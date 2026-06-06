@@ -179,11 +179,11 @@ function HeroSection() {
       {/* Navy blue container */}
       <div className="bg-brand-900 py-20 px-6 text-center text-white relative">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-6">
-            See Your Portfolio Through<br />
-            a <span className="text-sky-300">Hiring Manager's</span> Eyes
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 tracking-tight">
+            <span className="whitespace-nowrap">See Your Portfolio Through</span><br />
+            <span className="whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
-          <p className="text-sky-100/70 text-base md:text-lg mb-10 max-w-xl mx-auto font-medium">
+          <p className="text-sky-100/70 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
             Paste your portfolio URL and get a structured, goal-aware audit scored across six dimensions in minutes.
           </p>
 
