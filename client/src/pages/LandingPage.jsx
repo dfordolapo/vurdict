@@ -1,60 +1,162 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  ArrowRight, Link2, Briefcase, Users, TrendingUp, Shield, Zap,
+  ArrowRight, Link2, Briefcase, Users, Shield, Zap,
   CheckCircle, Star, ChevronDown, ChevronUp, BarChart2, Eye,
-  Target, Layers, BookOpen, Code2, Award, Quote, ExternalLink,
-  SparkleIcon, Sparkles
+  Target, Layers, BookOpen, Code2, Award, Quote, Sparkles,
+  Compass, Brain, Palette, FileText, Terminal, Menu, X
 } from 'lucide-react'
+import heroIllustration from '../assets/hero-illustration.png'
+import ctaIllustration from '../assets/cta-illustration.jpg'
+
+/* ─── WAVE COMPONENTS ─── */
+function WaveDivider({ fill = '#172554', flip = false }) {
+  return (
+    <div className={`w-full overflow-hidden leading-none ${flip ? 'rotate-180 -mt-1' : '-mb-px'}`}>
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="relative block w-full h-[40px] md:h-[80px]">
+        <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill={fill} />
+      </svg>
+    </div>
+  )
+}
+
+
+/* ─── LOGO COMPONENT ─── */
+function Logo({ size = "normal" }) {
+  const isNormal = size === "normal";
+  return (
+    <div className="flex items-center gap-2 group cursor-pointer select-none">
+      <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={isNormal ? "w-10 h-8" : "w-8 h-6"}>
+        {/* Shadow/Glow under bubble */}
+        <ellipse cx="58" cy="32" rx="18" ry="14" fill="rgba(23,37,84,0.06)" />
+        
+        {/* V checkmark shape with professional filled path and stroke rounding for smooth corners */}
+        <path
+          d="M20 20 H34 L50 54 H60 L72 34 H86 L66 74 H42 Z"
+          fill="#172554"
+          stroke="#172554"
+          strokeWidth="6"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        
+        {/* Speech bubble touching the inner checkmark vertex */}
+        <path
+          d="M58 44c9 0 16-5.5 16-12s-7-12-16-12-16 5.5-16 12c0 2.8 1.3 5.3 3.3 7.1L38 48l8.5-3.3c3.6 2 8 3.3 13.5 3.3z"
+          fill="#172554"
+          stroke="#172554"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        
+        {/* Curved double quotes inside the speech bubble */}
+        <path
+          d="M52 29c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1zm6.5 0c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1z"
+          fill="white"
+        />
+      </svg>
+      <span className={`text-slate-900 font-extrabold tracking-tight ${isNormal ? 'text-xl' : 'text-base'}`}>
+        Vurdict<span className="text-brand-900">:</span>
+      </span>
+    </div>
+  )
+}
 
 /* ─── NAVBAR ─── */
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const navLinks = [
+    { label: 'How It Works', href: '#how-it-works' },
+    { label: 'Framework', href: '#framework' },
+    { label: 'Report Card', href: '#report-card' },
+    { label: 'FAQ', href: '#faq' },
+  ]
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-strong' : ''}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm' : 'bg-transparent'}`}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/40 transition-shadow">
-            <span className="text-white font-bold text-sm">V</span>
-          </div>
-          <span className="text-white font-semibold text-lg tracking-tight">Vurdict</span>
+        <a href="/" className="flex items-center">
+          <Logo size="normal" />
         </a>
 
-        {/* Nav links */}
+        {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-8">
-          {[
-            { label: 'How It Works', href: '#how-it-works' },
-            { label: 'Framework', href: '#framework' },
-            { label: 'Report Card', href: '#report-card' },
-            { label: 'FAQ', href: '#faq' },
-          ].map(link => (
+          {navLinks.map(link => (
             <a
               key={link.label}
               href={link.href}
-              className="text-slate-400 hover:text-white text-sm font-medium transition-colors"
+              className="text-slate-600 hover:text-brand-900 text-sm font-semibold transition-colors"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* CTA */}
-        <a
-          href="/analyze"
-          className="btn-gradient hidden md:flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm font-semibold"
-        >
-          <span>Analyze Portfolio</span>
-          <ArrowRight size={14} />
-        </a>
+        {/* CTA + Hamburger */}
+        <div className="flex items-center gap-3">
+          <a
+            href="/analyze"
+            className="btn-brand flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold group"
+          >
+            <span>Analyze Portfolio</span>
+            <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
+              <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
+            </div>
+          </a>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
+
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm">
+          <div className="px-6 py-4 flex flex-col gap-3">
+            {navLinks.map(link => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-slate-600 hover:text-brand-900 text-sm font-semibold transition-colors py-2"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
+  )
+}
+
+/* ─── HERO VISUAL (Top Illustration) ─── */
+function HeroVisual() {
+  return (
+    <div className="relative w-full max-w-6xl mx-auto mt-6 px-4 animate-fade-in-up">
+      <img
+        src={heroIllustration}
+        alt="Vurdict Portfolio Evaluation"
+        className="w-full h-auto object-contain select-none"
+        loading="eager"
+        style={{
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden',
+          WebkitFontSmoothing: 'antialiased'
+        }}
+      />
+    </div>
   )
 }
 
@@ -62,226 +164,135 @@ function Navbar() {
 function HeroSection() {
   const navigate = useNavigate()
   const [url, setUrl] = useState('')
+  const [goal, setGoal] = useState('hired')
 
   return (
-    <section className="relative min-h-screen flex items-center grid-bg overflow-hidden pt-16">
-      {/* Background blobs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-violet-600/15 rounded-full blur-3xl" />
-        <div className="absolute top-3/4 left-1/2 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl" />
+    <section className="relative bg-white pt-24 pb-0 overflow-hidden">
+      {/* Top Illustration Showcase */}
+      <div className="max-w-6xl mx-auto px-6 mb-12">
+        <HeroVisual />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6 py-24 w-full">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Copy */}
-          <div>
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-indigo-500/30 mb-8 animate-fade-in-up">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 pulse-dot" />
-              <span className="text-indigo-300 text-xs font-medium">AI-Powered · No Signup · Free</span>
+      {/* Top Wave (Transition from White to Navy) */}
+      <WaveDivider fill="#172554" flip={false} />
+
+      {/* Navy blue container */}
+      <div className="bg-brand-900 py-20 px-6 text-center text-white relative">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-6">
+            See Your Portfolio Through<br />
+            a <span className="text-sky-300">Hiring Manager's</span> Eyes
+          </h1>
+          <p className="text-sky-100/70 text-base md:text-lg mb-10 max-w-xl mx-auto font-medium">
+            Paste your portfolio URL and get a structured, goal-aware audit scored across six dimensions in minutes.
+          </p>
+
+          {/* Form container */}
+          <div className="bg-white p-2.5 rounded-2xl shadow-xl flex flex-col md:flex-row gap-2 max-w-2xl mx-auto text-slate-900">
+            <div className="flex-1 flex items-center gap-2.5 px-3">
+              <Link2 size={18} className="text-slate-400 shrink-0" />
+              <input
+                type="url"
+                value={url}
+                onChange={e => setUrl(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && url && navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}`)}
+                placeholder="https://yourportfolio.com"
+                className="w-full py-2 bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+              />
             </div>
-
-            <h1 className="text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight mb-6 animate-fade-in-up-1">
-              See Your Portfolio
-              <br />
-              Through a{' '}
-              <span className="gradient-text">Hiring Manager's</span>
-              <br />
-              Eyes
-            </h1>
-
-            <p className="text-slate-400 text-lg leading-relaxed mb-10 animate-fade-in-up-2 max-w-lg">
-              Paste your portfolio URL and get a structured, goal-aware audit in under 60 seconds — scored across six dimensions by an AI calibrated to think like a Senior Design Lead.
-            </p>
-
-            {/* URL input + CTA */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-8 animate-fade-in-up-3">
-              <div className="flex-1 relative">
-                <Link2 size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
-                <input
-                  type="url"
-                  value={url}
-                  onChange={e => setUrl(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && url && navigate('/analyze')}
-                  placeholder="https://yourportfolio.com"
-                  className="w-full pl-10 pr-4 py-3.5 rounded-xl glass border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
-                />
-              </div>
-              <button
-                onClick={() => navigate('/analyze')}
-                className="btn-gradient flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-white font-semibold text-sm whitespace-nowrap"
+            
+            {/* Goal Select */}
+            <div className="border-t md:border-t-0 md:border-l border-slate-100 px-3 py-2 md:py-0 flex items-center shrink-0">
+              <select
+                value={goal}
+                onChange={e => setGoal(e.target.value)}
+                className="bg-transparent text-xs font-bold text-slate-600 focus:outline-none cursor-pointer w-full md:w-auto"
               >
-                <Sparkles size={15} />
-                <span>Analyze Portfolio</span>
-              </button>
+                <option value="hired">Goal: Get Hired</option>
+                <option value="clients">Goal: Win Clients</option>
+                <option value="audit">Goal: General Improvement</option>
+              </select>
             </div>
 
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-4 animate-fade-in-up-3">
-              {[
-                { icon: Shield, text: 'No signup required' },
-                { icon: Zap, text: 'Results in 60 seconds' },
-                { icon: CheckCircle, text: 'Any portfolio URL works' },
-              ].map(({ icon: Icon, text }) => (
-                <div key={text} className="flex items-center gap-1.5 text-slate-400 text-xs">
-                  <Icon size={12} className="text-indigo-400" />
-                  <span>{text}</span>
-                </div>
-              ))}
-            </div>
+            <button
+              onClick={() => url && navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}`)}
+              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group"
+            >
+              <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_12px_rgba(255,255,255,0.15)]">
+                <Sparkles size={14} className="transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
+              </div>
+              <span>Analyze Portfolio</span>
+            </button>
           </div>
 
-          {/* Right: Floating mockup */}
-          <div className="relative hidden lg:block">
-            <HeroVisual />
+          {/* Bullet sub-badges */}
+          <div className="flex flex-wrap justify-center gap-6 mt-8">
+            {[
+              { icon: Shield, text: 'No signup required' },
+              { icon: Zap, text: 'Results in minutes' },
+              { icon: CheckCircle, text: 'Any portfolio URL works' },
+            ].map(({ icon: Icon, text }) => (
+              <div key={text} className="flex items-center gap-2 text-sky-200/60 text-xs font-semibold group">
+                <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_10px_rgba(255,255,255,0.1)]">
+                  <Icon size={13} className="text-sky-300 transition-all duration-200 group-hover:text-white group-hover:scale-110" />
+                </div>
+                <span className="transition-colors duration-200 group-hover:text-sky-200">{text}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Bottom scroll indicator */}
-      <a href="#problem" className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors group">
-        <span className="text-xs font-medium">See how it works</span>
-        <ChevronDown size={16} className="group-hover:translate-y-1 transition-transform" />
-      </a>
+      {/* Bottom Wave (Transition from Navy to White) */}
+      <WaveDivider fill="#172554" flip={true} />
     </section>
   )
 }
 
-/* ─── HERO VISUAL ─── */
-function HeroVisual() {
-  const dimensions = [
-    { label: 'Problem Framing', score: 88, color: '#6366f1', angle: 0 },
-    { label: 'Process Visibility', score: 75, color: '#8b5cf6', angle: 60 },
-    { label: 'Outcome & Impact', score: 62, color: '#a78bfa', angle: 120 },
-    { label: 'Visual Quality', score: 85, color: '#6366f1', angle: 180 },
-    { label: 'Niche & Positioning', score: 70, color: '#8b5cf6', angle: 240 },
-    { label: 'Trust & CTA', score: 80, color: '#a78bfa', angle: 300 },
-  ]
-
-  return (
-    <div className="relative w-full aspect-square max-w-lg mx-auto">
-      {/* Central card */}
-      <div className="absolute inset-16 glass-strong rounded-2xl glow-indigo flex flex-col items-center justify-center p-6 animate-float-slow">
-        <div className="relative mb-3">
-          <svg width="80" height="80" viewBox="0 0 80 80">
-            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="6" />
-            <circle
-              cx="40" cy="40" r="32" fill="none"
-              stroke="url(#heroGrad)" strokeWidth="6"
-              strokeLinecap="round" strokeDasharray="201" strokeDashoffset="50"
-              transform="rotate(-90 40 40)"
-            />
-            <defs>
-              <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#6366f1" />
-                <stop offset="100%" stopColor="#a78bfa" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-2xl font-black text-white">82</span>
-          </div>
-        </div>
-        <div className="text-xs text-indigo-300 font-semibold mb-0.5">Overall Score</div>
-        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span className="text-emerald-300 text-xs font-medium">Strong Portfolio</span>
-        </div>
-      </div>
-
-      {/* Orbiting score chips */}
-      {dimensions.map((dim, i) => {
-        const rad = (dim.angle * Math.PI) / 180
-        const r = 44
-        const x = 50 + r * Math.cos(rad)
-        const y = 50 + r * Math.sin(rad)
-        return (
-          <div
-            key={dim.label}
-            className="absolute glass rounded-lg px-2 py-1 text-center"
-            style={{
-              left: `${x}%`,
-              top: `${y}%`,
-              transform: 'translate(-50%, -50%)',
-              animationDelay: `${i * 0.3}s`,
-              animation: 'float 4s ease-in-out infinite',
-              animationDelay: `${i * 0.5}s`,
-            }}
-          >
-            <div className="text-xs font-bold" style={{ color: dim.color }}>{dim.score}</div>
-            <div className="text-[9px] text-slate-400 whitespace-nowrap">{dim.label.split(' ')[0]}</div>
-          </div>
-        )
-      })}
-
-      {/* Orbit ring */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[88%] h-[88%] rounded-full border border-indigo-500/10 border-dashed" />
-      </div>
-    </div>
-  )
-}
-
-/* ─── PROBLEM SECTION ─── */
+/* ─── COMPARISON SECTION ─── */
 function ProblemSection() {
-  const before = [
-    ['Friends & Community', 'Too nice', '"Looks great!" (no specifics)', 'Generic praise'],
-    ['Generic AI (ChatGPT)', 'Too vague', '"Consider adding outcomes"', 'No design rubric'],
-    ['Mentor Sessions', 'Too slow', 'Inconsistent advice', 'Weeks of wait'],
-    ['Portfolio Builders', 'No feedback', 'Templates, not critique', 'Wrong tool entirely'],
-  ]
-  const after = [
-    'Scored against a 6-dimension professional rubric',
-    'Goal-aware: different lens for "Get Hired" vs "Win Clients"',
-    'Specific, direct feedback — not generic suggestions',
-    'Results in 60 seconds, anytime',
+  const features = [
+    { name: 'Specific Score Rubric', friends: 'No', chatgpt: 'No', builders: 'No', vurdict: 'Yes' },
+    { name: 'Goal-Aware Context', friends: 'No', chatgpt: 'Partial', builders: 'No', vurdict: 'Yes' },
+    { name: 'Actionable Design Fixes', friends: 'Vague', chatgpt: 'Generic', builders: 'No', vurdict: 'Yes' },
+    { name: 'Speed & Availability', friends: 'Weeks', chatgpt: 'Instant', builders: 'None', vurdict: 'In Minutes' },
+    { name: 'Cost', friends: 'Free', chatgpt: 'Free', builders: '$15+/mo', vurdict: '100% Free' },
   ]
 
   return (
-    <section id="problem" className="py-28 relative">
-      <div className="section-divider mb-28" />
+    <section className="py-16 md:py-24 bg-white relative">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-black mb-5 tracking-tight">
-            Most portfolio feedback is{' '}
-            <span className="relative">
-              <span className="text-red-400 line-through decoration-red-400/60">too vague</span>
-            </span>{' '}
-            to be helpful
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+            Most portfolio feedback is <br />
+            <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            You've been getting feedback for months. But nothing is translating to interviews.
-            Here's why — and what Vurdict does differently.
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            Vurdict replaces the guesswork with a structured evaluation so you can improve with confidence.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Before */}
-          <div className="glass rounded-2xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-red-500/20 bg-red-500/5">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-red-400" />
-                <span className="text-red-300 text-sm font-semibold">Current Feedback Options</span>
-              </div>
-            </div>
-            <div className="p-2">
-              <table className="w-full text-sm">
+        {/* Side-by-Side Comparison Container */}
+        <div className="grid lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
+          {/* Table (Left column) */}
+          <div className="lg:col-span-8 bg-slate-50/50 rounded-2xl border border-slate-100 p-6 flex flex-col justify-between">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[500px]">
                 <thead>
-                  <tr>
-                    {['Source', 'Problem', 'Example Feedback', 'Result'].map(h => (
-                      <th key={h} className="text-left px-4 py-2 text-slate-500 text-xs font-medium">{h}</th>
-                    ))}
+                  <tr className="border-b border-slate-100">
+                    <th className="pb-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Features</th>
+                    <th className="pb-4 text-xs font-bold text-slate-500">Friends</th>
+                    <th className="pb-4 text-xs font-bold text-slate-500">ChatGPT</th>
+                    <th className="pb-4 text-xs font-bold text-slate-500">Builders</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {before.map((row, i) => (
-                    <tr key={i} className="border-t border-slate-800/60">
-                      {row.map((cell, j) => (
-                        <td key={j} className={`px-4 py-3 ${j === 0 ? 'text-slate-300 font-medium' : 'text-slate-500'}`}>
-                          {cell}
-                        </td>
-                      ))}
+                <tbody className="divide-y divide-slate-100/60">
+                  {features.map((f, i) => (
+                    <tr key={i} className="hover:bg-slate-100/10 transition-colors">
+                      <td className="py-4 text-xs font-bold text-slate-700">{f.name}</td>
+                      <td className="py-4 text-xs text-slate-500">{f.friends}</td>
+                      <td className="py-4 text-xs text-slate-500">{f.chatgpt}</td>
+                      <td className="py-4 text-xs text-slate-500">{f.builders}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -289,30 +300,32 @@ function ProblemSection() {
             </div>
           </div>
 
-          {/* After */}
-          <div className="glass rounded-2xl overflow-hidden gradient-border">
-            <div className="px-6 py-4 border-b border-indigo-500/20 bg-indigo-500/5">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-indigo-400" />
-                <span className="text-indigo-300 text-sm font-semibold">Vurdict — The Audit You Need</span>
-              </div>
-            </div>
-            <div className="p-6 space-y-4">
-              {after.map((item, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle size={11} className="text-indigo-400" />
-                  </div>
-                  <p className="text-slate-300 text-sm leading-relaxed">{item}</p>
+          {/* Vurdict Card (Right column) */}
+          <div className="lg:col-span-4 bg-blue-50/80 rounded-2xl border border-blue-100 p-6 flex flex-col justify-between relative overflow-hidden shadow-sm">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-sky-200/20 rounded-full blur-2xl" />
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-900/10 text-brand-900 text-[10px] font-bold mb-4 group hover:bg-brand-900/20 transition-colors cursor-default">
+                <div className="rounded p-0.5 transition-all duration-200 group-hover:bg-brand-900/20 group-hover:shadow-[0_0_8px_rgba(23,37,84,0.15)]">
+                  <Sparkles size={10} className="transition-all duration-200 group-hover:scale-125 group-hover:rotate-12" />
                 </div>
-              ))}
-              <div className="mt-6 p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-                <p className="text-indigo-200 text-sm italic">
-                  "I went from 0 interviews in 3 months to 4 callbacks in 2 weeks — after fixing just the one thing Vurdict flagged."
-                </p>
-                <p className="text-slate-500 text-xs mt-2">— Product Designer, London</p>
+                <span>The Vurdict Standard</span>
               </div>
+              <h3 className="text-slate-900 font-extrabold text-lg mb-2">Vurdict Report Card</h3>
+              <p className="text-slate-500 text-xs leading-relaxed mb-6">
+                Objective scoring, deep structural analysis, and specific visual instructions compiled in under a minute.
+              </p>
             </div>
+            
+            <ul className="space-y-3">
+              {['6-dimension rubric analysis', 'Targeted goal alignment', 'Immediate visual pointers', 'No login required'].map((text, idx) => (
+                <li key={idx} className="flex items-center gap-2 text-xs font-bold text-brand-900 group cursor-default">
+                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-sky-100 group-hover:shadow-[0_0_8px_rgba(2,132,199,0.15)]">
+                    <CheckCircle size={14} className="text-sky-600 shrink-0 transition-all duration-200 group-hover:text-sky-500 group-hover:scale-110" />
+                  </div>
+                  <span className="transition-colors duration-200 group-hover:text-sky-700">{text}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
@@ -320,72 +333,61 @@ function ProblemSection() {
   )
 }
 
-/* ─── HOW IT WORKS ─── */
+/* ─── HOW IT WORKS (Steps) ─── */
 function HowItWorksSection() {
   const steps = [
     {
-      number: '01',
-      icon: Link2,
-      title: 'Paste Your URL',
-      desc: 'Drop in your portfolio link — Behance, Notion, Framer, personal site, anything publicly accessible.',
-      color: 'indigo',
+      num: '1',
+      title: 'Paste URL',
+      desc: 'Submit your live portfolio or case study link.',
     },
     {
-      number: '02',
-      icon: Target,
-      title: 'Set Your Goal',
-      desc: 'Tell us what you\'re optimizing for: landing a full-time role, winning freelance clients, or improving your overall portfolio.',
-      color: 'violet',
+      num: '2',
+      title: 'Choose Goal',
+      desc: "Tell us if you're job hunting or trying to win freelance clients.",
     },
     {
-      number: '03',
-      icon: BarChart2,
-      title: 'Get Your Report',
-      desc: 'Receive a full six-dimension breakdown with scores, detailed explanations, and your single highest-impact fix.',
-      color: 'purple',
+      num: '3',
+      title: 'Receive Review',
+      desc: (
+        <>
+          Receive your comprehensive <strong className="font-bold text-slate-800">Vurdict</strong> Report Card.
+        </>
+      ),
     },
   ]
 
   return (
-    <section id="how-it-works" className="py-28 relative">
-      <div className="section-divider mb-28" />
+    <section id="how-it-works" className="py-16 md:py-24 bg-white border-y border-slate-100/80">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-indigo-500/30 mb-5">
-            <Zap size={12} className="text-indigo-400" />
-            <span className="text-indigo-300 text-xs font-medium">Portfolio Feedback in Minutes</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-black mb-5 tracking-tight">
-            Three steps to your{' '}
-            <span className="gradient-text">honest audit</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+            Portfolio Feedback in <span className="text-[#3b82f6]">Minutes</span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            No forms. No account. No wait. Paste, select, receive.
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            Identify the changes most likely to improve your chances of getting noticed
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 relative">
-          {/* Connector lines */}
-          <div className="hidden md:block absolute top-12 left-1/3 right-1/3 h-px bg-gradient-to-r from-indigo-500/30 via-violet-500/30 to-indigo-500/30" />
-
-          {steps.map((step, i) => (
-            <div key={i} className="glass rounded-2xl p-6 relative group hover:border-indigo-500/30 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/10">
-              {/* Number */}
-              <div className="text-5xl font-black text-slate-800 absolute top-4 right-5 select-none">{step.number}</div>
-
-              {/* Icon */}
-              <div className={`w-11 h-11 rounded-xl mb-5 flex items-center justify-center
-                ${step.color === 'indigo' ? 'bg-indigo-500/20 border border-indigo-500/30' :
-                  step.color === 'violet' ? 'bg-violet-500/20 border border-violet-500/30' :
-                  'bg-purple-500/20 border border-purple-500/30'}`}>
-                <step.icon size={20} className={
-                  step.color === 'indigo' ? 'text-indigo-400' :
-                  step.color === 'violet' ? 'text-violet-400' : 'text-purple-400'
-                } />
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-8 md:gap-4 max-w-4xl mx-auto">
+          {steps.map((step, idx) => (
+            <div key={idx} className="flex flex-col md:flex-row items-center md:items-start flex-1 justify-center w-full">
+              <div className="flex-1 flex flex-col items-center text-center max-w-[260px] md:max-w-none w-full">
+                <div className="w-8 h-8 rounded-xl bg-blue-50/80 border border-blue-100/60 text-blue-600 flex items-center justify-center font-bold text-xs mb-4">
+                  {step.num}
+                </div>
+                <h3 className="text-slate-900 font-bold text-sm mb-2">{step.title}</h3>
+                <p className="text-slate-500 text-xs leading-relaxed font-medium">{step.desc}</p>
               </div>
-
-              <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
+              
+              {/* Arrow spacer for desktop */}
+              {idx < steps.length - 1 && (
+                <div className="hidden md:flex items-center justify-center pt-8 text-slate-400 px-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
+                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -398,103 +400,57 @@ function HowItWorksSection() {
 function FrameworkSection() {
   const dimensions = [
     {
-      icon: Target,
-      label: 'Problem Framing',
-      desc: 'Does your portfolio clearly explain the problem being solved — with context, research, and a clear hypothesis?',
-      weight_hired: 'High',
-      weight_freelance: 'Medium',
+      icon: Compass,
+      title: 'Structural Logic',
+      desc: 'Evaluates the flow of your case study, ensuring problem statements connect logically to delivered solutions.',
     },
     {
-      icon: Layers,
-      label: 'Process Visibility',
-      desc: 'Do you show how decisions were made? Failed iterations, user testing insights, and trade-offs made under constraints.',
-      weight_hired: 'High',
-      weight_freelance: 'Low',
+      icon: Brain,
+      title: 'Critical Thinking',
+      desc: 'Checks for evidence of research-driven decisions rather than purely aesthetic choices.',
+    },
+    {
+      icon: Palette,
+      title: 'Visual Execution',
+      desc: 'Analysis of spacing, typography, hierarchy, and adherence to modern UI principles and accessibility.',
     },
     {
       icon: BarChart2,
-      label: 'Outcome & Impact',
-      desc: 'Does your work show measurable or observable results? Specific metrics, quotes, or conversion improvements.',
-      weight_hired: 'High',
-      weight_freelance: 'Medium',
+      title: 'Impact Evidence',
+      desc: 'Scans for quantifiable metrics and business outcomes that demonstrate the value of your work.',
     },
     {
-      icon: Eye,
-      label: 'Visual Quality',
-      desc: 'Does your portfolio communicate professionalism? Typography, spacing, color theory, and premium attention to detail.',
-      weight_hired: 'Medium',
-      weight_freelance: 'High',
+      icon: FileText,
+      title: 'Narrative Tone',
+      desc: 'Assesses professional voice and clarity, ensuring your writing is concise yet persuasive.',
     },
     {
-      icon: BookOpen,
-      label: 'Niche & Positioning',
-      desc: 'Do you communicate a clear area of focus? A strong niche beats a generic "I design anything" portfolio every time.',
-      weight_hired: 'Medium',
-      weight_freelance: 'High',
-    },
-    {
-      icon: Award,
-      label: 'Trust & CTA',
-      desc: 'Does your portfolio establish credibility and provide a clear next step? Testimonials, company logos, and a strong call-to-action.',
-      weight_hired: 'Low',
-      weight_freelance: 'High',
+      icon: Terminal,
+      title: 'Positioning Clarity',
+      desc: 'Verifies whether the portfolio communicates who the designer is and what they specialize in.',
     },
   ]
 
-  const weightColor = (w) =>
-    w === 'High' ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' :
-    w === 'Medium' ? 'text-amber-400 bg-amber-500/10 border-amber-500/20' :
-    'text-slate-400 bg-slate-800 border-slate-700'
-
   return (
-    <section id="framework" className="py-28 relative">
-      <div className="section-divider mb-28" />
+    <section id="framework" className="py-16 md:py-24 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-violet-500/30 mb-5">
-            <Layers size={12} className="text-violet-400" />
-            <span className="text-violet-300 text-xs font-medium">The 6-Dimension Evaluation Framework</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-black mb-5 tracking-tight">
-            An audit calibrated to{' '}
-            <span className="gradient-text">real hiring signals</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+            The 6-Dimension Evaluation Framework
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Every dimension is weighted differently based on your goal.
-            What a hiring manager cares about differs from what a freelance client needs to see.
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            We review what actually determines your portfolio's success
           </p>
         </div>
 
-        {/* Goal legend */}
-        <div className="flex flex-wrap justify-center gap-4 mb-10">
-          <div className="flex items-center gap-2 text-sm text-slate-400">
-            <Briefcase size={13} className="text-indigo-400" />
-            <span>Get Hired weight →</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-slate-400">
-            <Users size={13} className="text-violet-400" />
-            <span>Win Freelance Clients weight →</span>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {dimensions.map((dim, i) => (
-            <div key={i} className="glass rounded-2xl p-5 hover:-translate-y-1 hover:border-indigo-500/25 transition-all group">
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-10 h-10 rounded-lg bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center group-hover:bg-indigo-500/25 transition-colors">
-                  <dim.icon size={17} className="text-indigo-400" />
-                </div>
-                <div className="flex flex-col items-end gap-1">
-                  <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${weightColor(dim.weight_hired)}`}>
-                    Hired: {dim.weight_hired}
-                  </span>
-                  <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${weightColor(dim.weight_freelance)}`}>
-                    Freelance: {dim.weight_freelance}
-                  </span>
-                </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {dimensions.map((dim, idx) => (
+            <div key={idx} className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.012)] hover:shadow-md hover:border-blue-100 transition-all flex flex-col text-left group">
+              <div className="w-fit rounded-xl p-2.5 bg-blue-50/50 border border-blue-100/50 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200 group-hover:shadow-[0_0_16px_rgba(59,130,246,0.15)]">
+                <dim.icon size={20} className="text-blue-600 transition-all duration-200 group-hover:text-blue-500 group-hover:scale-110" />
               </div>
-              <h3 className="text-white font-bold mb-2">{dim.label}</h3>
-              <p className="text-slate-400 text-xs leading-relaxed">{dim.desc}</p>
+              <h3 className="text-slate-950 font-bold text-base mb-2">{dim.title}</h3>
+              <p className="text-slate-500 text-xs leading-relaxed font-medium">{dim.desc}</p>
             </div>
           ))}
         </div>
@@ -503,317 +459,179 @@ function FrameworkSection() {
   )
 }
 
-/* ─── REPORT CARD PREVIEW ─── */
+/* ─── REPORT CARD SHOWCASE (Inside Navy Waves) ─── */
 function ReportCardSection() {
   const scores = [
-    { label: 'Problem Framing', score: 88, icon: Target },
-    { label: 'Process Visibility', score: 85, icon: Layers },
-    { label: 'Outcome & Impact', score: 62, icon: BarChart2 },
-    { label: 'Business Impact', score: 80, icon: TrendingUp },
-    { label: 'Narrative Clarity', score: 72, icon: BookOpen },
-    { label: 'Technical Execution', score: 82, icon: Code2 },
+    { label: 'Problem Framing', score: 88, color: 'bg-emerald-500' },
+    { label: 'Process Visibility', score: 85, color: 'bg-sky-500' },
+    { label: 'Outcome & Impact', score: 62, color: 'bg-amber-500' },
+    { label: 'Visual Quality', score: 80, color: 'bg-indigo-500' },
+    { label: 'Niche & Positioning', score: 72, color: 'bg-violet-500' },
+    { label: 'Trust & CTA', score: 82, color: 'bg-sky-400' },
   ]
 
-  const scoreColor = (s) =>
-    s >= 80 ? '#22c55e' : s >= 65 ? '#f59e0b' : '#ef4444'
-
   return (
-    <section id="report-card" className="py-28 relative">
-      <div className="section-divider mb-28" />
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-indigo-500/30 mb-5">
-            <Award size={12} className="text-indigo-400" />
-            <span className="text-indigo-300 text-xs font-medium">The Vurdict Report Card</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-black mb-5 tracking-tight">
-            Every dimension.{' '}
-            <span className="gradient-text">Every score. Every fix.</span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            Not just a number. A full breakdown of what's working, what isn't, and exactly what to do next.
+    <section id="report-card" className="relative bg-white pt-16">
+      {/* Heading area on White background */}
+      <div className="text-center mb-12 px-6">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+          The <span className="text-[#3b82f6]">Vurdict</span> Report Card
+        </h2>
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            Don't settle for "Nice work!" See where you actually stand
           </p>
-        </div>
+      </div>
 
-        {/* Mock report card */}
-        <div className="glass-strong rounded-3xl overflow-hidden glow-indigo max-w-4xl mx-auto animate-float-slow">
-          {/* Header */}
-          <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-                <span className="text-white font-bold text-xs">V</span>
-              </div>
-              <span className="text-white font-semibold">Vurdict</span>
-            </div>
-            <div className="flex gap-2">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/60" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                <div className="w-3 h-3 rounded-full bg-green-500/60" />
-              </div>
-            </div>
-          </div>
+      {/* Wave top */}
+      <WaveDivider fill="#172554" flip={false} />
 
-          <div className="p-6 grid md:grid-cols-3 gap-6">
-            {/* Left: title + thumbnail */}
-            <div>
-              <h3 className="text-white font-black text-lg mb-1">Your Portfolio Report Card</h3>
-              <p className="text-slate-500 text-xs mb-4">Here's how your portfolio performs across six dimensions.</p>
-              <div className="glass rounded-xl p-3 mb-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-10 h-8 rounded bg-slate-800 flex items-center justify-center text-xs text-slate-500">
-                    <Eye size={10} />
-                  </div>
-                  <div>
-                    <div className="text-white text-xs font-medium">yourportfolio.com</div>
-                    <div className="text-slate-500 text-[10px]">Analyzed May 18, 2025 · 2:34 PM</div>
-                  </div>
+      {/* Navy block containing mockup */}
+      <div className="bg-brand-900 py-24 px-6 text-white text-center">
+        <div className="max-w-4xl mx-auto">
+          {/* High-Fidelity Report Card Container */}
+          <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl text-slate-900 text-left p-6 md:p-10 max-w-3xl mx-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-6 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-brand-900 flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">V</span>
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-slate-900">vurdict.com/analysis</h4>
+                  <p className="text-[10px] text-slate-400 font-medium">May 2026 · 100% Objective AI Review</p>
                 </div>
               </div>
-              <div className="glass rounded-xl p-3 bg-indigo-500/5 border border-indigo-500/15">
-                <Sparkles size={13} className="text-indigo-400 mb-2" />
-                <p className="text-slate-300 text-xs leading-relaxed">
-                  Great work! Your portfolio shows strong potential. A few strategic improvements will get you shortlisted.
-                </p>
+              <div className="text-right">
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">Report ID</span>
+                <p className="text-xs font-bold text-slate-700">#VRD-2894</p>
               </div>
             </div>
 
-            {/* Center: score ring */}
-            <div>
-              <div className="text-slate-400 text-xs mb-3 font-medium">Overall Score</div>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="relative">
-                  <svg width="72" height="72" viewBox="0 0 72 72">
-                    <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(99,102,241,0.15)" strokeWidth="5" />
-                    <circle
-                      cx="36" cy="36" r="28" fill="none"
-                      stroke="url(#rcGrad)" strokeWidth="5"
-                      strokeLinecap="round" strokeDasharray="176" strokeDashoffset="32"
-                      transform="rotate(-90 36 36)"
-                    />
-                    <defs>
-                      <linearGradient id="rcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#6366f1" />
-                        <stop offset="100%" stopColor="#a78bfa" />
-                      </linearGradient>
-                    </defs>
+            {/* Content Body */}
+            <div className="grid md:grid-cols-12 gap-8 pt-8">
+              {/* Left Column: Big Score */}
+              <div className="md:col-span-5 flex flex-col items-center md:items-start text-center md:text-left justify-center border-b md:border-b-0 md:border-r border-slate-100 pb-6 md:pb-0 md:pr-8">
+                <div className="relative w-28 sm:w-36 h-28 sm:h-36 flex items-center justify-center mb-4">
+                  {/* Outer radial stroke */}
+                  <svg className="absolute w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#f1f5f9" strokeWidth="6" />
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#3b82f6" strokeWidth="6" strokeDasharray="264" strokeDashoffset="48" strokeLinecap="round" />
                   </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xl font-black text-white">82</span>
+                  <div className="flex flex-col items-center">
+                    <span className="text-4xl font-black text-slate-900">82</span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Overall</span>
                   </div>
                 </div>
-                <div>
-                  <div className="text-2xl font-black text-white">82<span className="text-slate-500 text-base">/100</span></div>
-                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/25 mt-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span className="text-emerald-300 text-[10px] font-medium">Strong Portfolio</span>
-                  </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span className="text-emerald-700 text-xs font-bold">Strong Portfolio</span>
                 </div>
               </div>
 
-              {/* Hiring readiness */}
-              <div className="mb-4">
-                <div className="flex justify-between text-xs mb-1.5">
-                  <span className="text-slate-400">Hiring Readiness</span>
-                  <span className="text-emerald-400 font-semibold">High</span>
-                </div>
-                <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full w-[80%] bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" />
-                </div>
-                <div className="flex justify-between text-[10px] text-slate-600 mt-1">
-                  <span>Low</span><span>Medium</span><span>High</span>
-                </div>
-              </div>
-
-              {/* Top strengths */}
-              <div className="space-y-1.5">
-                {['Clear Visual Design', 'Strong Case Studies'].map(s => (
-                  <div key={s} className="flex items-center gap-2 text-xs text-slate-300">
-                    <CheckCircle size={11} className="text-emerald-400 shrink-0" />
-                    {s}
-                  </div>
-                ))}
-                <div className="flex items-center gap-2 text-xs text-amber-300">
-                  <div className="w-2.5 h-2.5 rounded-full border border-amber-400/50 flex items-center justify-center shrink-0">
-                    <div className="w-1 h-1 rounded-full bg-amber-400" />
-                  </div>
-                  Deeper Impact Metrics needed
+              {/* Right Column: Dimension Scores */}
+              <div className="md:col-span-7 space-y-4">
+                <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Evaluation Dimensions</h5>
+                <div className="space-y-3">
+                  {scores.map((s, i) => (
+                    <div key={i} className="space-y-1">
+                      <div className="flex justify-between text-xs font-bold">
+                        <span className="text-slate-700">{s.label}</span>
+                        <span className="text-slate-900">{s.score}/100</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div className={`h-full ${s.color} rounded-full`} style={{ width: `${s.score}%` }} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Right: dimension scores */}
-            <div>
-              <div className="text-slate-400 text-xs mb-3 font-medium">Scores by Dimension</div>
-              <div className="space-y-2.5">
-                {scores.map(({ label, score, icon: Icon }) => (
-                  <div key={label}>
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center gap-1.5">
-                        <Icon size={10} className="text-slate-500" />
-                        <span className="text-slate-300 text-[11px]">{label}</span>
-                      </div>
-                      <span className="text-[11px] font-bold" style={{ color: scoreColor(score) }}>{score}/100</span>
-                    </div>
-                    <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all"
-                        style={{ width: `${score}%`, backgroundColor: scoreColor(score) }}
-                      />
-                    </div>
-                  </div>
-                ))}
+            {/* Recommendation Footer Banner inside card */}
+            <div className="mt-8 bg-amber-50 border border-amber-100 rounded-2xl p-4 flex gap-3 group hover:bg-amber-100/80 transition-colors">
+              <div className="rounded-lg p-2 bg-amber-100/50 transition-all duration-200 group-hover:bg-amber-200 group-hover:shadow-[0_0_12px_rgba(217,119,6,0.15)]">
+                <Sparkles className="text-amber-600 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-500" size={16} />
               </div>
-
-              {/* Fix this first */}
-              <div className="mt-4 p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <Sparkles size={10} className="text-indigo-400" />
-                  <span className="text-indigo-300 text-[10px] font-semibold">Top Recommendation</span>
-                </div>
-                <p className="text-slate-300 text-[11px] leading-snug">
-                  Add specific metrics to your case studies — portfolios with strong impact data are 3.4× more likely to be shortlisted.
+              <div>
+                <h6 className="text-xs font-bold text-amber-900 mb-0.5">Top Recommendation</h6>
+                <p className="text-xs text-amber-800/80 leading-relaxed font-medium">
+                  Your "Outcome & Impact" score is currently bottlenecking your results. Add specific metrics (e.g. conversion rates, user satisfaction scores) to your case studies to increase shortlisting odds.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Wave bottom */}
+      <WaveDivider fill="#172554" flip={true} />
     </section>
   )
 }
 
-/* ─── TESTIMONIALS ─── */
-function TestimonialsSection() {
-  const testimonials = [
-    {
-      quote: "I'd been applying for 3 months with zero callbacks. Vurdict told me my Outcome & Impact scores were tanking my portfolio. Two days of fixes later — four interview requests.",
-      name: 'Adaeze O.',
-      role: 'Junior Product Designer',
-      location: 'Lagos → London',
-      score: 82,
-    },
-    {
-      quote: "The goal-aware scoring is genius. As a freelancer, I didn't need better process docs — I needed stronger trust signals. Vurdict pointed me exactly there.",
-      name: 'Marcus T.',
-      role: 'Freelance UI/UX Designer',
-      location: 'Berlin',
-      score: 76,
-    },
-    {
-      quote: "This is what I was booking ADPList sessions for — except instant, consistent, and actually structured. The Fix This First recommendation alone was worth it.",
-      name: 'Priya K.',
-      role: 'Mid-Level Product Designer',
-      location: 'Bangalore → Remote',
-      score: 91,
-    },
-  ]
-
-  return (
-    <section className="py-28 relative">
-      <div className="section-divider mb-28" />
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-indigo-500/30 mb-5">
-            <Star size={12} className="text-yellow-400" />
-            <span className="text-indigo-300 text-xs font-medium">Designer Stories</span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-black mb-5 tracking-tight">
-            From{' '}
-            <span className="text-slate-500 line-through decoration-slate-500/50">invisible</span>
-            {' '}to{' '}
-            <span className="gradient-text">shortlisted</span>
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <div key={i} className="glass rounded-2xl p-6 flex flex-col justify-between hover:-translate-y-1 transition-all">
-              <div>
-                <Quote size={20} className="text-indigo-400/50 mb-4" />
-                <p className="text-slate-300 text-sm leading-relaxed mb-6">"{t.quote}"</p>
-              </div>
-              <div className="flex items-center justify-between pt-4 border-t border-slate-800">
-                <div>
-                  <div className="text-white font-semibold text-sm">{t.name}</div>
-                  <div className="text-slate-500 text-xs">{t.role}</div>
-                  <div className="text-slate-600 text-xs">{t.location}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-black gradient-text">{t.score}</div>
-                  <div className="text-slate-600 text-[10px]">/100 score</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ─── FAQ ─── */
+/* ─── FAQ SECTION ─── */
 function FAQSection() {
   const [open, setOpen] = useState(null)
 
   const faqs = [
     {
       q: 'What kinds of portfolio URLs does Vurdict support?',
-      a: 'Any publicly accessible URL works — Behance, Dribbble, Notion, Framer, Webflow, personal websites, or a direct link to a case study. The only requirement is that the content is publicly viewable without a login.',
+      a: 'Any publicly accessible link works — Dribbble, Behance, Notion, Framer, Webflow, personal websites, or a direct link to a case study.',
     },
     {
       q: 'How is Vurdict different from just asking ChatGPT to review my portfolio?',
-      a: 'Generic AI has no design rubric, no professional calibration, and no goal-awareness. Vurdict\'s AI is instructed to act as a Senior Design Lead at a top-tier company, scored against a specific 6-dimension framework, and weighted differently depending on whether you want to get hired or win freelance clients.',
+      a: 'ChatGPT uses general knowledge. Vurdict is calibrated against a specific 6-dimension design rubric with context settings for either full-time job seeking or client-winning freelance work.',
     },
     {
       q: 'Is my portfolio data stored or shared?',
-      a: 'No. We only analyze your publicly available content. No data is stored, shared, or used for training. Your portfolio URL and results are not persisted beyond your current session.',
-    },
-    {
-      q: 'What does "Fix This First" mean?',
-      a: '"Fix This First" is your single highest-priority recommendation — the one change most likely to improve your score relative to your specific goal. Instead of a list of 20 things, we identify the one bottleneck holding you back.',
+      a: 'No. We only scrape and inspect your publicly available details. We do not store or share your designs or content.',
     },
     {
       q: 'How accurate is the AI scoring?',
-      a: 'Vurdict uses Claude (Anthropic\'s frontier AI model) with a carefully designed prompt calibrated against a professional design rubric. It is not a substitute for a human mentor, but it is significantly more structured, consistent, and goal-aware than any generic AI tool.',
+      a: 'The analysis evaluates key signals and metrics common in successful product designer portfolios. It serves as a rapid automated audit, not a complete replacement for human mentors.',
     },
     {
-      q: 'Is Vurdict free?',
-      a: 'Yes — the MVP is completely free, no account required. You get your full report instantly.',
+      q: 'If my portfolio has won awards, will Vurdict score it higher?',
+      a: 'Not necessarily. Awards typically judge aesthetic polish or narrative craft, while Vurdict evaluates how effectively your portfolio signals the specific competencies hiring managers look for — problem-framing, process visibility, and measurable impact. A visually stunning portfolio can still score low on structural logic or positioning clarity if those signals are buried. Think of Vurdict as the hiring manager who reads case studies, not the award judge who flips through hero shots.',
+    },
+    {
+      q: 'Could optimizing for Vurdict make my portfolio worse for real humans?',
+      a: 'Only if you blindly optimize for scores over storytelling. Vurdict\'s dimensions — structural logic, visual hierarchy, business impact — align with what top design leaders actually look for when hiring. The difference is Vurdict is explicit about what human reviewers often leave unsaid. The portfolios that score highest on Vurdict tend to be the same ones that convert in real interviews because they communicate clearly, show process, and prove value — which is exactly what makes a portfolio memorable to both an AI and a person.',
     },
   ]
 
   return (
-    <section id="faq" className="py-28 relative">
-      <div className="section-divider mb-28" />
+    <section id="faq" className="py-16 md:py-24 bg-white relative">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-black mb-5 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-slate-400 text-lg">Everything you need to know before you hit Analyze.</p>
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">Everything you need to know about the evaluation.</p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4 max-w-2xl mx-auto">
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className={`glass rounded-xl overflow-hidden transition-all ${open === i ? 'border-indigo-500/30' : ''}`}
+              className={`bg-slate-50/50 rounded-2xl border transition-all overflow-hidden ${open === i ? 'border-brand-900/20 bg-white shadow-sm' : 'border-slate-100'}`}
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left"
+                className="w-full flex items-center justify-between px-6 py-4 text-left font-bold text-sm text-slate-800 group"
               >
-                <span className="text-white font-medium text-sm pr-4">{faq.q}</span>
-                {open === i ? (
-                  <ChevronUp size={16} className="text-indigo-400 shrink-0" />
-                ) : (
-                  <ChevronDown size={16} className="text-slate-500 shrink-0" />
-                )}
+                <span>{faq.q}</span>
+                <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-slate-200/60 group-hover:shadow-[0_0_8px_rgba(0,0,0,0.05)]">
+                  {open === i ? (
+                    <ChevronUp size={16} className="text-brand-900 shrink-0 transition-transform duration-200 group-hover:scale-110" />
+                  ) : (
+                    <ChevronDown size={16} className="text-slate-400 shrink-0 transition-all duration-200 group-hover:text-slate-600 group-hover:scale-110" />
+                  )}
+                </div>
               </button>
               {open === i && (
-                <div className="px-5 pb-5">
-                  <p className="text-slate-400 text-sm leading-relaxed">{faq.a}</p>
+                <div className="px-6 pb-5">
+                  <p className="text-slate-500 text-xs leading-relaxed font-medium">{faq.a}</p>
                 </div>
               )}
             </div>
@@ -824,100 +642,74 @@ function FAQSection() {
   )
 }
 
-/* ─── FINAL CTA SECTION ─── */
+/* ─── FINAL CTA (Spotlight/Lamp Section) ─── */
 function FinalCTASection() {
   const navigate = useNavigate()
 
-  const floatingCards = [
-    { url: 'amaka.design', score: 91, label: 'Strong Portfolio', color: '#22c55e' },
-    { url: 'marcus-ux.com', score: 63, label: 'Needs Work', color: '#f59e0b' },
-    { url: 'priya.notion.site', score: 78, label: 'Good', color: '#6366f1' },
-    { url: 'chen-design.io', score: 55, label: 'Improve Now', color: '#ef4444' },
-    { url: 'studio.lena.me', score: 88, label: 'Strong', color: '#22c55e' },
-  ]
-
   return (
-    <section className="py-28 relative overflow-hidden">
-      <div className="section-divider mb-0" />
-
-      {/* Dark hero bg */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-        <div className="dot-grid absolute inset-0 opacity-30" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative max-w-6xl mx-auto px-6 text-center">
-        {/* Floating portfolio cards */}
-        <div className="relative h-48 mb-12">
-          {floatingCards.map((card, i) => {
-            const positions = [
-              { left: '5%', top: '10%' },
-              { left: '20%', top: '60%' },
-              { left: '40%', top: '20%' },
-              { left: '65%', top: '55%' },
-              { left: '80%', top: '15%' },
-            ]
-            const pos = positions[i]
-            return (
-              <div
-                key={card.url}
-                className="absolute glass rounded-xl px-3 py-2 text-left"
-                style={{
-                  ...pos,
-                  animation: `float ${3.5 + i * 0.5}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.4}s`,
-                }}
-              >
-                <div className="text-[10px] text-slate-400 mb-0.5">{card.url}</div>
-                <div className="flex items-center gap-2">
-                  <span className="text-lg font-black text-white">{card.score}</span>
-                  <span className="text-[10px] font-medium px-1.5 py-0.5 rounded" style={{ color: card.color, background: `${card.color}15` }}>
-                    {card.label}
-                  </span>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        <h2 className="text-5xl lg:text-6xl font-black mb-6 tracking-tight">
-          See What Hirers See
-          <br />
-          <span className="gradient-text">Before They Do</span>
+    <div className="bg-white">
+      {/* Heading area on White background */}
+      <div className="pt-24 pb-12 px-6 text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+          See What Hirers See Before They Do
         </h2>
-        <p className="text-slate-400 text-lg mb-10 max-w-lg mx-auto">
-          Stop guessing why your portfolio isn't landing interviews. Get the objective audit you've been waiting for — free, instant, no signup.
-        </p>
-
-        <button
-          onClick={() => navigate('/analyze')}
-          className="btn-gradient inline-flex items-center gap-3 px-8 py-4 rounded-xl text-white font-bold text-lg shimmer"
-        >
-          <Sparkles size={18} />
-          <span>Analyze My Portfolio →</span>
-        </button>
-
-        <p className="text-slate-600 text-xs mt-4">No signup required · Free · Results in 60 seconds</p>
+          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            Great portfolios don't happen by accident
+          </p>
       </div>
-    </section>
+
+      {/* Dark blue illustration block with absolute button overlay */}
+      <div className="relative bg-[#111d43] overflow-hidden pt-0 pb-16 px-6 flex flex-col items-center">
+        <div className="relative w-full max-w-4xl mx-auto flex flex-col items-center">
+          {/* CTA Illustration Image */}
+          <img
+            src={ctaIllustration}
+            alt="Pedestal Spotlight Evaluation"
+            className="w-full h-auto object-contain select-none"
+            loading="lazy"
+            style={{
+              transform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
+              WebkitFontSmoothing: 'antialiased'
+            }}
+          />
+
+          {/* Absolute centered button overlapping bottom of image */}
+          <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-full max-w-xs sm:max-w-[280px] z-20">
+            <button
+              onClick={() => navigate('/analyze')}
+              className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-extrabold text-sm hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group"
+            >
+              <span>Analyze Your Portfolio</span>
+              <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-900/10">
+                <ArrowRight size={16} className="text-brand-900 transition-all duration-200 group-hover:translate-x-1" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
 /* ─── FOOTER ─── */
 function Footer() {
   return (
-    <footer className="border-t border-slate-800 py-8">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded-md bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-            <span className="text-white font-bold text-[10px]">V</span>
+    <footer className="border-t border-slate-100 py-8 md:py-12 bg-white text-slate-500">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col items-center md:items-start gap-1">
+          <div className="flex items-center">
+            <Logo size="small" />
           </div>
-          <span className="text-slate-400 text-sm">Vurdict</span>
+          <p className="text-xs text-slate-400 font-medium mt-1">
+            © 2026 Vurdict. The Reviewer's Perspective.
+          </p>
         </div>
-        <p className="text-slate-600 text-xs text-center">
-          The brutal honesty of a Senior Design Lead · Instant · Free
-        </p>
-        <p className="text-slate-700 text-xs">© 2025 Vurdict</p>
+        <div className="flex flex-wrap gap-6 text-xs font-semibold text-slate-500">
+          {['Privacy', 'Terms', 'Contact', 'Twitter'].map(link => (
+            <a key={link} href="#" className="hover:text-brand-900 transition-colors">{link}</a>
+          ))}
+        </div>
       </div>
     </footer>
   )
@@ -926,7 +718,7 @@ function Footer() {
 /* ─── LANDING PAGE ─── */
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-white text-slate-900 antialiased">
       <Navbar />
       <main>
         <HeroSection />
@@ -934,7 +726,6 @@ export default function LandingPage() {
         <HowItWorksSection />
         <FrameworkSection />
         <ReportCardSection />
-        <TestimonialsSection />
         <FAQSection />
         <FinalCTASection />
       </main>
