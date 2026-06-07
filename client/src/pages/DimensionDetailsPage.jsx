@@ -173,7 +173,7 @@ export default function DimensionDetailsPage() {
       </div>
 
       {/* Navy blue block containing Split Grid */}
-      <div className="bg-brand-900 text-white py-12 px-6 md:px-12 relative overflow-hidden z-10 animate-fade-in-up">
+      <div className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 relative overflow-hidden z-10 animate-fade-in-up">
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
         

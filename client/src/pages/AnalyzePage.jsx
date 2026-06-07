@@ -95,7 +95,7 @@ export default function AnalyzePage() {
       </div>
 
       {/* Navy section */}
-      <section className="bg-brand-900 text-white pt-6 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden">
+      <section className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden">
 
         <div className="max-w-7xl w-full mx-auto relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 items-start">
@@ -146,12 +146,12 @@ export default function AnalyzePage() {
                           className={`flex items-center gap-3.5 w-full text-left p-3.5 rounded-2xl border transition-all ${
                             isSelected
                               ? 'bg-white text-slate-900 border-white shadow-sm'
-                              : 'bg-white/10 text-white/85 border-white/20 hover:bg-white/15 hover:border-white/35'
+                              : 'bg-[#121e48] text-white border-[#1e3060] hover:bg-[#162348] hover:border-[#264070]'
                           }`}
                         >
                           <div
                             className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 ${
-                              isSelected ? 'bg-brand-900/10 text-brand-900' : 'bg-white/15 text-sky-300'
+                              isSelected ? 'bg-brand-900/10 text-brand-900' : 'bg-[#162348] text-sky-300'
                             }`}
                           >
                             <Icon size={17} />
@@ -197,12 +197,12 @@ export default function AnalyzePage() {
                           className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-3 rounded-2xl border text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
                             isSelected
                               ? 'bg-white text-slate-900 border-white shadow-sm'
-                              : 'bg-white/10 text-white/75 border-white/20 hover:bg-white/15 hover:border-white/35'
+                              : 'bg-[#121e48] text-white border-[#1e3060] hover:bg-[#162348] hover:border-[#264070]'
                           }`}
                         >
                           <div
                             className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-                              isSelected ? 'border-brand-900' : 'border-white/40'
+                              isSelected ? 'border-brand-900' : 'border-white/60'
                             }`}
                           >
                             {isSelected && <div className="h-2 w-2 rounded-full bg-brand-900" />}

@@ -156,7 +156,7 @@ export default function ResultsPage() {
       </div>
 
       {/* Navy blue block containing Core Report Cards */}
-      <div className="bg-brand-900 text-white pt-6 pb-12 px-6 md:px-12 relative overflow-hidden z-10">
+      <div className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 relative overflow-hidden z-10">
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
         
@@ -166,7 +166,7 @@ export default function ResultsPage() {
             <div className="space-y-4 w-full flex flex-col items-center">
               <div className="flex flex-col items-center">
                 <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
-                  Your Portfolio Report Card
+                  Your <span className="text-sky-300">Vurdict</span> Report Card
                 </h1>
                 <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
                   Here's how your portfolio performs across the six hiring dimensions.
@@ -175,15 +175,15 @@ export default function ResultsPage() {
 
               {/* Action buttons (Download, Save, Share) */}
               <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 w-full">
-                <button className="flex items-center gap-1.5 px-3.5 py-2 border border-white/20 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
-                  <Download size={14} className="text-sky-300" />
+                <button className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-bold text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                  <Download size={14} className="text-brand-900" />
                   <span>Download</span>
                 </button>
-                <button className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs font-bold text-white shadow-lg shadow-blue-900/25 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                <button className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-bold text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
                   <Bookmark size={14} />
                   <span>Save</span>
                 </button>
-                <button className="flex items-center justify-center p-2 border border-white/20 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-100">
+                <button className="flex items-center justify-center p-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-white/80 hover:text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-100">
                   <Share2 size={14} />
                 </button>
               </div>

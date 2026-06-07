@@ -152,7 +152,7 @@ export default function AnalyzingPage() {
       </div>
 
       {/* Navy blue block containing Main Content Grid */}
-      <div className="bg-brand-900 text-white pt-6 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden z-10">
+      <div className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden z-10">
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
 
@@ -204,7 +204,7 @@ export default function AnalyzingPage() {
                 
                 <button
                   onClick={toggleMockFallback}
-                  className="w-full sm:w-auto rounded-xl bg-sky-900/40 hover:bg-sky-900/60 border border-sky-300/30 text-sky-200 flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-bold transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  className="w-full sm:w-auto rounded-xl bg-[#121e48] hover:bg-[#162348] border border-[#1e3060] text-white/80 hover:text-white flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-bold transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <Sparkles size={14} className="text-sky-300" />
                   <span>Bypass with Mock Report</span>
