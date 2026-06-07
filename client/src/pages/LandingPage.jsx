@@ -18,10 +18,52 @@ import WaveDivider from '../components/WaveDivider'
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const sectionIds = ['why-vurdict', 'how-it-works', 'framework', 'report-card', 'faq']
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -55% 0px',
+      threshold: 0
+    }
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(`#${entry.target.id}`)
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+    
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    const handleScroll = () => {
+      if (window.scrollY < 100) {
+        setActiveSection('')
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id)
+        if (el) observer.unobserve(el)
+      })
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   const navLinks = [
@@ -45,7 +87,11 @@ function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="text-slate-600 hover:text-brand-900 text-sm font-semibold transition-colors"
+              className={`text-sm font-semibold transition-all pb-1 pt-1 border-b-2 ${
+                activeSection === link.href 
+                  ? 'text-blue-600 border-blue-600 font-bold' 
+                  : 'text-slate-600 hover:text-brand-900 border-transparent hover:border-slate-300'
+              }`}
             >
               {link.label}
             </a>
@@ -56,7 +102,7 @@ function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             to="/analyze"
-            className="btn-brand flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold group"
+            className="btn-brand flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold group whitespace-nowrap shrink-0"
           >
             <span>Analyze Portfolio</span>
             <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
@@ -75,14 +121,18 @@ function Navbar() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm">
-          <div className="px-6 py-4 flex flex-col gap-3">
+        <div className="md:hidden bg-white/95 backdrop-blur-lg border-y border-slate-200 shadow-sm">
+          <div className="py-1 flex flex-col">
             {navLinks.map(link => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-slate-600 hover:text-brand-900 text-sm font-semibold transition-colors py-2"
+                className={`text-sm font-semibold transition-all py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50/70 hover:text-brand-900 ${
+                  activeSection === link.href 
+                    ? 'text-blue-600 bg-blue-50/50 border-l-4 border-l-blue-600 pl-5 font-bold' 
+                    : 'text-slate-600 border-l-4 border-l-transparent pl-5 active:bg-brand-900 active:text-white'
+                }`}
               >
                 {link.label}
               </a>
@@ -141,9 +191,9 @@ function HeroSection() {
       {/* Navy blue container */}
       <div className="bg-brand-900 py-12 px-6 text-center text-white relative">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 tracking-tight">
-            <span className="whitespace-nowrap">See Your Portfolio Through</span><br />
-            <span className="whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
+            <span className="md:whitespace-nowrap">See Your Portfolio Through</span> <br className="hidden md:inline" />
+            <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
             Paste your portfolio URL and get a structured, goal-aware audit scored across six dimensions in minutes.
@@ -183,7 +233,7 @@ function HeroSection() {
               </button>
 
               {goalDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-slate-100 bg-white p-1.5 shadow-2xl z-30 text-left">
+                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-slate-200 bg-white p-1.5 shadow-2xl z-30 text-left">
                   {Object.keys(goalsList).map((key) => {
                     const item = goalsList[key];
                     const ItemIcon = item.icon;
@@ -217,7 +267,7 @@ function HeroSection() {
                   navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
                 }
               }}
-              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group cursor-pointer"
+              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0"
             >
               <span>Analyze Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
@@ -283,12 +333,12 @@ function ProblemSection() {
     <section id="why-vurdict" className="py-12 md:py-20 bg-white relative">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
-            Most portfolio feedback is <br />
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+            Most portfolio feedback is <br className="hidden md:inline" />{" "}
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
           <p className="text-slate-500 font-semibold max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            Vurdict replaces the guesswork with a structured evaluation <br />
+            Vurdict replaces the guesswork with a structured evaluation <br className="hidden md:inline" />{" "}
             so you can improve with confidence
           </p>
         </div>
@@ -388,7 +438,7 @@ function HowItWorksSection() {
     <section id="how-it-works" className="py-10 md:py-16 bg-white border-y border-slate-100/80">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
             Portfolio Feedback in <span className="text-[#3b82f6]">Minutes</span>
           </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -462,7 +512,7 @@ function FrameworkSection() {
     <section id="framework" className="py-10 md:py-16 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
             The 6-Dimension Evaluation Framework
           </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -504,7 +554,7 @@ function ReportCardSection() {
     <section id="report-card" className="relative bg-white pt-10">
       {/* Heading area on White background */}
       <div className="text-center mb-10 px-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
           The <span className="text-[#3b82f6]">Vurdict</span> Report Card
         </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -634,7 +684,7 @@ function FAQSection() {
     <section id="faq" className="py-10 md:py-16 bg-white relative">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
             Frequently Asked Questions
           </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">Everything you need to know about the evaluation.</p>
@@ -680,7 +730,7 @@ function FinalCTASection() {
     <div className="bg-white">
       {/* Heading area on White background */}
       <div className="pt-16 pb-8 px-6 text-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
           See What Hirers See Before They Do
         </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -707,7 +757,7 @@ function FinalCTASection() {
           <div className="absolute bottom-0 translate-y-[80%] left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20">
             <button
               onClick={() => navigate('/analyze')}
-              className="w-full bg-white text-brand-900 flex items-center justify-center gap-3 px-8 py-5 rounded-xl font-extrabold text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group"
+              className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-4 md:py-5 rounded-xl font-extrabold text-sm md:text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group whitespace-nowrap shrink-0"
             >
                 <span>Analyze Your Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-900/10">
