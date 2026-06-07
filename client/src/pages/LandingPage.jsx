@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   ArrowRight, Link2, Briefcase, Users, Shield, Zap,
   CheckCircle, Star, ChevronDown, ChevronUp, BarChart2, Eye,
@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import heroIllustration from '../assets/hero-illustration.png'
 import ctaIllustration from '../assets/cta-illustration.jpg'
+import Logo from '../components/Logo'
 
 /* ─── WAVE COMPONENTS ─── */
 function WaveDivider({ fill = '#172554', flip = false }) {
@@ -21,46 +22,7 @@ function WaveDivider({ fill = '#172554', flip = false }) {
 }
 
 
-/* ─── LOGO COMPONENT ─── */
-function Logo({ size = "normal" }) {
-  const isNormal = size === "normal";
-  return (
-    <div className="flex items-center gap-2 group cursor-pointer select-none">
-      <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={isNormal ? "w-10 h-8" : "w-8 h-6"}>
-        {/* Shadow/Glow under bubble */}
-        <ellipse cx="58" cy="32" rx="18" ry="14" fill="rgba(23,37,84,0.06)" />
-        
-        {/* V checkmark shape with professional filled path and stroke rounding for smooth corners */}
-        <path
-          d="M20 20 H34 L50 54 H60 L72 34 H86 L66 74 H42 Z"
-          fill="#172554"
-          stroke="#172554"
-          strokeWidth="6"
-          strokeLinejoin="round"
-          strokeLinecap="round"
-        />
-        
-        {/* Speech bubble touching the inner checkmark vertex */}
-        <path
-          d="M58 44c9 0 16-5.5 16-12s-7-12-16-12-16 5.5-16 12c0 2.8 1.3 5.3 3.3 7.1L38 48l8.5-3.3c3.6 2 8 3.3 13.5 3.3z"
-          fill="#172554"
-          stroke="#172554"
-          strokeWidth="2"
-          strokeLinejoin="round"
-        />
-        
-        {/* Curved double quotes inside the speech bubble */}
-        <path
-          d="M52 29c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1zm6.5 0c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1z"
-          fill="white"
-        />
-      </svg>
-      <span className={`text-slate-900 font-extrabold tracking-tight ${isNormal ? 'text-xl' : 'text-base'}`}>
-        Vurdict<span className="text-brand-900">:</span>
-      </span>
-    </div>
-  )
-}
+
 
 /* ─── NAVBAR ─── */
 function Navbar() {
@@ -80,11 +42,11 @@ function Navbar() {
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-lg border-b border-slate-100 shadow-sm' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-lg border-b border-slate-100 ${scrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <Logo size="normal" />
-        </a>
+        </Link>
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-8">
@@ -101,15 +63,15 @@ function Navbar() {
 
         {/* CTA + Hamburger */}
         <div className="flex items-center gap-3">
-          <a
-            href="/analyze"
+          <Link
+            to="/analyze"
             className="btn-brand flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold group"
           >
             <span>Analyze Portfolio</span>
             <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
               <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
             </div>
-          </a>
+          </Link>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -160,11 +122,20 @@ function HeroVisual() {
   )
 }
 
-/* ─── HERO SECTION ─── */
 function HeroSection() {
   const navigate = useNavigate()
   const [url, setUrl] = useState('')
-  const [goal, setGoal] = useState('hired')
+  const [goal, setGoal] = useState('get_hired')
+  const [goalDropdownOpen, setGoalDropdownOpen] = useState(false)
+
+  const goalsList = {
+    get_hired: { label: 'Get Hired', icon: Briefcase },
+    win_clients: { label: 'Win Clients', icon: Users },
+    improve_portfolio: { label: 'Improve Portfolio', icon: Sparkles }
+  }
+
+  const selectedGoal = goalsList[goal];
+  const SelectedIcon = selectedGoal.icon;
 
   return (
     <section className="relative bg-white pt-24 pb-0 overflow-hidden">
@@ -188,35 +159,74 @@ function HeroSection() {
           </p>
 
           {/* Form container */}
-          <div className="bg-white p-2.5 rounded-2xl shadow-xl flex flex-col md:flex-row gap-2 max-w-2xl mx-auto text-slate-900">
+          <div className="bg-white p-2.5 rounded-2xl shadow-xl flex flex-col md:flex-row gap-2 max-w-2xl mx-auto text-slate-900 relative">
             <div className="flex-1 flex items-center gap-2.5 px-3">
               <Link2 size={18} className="text-slate-400 shrink-0" />
               <input
                 type="url"
                 value={url}
                 onChange={e => setUrl(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && url && navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}`)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && url) {
+                    const mappedGoal = goal === 'win_clients' ? 'win_clients' : 'get_hired';
+                    navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
+                  }
+                }}
                 placeholder="https://yourportfolio.com"
                 className="w-full py-2 bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
               />
             </div>
             
-            {/* Goal Select */}
-            <div className="border-t md:border-t-0 md:border-l border-slate-100 px-3 py-2 md:py-0 flex items-center shrink-0">
-              <select
-                value={goal}
-                onChange={e => setGoal(e.target.value)}
-                className="bg-transparent text-xs font-bold text-slate-600 focus:outline-none cursor-pointer w-full md:w-auto"
+            {/* Goal Select (Custom Premium Dropdown) */}
+            <div className="relative border-t md:border-t-0 md:border-l border-slate-100 px-3 py-2 md:py-0 flex items-center shrink-0">
+              <button
+                type="button"
+                onClick={() => setGoalDropdownOpen(!goalDropdownOpen)}
+                className="flex items-center justify-between gap-3 bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all w-full md:w-auto md:min-w-[11rem] whitespace-nowrap shrink-0"
               >
-                <option value="hired">Goal: Get Hired</option>
-                <option value="clients">Goal: Win Clients</option>
-                <option value="audit">Goal: General Improvement</option>
-              </select>
+                <span className="flex items-center gap-1.5 whitespace-nowrap">
+                  <SelectedIcon size={14} className="text-brand-900" />
+                  {selectedGoal.label}
+                </span>
+                <ChevronDown size={14} className={`text-slate-400 transition-transform shrink-0 ${goalDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {goalDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-slate-100 bg-white p-1.5 shadow-2xl z-30 text-left">
+                  {Object.keys(goalsList).map((key) => {
+                    const item = goalsList[key];
+                    const ItemIcon = item.icon;
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => {
+                          setGoal(key);
+                          setGoalDropdownOpen(false);
+                        }}
+                        className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-bold transition-colors ${
+                          goal === key 
+                            ? 'bg-brand-900/5 text-brand-900' 
+                            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
+                        }`}
+                      >
+                        <ItemIcon size={13} className="text-brand-900" />
+                        {item.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
             </div>
 
             <button
-              onClick={() => url && navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}`)}
-              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group"
+              onClick={() => {
+                if (url) {
+                  const mappedGoal = goal === 'win_clients' ? 'win_clients' : 'get_hired';
+                  navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
+                }
+              }}
+              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group cursor-pointer"
             >
               <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_12px_rgba(255,255,255,0.15)]">
                 <Sparkles size={14} className="transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
@@ -444,15 +454,18 @@ function FrameworkSection() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {dimensions.map((dim, idx) => (
-            <div key={idx} className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.012)] hover:shadow-md hover:border-blue-100 transition-all flex flex-col text-left group">
-              <div className="w-fit rounded-xl p-2.5 bg-blue-50/50 border border-blue-100/50 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200 group-hover:shadow-[0_0_16px_rgba(59,130,246,0.15)]">
-                <dim.icon size={20} className="text-blue-600 transition-all duration-200 group-hover:text-blue-500 group-hover:scale-110" />
+          {dimensions.map((dim, idx) => {
+            const Icon = dim.icon;
+            return (
+              <div key={idx} className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.012)] hover:shadow-md hover:border-blue-100 transition-all flex flex-col text-left group">
+                <div className="w-fit rounded-xl p-2.5 bg-blue-50/50 border border-blue-100/50 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200 group-hover:shadow-[0_0_16px_rgba(59,130,246,0.15)]">
+                  <Icon size={20} className="text-blue-600 transition-all duration-200 group-hover:text-blue-500 group-hover:scale-110" />
+                </div>
+                <h3 className="text-slate-950 font-bold text-base mb-2">{dim.title}</h3>
+                <p className="text-slate-500 text-xs leading-relaxed font-medium">{dim.desc}</p>
               </div>
-              <h3 className="text-slate-950 font-bold text-base mb-2">{dim.title}</h3>
-              <p className="text-slate-500 text-xs leading-relaxed font-medium">{dim.desc}</p>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
@@ -462,12 +475,12 @@ function FrameworkSection() {
 /* ─── REPORT CARD SHOWCASE (Inside Navy Waves) ─── */
 function ReportCardSection() {
   const scores = [
-    { label: 'Problem Framing', score: 88, color: 'bg-emerald-500' },
-    { label: 'Process Visibility', score: 85, color: 'bg-sky-500' },
-    { label: 'Outcome & Impact', score: 62, color: 'bg-amber-500' },
-    { label: 'Visual Quality', score: 80, color: 'bg-indigo-500' },
-    { label: 'Niche & Positioning', score: 72, color: 'bg-violet-500' },
-    { label: 'Trust & CTA', score: 82, color: 'bg-sky-400' },
+    { label: 'Critical Thinking', score: 88, color: 'bg-emerald-500' },
+    { label: 'Structural Logic', score: 85, color: 'bg-sky-500' },
+    { label: 'Impact Evidence', score: 62, color: 'bg-amber-500' },
+    { label: 'Visual Execution', score: 80, color: 'bg-indigo-500' },
+    { label: 'Positioning Clarity', score: 72, color: 'bg-violet-500' },
+    { label: 'Narrative Tone', score: 82, color: 'bg-sky-400' },
   ]
 
   return (
@@ -715,7 +728,6 @@ function Footer() {
   )
 }
 
-/* ─── LANDING PAGE ─── */
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 antialiased">
