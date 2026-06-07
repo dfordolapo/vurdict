@@ -438,13 +438,8 @@ export default function ResultsPage() {
       <footer className="border-t border-slate-100 py-8 bg-white text-slate-500 z-10">
         <div className="max-w-7xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col items-center md:items-start gap-1">
-            <div className="flex items-center gap-2 font-extrabold text-base text-slate-900">
-              <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-6">
-                <path d="M20 20 H34 L50 54 H60 L72 34 H86 L66 74 H42 Z" fill="#172554" stroke="#172554" strokeWidth="6" strokeLinejoin="round" strokeLinecap="round" />
-                <path d="M58 44c9 0 16-5.5 16-12s-7-12-16-12-16 5.5-16 12c0 2.8 1.3 5.3 3.3 7.1L38 48l8.5-3.3c3.6 2 8 3.3 13.5 3.3z" fill="#172554" stroke="#172554" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M52 29c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1zm6.5 0c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1z" fill="white" />
-              </svg>
-              <span>Vurdict</span>
+            <div className="flex items-center">
+              <Logo size="small" />
             </div>
             <p className="text-[10px] text-slate-400 font-medium">
               © 2026 Vurdict. The Reviewer's Perspective.
