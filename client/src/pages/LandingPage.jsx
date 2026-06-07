@@ -304,16 +304,16 @@ function ProblemSection() {
               </colgroup>
               <thead>
                 <tr>
-                  <th className="pb-6 text-xs font-black text-slate-800 uppercase tracking-wider pl-4 border-b border-slate-100">
+                  <th className="py-6 text-xs font-black text-slate-800 uppercase tracking-wider pl-4 border-b border-slate-100">
                     Dimension
                   </th>
-                  <th className="pb-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
+                  <th className="py-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
                     Generic AI
                   </th>
-                  <th className="pb-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
+                  <th className="py-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
                     Community Feedback
                   </th>
-                  <th className="pb-6 text-xs font-black text-blue-600 uppercase tracking-wider px-6 bg-blue-50/70 border-t border-r border-l-2 border-l-blue-400 border-t-blue-100/50 border-r-blue-100/50 border-b border-b-slate-100 rounded-t-2xl">
+                  <th className="py-6 text-xs font-black text-blue-600 uppercase tracking-wider px-6 bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 border-t-2 border-t-blue-500 border-b border-b-blue-200/60 rounded-t-2xl">
                     Vurdict Intelligence
                   </th>
                 </tr>
@@ -332,10 +332,10 @@ function ProblemSection() {
                       <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
                         {row.community}
                       </td>
-                      <td className={`py-6 text-xs text-blue-600 px-6 font-bold leading-relaxed bg-blue-50/70 border-l-2 border-l-blue-400 border-r border-r-blue-100/50 ${
+                      <td className={`py-6 text-xs text-blue-600 px-6 font-bold leading-relaxed bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 ${
                         isLast 
-                          ? 'border-b border-b-blue-100/50 rounded-b-2xl' 
-                          : 'border-b border-b-blue-100/30'
+                          ? 'border-b-2 border-b-blue-500 rounded-b-2xl' 
+                          : 'border-b border-b-blue-200/60'
                       }`}>
                         {row.vurdict}
                       </td>
@@ -691,7 +691,7 @@ function FinalCTASection() {
       <WaveDivider fill="#111d43" flip={false} />
 
       {/* Dark blue illustration block with absolute button overlay */}
-      <div className="relative bg-[#111d43] pt-0 pb-12 px-6 flex flex-col items-center">
+      <div className="relative bg-[#111d43] pt-0 pb-28 md:pb-36 px-6 flex flex-col items-center">
         <div className="relative w-full max-w-4xl mx-auto mt-[1px] md:mt-[1px]">
           <div className="relative flex flex-col items-center -ml-16 md:-ml-32">
             <img
@@ -703,7 +703,7 @@ function FinalCTASection() {
           </div>
 
           {/* Centered CTA button — outside shifted wrapper so it stays page-centered */}
-          <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20">
+          <div className="absolute bottom-0 translate-y-[80%] left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20">
             <button
               onClick={() => navigate('/analyze')}
               className="w-full bg-white text-brand-900 flex items-center justify-center gap-3 px-8 py-5 rounded-xl font-extrabold text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group"
