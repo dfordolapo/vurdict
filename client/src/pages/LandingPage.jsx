@@ -25,6 +25,7 @@ function Navbar() {
   }, [])
 
   const navLinks = [
+    { label: 'Why Vurdict', href: '#why-vurdict' },
     { label: 'How It Works', href: '#how-it-works' },
     { label: 'Framework', href: '#framework' },
     { label: 'Report Card', href: '#report-card' },
@@ -251,81 +252,106 @@ function HeroSection() {
 
 /* ─── COMPARISON SECTION ─── */
 function ProblemSection() {
-  const features = [
-    { name: 'Specific Score Rubric', friends: 'No', chatgpt: 'No', builders: 'No', vurdict: 'Yes' },
-    { name: 'Goal-Aware Context', friends: 'No', chatgpt: 'Partial', builders: 'No', vurdict: 'Yes' },
-    { name: 'Actionable Design Fixes', friends: 'Vague', chatgpt: 'Generic', builders: 'No', vurdict: 'Yes' },
-    { name: 'Speed & Availability', friends: 'Weeks', chatgpt: 'Instant', builders: 'None', vurdict: 'In Minutes' },
-    { name: 'Cost', friends: 'Free', chatgpt: 'Free', builders: '$15+/mo', vurdict: '100% Free' },
+  const rows = [
+    {
+      dimension: 'Context Awareness',
+      generic: 'Surface level only',
+      community: 'Subjective & inconsistent',
+      vurdict: 'Goal-Aware (Hiring vs. Freelance)',
+    },
+    {
+      dimension: 'Reviewer Profile',
+      generic: 'Algorithmic / Generalist',
+      community: 'Random peer skill levels',
+      vurdict: 'Role-Specific (Design Lead perspective)',
+    },
+    {
+      dimension: 'Specificity',
+      generic: 'Vague text blocks',
+      community: '"Looks great!" / "Not for me"',
+      vurdict: 'Figma-style pixel annotations',
+    },
+    {
+      dimension: 'Turnaround',
+      generic: 'Instant',
+      community: 'Days to Weeks',
+      vurdict: 'Instant + 48hr Human Review',
+    },
   ]
 
   return (
-    <section className="py-10 md:py-16 bg-white relative">
+    <section id="why-vurdict" className="py-12 md:py-20 bg-white relative">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-10">
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
             Most portfolio feedback is <br />
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            Vurdict replaces the guesswork with a structured evaluation so you can improve with confidence.
+          <p className="text-slate-500 font-semibold max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            so you can improve with confidence
           </p>
         </div>
 
-        {/* Side-by-Side Comparison Container */}
-        <div className="grid lg:grid-cols-12 gap-8 items-stretch max-w-5xl mx-auto">
-          {/* Table (Left column) */}
-          <div className="lg:col-span-8 bg-slate-50/50 rounded-2xl border border-slate-100 p-6 flex flex-col justify-between">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[500px]">
-                <thead>
-                  <tr className="border-b border-slate-100">
-                    <th className="pb-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Features</th>
-                    <th className="pb-4 text-xs font-bold text-slate-500">Friends</th>
-                    <th className="pb-4 text-xs font-bold text-slate-500">ChatGPT</th>
-                    <th className="pb-4 text-xs font-bold text-slate-500">Builders</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100/60">
-                  {features.map((f, i) => (
-                    <tr key={i} className="hover:bg-slate-100/10 transition-colors">
-                      <td className="py-4 text-xs font-bold text-slate-700">{f.name}</td>
-                      <td className="py-4 text-xs text-slate-500">{f.friends}</td>
-                      <td className="py-4 text-xs text-slate-500">{f.chatgpt}</td>
-                      <td className="py-4 text-xs text-slate-500">{f.builders}</td>
+        {/* Comparison Table */}
+        <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.015)] p-4 md:p-8 relative">
+          <div className="overflow-x-auto scrollbar-thin">
+            <table className="w-full text-left border-separate border-spacing-0 min-w-[768px] md:min-w-[850px] table-fixed">
+              <colgroup>
+                <col className="w-[22%]" />
+                <col className="w-[24%]" />
+                <col className="w-[26%]" />
+                <col className="w-[28%]" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th className="pb-6 text-xs font-black text-slate-800 uppercase tracking-wider pl-4 border-b border-slate-100">
+                    Dimension
+                  </th>
+                  <th className="pb-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
+                    Generic AI
+                  </th>
+                  <th className="pb-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
+                    Community Feedback
+                  </th>
+                  <th className="pb-6 text-xs font-black text-blue-600 uppercase tracking-wider px-6 bg-blue-50/70 border-t border-r border-l-2 border-l-blue-400 border-t-blue-100/50 border-r-blue-100/50 border-b border-b-slate-100 rounded-t-2xl">
+                    Vurdict Intelligence
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => {
+                  const isLast = i === rows.length - 1;
+                  return (
+                    <tr key={i} className="hover:bg-slate-50/30 transition-colors">
+                      <td className="py-6 text-xs font-bold text-slate-800 pl-4 border-b border-slate-100/80">
+                        {row.dimension}
+                      </td>
+                      <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
+                        {row.generic}
+                      </td>
+                      <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
+                        {row.community}
+                      </td>
+                      <td className={`py-6 text-xs text-blue-600 px-6 font-bold leading-relaxed bg-blue-50/70 border-l-2 border-l-blue-400 border-r border-r-blue-100/50 ${
+                        isLast 
+                          ? 'border-b border-b-blue-100/50 rounded-b-2xl' 
+                          : 'border-b border-b-blue-100/30'
+                      }`}>
+                        {row.vurdict}
+                      </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  )
+                })}
+              </tbody>
+            </table>
           </div>
-
-          {/* Vurdict Card (Right column) */}
-          <div className="lg:col-span-4 bg-blue-50/80 rounded-2xl border border-blue-100 p-6 flex flex-col justify-between relative overflow-hidden shadow-sm">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-sky-200/20 rounded-full blur-2xl" />
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-900/10 text-brand-900 text-[10px] font-bold mb-4 group hover:bg-brand-900/20 transition-colors cursor-default">
-                <div className="rounded p-0.5 transition-all duration-200 group-hover:bg-brand-900/20 group-hover:shadow-[0_0_8px_rgba(23,37,84,0.15)]">
-                  <Sparkles size={10} className="transition-all duration-200 group-hover:scale-125 group-hover:rotate-12" />
-                </div>
-                <span>The Vurdict Standard</span>
-              </div>
-              <h3 className="text-slate-900 font-extrabold text-lg mb-2">Vurdict Report Card</h3>
-              <p className="text-slate-500 text-xs leading-relaxed mb-6">
-                Objective scoring, deep structural analysis, and specific visual instructions compiled in under a minute.
-              </p>
-            </div>
-            
-            <ul className="space-y-3">
-              {['6-dimension rubric analysis', 'Targeted goal alignment', 'Immediate visual pointers', 'No login required'].map((text, idx) => (
-                <li key={idx} className="flex items-center gap-2 text-xs font-bold text-brand-900 group cursor-default">
-                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-sky-100 group-hover:shadow-[0_0_8px_rgba(2,132,199,0.15)]">
-                    <CheckCircle size={14} className="text-sky-600 shrink-0 transition-all duration-200 group-hover:text-sky-500 group-hover:scale-110" />
-                  </div>
-                  <span className="transition-colors duration-200 group-hover:text-sky-700">{text}</span>
-                </li>
-              ))}
-            </ul>
+          
+          {/* Scroll Tip for Mobile */}
+          <div className="md:hidden flex items-center justify-center gap-1.5 mt-4 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            <span>Swipe to compare</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
           </div>
         </div>
       </div>
