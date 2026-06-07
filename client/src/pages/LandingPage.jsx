@@ -128,9 +128,9 @@ function HeroSection() {
   const SelectedIcon = selectedGoal.icon;
 
   return (
-    <section className="relative bg-white pt-24 pb-0 overflow-hidden">
+    <section className="relative bg-white pt-16 pb-0 overflow-hidden">
       {/* Top Illustration Showcase */}
-      <div className="max-w-6xl mx-auto px-6 mb-12">
+      <div className="max-w-6xl mx-auto px-6 mb-8">
         <HeroVisual />
       </div>
 
@@ -138,7 +138,7 @@ function HeroSection() {
       <WaveDivider fill="#172554" flip={false} />
 
       {/* Navy blue container */}
-      <div className="bg-brand-900 py-20 px-6 text-center text-white relative">
+      <div className="bg-brand-900 py-12 px-6 text-center text-white relative">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 tracking-tight">
             <span className="whitespace-nowrap">See Your Portfolio Through</span><br />
@@ -260,9 +260,9 @@ function ProblemSection() {
   ]
 
   return (
-    <section className="py-16 md:py-24 bg-white relative">
+    <section className="py-10 md:py-16 bg-white relative">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
             Most portfolio feedback is <br />
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
@@ -358,9 +358,9 @@ function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-white border-y border-slate-100/80">
+    <section id="how-it-works" className="py-10 md:py-16 bg-white border-y border-slate-100/80">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
             Portfolio Feedback in <span className="text-[#3b82f6]">Minutes</span>
           </h2>
@@ -432,9 +432,9 @@ function FrameworkSection() {
   ]
 
   return (
-    <section id="framework" className="py-16 md:py-24 bg-white">
+    <section id="framework" className="py-10 md:py-16 bg-white">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
             The 6-Dimension Evaluation Framework
           </h2>
@@ -474,9 +474,9 @@ function ReportCardSection() {
   ]
 
   return (
-    <section id="report-card" className="relative bg-white pt-16">
+    <section id="report-card" className="relative bg-white pt-10">
       {/* Heading area on White background */}
-      <div className="text-center mb-12 px-6">
+      <div className="text-center mb-10 px-6">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
           The <span className="text-[#3b82f6]">Vurdict</span> Report Card
         </h2>
@@ -489,7 +489,7 @@ function ReportCardSection() {
       <WaveDivider fill="#172554" flip={false} />
 
       {/* Navy block containing mockup */}
-      <div className="bg-brand-900 py-24 px-6 text-white text-center">
+      <div className="bg-brand-900 py-16 px-6 text-white text-center">
         <div className="max-w-4xl mx-auto">
           {/* High-Fidelity Report Card Container */}
           <div className="bg-white rounded-3xl border border-slate-100 shadow-2xl text-slate-900 text-left p-6 md:p-10 max-w-3xl mx-auto">
@@ -604,9 +604,9 @@ function FAQSection() {
   ]
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-white relative">
+    <section id="faq" className="py-10 md:py-16 bg-white relative">
       <div className="max-w-3xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
             Frequently Asked Questions
           </h2>
@@ -652,7 +652,7 @@ function FinalCTASection() {
   return (
     <div className="bg-white">
       {/* Heading area on White background */}
-      <div className="pt-24 pb-12 px-6 text-center">
+      <div className="pt-16 pb-8 px-6 text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 text-slate-900 tracking-tight">
           See What Hirers See Before They Do
         </h2>
@@ -665,7 +665,7 @@ function FinalCTASection() {
       <WaveDivider fill="#111d43" flip={false} />
 
       {/* Dark blue illustration block with absolute button overlay */}
-      <div className="relative bg-[#111d43] pt-0 pb-16 px-6 flex flex-col items-center">
+      <div className="relative bg-[#111d43] pt-0 pb-12 px-6 flex flex-col items-center">
         <div className="relative w-full max-w-4xl mx-auto mt-[1px] md:mt-[1px]">
           <div className="relative flex flex-col items-center -ml-16 md:-ml-32">
             <img
