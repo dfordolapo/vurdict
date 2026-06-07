@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAnalysis } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
+import WaveDivider from '../components/WaveDivider';
 import { 
   Check, 
   Sparkles, 
@@ -147,9 +148,7 @@ export default function AnalyzingPage() {
 
       {/* Wave divider transitioning to Navy */}
       <div className="w-full bg-white z-10">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="relative block w-full h-[40px] md:h-[60px] -mb-px">
-          <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill="#172554" />
-        </svg>
+        <WaveDivider fill="#172554" flip={false} />
       </div>
 
       {/* Navy blue block containing Main Content Grid */}
@@ -365,10 +364,8 @@ export default function AnalyzingPage() {
       </div>
 
       {/* Wave divider transitioning back to White */}
-      <div className="w-full bg-white rotate-180 -mt-1">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="relative block w-full h-[40px] md:h-[60px] -mb-px">
-          <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill="#172554" />
-        </svg>
+      <div className="w-full bg-white">
+        <WaveDivider fill="#172554" flip={true} />
       </div>
 
       {/* Bottom Information Strip */}

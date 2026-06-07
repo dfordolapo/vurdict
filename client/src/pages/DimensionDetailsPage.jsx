@@ -2,42 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
-import { 
-  ArrowLeft, 
-  Sparkles, 
-  ChevronRight, 
-  Eye, 
-  Layers, 
-  Search, 
-  TrendingUp, 
-  MessageSquare, 
-  ShieldCheck,
-  CheckCircle,
-  HelpCircle,
-  Code,
-  Download,
-  Bookmark,
-  Share2,
-  AlertTriangle,
-  FileText,
-  MessageCircle,
-  ExternalLink,
-  Compass,
-  Brain,
-  Palette,
-  BarChart2,
-  Terminal
-} from 'lucide-react';
-
-function WaveDivider({ fill = '#172554', flip = false }) {
-  return (
-    <div className={`w-full overflow-hidden leading-none ${flip ? 'rotate-180 -mt-1' : '-mb-px'}`}>
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="relative block w-full h-[40px] md:h-[80px]">
-        <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill={fill} />
-      </svg>
-    </div>
-  );
-}
+import WaveDivider from '../components/WaveDivider';
 
 export default function DimensionDetailsPage() {
   const { dimSlug } = useParams();
@@ -414,8 +379,8 @@ export default function DimensionDetailsPage() {
       </div>
 
       {/* Wave divider transitioning back to White */}
-      <div className="w-full bg-white rotate-180 -mt-1">
-        <WaveDivider fill="#172554" flip={false} />
+      <div className="w-full bg-white">
+        <WaveDivider fill="#172554" flip={true} />
       </div>
 
       {/* Footer informational banner & bottom bar */}
@@ -435,13 +400,8 @@ export default function DimensionDetailsPage() {
         {/* Footer */}
         <footer className="mt-8 pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-xs">
           <div className="flex flex-col items-center md:items-start gap-1">
-            <div className="flex items-center gap-2 font-extrabold text-base text-slate-900">
-              <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-6">
-                <path d="M20 20 H34 L50 54 H60 L72 34 H86 L66 74 H42 Z" fill="#172554" stroke="#172554" strokeWidth="6" strokeLinejoin="round" strokeLinecap="round" />
-                <path d="M58 44c9 0 16-5.5 16-12s-7-12-16-12-16 5.5-16 12c0 2.8 1.3 5.3 3.3 7.1L38 48l8.5-3.3c3.6 2 8 3.3 13.5 3.3z" fill="#172554" stroke="#172554" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M52 29c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1zm6.5 0c0-1.5.7-2.6 2-2.6s2 1.1 2 2.6c0 3-2 4.8-3.5 6l-1.2-1.2c1-1 1.7-2 1.7-3h-1z" fill="white" />
-              </svg>
-              <span>Vurdict</span>
+            <div className="flex items-center">
+              <Logo size="small" />
             </div>
             <p className="text-[10px] text-slate-400 font-medium">
               © 2026 Vurdict. The Reviewer's Perspective.

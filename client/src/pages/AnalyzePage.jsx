@@ -14,6 +14,7 @@ import {
   Server,
 } from 'lucide-react';
 import Logo from '../components/Logo';
+import WaveDivider from '../components/WaveDivider';
 import analyzeIllustration from '../assets/analyze_illustration.png';
 
 const GOALS = [
@@ -90,9 +91,7 @@ export default function AnalyzePage() {
 
       {/* Wave to navy */}
       <div className="w-full bg-white">
-             <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="block w-full h-[120px] md:h-[180px] -mb-px">
-          <path d="M0,0 Q360,120 720,60 Q1080,120 1440,0 L1440,120 L0,120 Z" fill="#172554" />
-        </svg>
+        <WaveDivider fill="#172554" flip={false} />
       </div>
 
       {/* Navy section */}
@@ -268,10 +267,8 @@ export default function AnalyzePage() {
       </section>
 
       {/* Wave to white */}
-      <div className="w-full bg-white rotate-180 -mt-1">
-         <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="block w-full h-[30px] md:h-[45px] -mb-px">
-           <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill="#172554" />
-         </svg>
+      <div className="w-full bg-white">
+        <WaveDivider fill="#172554" flip={true} />
       </div>
 
       {/* Bottom strip */}

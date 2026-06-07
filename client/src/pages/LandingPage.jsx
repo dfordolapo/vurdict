@@ -9,17 +9,7 @@ import {
 import heroIllustration from '../assets/hero-illustration.png'
 import ctaIllustration from '../assets/cta-illustration.jpg'
 import Logo from '../components/Logo'
-
-/* ─── WAVE COMPONENTS ─── */
-function WaveDivider({ fill = '#172554', flip = false }) {
-  return (
-    <div className={`w-full overflow-hidden leading-none ${flip ? 'rotate-180 -mt-1' : '-mb-px'}`}>
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="relative block w-full h-[40px] md:h-[80px]">
-        <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill={fill} />
-      </svg>
-    </div>
-  )
-}
+import WaveDivider from '../components/WaveDivider'
 
 
 
@@ -228,10 +218,10 @@ function HeroSection() {
               }}
               className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group cursor-pointer"
             >
-              <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_12px_rgba(255,255,255,0.15)]">
-                <Sparkles size={14} className="transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
-              </div>
               <span>Analyze Portfolio</span>
+              <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
+                <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
+              </div>
             </button>
           </div>
 
@@ -671,29 +661,28 @@ function FinalCTASection() {
           </p>
       </div>
 
-      {/* Dark blue illustration block with absolute button overlay */}
-      <div className="relative bg-[#111d43] overflow-hidden pt-0 pb-16 px-6 flex flex-col items-center">
-        <div className="relative w-full max-w-4xl mx-auto flex flex-col items-center">
-          {/* CTA Illustration Image */}
-          <img
-            src={ctaIllustration}
-            alt="Pedestal Spotlight Evaluation"
-            className="w-full h-auto object-contain select-none"
-            loading="lazy"
-            style={{
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden',
-              WebkitFontSmoothing: 'antialiased'
-            }}
-          />
+      {/* Wave divider into dark blue section */}
+      <WaveDivider fill="#111d43" flip={false} />
 
-          {/* Absolute centered button overlapping bottom of image */}
-          <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-full max-w-xs sm:max-w-[280px] z-20">
+      {/* Dark blue illustration block with absolute button overlay */}
+      <div className="relative bg-[#111d43] pt-0 pb-16 px-6 flex flex-col items-center">
+        <div className="relative w-full max-w-4xl mx-auto mt-[1px] md:mt-[1px]">
+          <div className="relative flex flex-col items-center -ml-16 md:-ml-32">
+            <img
+              src={ctaIllustration}
+              alt="Pedestal Spotlight Evaluation"
+              className="w-full h-auto object-contain select-none"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Centered CTA button — outside shifted wrapper so it stays page-centered */}
+          <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20">
             <button
               onClick={() => navigate('/analyze')}
-              className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-extrabold text-sm hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group"
+              className="w-full bg-white text-brand-900 flex items-center justify-center gap-3 px-8 py-5 rounded-xl font-extrabold text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group"
             >
-              <span>Analyze Your Portfolio</span>
+                <span>Analyze Your Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-900/10">
                 <ArrowRight size={16} className="text-brand-900 transition-all duration-200 group-hover:translate-x-1" />
               </div>

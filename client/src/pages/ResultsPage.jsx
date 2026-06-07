@@ -31,16 +31,7 @@ import {
   FileText
 } from 'lucide-react';
 import Logo from '../components/Logo';
-
-function WaveDivider({ fill = '#172554', flip = false }) {
-  return (
-    <div className={`w-full overflow-hidden leading-none ${flip ? 'rotate-180 -mt-1' : '-mb-px'}`}>
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="relative block w-full h-[60px] md:h-[100px]">
-        <path d="M0,0 Q360,90 720,30 Q1080,90 1440,0 L1440,120 L0,120 Z" fill={fill} />
-      </svg>
-    </div>
-  );
-}
+import WaveDivider from '../components/WaveDivider';
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -330,8 +321,8 @@ export default function ResultsPage() {
       </div>
 
       {/* Wave divider transitioning back to White */}
-      <div className="w-full bg-white rotate-180 -mt-1">
-        <WaveDivider fill="#172554" flip={false} />
+      <div className="w-full bg-white">
+        <WaveDivider fill="#172554" flip={true} />
       </div>
 
       {/* White background block containing Strengths, Weaknesses, Recommendations, and Footer */}
