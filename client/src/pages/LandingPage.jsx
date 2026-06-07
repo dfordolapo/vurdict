@@ -287,7 +287,8 @@ function ProblemSection() {
             Most portfolio feedback is <br />
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
-          <p className="text-slate-500 font-semibold max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-slate-500 font-semibold max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+            Vurdict replaces the guesswork with a structured evaluation <br />
             so you can improve with confidence
           </p>
         </div>
