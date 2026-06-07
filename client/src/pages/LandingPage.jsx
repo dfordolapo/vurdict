@@ -577,12 +577,12 @@ function ReportCardSection() {
                   <span className="text-white font-bold text-sm">V</span>
                 </div>
                 <div>
-                  <h4 className="text-sm font-black text-slate-900">vurdict.com/analysis</h4>
+                  <h4 className="text-sm font-bold text-slate-900">vurdict.com/analysis</h4>
                   <p className="text-[10px] text-slate-400 font-medium">May 2026 · 100% Objective AI Review</p>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">Report ID</span>
+                <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Report ID</span>
                 <p className="text-xs font-bold text-slate-700">#VRD-2894</p>
               </div>
             </div>

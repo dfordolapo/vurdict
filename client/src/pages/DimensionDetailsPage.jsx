@@ -3,6 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
+import {
+  Compass,
+  Brain,
+  Palette,
+  BarChart2,
+  FileText,
+  Terminal,
+  ChevronRight,
+  CheckCircle,
+  AlertTriangle,
+  ExternalLink,
+  HelpCircle,
+  MessageCircle
+} from 'lucide-react';
+
 
 export default function DimensionDetailsPage() {
   const { dimSlug } = useParams();
@@ -173,7 +188,7 @@ export default function DimensionDetailsPage() {
           <div className="lg:col-span-3 space-y-4">
             <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4">
               <div>
-                <h3 className="text-xs font-black text-slate-800 uppercase tracking-wide">Review by Dimension</h3>
+                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Review by Dimension</h3>
                 <span className="text-[9px] text-slate-400 font-semibold block mt-0.5">Click a dimension to view details</span>
               </div>
 
@@ -201,8 +216,8 @@ export default function DimensionDetailsPage() {
                           <SidebarIcon size={14} />
                         </div>
                         <div>
-                          <div className={`text-xs font-extrabold ${isSelected ? 'text-brand-900' : 'text-slate-700 group-hover:text-slate-950'}`}>{dim.label}</div>
-                          <div className={`text-[8px] font-extrabold uppercase mt-0.5 ${scoreBadge.style.split(' ')[0]}`}>{scoreBadge.label}</div>
+                          <div className={`text-xs font-bold ${isSelected ? 'text-brand-900' : 'text-slate-700 group-hover:text-slate-950'}`}>{dim.label}</div>
+                          <div className={`text-[8px] font-bold uppercase mt-0.5 ${scoreBadge.style.split(' ')[0]}`}>{scoreBadge.label}</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5">
@@ -226,7 +241,7 @@ export default function DimensionDetailsPage() {
                   <DimIcon size={22} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-black text-slate-900">{activeDim.label}</h2>
+                  <h2 className="text-xl font-bold text-slate-900">{activeDim.label}</h2>
                   <p className="text-xs text-slate-450 font-semibold leading-relaxed max-w-xl mt-1">{activeDim.desc}</p>
                 </div>
               </div>
@@ -234,15 +249,15 @@ export default function DimensionDetailsPage() {
               {/* Score gauges */}
               <div className="flex items-center gap-6 shrink-0 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
                 <div>
-                  <span className="text-[9px] font-extrabold uppercase tracking-wide text-slate-450 block">Your Score</span>
-                  <span className="text-2xl font-black text-slate-900 mt-0.5 block">{activeData.score} <span className="text-xs text-slate-400 font-bold">/ 100</span></span>
-                  <span className={`inline-block text-[8px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full border mt-1.5 ${badge.style}`}>
+                  <span className="text-[9px] font-bold uppercase tracking-wide text-slate-455 block">Your Score</span>
+                  <span className="text-2xl font-bold text-slate-900 mt-0.5 block">{activeData.score} <span className="text-xs text-slate-400 font-bold">/ 100</span></span>
+                  <span className={`inline-block text-[8px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full border mt-1.5 ${badge.style}`}>
                     {badge.label}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[9px] font-extrabold uppercase tracking-wide text-slate-450 block">Industry Benchmark</span>
-                  <span className="text-2xl font-black text-slate-650 mt-0.5 block">{activeDim.benchmark} <span className="text-xs text-slate-400 font-bold">/ 100</span></span>
+                  <span className="text-[9px] font-bold uppercase tracking-wide text-slate-455 block">Industry Benchmark</span>
+                  <span className="text-2xl font-bold text-slate-600 mt-0.5 block">{activeDim.benchmark} <span className="text-xs text-slate-400 font-bold">/ 100</span></span>
                   <div className="w-24 h-1.5 rounded bg-slate-100 mt-2.5 overflow-hidden">
                     <div className="h-full bg-slate-400 rounded" style={{ width: `${activeDim.benchmark}%` }} />
                   </div>
@@ -252,7 +267,7 @@ export default function DimensionDetailsPage() {
 
             {/* Why this score block */}
             <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-2 text-left">
-              <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wide">Why this score?</h4>
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wide">Why this score?</h4>
               <p className="text-xs text-slate-700 font-semibold leading-relaxed">
                 {details.why}
               </p>
@@ -331,10 +346,10 @@ export default function DimensionDetailsPage() {
             <div className="bg-blue-50 border border-blue-150 p-6 rounded-3xl text-left space-y-4 text-slate-900">
               <div className="flex items-center justify-between border-b border-blue-100 pb-3">
                 <div className="space-y-0.5">
-                  <span className="text-[9px] font-extrabold uppercase tracking-wide text-blue-700 block">Top Recommendation</span>
-                  <h4 className="text-sm font-extrabold text-slate-900">{details.recommendation.title}</h4>
+                  <span className="text-[9px] font-bold uppercase tracking-wide text-blue-700 block">Top Recommendation</span>
+                  <h4 className="text-sm font-bold text-slate-900">{details.recommendation.title}</h4>
                 </div>
-                <button className="rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-extrabold text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
+                <button className="rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
                   <span>See Examples</span>
                   <ExternalLink size={12} />
                 </button>
@@ -349,7 +364,7 @@ export default function DimensionDetailsPage() {
                 <div className="space-y-2">
                   {details.recommendation.steps.map((step, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <div className="h-5 w-5 rounded-full bg-blue-600 text-white font-extrabold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                      <div className="h-5 w-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
                         {i + 1}
                       </div>
                       <p className="text-xs text-slate-750 font-semibold mt-0.5">{step}</p>

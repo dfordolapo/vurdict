@@ -165,22 +165,21 @@ export default function ResultsPage() {
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
         
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-20">
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-stretch relative z-20">
           {/* Column 1: Domain & Preview Meta (lg:col-span-3) */}
-          <div className="lg:col-span-3 space-y-6 animate-fade-in-up">
-            <div className="space-y-4">
-              <div>
-                <h1 className="text-3xl font-black tracking-tight text-white leading-tight">
-                  Your Portfolio <br />
-                  Report Card
+          <div className="lg:col-span-3 space-y-6 animate-fade-in-up flex flex-col justify-between lg:h-full items-center text-center">
+            <div className="space-y-4 w-full flex flex-col items-center">
+              <div className="flex flex-col items-center">
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
+                  Your Portfolio Report Card
                 </h1>
-                <p className="mt-2 text-sky-100/70 text-xs font-semibold leading-relaxed">
+                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
                   Here's how your portfolio performs across the six hiring dimensions.
                 </p>
               </div>
 
               {/* Action buttons (Download, Save, Share) */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 w-full">
                 <button className="flex items-center gap-1.5 px-3.5 py-2 border border-white/20 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
                   <Download size={14} className="text-sky-300" />
                   <span>Download</span>
@@ -205,36 +204,21 @@ export default function ResultsPage() {
                 </div>
                 <div className="flex-1 flex flex-col justify-center gap-1.5 pt-1 text-slate-300">
                   <div className="h-1.5 w-12 bg-slate-700 rounded" />
-                  <div className="text-[10px] font-black text-white leading-tight">Design products that make impact</div>
+                  <div className="text-[10px] font-bold text-white leading-tight">Design products that make impact</div>
                 </div>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Domain Link</span>
-                <a href="#" className="text-sm font-extrabold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
+                <a href="#" className="text-sm font-bold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
                 <span className="text-[9px] text-slate-400 font-semibold block pt-1">Analyzed on May 18, 2025 • 2:34 PM</span>
               </div>
-            </div>
-
-            {/* General Assessment */}
-            <div className="bg-white/10 border border-white/10 p-5 rounded-3xl space-y-3 relative overflow-hidden">
-              <div className="absolute top-0 right-0 h-16 w-16 bg-sky-500/20 rounded-full blur-lg" />
-              <div className="flex items-center gap-2 text-xs font-extrabold text-sky-200 uppercase">
-                <Sparkles size={14} className="text-sky-300" />
-                <span>General Assessment</span>
-              </div>
-              <p className="text-xs text-white font-extrabold leading-normal">
-                {statusSummary.title} {statusSummary.text}
-              </p>
-              <p className="text-[10px] text-sky-100/70 font-semibold leading-relaxed">
-                {summaryText}
-              </p>
             </div>
           </div>
 
           {/* Column 2: Radial Score arc & readiness (lg:col-span-5) */}
           <div className="lg:col-span-5 space-y-6 animate-fade-in-up">
             <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center text-center relative">
-              <span className="text-xs font-extrabold text-slate-450 uppercase tracking-wider mb-5">Overall Score</span>
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Overall Score</span>
               
               {/* Trophy circle indicator */}
               <div className="relative flex h-36 w-36 items-center justify-center">
@@ -252,7 +236,7 @@ export default function ResultsPage() {
                   />
                 </svg>
                 <div className="text-center flex flex-col items-center">
-                  <span className="text-5xl font-black text-slate-900 leading-none">{report.overall_score}</span>
+                  <span className="text-5xl font-bold text-slate-900 leading-none">{report.overall_score}</span>
                   <span className="text-[10px] text-slate-400 font-bold block mt-1">/ 100</span>
                 </div>
               </div>
@@ -262,8 +246,8 @@ export default function ResultsPage() {
                 <span className={`text-xs font-bold text-emerald-700`}>{statusLabel} Portfolio</span>
               </div>
 
-              <p className="text-[10px] text-slate-500 font-semibold max-w-xs mt-3 leading-normal">
-                You're doing many things right! Focus on strengthening the areas below to reach the next level.
+              <p className="text-[10px] text-slate-500 font-bold max-w-xs mt-3 leading-normal">
+                {statusSummary.title} {statusSummary.text}
               </p>
 
               {/* Hiring readiness progress handle bar */}
@@ -275,24 +259,22 @@ export default function ResultsPage() {
                 <div className="relative h-2 rounded bg-slate-100 overflow-hidden flex">
                   <div className="h-full bg-blue-600 rounded transition-all" style={{ width: readinessWidth }} />
                 </div>
-                <div className="flex justify-between text-[8px] text-slate-400 font-extrabold uppercase tracking-wide">
+                <div className="flex justify-between text-[8px] text-slate-400 font-bold uppercase tracking-wide">
                   <span>Low</span>
                   <span>Medium</span>
                   <span>High</span>
                 </div>
                 <p className="text-[9px] text-slate-400 font-semibold leading-relaxed pt-1">
-                  {readinessLevel === 'High' ? "You're well-positioned for opportunities. A few refinements can help you stand out even more." :
-                   readinessLevel === 'Medium' ? "You have a solid foundation. Focus on the areas below to reach the next level." :
-                   "There's room for improvement. Use the recommendations below to build a stronger portfolio."}
+                  {summaryText}
                 </p>
               </div>
             </div>
           </div>
 
           {/* Column 3: Scores by Hiring Dimension scoreboard list (lg:col-span-4) */}
-          <div className="lg:col-span-4 space-y-4 animate-fade-in-up">
-            <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg space-y-4">
-              <h3 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
+          <div className="lg:col-span-4 animate-fade-in-up lg:h-full flex flex-col">
+            <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg space-y-4 flex-1">
+              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
                 Scores by Hiring Dimension
               </h3>
 
@@ -305,7 +287,7 @@ export default function ResultsPage() {
                       className="group flex flex-col gap-1.5 cursor-pointer"
                     >
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-extrabold text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
+                        <span className="font-bold text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
                         <span className="font-mono font-bold text-slate-900">{dim.score}/100</span>
                       </div>
                       <div className="w-full h-1.5 rounded bg-slate-100 overflow-hidden relative">
@@ -383,7 +365,7 @@ export default function ResultsPage() {
                 <Sparkles size={14} className="text-blue-600" />
                 <span>Top Recommendation</span>
               </div>
-              <h4 className="text-sm font-extrabold text-slate-900">{fixFirst.title}</h4>
+              <h4 className="text-sm font-bold text-slate-900">{fixFirst.title}</h4>
               <p className="text-xs text-slate-500 font-semibold leading-relaxed">
                 {fixFirst.description}
               </p>
@@ -398,7 +380,7 @@ export default function ResultsPage() {
 
             <button
               onClick={() => navigate(`/results/${lowestSlug}`)}
-              className="text-xs font-extrabold text-brand-900 hover:text-brand-800 flex items-center gap-1.5 cursor-pointer self-start whitespace-nowrap shrink-0"
+              className="text-xs font-bold text-brand-900 hover:text-brand-800 flex items-center gap-1.5 cursor-pointer self-start whitespace-nowrap shrink-0"
             >
               <span>See how to improve this →</span>
             </button>
@@ -413,13 +395,13 @@ export default function ResultsPage() {
               <Trophy size={20} className="text-yellow-400" />
             </div>
             <div>
-              <h4 className="text-sm font-extrabold">Want a personalized action plan to improve your score?</h4>
+              <h4 className="text-sm font-bold">Want a personalized action plan to improve your score?</h4>
               <p className="text-[10px] text-slate-400 mt-0.5">Get step-by-step recommendations tailored to your portfolio.</p>
             </div>
           </div>
           <button
             onClick={() => navigate(`/results/${lowestSlug}`)}
-            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-extrabold transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
+            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-bold transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>View Detailed Recommendations</span>
             <ArrowRight size={14} />

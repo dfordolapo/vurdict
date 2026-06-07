@@ -103,12 +103,11 @@ export default function AnalyzePage() {
             {/* ─── LEFT COLUMN: FORM ─── */}
             <div className="lg:col-span-5 space-y-7">
               {/* Header */}
-              <div>
-
-                <h1 className="text-3xl sm:text-4xl font-black tracking-tight mt-3 text-white">
+              <div className="flex flex-col items-center text-center">
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
                   Analyze Your Portfolio
                 </h1>
-                <p className="mt-2 text-sky-200 text-sm sm:text-base font-medium leading-relaxed">
+                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
                   Paste a portfolio link and choose what you're optimizing for.
                 </p>
               </div>

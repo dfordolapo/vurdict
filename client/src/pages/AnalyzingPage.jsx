@@ -160,23 +160,22 @@ export default function AnalyzingPage() {
           /* Image 1: Analysis Failed State */
           <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-20">
             {/* Left panel */}
-            <div className="lg:col-span-6 space-y-6 text-left animate-fade-in-up">
-              <div>
+            <div className="lg:col-span-6 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
+              <div className="flex flex-col items-center text-center">
                 <div className="inline-flex items-center gap-1.5 rounded-full border border-red-300/30 bg-red-900/40 px-3 py-1 text-[10px] font-bold text-red-200 uppercase tracking-widest">
                   ⚠ Analysis Failed
                 </div>
-                <h1 className="text-4xl sm:text-5xl font-black tracking-tight mt-4 text-white leading-tight">
-                  We couldn't analyze <br />
-                  this portfolio.
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance mt-3">
+                  We couldn't analyze this portfolio.
                 </h1>
-                <p className="mt-3 text-sky-100/70 text-xs sm:text-sm font-semibold max-w-md leading-relaxed">
+                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
                   Something prevented us from accessing or understanding the portfolio at this link.
                 </p>
               </div>
 
               {/* Possible reasons checklist */}
               <div className="space-y-3 max-w-md">
-                <span className="text-[10px] font-black text-sky-200 uppercase tracking-wider block">Possible reasons:</span>
+                <span className="text-[10px] font-bold text-sky-200 uppercase tracking-wider block">Possible reasons:</span>
                 {[
                   { icon: Lock, title: 'Private or Restricted Access', desc: 'The portfolio may be private or behind a login.', color: 'text-red-500 bg-red-50 border-red-100' },
                   { icon: Link2, title: 'Unsupported or Invalid Link', desc: "We couldn't retrieve content from this URL.", color: 'text-red-500 bg-red-50 border-red-100' },
@@ -189,7 +188,7 @@ export default function AnalyzingPage() {
                         <ReasonIcon size={14} />
                       </div>
                       <div>
-                        <h5 className="text-xs font-black text-slate-900">{reason.title}</h5>
+                        <h5 className="text-xs font-bold text-slate-900">{reason.title}</h5>
                         <p className="text-[10px] text-slate-500 font-semibold mt-0.5">{reason.desc}</p>
                       </div>
                     </div>
@@ -200,7 +199,7 @@ export default function AnalyzingPage() {
               <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                 <button
                   onClick={() => navigate('/analyze')}
-                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 text-brand-900 flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-black shadow-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 text-brand-900 flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-bold shadow-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <RotateCw size={14} className="animate-spin-slow text-brand-900" />
                   <span>Try Another URL</span>
@@ -208,7 +207,7 @@ export default function AnalyzingPage() {
                 
                 <button
                   onClick={toggleMockFallback}
-                  className="w-full sm:w-auto rounded-xl bg-sky-900/40 hover:bg-sky-900/60 border border-sky-300/30 text-sky-200 flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-black transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  className="w-full sm:w-auto rounded-xl bg-sky-900/40 hover:bg-sky-900/60 border border-sky-300/30 text-sky-200 flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-bold transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <Sparkles size={14} className="text-sky-300" />
                   <span>Bypass with Mock Report</span>
@@ -246,16 +245,15 @@ export default function AnalyzingPage() {
           <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-20">
             
             {/* Left panel: Timeline Checklist */}
-            <div className="lg:col-span-5 space-y-6 text-left animate-fade-in-up">
-              <div>
+            <div className="lg:col-span-5 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
+              <div className="flex flex-col items-center text-center">
                 <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-300/30 bg-sky-900/40 px-3 py-1 text-[10px] font-bold text-sky-200 uppercase tracking-widest">
                   ⚙ Analyzing Portfolio
                 </div>
-                <h1 className="text-4xl sm:text-5xl font-black tracking-tight mt-3 text-white leading-tight">
-                  Reviewing Your <br />
-                  Portfolio
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance mt-3">
+                  Reviewing Your Portfolio
                 </h1>
-                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-semibold max-w-md">
+                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
                   We're evaluating your work across six hiring dimensions.
                 </p>
               </div>
@@ -286,7 +284,7 @@ export default function AnalyzingPage() {
                         ) : null}
                       </div>
                       <div>
-                        <h4 className={`text-xs font-black ${isActive ? 'text-brand-900' : 'text-slate-800'}`}>{step.label}</h4>
+                        <h4 className={`text-xs font-bold ${isActive ? 'text-brand-900' : 'text-slate-800'}`}>{step.label}</h4>
                         <p className="text-[9px] text-slate-500 font-semibold mt-0.5 leading-normal">{step.desc}</p>
                       </div>
                     </div>
@@ -344,7 +342,7 @@ export default function AnalyzingPage() {
 
               {/* Bottom Progress details */}
               <div className="mt-8 flex flex-col items-center gap-2 w-64 z-20">
-                <span className="text-3xl font-black text-white">{progress}%</span>
+                <span className="text-3xl font-bold text-white">{progress}%</span>
                 <div className="w-full h-1.5 rounded bg-sky-950 overflow-hidden relative">
                   <div className="h-full bg-sky-400 rounded transition-all duration-300 shadow-[0_0_8px_rgba(56,189,248,0.8)]" style={{ width: `${progress}%` }} />
                 </div>
