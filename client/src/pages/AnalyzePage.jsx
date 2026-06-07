@@ -82,7 +82,7 @@ export default function AnalyzePage() {
         <Logo onClick={() => navigate('/')} />
         <button
           onClick={() => navigate('/')}
-          className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+          className="text-xs font-medium text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
         >
           <span>← Back to Home</span>
         </button>
@@ -157,7 +157,7 @@ export default function AnalyzePage() {
                             <Icon size={17} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <span className={`block text-sm font-bold leading-tight ${isSelected ? 'text-slate-900' : 'text-white'}`}>
+                            <span className={`block text-sm font-semibold leading-tight ${isSelected ? 'text-slate-900' : 'text-white'}`}>
                               {item.label}
                             </span>
                             <span className={`block text-xs mt-0.5 leading-normal font-medium ${isSelected ? 'text-slate-500' : 'text-white/60'}`}>
@@ -194,7 +194,7 @@ export default function AnalyzePage() {
                           key={item.key}
                           type="button"
                           onClick={() => setExperience(item.key)}
-                          className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-3 rounded-2xl border text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
+                          className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-3 rounded-2xl border text-xs sm:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                             isSelected
                               ? 'bg-white text-slate-900 border-white shadow-sm'
                               : 'bg-[#121e48] text-white border-[#1e3060] hover:bg-[#162348] hover:border-[#264070]'
@@ -217,7 +217,7 @@ export default function AnalyzePage() {
                 <div className="flex items-center justify-between bg-white border border-white rounded-2xl px-4 py-2.5">
                   <div className="flex items-center gap-2">
                     <Server size={14} className="text-slate-600" />
-                    <span className="text-[11px] font-bold text-slate-900">Bypass server (use mock data)</span>
+                    <span className="text-[11px] font-medium text-slate-900">Bypass server (use mock data)</span>
                   </div>
                   <button
                     type="button"
@@ -230,7 +230,7 @@ export default function AnalyzePage() {
                 <button
                   type="submit"
                   disabled={isUrlEmpty}
-                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
+                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                     isUrlEmpty
                       ? 'bg-white/15 text-white/40 cursor-not-allowed'
                       : 'bg-white text-brand-900 hover:bg-sky-50 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0'
@@ -285,7 +285,7 @@ export default function AnalyzePage() {
                   <Icon size={14} className="text-brand-900" />
                 </div>
                 <div>
-                  <p className="text-slate-800 font-extrabold">{item.text}</p>
+                  <p className="text-slate-800 font-semibold">{item.text}</p>
                   <p className="text-[10px] text-slate-400 font-medium mt-0.5">{item.sub}</p>
                 </div>
               </div>

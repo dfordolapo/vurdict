@@ -143,7 +143,7 @@ export default function ResultsPage() {
               resetAnalysis();
               navigate('/analyze');
             }}
-            className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-medium text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Home</span>
           </button>
@@ -175,11 +175,11 @@ export default function ResultsPage() {
 
               {/* Action buttons (Download, Save, Share) */}
               <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 w-full">
-                <button className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-bold text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                <button className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-medium text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
                   <Download size={14} className="text-brand-900" />
                   <span>Download</span>
                 </button>
-                <button className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-bold text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                <button className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
                   <Bookmark size={14} />
                   <span>Save</span>
                 </button>
@@ -249,7 +249,7 @@ export default function ResultsPage() {
               <div className="w-full mt-6 border-t border-slate-100 pt-5 space-y-2 text-left">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-700">
                   <span>Hiring Readiness</span>
-                  <span className={readinessLevel === 'High' ? 'text-emerald-700 font-black' : readinessLevel === 'Medium' ? 'text-amber-700 font-black' : 'text-rose-700 font-black'}>{readinessLevel}</span>
+                  <span className={readinessLevel === 'High' ? 'text-emerald-700 font-bold' : readinessLevel === 'Medium' ? 'text-amber-700 font-bold' : 'text-rose-700 font-bold'}>{readinessLevel}</span>
                 </div>
                 <div className="relative h-2 rounded bg-slate-100 overflow-hidden flex">
                   <div className="h-full bg-blue-600 rounded transition-all" style={{ width: readinessWidth }} />
@@ -282,8 +282,8 @@ export default function ResultsPage() {
                       className="group flex flex-col gap-1.5 cursor-pointer"
                     >
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
-                        <span className="font-mono font-bold text-slate-900">{dim.score}/100</span>
+                        <span className="font-medium text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
+                        <span className="font-mono font-medium text-slate-900">{dim.score}/100</span>
                       </div>
                       <div className="w-full h-1.5 rounded bg-slate-100 overflow-hidden relative">
                         <div 
@@ -396,7 +396,7 @@ export default function ResultsPage() {
           </div>
           <button
             onClick={() => navigate(`/results/${lowestSlug}`)}
-            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-bold transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
+            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>View Detailed Recommendations</span>
             <ArrowRight size={14} />

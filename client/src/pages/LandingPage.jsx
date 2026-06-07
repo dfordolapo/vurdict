@@ -87,10 +87,10 @@ function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className={`text-sm font-semibold transition-all pb-1 pt-1 border-b-2 ${
+              className={`text-sm font-normal transition-all pb-1 pt-1 border-b-2 ${
                 activeSection === link.href 
-                  ? 'text-blue-600 border-blue-600 font-bold' 
-                  : 'text-slate-600 hover:text-brand-900 border-transparent hover:border-slate-300'
+                  ? 'text-blue-600 border-blue-600 font-medium' 
+                  : 'text-slate-500 hover:text-brand-900 border-transparent hover:border-slate-300'
               }`}
             >
               {link.label}
@@ -102,7 +102,7 @@ function Navbar() {
         <div className="flex items-center gap-3.5 md:gap-3">
           <Link
             to="/analyze"
-            className="btn-brand flex items-center gap-1.5 md:gap-2 px-3.5 md:px-5 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-bold group whitespace-nowrap shrink-0"
+            className="btn-brand flex items-center gap-1.5 md:gap-2 px-3.5 md:px-5 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-medium group whitespace-nowrap shrink-0"
           >
             <span>Analyze Portfolio</span>
             <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
@@ -196,7 +196,7 @@ function HeroSection() {
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-            Paste your portfolio URL and get a structured, goal-aware audit scored across six dimensions in minutes.
+            Paste your portfolio link and get structured feedback on what's helping and what to fix first.
           </p>
 
           {/* Form container */}
@@ -223,7 +223,7 @@ function HeroSection() {
               <button
                 type="button"
                 onClick={() => setGoalDropdownOpen(!goalDropdownOpen)}
-                className="flex items-center justify-between gap-3 bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all w-full md:w-auto md:min-w-[11rem] whitespace-nowrap shrink-0"
+                className="flex items-center justify-between gap-3 bg-slate-50 border border-slate-100 rounded-xl px-4 py-2.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all w-full md:w-auto md:min-w-[11rem] whitespace-nowrap shrink-0"
               >
                 <span className="flex items-center gap-1.5 whitespace-nowrap">
                   <SelectedIcon size={14} className="text-brand-900" />
@@ -245,7 +245,7 @@ function HeroSection() {
                           setGoal(key);
                           setGoalDropdownOpen(false);
                         }}
-                        className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-bold transition-colors ${
+                        className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
                           goal === key 
                             ? 'bg-brand-900/5 text-brand-900' 
                             : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'
@@ -267,7 +267,7 @@ function HeroSection() {
                   navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
                 }
               }}
-              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0"
+              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0"
             >
               <span>Analyze Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
@@ -337,7 +337,7 @@ function ProblemSection() {
             Most portfolio feedback is <br className="hidden md:inline" />{" "}
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
-          <p className="text-slate-500 font-semibold max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-slate-500 font-normal max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Vurdict replaces the guesswork with a structured evaluation <br className="hidden md:inline" />{" "}
             so you can improve with confidence
           </p>
@@ -355,7 +355,7 @@ function ProblemSection() {
               </colgroup>
               <thead>
                 <tr>
-                  <th className="py-6 text-xs font-black text-slate-800 uppercase tracking-wider pl-4 border-b border-slate-100">
+                  <th className="py-6 text-xs font-semibold text-slate-800 uppercase tracking-wider pl-4 border-b border-slate-100">
                     Dimension
                   </th>
                   <th className="py-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
@@ -364,7 +364,7 @@ function ProblemSection() {
                   <th className="py-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
                     Community Feedback
                   </th>
-                  <th className="py-6 text-xs font-black text-blue-600 uppercase tracking-wider px-6 bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 border-t-2 border-t-blue-500 border-b border-b-blue-200/60 rounded-t-2xl">
+                  <th className="py-6 text-xs font-semibold text-blue-600 uppercase tracking-wider px-6 bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 border-t-2 border-t-blue-500 border-b border-b-blue-200/60 rounded-t-2xl">
                     Vurdict Intelligence
                   </th>
                 </tr>
@@ -374,7 +374,7 @@ function ProblemSection() {
                   const isLast = i === rows.length - 1;
                   return (
                     <tr key={i} className="hover:bg-slate-50/30 transition-colors">
-                      <td className="py-6 text-xs font-bold text-slate-800 pl-4 border-b border-slate-100/80">
+                      <td className="py-6 text-xs font-medium text-slate-800 pl-4 border-b border-slate-100/80">
                         {row.dimension}
                       </td>
                       <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
@@ -383,7 +383,7 @@ function ProblemSection() {
                       <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
                         {row.community}
                       </td>
-                      <td className={`py-6 text-xs text-blue-600 px-6 font-bold leading-relaxed bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 ${
+                      <td className={`py-6 text-xs text-blue-600 px-6 font-medium leading-relaxed bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 ${
                         isLast 
                           ? 'border-b-2 border-b-blue-500 rounded-b-2xl' 
                           : 'border-b border-b-blue-200/60'
@@ -453,8 +453,8 @@ function HowItWorksSection() {
                 <div className="w-8 h-8 rounded-xl bg-blue-50/80 border border-blue-100/60 text-blue-600 flex items-center justify-center font-bold text-xs mb-4">
                   {step.num}
                 </div>
-                <h3 className="text-slate-900 font-bold text-sm mb-2">{step.title}</h3>
-                <p className="text-slate-500 text-xs leading-relaxed font-medium">{step.desc}</p>
+                <h3 className="text-slate-900 font-semibold text-sm mb-2">{step.title}</h3>
+                <p className="text-slate-500 text-xs leading-relaxed font-normal">{step.desc}</p>
               </div>
               
               {/* Arrow spacer for desktop */}
@@ -528,8 +528,8 @@ function FrameworkSection() {
                 <div className="w-fit rounded-xl p-2.5 bg-blue-50/50 border border-blue-100/50 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200 group-hover:shadow-[0_0_16px_rgba(59,130,246,0.15)]">
                   <Icon size={20} className="text-blue-600 transition-all duration-200 group-hover:text-blue-500 group-hover:scale-110" />
                 </div>
-                <h3 className="text-slate-950 font-bold text-base mb-2">{dim.title}</h3>
-                <p className="text-slate-500 text-xs leading-relaxed font-medium">{dim.desc}</p>
+                <h3 className="text-slate-950 font-semibold text-base mb-2 mt-3">{dim.title}</h3>
+                <p className="text-slate-500 text-xs leading-relaxed font-normal">{dim.desc}</p>
               </div>
             )
           })}
@@ -698,7 +698,7 @@ function FAQSection() {
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-4 text-left font-bold text-sm text-slate-800 group"
+                className="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-sm text-slate-800 group"
               >
                 <span>{faq.q}</span>
                 <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-slate-200/60 group-hover:shadow-[0_0_8px_rgba(0,0,0,0.05)]">
@@ -711,7 +711,7 @@ function FAQSection() {
               </button>
               {open === i && (
                 <div className="px-6 pb-5">
-                  <p className="text-slate-500 text-xs leading-relaxed font-medium">{faq.a}</p>
+                  <p className="text-slate-500 text-xs leading-relaxed font-normal">{faq.a}</p>
                 </div>
               )}
             </div>
@@ -757,7 +757,7 @@ function FinalCTASection() {
           <div className="absolute bottom-0 translate-y-[80%] left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20">
             <button
               onClick={() => navigate('/analyze')}
-              className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-4 md:py-5 rounded-xl font-extrabold text-sm md:text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group whitespace-nowrap shrink-0"
+              className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-4 md:py-5 rounded-xl font-medium text-sm md:text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group whitespace-nowrap shrink-0"
             >
                 <span>Analyze Your Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-900/10">
