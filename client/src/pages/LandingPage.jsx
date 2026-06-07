@@ -76,7 +76,7 @@ function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-lg border-b border-slate-100 ${scrolled ? 'shadow-sm' : ''}`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <Logo size="normal" />
         </Link>
@@ -99,10 +99,10 @@ function Navbar() {
         </div>
 
         {/* CTA + Hamburger */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3.5 md:gap-3">
           <Link
             to="/analyze"
-            className="btn-brand flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold group whitespace-nowrap shrink-0"
+            className="btn-brand flex items-center gap-1.5 md:gap-2 px-3.5 md:px-5 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-bold group whitespace-nowrap shrink-0"
           >
             <span>Analyze Portfolio</span>
             <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">

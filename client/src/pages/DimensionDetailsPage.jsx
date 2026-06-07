@@ -140,23 +140,9 @@ export default function DimensionDetailsPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-hidden select-none font-sans">
       
-      {/* Top Header Logostrip */}
       <div className="bg-white py-4 px-6 md:px-12 border-b border-slate-100 z-20">
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           <Logo onClick={() => navigate('/')} />
-          <div className="flex items-center gap-3">
-            <button className="flex items-center gap-1.5 px-3 py-2 border border-slate-200 bg-white rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer">
-              <Download size={14} />
-              <span>Download Report</span>
-            </button>
-            <button className="flex items-center gap-1.5 px-3 py-2 bg-brand-900 border border-brand-900 rounded-xl text-xs font-bold text-white hover:bg-brand-800 transition-colors cursor-pointer">
-              <Bookmark size={14} />
-              <span>Save Report</span>
-            </button>
-            <button className="flex items-center gap-1.5 px-3 py-2 border border-slate-200 bg-white rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer">
-              <Share2 size={14} />
-            </button>
-          </div>
         </div>
       </div>
 
@@ -164,7 +150,7 @@ export default function DimensionDetailsPage() {
         <div className="max-w-7xl w-full mx-auto">
           <button 
             onClick={() => navigate('/results')}
-            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Report Card</span>
           </button>
@@ -348,7 +334,7 @@ export default function DimensionDetailsPage() {
                   <span className="text-[9px] font-extrabold uppercase tracking-wide text-blue-700 block">Top Recommendation</span>
                   <h4 className="text-sm font-extrabold text-slate-900">{details.recommendation.title}</h4>
                 </div>
-                <button className="rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-extrabold text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 cursor-pointer">
+                <button className="rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-extrabold text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
                   <span>See Examples</span>
                   <ExternalLink size={12} />
                 </button>

@@ -135,23 +135,9 @@ export default function ResultsPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-hidden select-none font-sans">
       
-      {/* Top Header Logostrip */}
       <div className="bg-white py-4 px-6 md:px-12 border-b border-slate-100 z-20">
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           <Logo onClick={() => { resetAnalysis(); navigate('/'); }} />
-          <div className="flex items-center gap-3">
-            <button className="flex items-center gap-1.5 px-3 py-2 border border-slate-200 bg-white rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer">
-              <Download size={14} />
-              <span>Download Report</span>
-            </button>
-            <button className="flex items-center gap-1.5 px-3 py-2 bg-brand-900 border border-brand-900 rounded-xl text-xs font-bold text-white hover:bg-brand-800 transition-colors cursor-pointer">
-              <Bookmark size={14} />
-              <span>Save Report</span>
-            </button>
-            <button className="flex items-center gap-1.5 px-3 py-2 border border-slate-200 bg-white rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer">
-              <Share2 size={14} />
-            </button>
-          </div>
         </div>
       </div>
 
@@ -162,7 +148,7 @@ export default function ResultsPage() {
               resetAnalysis();
               navigate('/analyze');
             }}
-            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Home</span>
           </button>
@@ -182,14 +168,31 @@ export default function ResultsPage() {
         <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-20">
           {/* Column 1: Domain & Preview Meta (lg:col-span-3) */}
           <div className="lg:col-span-3 space-y-6 animate-fade-in-up">
-            <div>
-              <h1 className="text-3xl font-black tracking-tight text-white">
-                Your Portfolio <br />
-                Report Card
-              </h1>
-              <p className="mt-2 text-sky-100/70 text-xs font-semibold leading-relaxed">
-                Here's how your portfolio performs across the six hiring dimensions.
-              </p>
+            <div className="space-y-4">
+              <div>
+                <h1 className="text-3xl font-black tracking-tight text-white leading-tight">
+                  Your Portfolio <br />
+                  Report Card
+                </h1>
+                <p className="mt-2 text-sky-100/70 text-xs font-semibold leading-relaxed">
+                  Here's how your portfolio performs across the six hiring dimensions.
+                </p>
+              </div>
+
+              {/* Action buttons (Download, Save, Share) */}
+              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                <button className="flex items-center gap-1.5 px-3.5 py-2 border border-white/20 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                  <Download size={14} className="text-sky-300" />
+                  <span>Download</span>
+                </button>
+                <button className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs font-bold text-white shadow-lg shadow-blue-900/25 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                  <Bookmark size={14} />
+                  <span>Save</span>
+                </button>
+                <button className="flex items-center justify-center p-2 border border-white/20 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-100">
+                  <Share2 size={14} />
+                </button>
+              </div>
             </div>
 
             {/* Domain card */}
@@ -395,7 +398,7 @@ export default function ResultsPage() {
 
             <button
               onClick={() => navigate(`/results/${lowestSlug}`)}
-              className="text-xs font-extrabold text-brand-900 hover:text-brand-800 flex items-center gap-1.5 cursor-pointer self-start"
+              className="text-xs font-extrabold text-brand-900 hover:text-brand-800 flex items-center gap-1.5 cursor-pointer self-start whitespace-nowrap shrink-0"
             >
               <span>See how to improve this →</span>
             </button>
@@ -404,7 +407,7 @@ export default function ResultsPage() {
         </div>
 
         {/* Bottom Row: Action Banner */}
-        <div className="max-w-7xl w-full mx-auto bg-slate-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in-up mt-6">
+        <div className="max-w-7xl w-full mx-auto bg-brand-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in-up mt-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
               <Trophy size={20} className="text-yellow-400" />
@@ -416,7 +419,7 @@ export default function ResultsPage() {
           </div>
           <button
             onClick={() => navigate(`/results/${lowestSlug}`)}
-            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-extrabold transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap"
+            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-extrabold transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>View Detailed Recommendations</span>
             <ArrowRight size={14} />

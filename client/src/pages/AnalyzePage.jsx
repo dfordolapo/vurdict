@@ -195,7 +195,7 @@ export default function AnalyzePage() {
                           key={item.key}
                           type="button"
                           onClick={() => setExperience(item.key)}
-                          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl border text-sm font-bold transition-all ${
+                          className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-3 rounded-2xl border text-xs sm:text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
                             isSelected
                               ? 'bg-white text-slate-900 border-white shadow-sm'
                               : 'bg-white/10 text-white/75 border-white/20 hover:bg-white/15 hover:border-white/35'
@@ -231,7 +231,7 @@ export default function AnalyzePage() {
                 <button
                   type="submit"
                   disabled={isUrlEmpty}
-                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all ${
+                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold transition-all whitespace-nowrap shrink-0 ${
                     isUrlEmpty
                       ? 'bg-white/15 text-white/40 cursor-not-allowed'
                       : 'bg-white text-brand-900 hover:bg-sky-50 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0'

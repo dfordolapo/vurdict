@@ -139,7 +139,7 @@ export default function AnalyzingPage() {
           <Logo onClick={() => navigate('/')} />
           <button 
             onClick={() => navigate('/analyze')} 
-            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Home</span>
           </button>
@@ -200,7 +200,7 @@ export default function AnalyzingPage() {
               <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                 <button
                   onClick={() => navigate('/analyze')}
-                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 text-brand-900 flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-black shadow-md transition-colors cursor-pointer"
+                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 text-brand-900 flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-black shadow-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <RotateCw size={14} className="animate-spin-slow text-brand-900" />
                   <span>Try Another URL</span>
@@ -208,7 +208,7 @@ export default function AnalyzingPage() {
                 
                 <button
                   onClick={toggleMockFallback}
-                  className="w-full sm:w-auto rounded-xl bg-sky-900/40 hover:bg-sky-900/60 border border-sky-300/30 text-sky-200 flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-black transition-colors cursor-pointer"
+                  className="w-full sm:w-auto rounded-xl bg-sky-900/40 hover:bg-sky-900/60 border border-sky-300/30 text-sky-200 flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-black transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <Sparkles size={14} className="text-sky-300" />
                   <span>Bypass with Mock Report</span>
