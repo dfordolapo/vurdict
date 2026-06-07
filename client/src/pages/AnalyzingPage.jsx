@@ -139,7 +139,7 @@ export default function AnalyzingPage() {
           <Logo onClick={() => navigate('/')} />
           <button 
             onClick={() => navigate('/analyze')} 
-            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Home</span>
           </button>
@@ -152,20 +152,17 @@ export default function AnalyzingPage() {
       </div>
 
       {/* Navy blue block containing Main Content Grid */}
-      <div className="bg-brand-900 text-white py-12 px-6 md:px-12 flex-1 flex items-center relative overflow-hidden z-10">
+      <div className="bg-brand-900 text-white pt-6 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden z-10">
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
 
         {state.status === 'error' && minTimeElapsed ? (
           /* Image 1: Analysis Failed State */
-          <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-20">
+          <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start z-20">
             {/* Left panel */}
             <div className="lg:col-span-6 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
               <div className="flex flex-col items-center text-center">
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-red-300/30 bg-red-900/40 px-3 py-1 text-[10px] font-bold text-red-200 uppercase tracking-widest">
-                  ⚠ Analysis Failed
-                </div>
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance mt-3">
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
                   We couldn't analyze this portfolio.
                 </h1>
                 <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
@@ -242,15 +239,12 @@ export default function AnalyzingPage() {
           </div>
         ) : (
           /* Image 4: Active Analyzing State */
-          <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-20">
+          <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start z-20">
             
             {/* Left panel: Timeline Checklist */}
             <div className="lg:col-span-5 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
               <div className="flex flex-col items-center text-center">
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-300/30 bg-sky-900/40 px-3 py-1 text-[10px] font-bold text-sky-200 uppercase tracking-widest">
-                  ⚙ Analyzing Portfolio
-                </div>
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance mt-3">
+                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
                   Reviewing Your Portfolio
                 </h1>
                 <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">

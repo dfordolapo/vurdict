@@ -158,14 +158,9 @@ export default function DimensionDetailsPage() {
       <div className="bg-white py-4 px-6 md:px-12 border-b border-slate-100 z-20">
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           <Logo onClick={() => navigate('/')} />
-        </div>
-      </div>
-
-      <div className="bg-white py-4 px-6 md:px-12 z-10">
-        <div className="max-w-7xl w-full mx-auto">
           <button 
             onClick={() => navigate('/results')}
-            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Report Card</span>
           </button>
@@ -392,7 +387,7 @@ export default function DimensionDetailsPage() {
             <span>Scores are based on our 6-Dimension Framework.</span>
             <a href="#" className="text-brand-900 hover:underline">Learn more about how we evaluate portfolios →</a>
           </div>
-          <button className="flex items-center gap-1.5 text-slate-650 hover:text-slate-900 transition-colors">
+          <button className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition-colors">
             <MessageCircle size={14} />
             <span>Have questions about your score?</span>
           </button>

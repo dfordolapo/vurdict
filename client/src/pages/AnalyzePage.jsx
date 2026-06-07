@@ -82,9 +82,9 @@ export default function AnalyzePage() {
         <Logo onClick={() => navigate('/')} />
         <button
           onClick={() => navigate('/')}
-          className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors"
+          className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
         >
-          ← Back to Home
+          <span>← Back to Home</span>
         </button>
       </div>
     </header>
@@ -95,10 +95,10 @@ export default function AnalyzePage() {
       </div>
 
       {/* Navy section */}
-      <section className="bg-brand-900 text-white flex-1 flex items-center relative overflow-hidden">
+      <section className="bg-brand-900 text-white pt-6 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden">
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-2 w-full relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+        <div className="max-w-7xl w-full mx-auto relative z-10">
+          <div className="grid lg:grid-cols-12 gap-12 items-start">
 
             {/* ─── LEFT COLUMN: FORM ─── */}
             <div className="lg:col-span-5 space-y-7">

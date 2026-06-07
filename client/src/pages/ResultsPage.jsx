@@ -138,17 +138,12 @@ export default function ResultsPage() {
       <div className="bg-white py-4 px-6 md:px-12 border-b border-slate-100 z-20">
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           <Logo onClick={() => { resetAnalysis(); navigate('/'); }} />
-        </div>
-      </div>
-
-      <div className="bg-white py-4 px-6 md:px-12 z-10">
-        <div className="max-w-7xl w-full mx-auto">
           <button 
             onClick={() => {
               resetAnalysis();
               navigate('/analyze');
             }}
-            className="text-xs font-bold text-slate-600 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Home</span>
           </button>
@@ -161,7 +156,7 @@ export default function ResultsPage() {
       </div>
 
       {/* Navy blue block containing Core Report Cards */}
-      <div className="bg-brand-900 text-white py-12 px-6 md:px-12 relative overflow-hidden z-10">
+      <div className="bg-brand-900 text-white pt-6 pb-12 px-6 md:px-12 relative overflow-hidden z-10">
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
         
