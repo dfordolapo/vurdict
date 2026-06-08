@@ -43,6 +43,7 @@ export default function ResultsPage() {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [saveEmail, setSaveEmail] = useState('');
   const [saveSubmitted, setSaveSubmitted] = useState(false);
+  const [signupMode, setSignupMode] = useState(false);
 
   const handleDownload = () => {
     const dims = [
@@ -173,6 +174,13 @@ export default function ResultsPage() {
     if (saveEmail.trim()) {
       setSaveSubmitted(true);
     }
+  };
+
+  const closeSaveModal = () => {
+    setSaveModalOpen(false);
+    setSaveSubmitted(false);
+    setSaveEmail('');
+    setSignupMode(false);
   };
 
   const handleShare = () => {
@@ -636,10 +644,10 @@ export default function ResultsPage() {
       {/* Save Modal */}
       {saveModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => { setSaveModalOpen(false); setSaveSubmitted(false); setSaveEmail(''); }} />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeSaveModal} />
           <div className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 animate-fade-in-up">
             <button
-              onClick={() => { setSaveModalOpen(false); setSaveSubmitted(false); setSaveEmail(''); }}
+              onClick={closeSaveModal}
               className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all cursor-pointer"
             >
               <X size={16} />
@@ -652,7 +660,7 @@ export default function ResultsPage() {
                 </div>
                 <h3 className="text-xl font-semibold text-slate-900 mb-1">Save Your Report</h3>
                 <p className="text-sm text-slate-500 font-normal mb-6 leading-relaxed">
-                  Create a free account to save your results and track your portfolio progress over time.
+                  Enter your email and we'll send you the report. Or create an account to save it to your dashboard.
                 </p>
 
                 <form onSubmit={handleSaveSubmit} className="space-y-4">
@@ -670,13 +678,23 @@ export default function ResultsPage() {
                       />
                     </div>
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
-                  >
-                    <Lock size={14} />
-                    <span>Create Account & Save</span>
-                  </button>
+                  <div className="flex flex-col gap-2.5">
+                    <button
+                      type="submit"
+                      className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
+                    >
+                      <Mail size={14} />
+                      <span>Send to My Email</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSignupMode(true)}
+                      className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-sm font-medium transition-all cursor-pointer"
+                    >
+                      <Lock size={14} />
+                      <span>Create Account & Save</span>
+                    </button>
+                  </div>
                 </form>
 
                 <p className="text-[11px] text-slate-400 font-normal text-center mt-4 leading-relaxed">
@@ -689,12 +707,14 @@ export default function ResultsPage() {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-5">
                   <CheckCircle size={22} className="text-emerald-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-1">Check your inbox</h3>
+                <h3 className="text-xl font-semibold text-slate-900 mb-1">{signupMode ? 'Check your inbox' : 'Report sent!'}</h3>
                 <p className="text-sm text-slate-500 font-normal leading-relaxed">
-                  We sent a confirmation link to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Click it to activate your account and save your report.
+                  {signupMode
+                    ? <>We sent a confirmation link to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Click it to activate your account and save your report.</>
+                    : <>We've sent your report to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Check your inbox.</>}
                 </p>
                 <button
-                  onClick={() => { setSaveModalOpen(false); setSaveSubmitted(false); setSaveEmail(''); }}
+                  onClick={closeSaveModal}
                   className="w-full mt-6 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
                 >
                   Got it
