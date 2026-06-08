@@ -132,6 +132,30 @@ export default function ResultsPage() {
 
   const fixFirst = report.fix_this_first || { title: 'Improve Your Portfolio', description: 'Review the detailed breakdown below for specific recommendations.', priority_score: 5 };
 
+  const formattedDateTime = (() => {
+    const date = state.timestamp ? new Date(state.timestamp) : new Date();
+    const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
+    const optionsTime = { hour: 'numeric', minute: '2-digit', hour12: true };
+    return `Analyzed on ${date.toLocaleDateString('en-US', optionsDate)} • ${date.toLocaleTimeString('en-US', optionsTime)}`;
+  })();
+
+  const getHostname = (urlStr) => {
+    try {
+      const cleanUrl = /^https?:\/\//i.test(urlStr) ? urlStr : 'https://' + urlStr;
+      return new URL(cleanUrl).hostname;
+    } catch {
+      return urlStr || 'yourportfolio.com';
+    }
+  };
+
+  const getThumbnailUrl = (urlStr) => {
+    let cleanUrl = urlStr || 'https://react.dev';
+    if (!/^https?:\/\//i.test(cleanUrl)) {
+      cleanUrl = 'https://' + cleanUrl;
+    }
+    return `https://image.thum.io/get/width/400/crop/800/${cleanUrl}`;
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
@@ -161,59 +185,72 @@ export default function ResultsPage() {
         {/* Spotlight blue background circle */}
         <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
         
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-stretch relative z-20">
-          {/* Column 1: Domain & Preview Meta (lg:col-span-3) */}
-          <div className="lg:col-span-3 space-y-6 animate-fade-in-up flex flex-col justify-between lg:h-full items-center text-center">
-            <div className="space-y-4 w-full flex flex-col items-center">
-              <div className="flex flex-col items-center">
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
-                  Your <span className="text-sky-300">Vurdict</span> Report Card
-                </h1>
-                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
-                  Here's how your portfolio performs across the six hiring dimensions.
-                </p>
-              </div>
-
-              {/* Action buttons (Download, Save, Share) */}
-              <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 w-full">
-                <button className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-medium text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
-                  <Download size={14} className="text-brand-900" />
-                  <span>Download</span>
-                </button>
-                <button className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
-                  <Bookmark size={14} />
-                  <span>Save</span>
-                </button>
-                <button className="flex items-center justify-center p-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-white/80 hover:text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-100">
-                  <Share2 size={14} />
-                </button>
-              </div>
+        {/* Row 1: Title and Domain Link Card */}
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20 mb-8 animate-fade-in-up">
+          <div className="lg:col-span-8 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
+                Your <span className="text-sky-300">Vurdict</span> Report Card
+              </h1>
+              <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance">
+                Here's how your portfolio performs across the six hiring dimensions.
+              </p>
             </div>
 
+            {/* Action buttons (Download, Save, Share) */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 w-full">
+              <button className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-medium text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                <Download size={14} className="text-brand-900" />
+                <span>Download</span>
+              </button>
+              <button className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100">
+                <Bookmark size={14} />
+                <span>Save</span>
+              </button>
+              <button className="flex items-center justify-center p-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-white/80 hover:text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-100">
+                <Share2 size={14} />
+              </button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-4 w-full">
             {/* Domain card */}
             <div className="bg-white border border-slate-100 p-4 rounded-3xl shadow-lg space-y-4 text-slate-900">
-              <div className="h-32 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between p-3 relative overflow-hidden">
-                <div className="flex items-center gap-1 border-b border-slate-800 pb-1 text-slate-450">
-                  <span className="h-1 w-1 rounded-full bg-slate-500" />
-                  <span className="h-1 w-1 rounded-full bg-slate-500" />
-                  <span className="h-1 w-1 rounded-full bg-slate-500" />
-                </div>
-                <div className="flex-1 flex flex-col justify-center gap-1.5 pt-1 text-slate-300">
-                  <div className="h-1.5 w-12 bg-slate-700 rounded" />
-                  <div className="text-[10px] font-bold text-white leading-tight">Design products that make impact</div>
+              <div className="h-28 rounded-xl bg-slate-950 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
+                <img 
+                  src={getThumbnailUrl(state.url)} 
+                  alt="Portfolio thumbnail" 
+                  className="absolute inset-0 w-full h-full object-cover object-top z-0"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10 z-10" />
+                <div className="relative z-20 p-3 flex flex-col justify-between h-full w-full">
+                  <div className="flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/70 shadow" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/50 shadow" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/30 shadow" />
+                  </div>
+                  <div className="text-[10px] font-bold text-white leading-none tracking-wide truncate drop-shadow-md">
+                    {getHostname(state.url)}
+                  </div>
                 </div>
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Domain Link</span>
-                <a href="#" className="text-sm font-bold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
-                <span className="text-[9px] text-slate-400 font-semibold block pt-1">Analyzed on May 18, 2025 • 2:34 PM</span>
+                <a href={state.url || "#"} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
+                <span className="text-[9px] text-slate-400 font-semibold block pt-1">{formattedDateTime}</span>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Column 2: Radial Score arc & readiness (lg:col-span-5) */}
-          <div className="lg:col-span-5 space-y-6 animate-fade-in-up">
-            <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center text-center relative">
+        {/* Row 2: Score Card and scoreboard (Equal height layout) */}
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-20">
+          {/* Column 1: Overall Score Card (lg:col-span-6) */}
+          <div className="lg:col-span-6 animate-fade-in-up flex flex-col">
+            <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center text-center relative flex-1">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Overall Score</span>
               
               {/* Trophy circle indicator */}
@@ -267,34 +304,36 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* Column 3: Scores by Hiring Dimension scoreboard list (lg:col-span-4) */}
-          <div className="lg:col-span-4 animate-fade-in-up lg:h-full flex flex-col">
-            <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg space-y-4 flex-1">
-              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
-                Scores by Hiring Dimension
-              </h3>
+          {/* Column 2: Scores by Hiring Dimension (lg:col-span-6) */}
+          <div className="lg:col-span-6 animate-fade-in-up flex flex-col">
+            <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg space-y-4 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
+                  Scores by Hiring Dimension
+                </h3>
 
-              <div className="space-y-3.5">
-                {scoreboard.map((dim) => {
-                  return (
-                    <div 
-                      key={dim.slug}
-                      onClick={() => navigate(`/results/${dim.slug}`)}
-                      className="group flex flex-col gap-1.5 cursor-pointer"
-                    >
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
-                        <span className="font-mono font-medium text-slate-900">{dim.score}/100</span>
+                <div className="space-y-3.5 pt-3">
+                  {scoreboard.map((dim) => {
+                    return (
+                      <div 
+                        key={dim.slug}
+                        onClick={() => navigate(`/results/${dim.slug}`)}
+                        className="group flex flex-col gap-1.5 cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-medium text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
+                          <span className="font-mono font-medium text-slate-900">{dim.score}/100</span>
+                        </div>
+                        <div className="w-full h-1.5 rounded bg-slate-100 overflow-hidden relative">
+                          <div 
+                            className="h-full bg-blue-600 rounded transition-all duration-300 group-hover:bg-blue-700" 
+                            style={{ width: `${dim.score}%` }} 
+                          />
+                        </div>
                       </div>
-                      <div className="w-full h-1.5 rounded bg-slate-100 overflow-hidden relative">
-                        <div 
-                          className="h-full bg-blue-600 rounded transition-all duration-300 group-hover:bg-blue-700" 
-                          style={{ width: `${dim.score}%` }} 
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

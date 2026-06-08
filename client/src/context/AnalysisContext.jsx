@@ -13,45 +13,46 @@ export function getScoreStatus(score) {
 }
 
 // Generate realistic fallback mock data matching the backend schema
-export function getMockReport(url, goal) {
+export function getMockReport(url, goal, experience = 'junior') {
   const isGetHired = goal === 'get_hired';
+  const expLabel = experience === 'senior' ? 'Senior' : experience === 'mid' ? 'Mid-Level' : 'Junior';
   
   const categories = {
     problem_framing: {
-      score: isGetHired ? 85 : 70,
+      score: experience === 'senior' ? 70 : experience === 'mid' ? 80 : 85,
       explanation: isGetHired 
-        ? "The Hiring Manager's perspective: Good framing of user and product problems with clear, defined boundaries. However, more emphasis could be placed on the initial user discovery artifacts."
-        : "The Client's perspective: The target client can understand what problems you solve, though the messaging feels slightly academic rather than value-driven."
+        ? `The Hiring Manager's perspective (${expLabel} Calibration): Good framing of user and product problems with clear boundaries. ${experience === 'senior' ? 'For a Senior role, we need deeper business integration details.' : 'Foundation matches expectations.'}`
+        : `The Client's perspective (${expLabel} Calibration): The target client can understand what problems you solve, though the messaging should focus more on business value.`
     },
     process_visibility: {
-      score: isGetHired ? 80 : 60,
+      score: experience === 'senior' ? 75 : experience === 'mid' ? 80 : 65,
       explanation: isGetHired
-        ? "The Hiring Manager's perspective: Decisions are mapped out systematically. You've clearly shown sketches and mid-fi variations. Move from 8 to 10 by documenting why specific iterations failed."
-        : "The Client's perspective: Process shows you are competent, but clients want a smoother, high-level summary. Condense complex journey maps into direct value steps."
+        ? `The Hiring Manager's perspective (${expLabel} Calibration): Decisions are mapped out systematically. ${experience === 'junior' ? 'Show why basic sketches were selected.' : 'Move to advanced level by documenting why specific iterations failed.'}`
+        : `The Client's perspective (${expLabel} Calibration): Process shows you are competent, but clients want a smoother summary. Condense complex maps into value steps.`
     },
     outcome_impact: {
-      score: isGetHired ? 55 : 65,
+      score: experience === 'senior' ? 50 : experience === 'mid' ? 60 : 70,
       explanation: isGetHired
-        ? "The Hiring Manager's perspective: You only concluded with design deliverables. Recruiter feedback indicates a strong demand for quantitative results. Mention metric shifts, conversions, or usability success scores."
-        : "The Client's perspective: Clients want to see how your design generated revenue, saved costs, or boosted key client metrics. Frame outcomes as business wins."
+        ? `The Hiring Manager's perspective (${expLabel} Calibration): ${experience === 'senior' ? 'Senior standard requires quantitative business metrics. Mention metric shifts, conversions, or revenue.' : 'Add outcome metrics to support case study.'}`
+        : `The Client's perspective (${expLabel} Calibration): Clients want to see how your design generated revenue or saved costs. Frame outcomes as business wins.`
     },
     visual_quality: {
-      score: isGetHired ? 75 : 85,
+      score: experience === 'senior' ? 88 : experience === 'mid' ? 82 : 75,
       explanation: isGetHired
-        ? "The Hiring Manager's perspective: Typography and grid hierarchy are solid, but several responsive break-points show clipping on tablet viewport configurations."
-        : "The Client's perspective: Visually stunning landing page. Sleek Linear-style dark mode aesthetics establish strong credibility and look extremely premium."
+        ? `The Hiring Manager's perspective (${expLabel} Calibration): Typography and grids are solid. ${experience === 'junior' ? 'Basic styling is clean but can be modernized.' : 'Adherence to spacing systems looks extremely premium.'}`
+        : `The Client's perspective (${expLabel} Calibration): Visually stunning landing page. Sleek Linear-style dark mode aesthetics establish strong credibility.`
     },
     niche_positioning: {
-      score: isGetHired ? 70 : 88,
+      score: experience === 'senior' ? 85 : experience === 'mid' ? 75 : 65,
       explanation: isGetHired
-        ? "The Hiring Manager's perspective: Clear role definition as a Product Designer. You could specialize further by highlighting whether your focus is on SaaS complex systems, mobile-first design, or dev-handoff."
-        : "The Client's perspective: Highly optimized. You clearly target startups seeking fractional design leadership, which will attract high-quality inbound inquiries."
+        ? `The Hiring Manager's perspective (${expLabel} Calibration): Clear role definition as a Product Designer. ${experience === 'junior' ? 'Focus on founding your niche.' : 'Highlight SaaS, complex systems, or mobile-first design.'}`
+        : `The Client's perspective (${expLabel} Calibration): Highly optimized. You clearly target startups seeking fractional leadership, which attracts quality inquiries.`
     },
     trust_cta: {
-      score: isGetHired ? 65 : 82,
+      score: experience === 'senior' ? 80 : experience === 'mid' ? 70 : 60,
       explanation: isGetHired
-        ? "The Hiring Manager's perspective: Standard resume link is present. A direct 'Ready to chat?' calendar widget or a cleaner contact block would reduce friction for recruiter outreach."
-        : "The Client's perspective: Excellent placement of contact options. Having a direct scheduling link and testimonial stubs creates strong immediate trust."
+        ? `The Hiring Manager's perspective (${expLabel} Calibration): Resume link is present. ${experience === 'junior' ? 'Add a cleaner contact block.' : 'Recruiter response rate will increase with a direct scheduling widget.'}`
+        : `The Client's perspective (${expLabel} Calibration): Excellent placement of contact options. Having a direct scheduling link and testimonial stubs creates immediate trust.`
     }
   };
 
@@ -64,8 +65,10 @@ export function getMockReport(url, goal) {
   );
 
   const fix_this_first = isGetHired ? {
-    title: "Document Measurable Success Metrics",
-    description: "Your 'Outcome & Impact' score is currently bottlenecking your hireability. Add specific business and user outcomes (e.g. conversion rates, task time reduction) to your fintech case study to increase shortlisting odds.",
+    title: experience === 'senior' ? "Validate Strategic Business Value" : "Document Measurable Success Metrics",
+    description: experience === 'senior'
+      ? "As a Senior candidate, your portfolio needs to prove strategic revenue and conversion impact. Detail the business parameters of your case studies."
+      : "Your 'Outcome & Impact' score is currently bottlenecking your hireability. Add specific business and user outcomes (e.g. conversion rates, task time reduction) to your fintech case study to increase shortlisting odds.",
     priority_score: 9
   } : {
     title: "Sharpen Client-Facing CTAs",
@@ -78,8 +81,8 @@ export function getMockReport(url, goal) {
     categories,
     fix_this_first,
     summary: isGetHired
-      ? "Strong portfolio overall with clean layouts. The major blocker is outcomes: case studies lack quantitative metrics indicating how your designs improved business or usability goals. Documenting these will significantly increase interview conversions."
-      : "Excellent premium presentation. You communicate a strong niche and make booking inquiries low-friction. Adding clear before/after business cases of previous engagements will further maximize contract close rates."
+      ? `Strong ${expLabel} portfolio overall. The major blocker is outcomes: case studies lack quantitative metrics indicating how your designs improved business or usability goals.`
+      : `Excellent premium ${expLabel} presentation. You communicate a strong niche and make booking inquiries low-friction.`
   };
 }
 
@@ -88,6 +91,7 @@ export function AnalysisProvider({ children }) {
     status: 'idle',
     url: '',
     goal: 'get_hired',
+    experience: 'junior',
     report: null,
     error: null,
     isMock: false
@@ -117,11 +121,12 @@ export function AnalysisProvider({ children }) {
     });
   };
 
-  const startAnalysis = async (url, goal, forceMock = false) => {
+  const startAnalysis = async (url, goal, experience = 'junior', forceMock = false) => {
     updateState({
       status: 'analyzing',
       url,
       goal,
+      experience,
       report: null,
       error: null,
       isMock: forceMock
@@ -130,7 +135,7 @@ export function AnalysisProvider({ children }) {
     if (forceMock) {
       // Wait 4 seconds to show loading animation
       await new Promise(resolve => setTimeout(resolve, 4000));
-      const mock = getMockReport(url, goal);
+      const mock = getMockReport(url, goal, experience);
       updateState({
         status: 'completed',
         report: mock
@@ -145,7 +150,7 @@ export function AnalysisProvider({ children }) {
       const response = await fetch(`${API_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, goal }),
+        body: JSON.stringify({ url, goal, experience }),
         signal: controller.signal
       });
 

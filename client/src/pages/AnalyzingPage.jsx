@@ -37,6 +37,7 @@ export default function AnalyzingPage() {
 
   const url = searchParams.get('url') || 'yourportfolio.com';
   const goal = searchParams.get('goal') || 'get_hired';
+  const experience = searchParams.get('experience') || 'junior';
   const mock = searchParams.get('mock') === 'true';
 
   const [progress, setProgress] = useState(0);
@@ -54,8 +55,8 @@ export default function AnalyzingPage() {
 
   // Kick off analysis on mount
   useEffect(() => {
-    startAnalysis(url, goal, mock);
-  }, [url, goal, mock]);
+    startAnalysis(url, goal, experience, mock);
+  }, [url, goal, experience, mock]);
 
   // Minimum presentation timer (4 seconds)
   useEffect(() => {
@@ -163,7 +164,7 @@ export default function AnalyzingPage() {
                   We couldn't analyze this portfolio.
                 </h1>
                 <p className="mt-2 text-slate-500 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
-                  Something prevented us from accessing or understanding the portfolio at this link.
+                  {state.error || "Something prevented us from accessing or understanding the portfolio at this link."}
                 </p>
               </div>
 
@@ -288,7 +289,7 @@ export default function AnalyzingPage() {
 
                 <div className="text-[10px] text-sky-100/50 font-semibold flex items-center gap-1">
                   <Clock size={12} />
-                  <span>This usually takes less than a minute.</span>
+                  <span>This usually takes a few minutes.</span>
                 </div>
               </div>
 
