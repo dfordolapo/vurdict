@@ -689,8 +689,15 @@ export default function ResultsPage() {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-5">
                   <CheckCircle size={22} className="text-emerald-600" />
                 </div>
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center mb-5">
-                  <Sparkles size={22} className="text-amber-500" />
+                <div className="mb-5 flex justify-center">
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="80" height="80" rx="20" fill="#fffbeb"/>
+                    <rect x="18" y="26" width="44" height="28" rx="4" stroke="#d97706" strokeWidth="2" fill="#fffbeb"/>
+                    <path d="M18 30L40 46L62 30" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="60" cy="24" r="10" fill="#fef3c7" stroke="#d97706" strokeWidth="1.5"/>
+                    <path d="M60 20V24L63 26" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="60" cy="24" r="3" fill="#d97706"/>
+                  </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-slate-900 mb-1">Coming Soon</h3>
                 <p className="text-sm text-slate-500 font-normal leading-relaxed">
