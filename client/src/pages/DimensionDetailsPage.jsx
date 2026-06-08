@@ -577,16 +577,16 @@ export default function DimensionDetailsPage() {
               />
             </div>
 
-            <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Examples Coming Soon</h3>
-            <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
-              We're building a library of real-world examples showing how top designers nail each dimension. You'll be able to see before/after transformations and borrow proven patterns.
-            </p>
-            <button
-              onClick={() => setExamplesModalOpen(false)}
-              className="w-full mt-6 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
-            >
-              Got it
-            </button>
+             <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Examples coming soon</h3>
+             <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
+               We are writing a small handbook of real case studies to show how designers implement these improvements.
+             </p>
+             <button
+               onClick={() => setExamplesModalOpen(false)}
+               className="w-full mt-6 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white py-3.5 text-sm font-medium transition-all cursor-pointer shadow-lg shadow-brand-950/10"
+             >
+               Got it
+             </button>
           </div>
         </div>
       )}

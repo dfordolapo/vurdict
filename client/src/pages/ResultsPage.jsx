@@ -701,7 +701,7 @@ export default function ResultsPage() {
                 </p>
                 <button
                   onClick={closeSaveModal}
-                  className="w-full mt-6 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
+                  className="w-full mt-6 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white py-3.5 text-sm font-medium transition-all cursor-pointer shadow-lg shadow-brand-950/10"
                 >
                   Got it
                 </button>
