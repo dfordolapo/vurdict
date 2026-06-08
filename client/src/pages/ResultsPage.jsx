@@ -84,10 +84,11 @@ export default function ResultsPage() {
 
     <!-- Header -->
     <div style="background:#172554;border-radius:16px 16px 0 0;padding:32px 40px;text-align:center;">
-      <div style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.1);margin-bottom:12px;">
-        <span style="color:#fff;font-size:22px;font-weight:800;">V</span>
+      <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.12);font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;">V</div>
+        <span style="font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.3px;">vurdict</span>
       </div>
-      <h1 style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.3px;">Vurdict Portfolio Report</h1>
+      <h1 style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.3px;">Portfolio Report</h1>
       <p style="margin:6px 0 0;font-size:13px;color:rgba(255,255,255,0.6);">AI-Powered Portfolio Evaluation</p>
     </div>
 
