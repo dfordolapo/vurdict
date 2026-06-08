@@ -112,7 +112,7 @@ export default function ResultsPage() {
 
       <!-- Dimension Scores -->
       <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Dimension Breakdown</h2>
-      <p style="font-size:12px;color:#94a3b8;margin:0 0 16px;">How your portfolio scored across each evaluation dimension.</p>
+      <p style="font-size:12px;color:#94a3b8;margin:0 0 16px;">How your case study scored across each evaluation dimension.</p>
       <table style="width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
         <thead>
           <tr style="background:#f8fafc;">
