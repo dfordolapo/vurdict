@@ -152,6 +152,65 @@ export default function DimensionDetailsPage() {
 
   const details = getDetails(activeDim.slug);
 
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
+
+  // Initialize chat with a welcome message explaining the specific context of the active dimension
+  useEffect(() => {
+    if (chatOpen && chatMessages.length === 0) {
+      setChatMessages([
+        {
+          sender: 'ai',
+          text: `Hi there! I'm your Vurdict Design Co-Pilot. I see you're looking at the **${activeDim.label}** dimension, where you scored **${activeData.score}/100**.\n\nAsk me anything about how this score was determined, how to resolve the issues found, or request concrete rewriting examples for your case study!`
+        }
+      ]);
+    }
+  }, [chatOpen, activeDim, activeData, chatMessages.length]);
+
+  const handleSendChatMessage = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim() || chatLoading) return;
+
+    const userMsg = chatInput.trim();
+    setChatMessages(prev => [...prev, { sender: 'user', text: userMsg }]);
+    setChatInput('');
+    setChatLoading(true);
+
+    try {
+      // Direct call to Express backend Claude/Gemini API service
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMsg,
+          dimension: activeDim.label,
+          score: activeData.score,
+          explanation: activeData.explanation,
+          context: state.goal === 'win_clients' ? 'Win Freelance Clients' : 'Get Hired',
+          experience: state.experience
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setChatMessages(prev => [...prev, { sender: 'ai', text: data.reply }]);
+      } else {
+        throw new Error('API failed');
+      }
+    } catch (err) {
+      console.error(err);
+      // Fallback answers based on the dimension info to preserve reliability
+      setTimeout(() => {
+        let fallbackReply = `I'm sorry, I encountered a temporary connection issue. However, regarding your **${activeDim.label}** score of **${activeData.score}**, I highly recommend looking at the recommendation to **${details.recommendation.title.toLowerCase()}**. Let me know if you want me to write some text headers or outline blocks to solve this!`;
+        setChatMessages(prev => [...prev, { sender: 'ai', text: fallbackReply }]);
+      }, 800);
+    } finally {
+      setChatLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
@@ -238,7 +297,7 @@ export default function DimensionDetailsPage() {
                 </div>
                 <div>
                   <h2 className="text-xl font-semibold text-slate-900">{activeDim.label}</h2>
-                  <p className="text-xs text-slate-450 font-normal leading-relaxed max-w-xl mt-1">{activeDim.desc}</p>
+                  <p className="text-xs text-slate-455 font-normal leading-relaxed max-w-xl mt-1">{activeDim.desc}</p>
                 </div>
               </div>
 
@@ -286,7 +345,7 @@ export default function DimensionDetailsPage() {
                       </div>
                       <div>
                         <h5 className="text-xs font-bold text-slate-900">{item.title}</h5>
-                        <p className="text-[9px] text-slate-450 font-semibold leading-relaxed mt-0.5">{item.desc}</p>
+                        <p className="text-[9px] text-slate-455 font-semibold leading-relaxed mt-0.5">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -307,7 +366,7 @@ export default function DimensionDetailsPage() {
                       </div>
                       <div>
                         <h5 className="text-xs font-bold text-slate-900">{item.title}</h5>
-                        <p className="text-[9px] text-slate-450 font-semibold leading-relaxed mt-0.5">{item.desc}</p>
+                        <p className="text-[9px] text-slate-455 font-semibold leading-relaxed mt-0.5">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -329,7 +388,7 @@ export default function DimensionDetailsPage() {
                       </div>
                       <div>
                         <h5 className="text-xs font-bold text-slate-900">{item.title}</h5>
-                        <p className="text-[9px] text-slate-450 font-semibold leading-relaxed mt-0.5">{item.desc}</p>
+                        <p className="text-[9px] text-slate-455 font-semibold leading-relaxed mt-0.5">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -388,13 +447,13 @@ export default function DimensionDetailsPage() {
             <span>Scores are based on our 6-Dimension Framework.</span>
             <a href="/#framework" className="text-brand-900 hover:underline">Learn more about how we evaluate portfolios →</a>
           </div>
-          <a 
-            href="mailto:support@vurdict.com?subject=Questions about my Vurdict portfolio score"
-            className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition-colors"
+          <button 
+            onClick={() => setChatOpen(true)}
+            className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
           >
             <MessageCircle size={14} />
             <span>Have questions about your score?</span>
-          </a>
+          </button>
         </div>
 
         {/* Footer */}
@@ -413,6 +472,78 @@ export default function DimensionDetailsPage() {
           </div>
         </footer>
       </div>
+
+      {/* Co-Pilot AI Chatbox Drawer */}
+      {chatOpen && (
+        <div className="fixed inset-y-0 right-0 z-[100] w-full max-w-md bg-white shadow-2xl border-l border-slate-150 flex flex-col justify-between animate-fade-in-right">
+          {/* Header */}
+          <div className="h-16 border-b border-slate-100 px-6 flex items-center justify-between bg-brand-900 text-white">
+            <div className="flex items-center gap-2">
+              <div className="h-7 w-7 rounded-lg bg-white/10 flex items-center justify-center">
+                <MessageCircle size={15} className="text-sky-300" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold leading-none">Design Co-Pilot</h4>
+                <span className="text-[9px] text-sky-100/70 font-semibold mt-0.5 block">Calibrated for {activeDim.label}</span>
+              </div>
+            </div>
+            <button 
+              onClick={() => setChatOpen(false)}
+              className="p-1 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
+
+          {/* Messages List */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50">
+            {chatMessages.map((msg, i) => (
+              <div 
+                key={i} 
+                className={`flex flex-col max-w-[85%] ${msg.sender === 'user' ? 'ml-auto items-end' : 'mr-auto items-start'}`}
+              >
+                <div className={`px-4 py-3 rounded-2xl text-xs leading-relaxed ${
+                  msg.sender === 'user' 
+                    ? 'bg-brand-900 text-white rounded-tr-none font-medium' 
+                    : 'bg-white text-slate-800 border border-slate-100 rounded-tl-none font-normal shadow-sm whitespace-pre-wrap'
+                }`}>
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+            {chatLoading && (
+              <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold pl-1 uppercase animate-pulse">
+                <span>Co-Pilot is thinking...</span>
+              </div>
+            )}
+          </div>
+
+          {/* Form Input */}
+          <form onSubmit={handleSendChatMessage} className="p-4 border-t border-slate-100 bg-white">
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 focus-within:border-brand-900/30 focus-within:bg-white transition-all">
+              <input 
+                type="text"
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder={`Ask about your ${activeDim.label} score...`}
+                className="w-full bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none"
+                disabled={chatLoading}
+              />
+              <button 
+                type="submit"
+                disabled={!chatInput.trim() || chatLoading}
+                className="text-[10px] font-bold text-brand-900 hover:text-brand-850 disabled:text-slate-300 transition-colors cursor-pointer uppercase shrink-0"
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+    </div>
+  );
+}
 
     </div>
   );

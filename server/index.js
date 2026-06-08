@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 
 import analyzeRouter from './routes/analyze.js';
 import sendReportRouter from './routes/send-report.js';
+import chatRouter from './routes/chat.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -98,6 +99,7 @@ app.get('/health', (_req, res) => {
 
 app.use('/api/analyze', rateLimiter, analyzeRouter);
 app.use('/api/send-report', sendReportRouter);
+app.use('/api/chat', chatRouter);
 
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
 app.get('*', (req, res) => {
