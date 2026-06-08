@@ -88,9 +88,9 @@ export default function AnalyzingPage() {
     },
     {
       icon: ShieldAlert,
-      title: 'Service Temporarily Unavailable',
-      desc: 'The analysis engine is currently running at capacity.',
-      active: isAnalysisUnavailable,
+      title: 'High Traffic / Server Busy',
+      desc: 'We are experiencing too much traffic right now or the analysis engine is temporarily busy.',
+      active: isAnalysisUnavailable || (!isPrivate && !isInvalidUrl && !isTimeout),
       advice: 'Try again in a few minutes, or use the "Bypass with Mock Report" button to explore the dashboard instantly.'
     }
   ];
@@ -213,35 +213,20 @@ export default function AnalyzingPage() {
                 </p>
               </div>
 
-              {/* Possible reasons checklist */}
-              <div className="space-y-3 max-w-md w-full">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block text-left">Possible reasons:</span>
-                {reasons.map((reason, idx) => {
-                  const ReasonIcon = reason.icon;
-                  return (
-                    <div 
-                      key={idx} 
-                      className={`flex gap-4 p-3.5 border rounded-2xl shadow-sm text-slate-900 text-left transition-all ${
-                        reason.active 
-                          ? 'border-red-200 bg-red-50/40 ring-1 ring-red-200' 
-                          : 'border-slate-100 bg-white opacity-60'
-                      }`}
-                    >
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border ${
-                        reason.active 
-                          ? 'text-red-700 bg-red-100/50 border-red-200' 
-                          : 'text-slate-400 bg-slate-50 border-slate-100'
-                      }`}>
-                        <ReasonIcon size={14} />
-                      </div>
-                      <div>
-                        <h5 className="text-xs font-bold text-slate-900">{reason.title}</h5>
-                        <p className="text-[10px] text-slate-500 font-semibold mt-0.5">{reason.desc}</p>
-                      </div>
+              {activeReason && (
+                <div className="space-y-3 max-w-md w-full">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block text-left">Reason:</span>
+                  <div className="flex gap-4 p-3.5 border border-red-200 bg-red-50/40 ring-1 ring-red-200 rounded-2xl shadow-sm text-slate-900 text-left">
+                    <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border text-red-700 bg-red-100/50 border-red-200">
+                      {React.createElement(activeReason.icon, { size: 14 })}
                     </div>
-                  );
-                })}
-              </div>
+                    <div>
+                      <h5 className="text-xs font-bold text-slate-900">{activeReason.title}</h5>
+                      <p className="text-[10px] text-slate-500 font-semibold mt-0.5">{activeReason.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Dynamic Actionable Guidance / How to Fix */}
               {activeReason && (
