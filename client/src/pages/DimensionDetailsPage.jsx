@@ -160,7 +160,7 @@ export default function DimensionDetailsPage() {
           <Logo onClick={() => navigate('/')} />
           <button 
             onClick={() => navigate('/results')}
-            className="text-xs font-bold text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-medium text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
             <span>← Back to Report Card</span>
           </button>
@@ -386,12 +386,15 @@ export default function DimensionDetailsPage() {
           <div className="flex items-center gap-1.5">
             <HelpCircle size={14} className="text-slate-400" />
             <span>Scores are based on our 6-Dimension Framework.</span>
-            <a href="#" className="text-brand-900 hover:underline">Learn more about how we evaluate portfolios →</a>
+            <a href="/#framework" className="text-brand-900 hover:underline">Learn more about how we evaluate portfolios →</a>
           </div>
-          <button className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition-colors">
+          <a 
+            href="mailto:support@vurdict.com?subject=Questions about my Vurdict portfolio score"
+            className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition-colors"
+          >
             <MessageCircle size={14} />
             <span>Have questions about your score?</span>
-          </button>
+          </a>
         </div>
 
         {/* Footer */}
