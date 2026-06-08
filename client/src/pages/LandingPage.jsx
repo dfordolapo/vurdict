@@ -104,7 +104,7 @@ function Navbar() {
             to="/analyze"
             className="btn-brand flex items-center gap-1.5 md:gap-2 px-3.5 md:px-5 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-medium group whitespace-nowrap shrink-0"
           >
-            <span>Analyze Case Study</span>
+            <span>Analyze Portfolio</span>
             <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
               <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
             </div>
@@ -192,7 +192,7 @@ function HeroSection() {
       <div className="bg-brand-900 py-12 px-6 text-center text-white relative">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
-            <span className="md:whitespace-nowrap">See Your Case Study Through</span> <br className="hidden md:inline" />
+            <span className="md:whitespace-nowrap">See Your Portfolio Through</span> <br className="hidden md:inline" />
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
@@ -269,7 +269,7 @@ function HeroSection() {
               }}
               className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0"
             >
-              <span>Analyze Case Study</span>
+              <span>Analyze Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
                 <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
               </div>
@@ -759,7 +759,7 @@ function FinalCTASection() {
               onClick={() => navigate('/analyze')}
               className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-4 md:py-5 rounded-xl font-medium text-sm md:text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group whitespace-nowrap shrink-0"
             >
-                <span>Analyze Your Case Study</span>
+                <span>Analyze Your Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-900/10">
                 <ArrowRight size={16} className="text-brand-900 transition-all duration-200 group-hover:translate-x-1" />
               </div>
