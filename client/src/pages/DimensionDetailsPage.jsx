@@ -490,7 +490,7 @@ export default function DimensionDetailsPage() {
             </div>
             <button 
               onClick={() => setChatOpen(false)}
-              className="px-3 py-1 rounded-xl text-xs font-semibold text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="px-3 py-1 rounded-xl text-xs font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             >
               Close
             </button>
@@ -508,7 +508,7 @@ export default function DimensionDetailsPage() {
             </div>
             
             <div className="space-y-1.5">
-              <h3 className="text-base font-bold text-slate-900">Co-Pilot is moving in! ✈️</h3>
+              <h3 className="text-base font-semibold text-slate-900">Co-Pilot is moving in! ✈️</h3>
               <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
                 Your AI design bestie is wrapping up school. We'll be chatting here super soon!
               </p>
@@ -524,7 +524,7 @@ export default function DimensionDetailsPage() {
                 className="w-full bg-transparent text-xs text-slate-400 focus:outline-none cursor-not-allowed"
                 disabled
               />
-              <span className="text-[10px] font-bold text-slate-350 uppercase shrink-0 select-none">
+              <span className="text-[10px] font-medium text-slate-350 uppercase shrink-0 select-none">
                 Send
               </span>
             </div>
