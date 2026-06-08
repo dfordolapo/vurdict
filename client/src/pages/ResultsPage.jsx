@@ -30,8 +30,7 @@ import {
   Terminal,
   FileText,
   X,
-  Mail,
-  Lock
+  Mail
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
@@ -43,7 +42,6 @@ export default function ResultsPage() {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [saveEmail, setSaveEmail] = useState('');
   const [saveSubmitted, setSaveSubmitted] = useState(false);
-  const [signupMode, setSignupMode] = useState(false);
 
   const handleDownload = () => {
     const dims = [
@@ -180,7 +178,6 @@ export default function ResultsPage() {
     setSaveModalOpen(false);
     setSaveSubmitted(false);
     setSaveEmail('');
-    setSignupMode(false);
   };
 
   const handleShare = () => {
@@ -658,9 +655,9 @@ export default function ResultsPage() {
                 <div className="w-12 h-12 rounded-2xl bg-brand-900 flex items-center justify-center mb-5">
                   <Bookmark size={22} className="text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-1">Save Your Report</h3>
+                <h3 className="text-xl font-semibold text-slate-900 mb-1">Get Your Report</h3>
                 <p className="text-sm text-slate-500 font-normal mb-6 leading-relaxed">
-                  Enter your email and we'll send you the report. Or create an account to save it to your dashboard.
+                  Enter your email and we'll send you a copy of this report.
                 </p>
 
                 <form onSubmit={handleSaveSubmit} className="space-y-4">
@@ -678,40 +675,23 @@ export default function ResultsPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2.5">
-                    <button
-                      type="submit"
-                      className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
-                    >
-                      <Mail size={14} />
-                      <span>Send to My Email</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSignupMode(true)}
-                      className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-sm font-medium transition-all cursor-pointer"
-                    >
-                      <Lock size={14} />
-                      <span>Create Account & Save</span>
-                    </button>
-                  </div>
+                  <button
+                    type="submit"
+                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
+                  >
+                    <Mail size={14} />
+                    <span>Send to My Email</span>
+                  </button>
                 </form>
-
-                <p className="text-[11px] text-slate-400 font-normal text-center mt-4 leading-relaxed">
-                  Already have an account?{' '}
-                  <button className="text-brand-900 font-semibold hover:underline cursor-pointer">Log in</button>
-                </p>
               </>
             ) : (
               <>
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-5">
                   <CheckCircle size={22} className="text-emerald-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-1">{signupMode ? 'Check your inbox' : 'Report sent!'}</h3>
+                <h3 className="text-xl font-semibold text-slate-900 mb-1">Report sent!</h3>
                 <p className="text-sm text-slate-500 font-normal leading-relaxed">
-                  {signupMode
-                    ? <>We sent a confirmation link to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Click it to activate your account and save your report.</>
-                    : <>We've sent your report to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Check your inbox.</>}
+                  We've sent your report to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Check your inbox.
                 </p>
                 <button
                   onClick={closeSaveModal}
