@@ -105,6 +105,7 @@ export function AnalysisProvider({ children }) {
     experience: 'junior',
     report: null,
     error: null,
+    errorCode: null,
     isMock: false
   });
 
@@ -140,6 +141,7 @@ export function AnalysisProvider({ children }) {
       experience,
       report: null,
       error: null,
+      errorCode: null,
       isMock: forceMock
     });
 
@@ -170,7 +172,9 @@ export function AnalysisProvider({ children }) {
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(data.error || `Server returned status ${response.status}`);
+        const errObj = new Error(data.error || 'Something went wrong while analyzing this portfolio. Please try again.');
+        errObj.code = data.code || 'UNEXPECTED_FAILURE';
+        throw errObj;
       }
 
       const data = await response.json();
@@ -180,18 +184,23 @@ export function AnalysisProvider({ children }) {
           report: data.evaluation
         });
       } else {
-        throw new Error("Invalid response schema from analysis server.");
+        const errObj = new Error("Something went wrong while analyzing this portfolio. Please try again.");
+        errObj.code = 'UNEXPECTED_FAILURE';
+        throw errObj;
       }
     } catch (err) {
       console.error('Analysis error:', err);
       let errMsg = err.message;
+      let errCode = err.code || 'UNEXPECTED_FAILURE';
       if (err.name === 'AbortError') {
-        errMsg = 'The request timed out because portfolio content extraction took too long.';
+        errMsg = 'This portfolio took too long to analyze. Please try again.';
+        errCode = 'TIMEOUT';
       }
       
       updateState({
         status: 'error',
-        error: errMsg
+        error: errMsg,
+        errorCode: errCode
       });
     }
   };
@@ -203,6 +212,7 @@ export function AnalysisProvider({ children }) {
       goal: 'get_hired',
       report: null,
       error: null,
+      errorCode: null,
       isMock: false
     });
     try {
@@ -216,6 +226,7 @@ export function AnalysisProvider({ children }) {
       status: 'completed',
       report: mock,
       error: null,
+      errorCode: null,
       isMock: true
     });
   };

@@ -23,12 +23,16 @@ router.post('/', async (req, res, next) => {
 
     // ── Validation ──────────────────────────────────────────────────────────
     if (!url || typeof url !== 'string') {
-      return res.status(400).json({ error: 'A valid portfolio URL is required.' });
+      return res.status(400).json({
+        error: 'Please enter a valid portfolio URL.',
+        code: 'INVALID_URL'
+      });
     }
 
     if (!goal || !VALID_GOALS.includes(goal)) {
       return res.status(400).json({
-        error: `A valid goal is required. Must be one of: ${VALID_GOALS.join(', ')}.`,
+        error: 'Something went wrong while analyzing this portfolio. Please try again.',
+        code: 'UNEXPECTED_FAILURE'
       });
     }
 
@@ -36,10 +40,16 @@ router.post('/', async (req, res, next) => {
     try {
       const parsedUrl = new URL(url);
       if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
-        return res.status(400).json({ error: 'Only HTTP and HTTPS URLs are supported.' });
+        return res.status(400).json({
+          error: 'Please enter a valid portfolio URL.',
+          code: 'INVALID_URL'
+        });
       }
     } catch {
-      return res.status(400).json({ error: 'The provided URL is not valid.' });
+      return res.status(400).json({
+        error: 'Please enter a valid portfolio URL.',
+        code: 'INVALID_URL'
+      });
     }
 
     console.log(`[Analyze] Goal: ${goal} | Level: ${experienceLabel} | URL: ${url}`);

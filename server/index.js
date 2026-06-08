@@ -94,11 +94,42 @@ app.get('*', (req, res) => {
 
 // ── Global Error Handler ────────────────────────────────────────────────────
 app.use((err, _req, res, _next) => {
+  // Always log the actual stack trace/message internally
   console.error('[Server Error]', err.stack || err.message);
-  const isDev = process.env.NODE_ENV === 'development';
-  const isCategorized = err.message && (err.message.startsWith('Jina') || err.message.startsWith('Gemini'));
+
+  let message = 'Something went wrong while analyzing this portfolio. Please try again.';
+  let code = 'UNEXPECTED_FAILURE';
+
+  if (err.message) {
+    if (err.message.includes('JinaTimeout') || err.message.toLowerCase().includes('timeout')) {
+      message = 'This portfolio took too long to analyze. Please try again.';
+      code = 'TIMEOUT';
+    } else if (err.message.includes('JinaNotFound') || err.message.includes('404')) {
+      message = 'Please enter a valid portfolio URL.';
+      code = 'INVALID_URL';
+    } else if (
+      err.message.includes('JinaForbidden') ||
+      err.message.includes('JinaError') ||
+      err.message.includes('forbidden') ||
+      err.message.includes('403') ||
+      err.message.includes('insufficient content')
+    ) {
+      message = 'We couldn’t access this portfolio. Check that the link is public and try again.';
+      code = 'PRIVATE_PORTFOLIO';
+    } else if (
+      err.message.includes('GeminiQuotaExceeded') ||
+      err.message.toLowerCase().includes('quota') ||
+      err.message.toLowerCase().includes('limit') ||
+      err.message.includes('429')
+    ) {
+      message = 'We’re unable to analyze portfolios right now. Please try again later.';
+      code = 'ANALYSIS_UNAVAILABLE';
+    }
+  }
+
   res.status(err.status || 500).json({
-    error: isDev || isCategorized ? err.message : 'An error occurred during portfolio analysis. Please try again later.',
+    error: message,
+    code: code
   });
 });
 

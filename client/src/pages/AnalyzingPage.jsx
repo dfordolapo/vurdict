@@ -27,7 +27,9 @@ import {
   Brain,
   Palette,
   BarChart2,
-  Terminal
+  Terminal,
+  Home,
+  Mail
 } from 'lucide-react';
 
 export default function AnalyzingPage() {
@@ -54,47 +56,42 @@ export default function AnalyzingPage() {
   ];
 
   const getCleanErrorMessage = (errStr) => {
-    if (!errStr) return "Something prevented us from accessing or understanding the portfolio at this link.";
-    const colonIndex = errStr.indexOf(':');
-    if (colonIndex !== -1) {
-      return errStr.substring(colonIndex + 1).trim();
-    }
-    return errStr;
+    return errStr || "Something went wrong while analyzing this portfolio. Please try again.";
   };
 
-  const isJinaTimeout = state.error?.startsWith('JinaTimeout');
-  const isJinaForbidden = state.error?.startsWith('JinaForbidden');
-  const isJinaNotFound = state.error?.startsWith('JinaNotFound');
-  const isGeminiQuota = state.error?.startsWith('GeminiQuotaExceeded');
+  const isPrivate = state.errorCode === 'PRIVATE_PORTFOLIO';
+  const isInvalidUrl = state.errorCode === 'INVALID_URL';
+  const isTimeout = state.errorCode === 'TIMEOUT';
+  const isAnalysisUnavailable = state.errorCode === 'ANALYSIS_UNAVAILABLE';
 
   const reasons = [
     {
       icon: Lock,
-      title: 'Private or Restricted Access',
-      desc: 'The portfolio site requires a password, login, or has access restrictions.',
-      active: isJinaForbidden,
+      title: 'Restricted Access',
+      desc: 'The portfolio site might require a login, password, or has access limitations.',
+      active: isPrivate,
       advice: 'Ensure your portfolio is public and accessible without credentials.'
     },
     {
       icon: Link2,
-      title: 'Unsupported or Invalid Link',
-      desc: "We couldn't retrieve readable content from this URL. Make sure it contains text.",
-      active: isJinaNotFound,
-      advice: 'Verify the link opens correctly in a browser. Try copy-pasting the exact URL.'
+      title: 'Invalid URL',
+      desc: 'The URL entered might be incorrect or unreachable.',
+      active: isInvalidUrl,
+      advice: 'Double-check the spelling of the URL and verify it opens in your browser.'
     },
     {
       icon: Clock,
-      title: 'Portfolio Still Loading',
-      desc: 'The website took too long to load or Jina Reader timed out.',
-      active: isJinaTimeout,
-      advice: 'Wait a moment and try again. Your portfolio server might be slow.'
+      title: 'Connection Timeout',
+      desc: 'The website took too long to load or respond.',
+      active: isTimeout,
+      advice: 'Please wait a moment and try again. Your portfolio server might be running slowly.'
     },
     {
       icon: ShieldAlert,
-      title: 'API Limit Exceeded',
-      desc: 'The Gemini AI evaluation service has exceeded its daily free request quota.',
-      active: isGeminiQuota,
-      advice: 'Use the "Bypass with Mock Report" button below to test the UI and dashboard instantly.'
+      title: 'Service Temporarily Unavailable',
+      desc: 'The analysis engine is currently running at capacity.',
+      active: isAnalysisUnavailable,
+      advice: 'Try again in a few minutes, or use the "Bypass with Mock Report" button to explore the dashboard instantly.'
     }
   ];
 
@@ -256,32 +253,52 @@ export default function AnalyzingPage() {
                 </div>
               )}
 
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full max-w-md justify-center">
+              <div className="flex flex-wrap items-center gap-3 pt-2 w-full max-w-md justify-center">
                 <button
-                  onClick={() => navigate('/analyze')}
-                  className="w-full sm:w-auto rounded-xl btn-brand flex items-center justify-center gap-2 px-6 py-3.5 text-xs font-medium shadow-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  onClick={() => startAnalysis(url, goal, experience, mock)}
+                  className="w-full sm:w-auto rounded-xl btn-brand flex items-center justify-center gap-2 px-5 py-3 text-xs font-semibold shadow-md transition-all cursor-pointer whitespace-nowrap"
                 >
-                  <RotateCw size={14} className="text-white" />
-                  <span>Try Another URL</span>
+                  <RotateCw size={13} className="text-white" />
+                  <span>Try Again</span>
+                </button>
+
+                <button
+                  onClick={() => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)}
+                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap"
+                >
+                  <Link2 size={13} className="text-slate-500" />
+                  <span>Edit URL</span>
                 </button>
                 
                 <button
                   onClick={toggleMockFallback}
-                  className={`w-full sm:w-auto rounded-xl flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${
-                    isGeminiQuota 
-                      ? 'bg-brand-900 text-white hover:bg-brand-800 shadow-md scale-105 ring-2 ring-sky-300' 
+                  className={`w-full sm:w-auto rounded-xl flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    isAnalysisUnavailable 
+                      ? 'bg-brand-900 text-white hover:bg-brand-800 shadow-md ring-2 ring-sky-300' 
                       : 'bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900'
                   }`}
                 >
-                  <Sparkles size={14} className={isGeminiQuota ? 'text-white' : 'text-brand-900'} />
+                  <Sparkles size={13} className={isAnalysisUnavailable ? 'text-white' : 'text-brand-900'} />
                   <span>Bypass with Mock Report</span>
                 </button>
               </div>
 
-              <div className="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
-                <Clock size={12} />
-                <span>Need help? Visit our</span>
-                <a href="#" className="text-brand-900 hover:underline">Help Center ↗</a>
+              <div className="flex items-center gap-6 pt-4 text-xs font-bold text-slate-400">
+                <button 
+                  onClick={() => navigate('/')} 
+                  className="flex items-center gap-1.5 hover:text-brand-900 transition-colors"
+                >
+                  <Home size={13} />
+                  <span>Return Home</span>
+                </button>
+                <span className="h-3 w-px bg-slate-200" />
+                <a 
+                  href="mailto:support@vurdict.com?subject=Vurdict%20Portfolio%20Analysis%20Issue" 
+                  className="flex items-center gap-1.5 hover:text-brand-900 transition-colors"
+                >
+                  <Mail size={13} />
+                  <span>Contact Support</span>
+                </a>
               </div>
             </div>
 
