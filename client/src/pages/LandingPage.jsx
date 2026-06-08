@@ -441,7 +441,7 @@ function HowItWorksSection() {
            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
             Case Study Feedback in <span className="text-[#3b82f6]">Minutes</span>
           </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Identify the changes most likely to improve your chances of getting noticed
           </p>
         </div>
@@ -515,8 +515,8 @@ function FrameworkSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
             The 6-Dimension Evaluation Framework
           </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            We review what actually determines your case study's success
+          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+            We review what actually determines your portfolio's success
           </p>
         </div>
 
