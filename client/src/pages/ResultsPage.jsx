@@ -36,6 +36,35 @@ import WaveDivider from '../components/WaveDivider';
 export default function ResultsPage() {
   const navigate = useNavigate();
   const { state, resetAnalysis, toggleMockFallback } = useAnalysis();
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    try {
+      const payload = {
+        url: state.url,
+        goal: state.goal,
+        experience: state.experience,
+        report: state.report,
+        isMock: state.isMock
+      };
+      
+      // Safe UTF-8 to Base64 serialization
+      const jsonString = JSON.stringify(payload);
+      const utf8Bytes = new TextEncoder().encode(jsonString);
+      let binString = "";
+      for (let i = 0; i < utf8Bytes.length; i++) {
+        binString += String.fromCharCode(utf8Bytes[i]);
+      }
+      const serialized = btoa(binString);
+      const shareUrl = `${window.location.origin}/results?share=${serialized}`;
+      
+      navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error('Failed to generate share link', e);
+    }
+  };
 
   // Direct access safety: seed with mock if empty
   useEffect(() => {
@@ -219,8 +248,12 @@ export default function ResultsPage() {
                 <Bookmark size={14} />
                 <span>Save</span>
               </button>
-              <button className="flex items-center justify-center p-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-white/80 hover:text-white transition-all cursor-pointer hover:scale-[1.02] active:scale-100">
+              <button 
+                onClick={handleShare}
+                className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
+              >
                 <Share2 size={14} />
+                <span>{copied ? 'Link Copied!' : 'Share Review'}</span>
               </button>
             </div>
           </div>

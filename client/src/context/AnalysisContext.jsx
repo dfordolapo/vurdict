@@ -109,8 +109,37 @@ export function AnalysisProvider({ children }) {
     isMock: false
   });
 
-  // Load state on mount from sessionStorage
+  // Load state on mount (from share query param or sessionStorage)
   useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const shareData = params.get('share');
+      if (shareData) {
+        // Safe Base64 decoding (supporting UTF-8 characters)
+        const binString = atob(shareData);
+        const bytes = new Uint8Array(binString.length);
+        for (let i = 0; i < binString.length; i++) {
+          bytes[i] = binString.charCodeAt(i);
+        }
+        const jsonString = new TextDecoder().decode(bytes);
+        const decoded = JSON.parse(jsonString);
+
+        updateState({
+          status: 'completed',
+          url: decoded.url || 'yourportfolio.com',
+          goal: decoded.goal || 'get_hired',
+          experience: decoded.experience || 'junior',
+          report: decoded.report,
+          error: null,
+          errorCode: null,
+          isMock: decoded.isMock || false
+        });
+        return;
+      }
+    } catch (e) {
+      console.error('Failed to parse share data from URL:', e);
+    }
+
     try {
       const saved = sessionStorage.getItem('vurdict_analysis');
       if (saved) {

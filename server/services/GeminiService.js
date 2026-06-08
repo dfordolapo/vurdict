@@ -47,11 +47,41 @@ function buildUserPrompt(goal, experienceLabel, portfolioContent) {
     improve_portfolio: 'Improve Portfolio Quality',
   };
   const goalLabel = goalLabels[goal] || 'Improve Portfolio Quality';
+
+  // Inject specific prompt calibration details based on goals and experience level
+  let goalInstructions = '';
+  if (goal === 'get_hired') {
+    goalInstructions = `- **Hiring Perspective**: Evaluate from the perspective of an engineering-focused tech company. Look for B2B/B2C SaaS complexity, team collaboration, and hard evidence of outcome metrics (e.g., conversion rates, time-on-task).`;
+  } else if (goal === 'win_clients') {
+    goalInstructions = `- **Client Conversion Perspective**: Evaluate from the perspective of a high-paying freelance client. Look for a clear value proposition, service clarity, social proof (testimonials, logos), and a low-friction booking funnel.`;
+  } else {
+    goalInstructions = `- **Craft Perspective**: Evaluate from a peer-reviewer perspective. Look for pure visual UI quality, layout grid systems, typographic refinement, and design system logic.`;
+  }
+
+  let levelInstructions = '';
+  if (experienceLabel === 'Junior') {
+    levelInstructions = `- **Junior Calibration**: Grade leniently on business outcome metrics and positioning specificity, but strictly expect sound process visibility, execution quality, and clean problem framing.`;
+  } else if (experienceLabel === 'Mid-Level') {
+    levelInstructions = `- **Mid-Level Calibration**: Expect solid visual cleanliness, independent user research execution, clear wireframing, and structured case studies.`;
+  } else if (experienceLabel === 'Senior') {
+    levelInstructions = `- **Senior Calibration**: Grade strictly on business outcomes (conversions, metrics), niche specialization, and high-complexity workflows. Do not award high marks unless explicit outcome data is documented in the portfolio.`;
+  }
+
   return `## User Goal
 ${goalLabel}
+${goalInstructions}
 
 ## Experience Level
 ${experienceLabel}
+${levelInstructions}
+
+## Evaluation Rubric Reference
+- **problem_framing**: Clarity of user problem, constraints, and business context.
+- **process_visibility**: Evidence of messy/iterative research, wireframes, user testing, and pivot decisions.
+- **outcome_impact**: Measurable business metrics (conversion, speed) or explicit user success validation.
+- **visual_quality**: Typographic cleanliness, grid systems, personality, modern premium dark/light harmony.
+- **niche_positioning**: Focus area definition (e.g. B2B SaaS, mobile health) and supporting evidence.
+- **trust_cta**: Social proof, credibility validation (awards, past logos), and strong next-step CTAs.
 
 ## Portfolio Content (raw text data to evaluate)
 <portfolio_content>

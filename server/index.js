@@ -137,3 +137,5 @@ app.use((err, _req, res, _next) => {
 app.listen(PORT, () => {
   console.log(`✅ Vurdict server running on http://localhost:${PORT}`);
 });
+
+export default app;
