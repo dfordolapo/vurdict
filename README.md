@@ -1,70 +1,87 @@
 # Vurdict
 
-AI-powered portfolio review for product designers. Paste a URL, select your goal, and receive structured feedback based on a 6-dimension evaluation framework.
+Vurdict is an AI-powered, goal-aware portfolio review application designed specifically for product designers. By pasting a portfolio URL (such as Behance, dribbble, or a personal website), designers receive high-fidelity, objective feedback based on a structured 6-dimension evaluation framework.
 
-## Project Structure
+---
+
+## 🏗️ Project Architecture & Structure
+
+The repository supports a unified staging structure for ease of local testing and production deployment:
 
 ```
-├── client/          # React (Vite) frontend
-├── server/          # Express API server
+├── client/          # React (Vite + TypeScript) frontend
+├── server/          # Express API server (serves the built client)
 ├── nextjs/          # Next.js frontend (alternative implementation)
-├── PRD.md           # Product requirements
-├── AGENTS.md        # AI agent development context
-├── AI_EVALUATION_PROMPT.md
-├── MARKET_INTELLIGENCE.md
-└── RUBRIC.md
+├── PRD.md           # Product requirements document
+├── AGENTS.md        # AI agent development context & MVP boundaries
+├── AI_EVALUATION_PROMPT.md  # Core prompt definitions for the LLM
+├── RUBRIC.md        # The evaluation criteria for the 6-dimension review
+└── MARKET_INTELLIGENCE.md  # Target user and positioning details
 ```
 
-## Tech Stack
+### 🔗 Unified Origin Setup
+To bypass mobile/tunnel CORS issues, the backend is configured to host the static assets directly. The Express server serves compiled static files from `client/dist`. Relative routing is used for API communication, eliminating cross-origin request issues.
 
-- **Frontend**: React (Vite) + Tailwind CSS
-- **Backend**: Node.js + Express
-- **AI**: Claude API (Anthropic)
-- **Content Extraction**: Jina Reader
-- **Target**: Vercel
+---
 
-## Getting Started
+## 🛠️ Tech Stack
 
-### Client
+- **Frontend:** React (Vite) + Tailwind CSS + Lucide Icons + TypeScript
+- **Backend:** Node.js + Express
+- **AI Core:** Google Gemini API (`gemini-2.5-flash` via official `@google/genai` SDK)
+- **Scraping:** Jina Reader API (high-fidelity content extraction)
+- **Live Previews:** `thum.io` (for live webpage screenshot generation on the results dashboard)
 
+---
+
+## 🚀 Getting Started
+
+To run the unified application locally:
+
+### 1. Build the Frontend Assets
+Generate the client distribution bundle so the backend can serve it:
 ```bash
 cd client
-cp .env .env.local    # configure environment
 npm install
-npm run dev
+npm run build
 ```
 
-### Server
-
+### 2. Configure the Backend
+Navigate to the server folder, configure your keys, and install dependencies:
 ```bash
-cd server
-cp .env.example .env  # add your API keys
-npm install
-npm run dev
+cd ../server
+cp .env.example .env
+```
+Inside the `server/.env` file, populate your credentials:
+```env
+PORT=3001
+GEMINI_API_KEY=your_gemini_api_key
+# Optional: add other endpoints or override defaults
 ```
 
-### Next.js
-
+### 3. Start the Server
+Run the watch/dev server:
 ```bash
-cd nextjs
-cp .env.local.example .env.local
 npm install
 npm run dev
 ```
+The unified application will be live at **`http://localhost:3001`**.
 
-## MVP Scope
+---
 
-- **Role**: Product Designer only
-- **Input**: URL only (no PDF uploads)
-- **Auth**: None — stateless analysis
-- **Storage**: No database — results are transient
-- **Design**: Dark mode only (Linear-style)
+## 📊 Evaluation Dimensions
 
-## Evaluation Dimensions
+Vurdict grades portfolios against six distinct hiring dimensions:
+1. **Structural Logic:** Case study outline, clarity, and information hierarchy.
+2. **Critical Thinking:** Problem definition, user empathy, and validation process.
+3. **Visual Execution:** Layout, typography, component styling, and UX patterns.
+4. **Impact Evidence:** Key results, metrics, learnings, and performance data.
+5. **Narrative Tone:** Professionalism, readability, storytelling, and clarity.
+6. **Positioning Clarity:** Alignment with role expectations and career experience level.
 
-1. Structural Logic
-2. Critical Thinking
-3. Visual Execution
-4. Impact Evidence
-5. Narrative Tone
-6. Positioning Clarity
+---
+
+## ⚙️ MVP Boundaries & Core Rules
+* **Role Support:** Exclusively Product Designer roles.
+* **Stateless:** No user accounts, database persistence, or long-term storage (results are transient).
+* **Dark Mode Only:** A premium, "Linear-style" design aesthetics built with gradients, shadows, and glassmorphism.
