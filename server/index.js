@@ -54,18 +54,23 @@ function rateLimiter(req, res, next) {
 }
 
 // ── Middleware ──────────────────────────────────────────────────────────────
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  'http://localhost:3001',
-  'http://localhost:5173',
-].filter(Boolean);
-
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Blocked by CORS policy'));
+    if (!origin) return callback(null, true);
+    
+    try {
+      const parsedOrigin = new URL(origin);
+      const isLocalhost = parsedOrigin.hostname === 'localhost' || parsedOrigin.hostname === '127.0.0.1';
+      const isLocalTunnel = parsedOrigin.hostname.endsWith('.loca.lt') || parsedOrigin.hostname.endsWith('.ngrok-free.app');
+      const isAllowedProd = process.env.CLIENT_URL && origin === process.env.CLIENT_URL;
+
+      if (isLocalhost || isLocalTunnel || isAllowedProd) {
+        callback(null, true);
+      } else {
+        callback(new Error('Blocked by CORS policy'));
+      }
+    } catch {
+      callback(new Error('Invalid CORS origin'));
     }
   },
   methods: ['GET', 'POST'],

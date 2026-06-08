@@ -1,6 +1,19 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const getApiUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== 'undefined') {
+    if (window.location.port === '5173') {
+      return 'http://localhost:3001';
+    }
+    return '';
+  }
+  return 'http://localhost:3001';
+};
+
+const API_URL = getApiUrl();
 
 export const AnalysisContext = createContext(undefined);
 
