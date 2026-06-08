@@ -53,6 +53,54 @@ export default function AnalyzingPage() {
     { label: 'Positioning Clarity', desc: 'Reviewing specialization, target alignment, and role definition.' }
   ];
 
+  const getCleanErrorMessage = (errStr) => {
+    if (!errStr) return "Something prevented us from accessing or understanding the portfolio at this link.";
+    const colonIndex = errStr.indexOf(':');
+    if (colonIndex !== -1) {
+      return errStr.substring(colonIndex + 1).trim();
+    }
+    return errStr;
+  };
+
+  const isJinaTimeout = state.error?.startsWith('JinaTimeout');
+  const isJinaForbidden = state.error?.startsWith('JinaForbidden');
+  const isJinaNotFound = state.error?.startsWith('JinaNotFound');
+  const isGeminiQuota = state.error?.startsWith('GeminiQuotaExceeded');
+
+  const reasons = [
+    {
+      icon: Lock,
+      title: 'Private or Restricted Access',
+      desc: 'The portfolio site requires a password, login, or has access restrictions.',
+      active: isJinaForbidden,
+      advice: 'Ensure your portfolio is public and accessible without credentials.'
+    },
+    {
+      icon: Link2,
+      title: 'Unsupported or Invalid Link',
+      desc: "We couldn't retrieve readable content from this URL. Make sure it contains text.",
+      active: isJinaNotFound,
+      advice: 'Verify the link opens correctly in a browser. Try copy-pasting the exact URL.'
+    },
+    {
+      icon: Clock,
+      title: 'Portfolio Still Loading',
+      desc: 'The website took too long to load or Jina Reader timed out.',
+      active: isJinaTimeout,
+      advice: 'Wait a moment and try again. Your portfolio server might be slow.'
+    },
+    {
+      icon: ShieldAlert,
+      title: 'API Limit Exceeded',
+      desc: 'The Gemini AI evaluation service has exceeded its daily free request quota.',
+      active: isGeminiQuota,
+      advice: 'Use the "Bypass with Mock Report" button below to test the UI and dashboard instantly.'
+    }
+  ];
+
+  const activeReason = reasons.find(r => r.active);
+
+
   // Kick off analysis on mount
   useEffect(() => {
     startAnalysis(url, goal, experience, mock);
@@ -160,26 +208,33 @@ export default function AnalyzingPage() {
             {/* Left panel */}
             <div className="lg:col-span-6 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-tight text-balance">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 leading-tight text-balance">
                   We couldn't analyze this portfolio.
                 </h1>
                 <p className="mt-2 text-slate-500 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
-                  {state.error || "Something prevented us from accessing or understanding the portfolio at this link."}
+                  {getCleanErrorMessage(state.error)}
                 </p>
               </div>
 
               {/* Possible reasons checklist */}
               <div className="space-y-3 max-w-md w-full">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block text-left">Possible reasons:</span>
-                {[
-                  { icon: Lock, title: 'Private or Restricted Access', desc: 'The portfolio may be private or behind a login.', color: 'text-red-500 bg-red-50 border-red-100' },
-                  { icon: Link2, title: 'Unsupported or Invalid Link', desc: "We couldn't retrieve content from this URL.", color: 'text-red-500 bg-red-50 border-red-100' },
-                  { icon: Clock, title: 'Portfolio Still Loading', desc: 'The site may be temporarily unavailable.', color: 'text-red-500 bg-red-50 border-red-100' }
-                ].map((reason, idx) => {
+                {reasons.map((reason, idx) => {
                   const ReasonIcon = reason.icon;
                   return (
-                    <div key={idx} className="flex gap-4 p-3.5 bg-white border border-slate-100 rounded-2xl shadow-sm text-slate-900 text-left">
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border ${reason.color}`}>
+                    <div 
+                      key={idx} 
+                      className={`flex gap-4 p-3.5 border rounded-2xl shadow-sm text-slate-900 text-left transition-all ${
+                        reason.active 
+                          ? 'border-red-200 bg-red-50/40 ring-1 ring-red-200' 
+                          : 'border-slate-100 bg-white opacity-60'
+                      }`}
+                    >
+                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                        reason.active 
+                          ? 'text-red-700 bg-red-100/50 border-red-200' 
+                          : 'text-slate-400 bg-slate-50 border-slate-100'
+                      }`}>
                         <ReasonIcon size={14} />
                       </div>
                       <div>
@@ -190,6 +245,16 @@ export default function AnalyzingPage() {
                   );
                 })}
               </div>
+
+              {/* Dynamic Actionable Guidance / How to Fix */}
+              {activeReason && (
+                <div className="w-full max-w-md bg-blue-50/50 border border-blue-150 p-4 rounded-2xl text-left space-y-1">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-blue-700 block">How to fix this:</span>
+                  <p className="text-xs text-slate-700 font-semibold leading-relaxed">
+                    {activeReason.advice}
+                  </p>
+                </div>
+              )}
 
               <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full max-w-md justify-center">
                 <button
@@ -202,9 +267,13 @@ export default function AnalyzingPage() {
                 
                 <button
                   onClick={toggleMockFallback}
-                  className="w-full sm:w-auto rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  className={`w-full sm:w-auto rounded-xl flex items-center justify-center gap-1.5 px-6 py-3.5 text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+                    isGeminiQuota 
+                      ? 'bg-brand-900 text-white hover:bg-brand-800 shadow-md scale-105 ring-2 ring-sky-300' 
+                      : 'bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900'
+                  }`}
                 >
-                  <Sparkles size={14} className="text-brand-900" />
+                  <Sparkles size={14} className={isGeminiQuota ? 'text-white' : 'text-brand-900'} />
                   <span>Bypass with Mock Report</span>
                 </button>
               </div>

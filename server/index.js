@@ -96,8 +96,9 @@ app.get('*', (req, res) => {
 app.use((err, _req, res, _next) => {
   console.error('[Server Error]', err.stack || err.message);
   const isDev = process.env.NODE_ENV === 'development';
+  const isCategorized = err.message && (err.message.startsWith('Jina') || err.message.startsWith('Gemini'));
   res.status(err.status || 500).json({
-    error: isDev ? err.message : 'An error occurred during portfolio analysis. Please try again later.',
+    error: isDev || isCategorized ? err.message : 'An error occurred during portfolio analysis. Please try again later.',
   });
 });
 

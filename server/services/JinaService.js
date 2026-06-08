@@ -43,18 +43,18 @@ export async function extractContent(url) {
     return content;
   } catch (err) {
     if (err.code === 'ECONNABORTED' || err.message.includes('timeout')) {
-      throw new Error('The portfolio URL timed out. Please check it is accessible and try again.');
+      throw new Error('JinaTimeout: The portfolio URL timed out. Please check it is accessible and try again.');
     }
 
     if (err.response?.status === 404) {
-      throw new Error('The portfolio URL returned a 404 — page not found.');
+      throw new Error('JinaNotFound: The portfolio URL returned a 404 — page not found.');
     }
 
     if (err.response?.status === 403) {
-      throw new Error('Access to the portfolio URL was forbidden (403). It may require a login.');
+      throw new Error('JinaForbidden: Access to the portfolio URL was forbidden (403). It may require a login.');
     }
 
     // Re-throw enriched errors
-    throw new Error(err.message || 'Failed to extract content from the provided URL.');
+    throw new Error('JinaError: ' + (err.message || 'Failed to extract content from the provided URL.'));
   }
 }

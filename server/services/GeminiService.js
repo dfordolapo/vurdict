@@ -122,6 +122,12 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent)
           const parsedErr = JSON.parse(err.message);
           cleanMsg = parsedErr.error?.message || cleanMsg;
         } catch {}
+
+        const isQuota = cleanMsg.toLowerCase().includes('quota') || cleanMsg.toLowerCase().includes('limit') || cleanMsg.includes('429');
+        if (isQuota) {
+          throw new Error('GeminiQuotaExceeded: Google Gemini API quota has been exceeded. Please try again in a few minutes or use Mock Mode.');
+        }
+
         throw new Error(cleanMsg || 'Gemini service is currently unavailable. Please try again.');
       }
       
