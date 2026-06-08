@@ -62,8 +62,18 @@ export default function AnalyzePage() {
       return;
     }
 
-    const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/i;
-    if (!urlPattern.test(url.trim())) {
+    let trimmedUrl = url.trim();
+    if (!/^https?:\/\//i.test(trimmedUrl)) {
+      trimmedUrl = 'https://' + trimmedUrl;
+    }
+
+    try {
+      const parsedUrl = new URL(trimmedUrl);
+      if (!parsedUrl.hostname || !parsedUrl.hostname.includes('.')) {
+        setError('Please enter a valid URL (e.g., alexdesign.co)');
+        return;
+      }
+    } catch {
       setError('Please enter a valid URL (e.g., alexdesign.co)');
       return;
     }

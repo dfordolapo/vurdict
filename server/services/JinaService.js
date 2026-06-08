@@ -24,6 +24,7 @@ export async function extractContent(url) {
   try {
     const response = await axios.get(jinaUrl, {
       timeout: JINA_TIMEOUT_MS,
+      maxContentLength: 5 * 1024 * 1024, // limit payload size to 5MB to prevent OOM DoS
       headers: {
         Accept: 'text/plain',
         // Uncomment and set if you have a Jina API key:
