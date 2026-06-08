@@ -159,15 +159,15 @@ export default function DimensionDetailsPage() {
 
   // Initialize chat with a welcome message explaining the specific context of the active dimension
   useEffect(() => {
-    if (chatOpen && chatMessages.length === 0) {
+    if (chatOpen) {
       setChatMessages([
         {
           sender: 'ai',
-          text: `Hi there! I'm your Vurdict Design Co-Pilot. I see you're looking at the **${activeDim.label}** dimension, where you scored **${activeData.score}/100**.\n\nAsk me anything about how this score was determined, how to resolve the issues found, or request concrete rewriting examples for your case study!`
+          text: `Hey! I'm your Vurdict Design Co-Pilot. I see you're looking at the **${activeDim.label}** dimension, where you scored **${activeData.score}/100**.\n\nAsk me anything about how this score was determined, how to resolve the issues found, or request concrete rewriting examples for your case study!`
         }
       ]);
     }
-  }, [chatOpen, activeDim, activeData, chatMessages.length]);
+  }, [chatOpen, activeDim, activeData.score]);
 
   const handleSendChatMessage = async (e) => {
     e.preventDefault();
