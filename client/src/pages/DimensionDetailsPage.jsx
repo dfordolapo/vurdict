@@ -485,7 +485,7 @@ export default function DimensionDetailsPage() {
               </div>
               <div>
                 <h4 className="text-xs font-bold leading-none">Design Co-Pilot</h4>
-                <span className="text-[9px] text-sky-100/70 font-semibold mt-0.5 block">Your Design Lead Best Friend</span>
+                <span className="text-[9px] text-sky-100/70 font-normal mt-0.5 block">Your Design Lead Best Friend</span>
               </div>
             </div>
             <button 
