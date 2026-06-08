@@ -544,7 +544,3 @@ export default function DimensionDetailsPage() {
     </div>
   );
 }
-
-    </div>
-  );
-}
