@@ -230,11 +230,24 @@ export default function AnalyzingPage() {
 
       {state.status === 'error' && minTimeElapsed ? (
         /* Light mode Error Page body */
-        <div className="bg-slate-50 py-12 px-6 md:px-12 flex-1 relative overflow-hidden z-10 flex flex-col justify-center">
-          {/* Subtle light blue background glows */}
-          <div className="absolute w-80 h-80 rounded-full bg-blue-500/5 blur-[100px] top-1/4 left-1/4" />
-          <div className="absolute w-80 h-80 rounded-full bg-red-500/5 blur-[100px] top-1/2 right-1/4" />
-          
+        <div className="bg-white py-12 px-6 md:px-12 flex-1 relative overflow-hidden z-10 flex flex-col justify-center">
+          {/* Navy squiggly accent */}
+          <svg
+            className="absolute top-6 right-6 opacity-20 pointer-events-none select-none"
+            width="120" height="48" viewBox="0 0 120 48" fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 24 C14 8, 26 40, 40 24 C54 8, 66 40, 80 24 C94 8, 106 40, 116 24"
+              stroke="#172554" strokeWidth="3.5" strokeLinecap="round" fill="none"
+            />
+            <path
+              d="M4 36 C14 20, 26 52, 40 36 C54 20, 66 52, 80 36 C94 20, 106 52, 116 36"
+              stroke="#172554" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5"
+            />
+          </svg>
+
           <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-20">
             {/* Left panel */}
             <div className="lg:col-span-6 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
@@ -295,11 +308,10 @@ export default function AnalyzingPage() {
 
             {/* Right panel warning graphic */}
             <div className="lg:col-span-6 flex items-center justify-center relative py-12">
-              <div className="absolute w-72 h-72 rounded-full bg-red-500/5 blur-[80px]" />
               <img 
                 src={errorIllustration} 
                 alt="Broken magnifying glass illustration" 
-                className="w-full max-w-[600px] h-auto select-none animate-float-slow relative z-10" 
+                className="w-full max-w-[600px] h-auto select-none animate-float-slow" 
               />
             </div>
           </div>

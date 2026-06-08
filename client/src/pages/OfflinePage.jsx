@@ -7,13 +7,26 @@ export default function OfflinePage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between select-none font-sans relative overflow-hidden">
-      {/* Light Glow Effects */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-indigo-500/5 blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none font-sans relative overflow-hidden">
+      {/* Navy squiggly accent */}
+      <svg
+        className="absolute top-6 right-6 opacity-15 pointer-events-none select-none"
+        width="120" height="48" viewBox="0 0 120 48" fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M4 24 C14 8, 26 40, 40 24 C54 8, 66 40, 80 24 C94 8, 106 40, 116 24"
+          stroke="#172554" strokeWidth="3.5" strokeLinecap="round" fill="none"
+        />
+        <path
+          d="M4 36 C14 20, 26 52, 40 36 C54 20, 66 52, 80 36 C94 20, 106 52, 116 36"
+          stroke="#172554" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5"
+        />
+      </svg>
 
       {/* Header */}
-      <header className="border-b border-slate-100 py-4 px-6 md:px-12 backdrop-blur-lg bg-white/95 sticky top-0 z-50">
+      <header className="border-b border-slate-100 py-4 px-6 md:px-12 bg-white sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Logo />
         </div>
