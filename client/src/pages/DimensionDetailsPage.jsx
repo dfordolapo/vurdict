@@ -628,9 +628,16 @@ export default function DimensionDetailsPage() {
       {/* Co-Pilot AI Chatbox Drawer (Floating Bubble UI) */}
       {chatOpen && (
         <div className="fixed bottom-6 right-6 z-[100] w-[calc(100vw-3rem)] sm:w-[400px] h-[550px] max-h-[calc(100vh-6rem)] bg-white shadow-[0_20px_50px_rgba(23,37,84,0.15)] border border-slate-100 rounded-[32px] flex flex-col justify-between overflow-hidden animate-fade-in-up">
-          {/* Header */}
-          <div className="h-16 px-6 flex items-center justify-between bg-brand-900 text-white rounded-t-[30px]">
-            <div className="flex items-center gap-2.5">
+          {/* Header with Wavy top accent styling */}
+          <div className="relative pt-6 pb-4 px-6 flex items-center justify-between bg-brand-900 text-white overflow-hidden shrink-0">
+            {/* Embedded Wave Accent at bottom of header */}
+            <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none z-0">
+              <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[12px] text-white fill-current">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C26.9,8.75,57.05,18.3,88.43,26.85,145.61,42.47,205,52.34,264.48,56.44Z"></path>
+              </svg>
+            </div>
+            
+            <div className="flex items-center gap-2.5 relative z-10">
               <div className="h-8 w-8 rounded-2xl bg-white/10 flex items-center justify-center">
                 <MessageCircle size={16} className="text-sky-300 animate-pulse" />
               </div>
@@ -641,7 +648,7 @@ export default function DimensionDetailsPage() {
             </div>
             <button 
               onClick={() => setChatOpen(false)}
-              className="px-3 py-1 rounded-xl text-xs font-normal text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="px-3 py-1 rounded-xl text-xs font-normal text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer relative z-10"
             >
               Close
             </button>
