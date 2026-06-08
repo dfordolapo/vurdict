@@ -387,7 +387,7 @@ export default function DimensionDetailsPage() {
                           <SidebarIcon size={14} />
                         </div>
                         <div>
-                          <div className={`text-xs font-medium ${isSelected ? 'text-brand-900' : 'text-slate-700 group-hover:text-slate-950'}`}>{dim.label}</div>
+                          <div className={`text-xs font-semibold ${isSelected ? 'text-brand-900 font-semibold' : 'text-slate-700 group-hover:text-slate-950'}`}>{dim.label}</div>
                           <div className={`text-[8px] font-medium uppercase mt-0.5 ${scoreBadge.style.split(' ')[0]}`}>{scoreBadge.label}</div>
                         </div>
                       </div>
