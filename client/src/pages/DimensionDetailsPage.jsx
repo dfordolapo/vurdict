@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
+import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import {
   Compass,
   Brain,
@@ -495,49 +496,42 @@ export default function DimensionDetailsPage() {
             </button>
           </div>
 
-          {/* Messages List */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-slate-50/50">
-            {chatMessages.map((msg, i) => (
-              <div 
-                key={i} 
-                className={`flex flex-col max-w-[85%] ${msg.sender === 'user' ? 'ml-auto items-end' : 'mr-auto items-start'}`}
-              >
-                <div className={`px-4 py-3 rounded-2xl text-xs leading-relaxed ${
-                  msg.sender === 'user' 
-                    ? 'bg-brand-900 text-white rounded-tr-none font-medium' 
-                    : 'bg-white text-slate-800 border border-slate-100 rounded-tl-none font-normal shadow-sm whitespace-pre-wrap'
-                }`}>
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-            {chatLoading && (
-              <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold pl-1.5 uppercase animate-pulse">
-                <span>Thinking up improvements...</span>
-              </div>
-            )}
+          {/* Coming Soon Showcase Inside Chatbox */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white space-y-6">
+            <div className="w-48 h-auto flex items-center justify-center">
+              <img 
+                src={comingSoonIllustration} 
+                alt="Co-Pilot Coming Soon" 
+                className="w-full h-auto object-contain select-none"
+                loading="lazy"
+              />
+            </div>
+            
+            <div className="space-y-2.5">
+              <h3 className="text-base font-bold text-slate-900">Co-Pilot is Tuning Up! 🚀</h3>
+              <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
+                Hey! Your AI design partner is currently in the workshop getting calibrated on advanced recruiter rubrics. 
+              </p>
+              <p className="text-[11px] text-slate-400 font-medium leading-relaxed max-w-xs mx-auto pt-1">
+                We'll launch interactive chat feedback in the next update. Stay tuned!
+              </p>
+            </div>
           </div>
 
-          {/* Form Input */}
-          <form onSubmit={handleSendChatMessage} className="p-4 border-t border-slate-100 bg-white rounded-b-[30px]">
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 focus-within:border-brand-900/30 focus-within:bg-white transition-all">
+          {/* Disabled Form Input for Coming Soon */}
+          <div className="p-4 border-t border-slate-100 bg-white rounded-b-[30px]">
+            <div className="flex items-center gap-2 rounded-2xl border border-slate-100 bg-slate-50/50 px-4 py-2.5 opacity-60">
               <input 
                 type="text"
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                placeholder={`Ask about your ${activeDim.label}...`}
-                className="w-full bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none"
-                disabled={chatLoading}
+                placeholder="Chat disabled during calibration..."
+                className="w-full bg-transparent text-xs text-slate-400 focus:outline-none cursor-not-allowed"
+                disabled
               />
-              <button 
-                type="submit"
-                disabled={!chatInput.trim() || chatLoading}
-                className="text-[10px] font-bold text-brand-900 hover:text-brand-850 disabled:text-slate-300 transition-colors cursor-pointer uppercase shrink-0"
-              >
+              <span className="text-[10px] font-bold text-slate-350 uppercase shrink-0 select-none">
                 Send
-              </button>
+              </span>
             </div>
-          </form>
+          </div>
         </div>
       )}
 
