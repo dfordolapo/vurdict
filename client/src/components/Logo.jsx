@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Logo({ size = 'normal', onClick }) {
-  const dim = size === 'normal' ? 140 : 105;
+  const dim = size === 'normal' ? 120 : 105;
 
   return (
     <div
