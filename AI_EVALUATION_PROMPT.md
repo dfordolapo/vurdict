@@ -15,12 +15,12 @@ The user will provide a **Goal**. You must adjust your evaluation weight based o
 
 ## Scoring Framework
 Evaluate the portfolio content against the `RUBRIC.md` criteria. Provide a score from 1-10 for each of the following categories:
-- Problem Framing
-- Process Visibility
-- Outcome & Impact
-- Visual Quality
-- Niche & Positioning
-- Trust & CTA Strength
+- Structural Logic
+- Critical Thinking
+- Visual Execution
+- Impact Evidence
+- Narrative Tone
+- Positioning Clarity
 
 ## Input Data
 You will receive:

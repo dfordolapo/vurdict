@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VurdictAIResponseSchema",
+  "description": "Structured JSON response format returned by the Claude Service after portfolio evaluation.",
+  "type": "object",
+  "required": [
+    "overall_score",
+    "categories",
+    "fix_this_first",
+    "summary"
+  ],
+  "properties": {
+    "overall_score": {
+      "type": "number",
+      "description": "The aggregated score (0-100) representing overall portfolio readiness based on the selected goal weights.",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "categories": {
+      "type": "object",
+      "description": "Evaluation breakdown across the six hiring/client dimensions.",
+      "required": [
+        "problem_framing",
+        "process_visibility",
+        "outcome_impact",
+        "visual_quality",
+        "niche_positioning",
+        "trust_cta"
+      ],
+      "properties": {
+        "problem_framing": {
+          "type": "object",
+          "required": ["score", "explanation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "explanation": { "type": "string", "description": "Constructive lead-level feedback explaining the score from the context of the user's career goal." }
+          }
+        },
+        "process_visibility": {
+          "type": "object",
+          "required": ["score", "explanation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "explanation": { "type": "string", "description": "Constructive lead-level feedback explaining the score." }
+          }
+        },
+        "outcome_impact": {
+          "type": "object",
+          "required": ["score", "explanation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "explanation": { "type": "string", "description": "Constructive lead-level feedback explaining the score." }
+          }
+        },
+        "visual_quality": {
+          "type": "object",
+          "required": ["score", "explanation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "explanation": { "type": "string", "description": "Constructive lead-level feedback explaining the score." }
+          }
+        },
+        "niche_positioning": {
+          "type": "object",
+          "required": ["score", "explanation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "explanation": { "type": "string", "description": "Constructive lead-level feedback explaining the score." }
+          }
+        },
+        "trust_cta": {
+          "type": "object",
+          "required": ["score", "explanation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "explanation": { "type": "string", "description": "Constructive lead-level feedback explaining the score." }
+          }
+        }
+      }
+    },
+    "fix_this_first": {
+      "type": "object",
+      "description": "The single highest-priority recommendation identified for immediate optimization.",
+      "required": [
+        "title",
+        "description",
+        "priority_score"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "A short, actionable title for the recommendation."
+        },
+        "description": {
+          "type": "string",
+          "description": "Details outlining what the blocker is, why it is critical, and specifically how to resolve it."
+        },
+        "priority_score": {
+          "type": "integer",
+          "description": "Priority score of the fix from 1 (low) to 10 (high blocker).",
+          "minimum": 1,
+          "maximum": 10
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "description": "A high-level executive summary of the portfolio evaluation, explaining key strengths and the primary bottlenecks."
+    }
+  }
+}

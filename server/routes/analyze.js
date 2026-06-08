@@ -1,18 +1,25 @@
 import { Router } from 'express';
 import { extractContent } from '../services/JinaService.js';
-import { evaluatePortfolio } from '../services/ClaudeService.js';
+import { evaluatePortfolio } from '../services/GeminiService.js';
 
 const router = Router();
 
-const VALID_GOALS = ['get_hired', 'win_clients'];
+const VALID_GOALS = ['get_hired', 'win_clients', 'improve_portfolio'];
+
+const EXPERIENCE_LABELS = {
+  junior: 'Junior',
+  mid: 'Mid-Level',
+  senior: 'Senior',
+};
 
 /**
  * POST /api/analyze
- * Body: { url: string, goal: 'get_hired' | 'win_clients' }
+ * Body: { url: string, goal: GoalType, experience?: 'junior' | 'mid' | 'senior' }
  */
 router.post('/', async (req, res, next) => {
   try {
-    const { url, goal } = req.body;
+    const { url, goal, experience } = req.body;
+    const experienceLabel = EXPERIENCE_LABELS[experience] || 'Mid-Level';
 
     // ── Validation ──────────────────────────────────────────────────────────
     if (!url || typeof url !== 'string') {
@@ -32,13 +39,13 @@ router.post('/', async (req, res, next) => {
       return res.status(400).json({ error: 'The provided URL is not valid.' });
     }
 
-    console.log(`[Analyze] Goal: ${goal} | URL: ${url}`);
+    console.log(`[Analyze] Goal: ${goal} | Level: ${experienceLabel} | URL: ${url}`);
 
     // ── Step 1: Extract portfolio content ────────────────────────────────────
     const portfolioContent = await extractContent(url);
 
     // ── Step 2: Run AI evaluation ────────────────────────────────────────────
-    const evaluation = await evaluatePortfolio(goal, portfolioContent);
+    const evaluation = await evaluatePortfolio(goal, experienceLabel, portfolioContent);
 
     return res.json({ success: true, evaluation });
   } catch (err) {
