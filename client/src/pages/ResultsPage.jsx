@@ -619,18 +619,18 @@ export default function ResultsPage() {
 
         {/* Bottom Row: Action Banner */}
         <div className="max-w-7xl w-full mx-auto bg-brand-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in-up mt-6">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
               <Trophy size={20} className="text-yellow-400" />
             </div>
             <div>
               <h4 className="text-sm font-semibold">Want a personalized action plan to improve your score?</h4>
-              <p className="text-[10px] text-slate-400 mt-0.5">Get step-by-step recommendations tailored to your portfolio.</p>
+              <p className="text-[10px] text-slate-400 mt-0.5 md:mt-0">Get step-by-step recommendations tailored to your portfolio.</p>
             </div>
           </div>
           <button
             onClick={() => navigate(`/results/${lowestSlug}`)}
-            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer whitespace-nowrap shrink-0"
+            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap shrink-0 w-full md:w-auto mt-2 md:mt-0"
           >
             <span>View Detailed Recommendations</span>
             <ArrowRight size={14} />

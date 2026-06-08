@@ -233,7 +233,7 @@ function HeroSection() {
               </button>
 
               {goalDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-slate-200 bg-white p-1.5 shadow-2xl z-30 text-left">
+                <div className="absolute left-0 right-0 md:left-auto top-full mt-2 w-full md:w-52 rounded-xl border border-slate-200 bg-white p-1.5 shadow-2xl z-30 text-left">
                   {Object.keys(goalsList).map((key) => {
                     const item = goalsList[key];
                     const ItemIcon = item.icon;
@@ -267,7 +267,7 @@ function HeroSection() {
                   navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
                 }
               }}
-              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0"
+              className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0 w-full md:w-auto"
             >
               <span>Analyze Portfolio</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
@@ -754,7 +754,7 @@ function FinalCTASection() {
           </div>
 
           {/* Centered CTA button — outside shifted wrapper so it stays page-centered */}
-          <div className="absolute bottom-0 translate-y-[80%] left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20">
+          <div className="absolute bottom-0 translate-y-[80%] left-1/2 -translate-x-1/2 w-full max-w-2xl sm:max-w-3xl z-20 px-6">
             <button
               onClick={() => navigate('/analyze')}
               className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-4 md:py-5 rounded-xl font-medium text-sm md:text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group whitespace-nowrap shrink-0"
