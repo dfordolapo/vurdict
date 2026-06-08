@@ -87,8 +87,7 @@ export default function ResultsPage() {
       <div style="margin-bottom:12px;">
         <span style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;">vurdict</span>
       </div>
-      <h1 style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.3px;">Portfolio Report</h1>
-      <p style="margin:6px 0 0;font-size:13px;color:rgba(255,255,255,0.6);">AI-Powered Portfolio Evaluation</p>
+      <h1 style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.3px;">Case Study Evaluation</h1>
     </div>
 
     <!-- Body -->
