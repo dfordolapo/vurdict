@@ -338,8 +338,6 @@ export default function ResultsPage() {
       }
     } catch {}
     return '#';
-  };
-
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
@@ -426,15 +424,15 @@ export default function ResultsPage() {
                     <span className="h-1.5 w-1.5 rounded-full bg-white/50 shadow" />
                     <span className="h-1.5 w-1.5 rounded-full bg-white/30 shadow" />
                   </div>
-                  <div className="text-[10px] font-bold text-white leading-none tracking-wide truncate drop-shadow-md">
+                  <div className="text-[10px] font-semibold text-white leading-none tracking-wide truncate drop-shadow-md">
                     {getHostname(state.url)}
                   </div>
                 </div>
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Domain Link</span>
-                <a href={getSafeHref(state.url)} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
-                <span className="text-[9px] text-slate-400 font-semibold block pt-1">{formattedDateTime}</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 block">Domain Link</span>
+                <a href={getSafeHref(state.url)} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
+                <span className="text-[9px] text-slate-400 font-medium block pt-1">{formattedDateTime}</span>
               </div>
             </div>
           </div>
@@ -445,7 +443,7 @@ export default function ResultsPage() {
           {/* Column 1: Overall Score Card (lg:col-span-6) */}
           <div className="lg:col-span-6 animate-fade-in-up flex flex-col">
             <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg flex flex-col items-center justify-center text-center relative flex-1">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5">Overall Score</span>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-5">Overall Score</span>
               
               {/* Trophy circle indicator */}
               <div className="relative flex h-36 w-36 items-center justify-center">
@@ -464,34 +462,34 @@ export default function ResultsPage() {
                 </svg>
                 <div className="text-center flex flex-col items-center">
                   <span className="text-5xl font-bold text-slate-900 leading-none">{report.overall_score}</span>
-                  <span className="text-[10px] text-slate-400 font-bold block mt-1">/ 100</span>
+                  <span className="text-[10px] text-slate-400 font-semibold block mt-1">/ 100</span>
                 </div>
               </div>
 
               <div className={`mt-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-250 bg-emerald-50`}>
                 <span className={`w-1.5 h-1.5 rounded-full bg-emerald-500`} />
-                <span className={`text-xs font-bold text-emerald-700`}>{statusLabel} Portfolio</span>
+                <span className={`text-xs font-semibold text-emerald-700`}>{statusLabel} Portfolio</span>
               </div>
 
-              <p className="text-[10px] text-slate-500 font-bold max-w-xs mt-3 leading-normal">
+              <p className="text-[10px] text-slate-500 font-medium max-w-xs mt-3 leading-normal">
                 {statusSummary.title} {statusSummary.text}
               </p>
 
               {/* Hiring readiness progress handle bar */}
               <div className="w-full mt-6 border-t border-slate-100 pt-5 space-y-2 text-left">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-700">
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
                   <span>Hiring Readiness</span>
-                  <span className={readinessLevel === 'High' ? 'text-emerald-700 font-bold' : readinessLevel === 'Medium' ? 'text-amber-700 font-bold' : 'text-rose-700 font-bold'}>{readinessLevel}</span>
+                  <span className={readinessLevel === 'High' ? 'text-emerald-700 font-semibold' : readinessLevel === 'Medium' ? 'text-amber-700 font-semibold' : 'text-rose-700 font-semibold'}>{readinessLevel}</span>
                 </div>
                 <div className="relative h-2 rounded bg-slate-100 overflow-hidden flex">
                   <div className="h-full bg-blue-600 rounded transition-all" style={{ width: readinessWidth }} />
                 </div>
-                <div className="flex justify-between text-[8px] text-slate-400 font-bold uppercase tracking-wide">
+                <div className="flex justify-between text-[8px] text-slate-400 font-semibold uppercase tracking-wide">
                   <span>Low</span>
                   <span>Medium</span>
                   <span>High</span>
                 </div>
-                <p className="text-[9px] text-slate-400 font-semibold leading-relaxed pt-1">
+                <p className="text-[9px] text-slate-400 font-medium leading-relaxed pt-1">
                   {summaryText}
                 </p>
               </div>
@@ -502,7 +500,7 @@ export default function ResultsPage() {
           <div className="lg:col-span-6 animate-fade-in-up flex flex-col">
             <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg space-y-4 flex-1 flex flex-col justify-between">
               <div>
-                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
+                <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
                   Scores by Hiring Dimension
                 </h3>
 
@@ -547,7 +545,7 @@ export default function ResultsPage() {
           
           {/* Strengths */}
           <div className="bg-slate-50/50 border border-slate-100 p-6 rounded-3xl shadow-sm space-y-4 text-left">
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 uppercase">
+            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 uppercase">
               <CheckCircle size={14} className="text-emerald-500" />
               <span>Top Strengths</span>
             </div>
@@ -558,8 +556,8 @@ export default function ResultsPage() {
                     <CheckCircle size={10} className="text-emerald-600" />
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-slate-900">{str.label}</h5>
-                    <p className="text-[9px] text-slate-450 font-semibold leading-relaxed mt-0.5">{str.score}/100 — {str.explanation.slice(0, 80)}...</p>
+                    <h5 className="text-xs font-semibold text-slate-900">{str.label}</h5>
+                    <p className="text-[9px] text-slate-450 font-normal leading-relaxed mt-0.5">{str.score}/100 — {str.explanation.slice(0, 80)}...</p>
                   </div>
                 </div>
               ))}
@@ -568,7 +566,7 @@ export default function ResultsPage() {
 
           {/* Areas to Improve */}
           <div className="bg-slate-50/50 border border-slate-100 p-6 rounded-3xl shadow-sm space-y-4 text-left">
-            <div className="flex items-center gap-2 text-xs font-bold text-amber-700 uppercase">
+            <div className="flex items-center gap-2 text-xs font-semibold text-amber-700 uppercase">
               <AlertTriangle size={14} className="text-amber-500" />
               <span>Areas to Improve</span>
             </div>
@@ -579,8 +577,8 @@ export default function ResultsPage() {
                     <AlertTriangle size={10} className="text-amber-600" />
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-slate-900">{weak.label}</h5>
-                    <p className="text-[9px] text-slate-450 font-semibold leading-relaxed mt-0.5">{weak.score}/100 — {weak.explanation.slice(0, 80)}...</p>
+                    <h5 className="text-xs font-semibold text-slate-900">{weak.label}</h5>
+                    <p className="text-[9px] text-slate-450 font-normal leading-relaxed mt-0.5">{weak.score}/100 — {weak.explanation.slice(0, 80)}...</p>
                   </div>
                 </div>
               ))}
@@ -590,18 +588,18 @@ export default function ResultsPage() {
           {/* Top Recommendation */}
           <div className="bg-blue-50/40 border border-blue-100 p-6 rounded-3xl text-left space-y-4 flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-blue-700 uppercase">
+              <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase">
                 <Sparkles size={14} className="text-blue-600" />
                 <span>Top Recommendation</span>
               </div>
-              <h4 className="text-sm font-bold text-slate-900">{fixFirst.title}</h4>
-              <p className="text-xs text-slate-500 font-semibold leading-relaxed">
+              <h4 className="text-sm font-semibold text-slate-900">{fixFirst.title}</h4>
+              <p className="text-xs text-slate-500 font-normal leading-relaxed">
                 {fixFirst.description}
               </p>
             </div>
 
             {fixFirst.priority_score && (
-              <div className="bg-white p-3 rounded-xl border border-slate-100 text-[10px] font-semibold text-slate-500 flex gap-2">
+              <div className="bg-white p-3 rounded-xl border border-slate-100 text-[10px] font-normal text-slate-500 flex gap-2">
                 <TrendingUp size={14} className="text-blue-600 shrink-0" />
                 <span>Priority score: <strong>{fixFirst.priority_score}/10</strong> — Focus on this first for the highest impact.</span>
               </div>
@@ -609,7 +607,7 @@ export default function ResultsPage() {
 
             <button
               onClick={() => navigate(`/results/${lowestSlug}`)}
-              className="text-xs font-bold text-brand-900 hover:text-brand-800 flex items-center gap-1.5 cursor-pointer self-start whitespace-nowrap shrink-0"
+              className="text-xs font-semibold text-brand-900 hover:text-brand-800 flex items-center gap-1.5 cursor-pointer self-start whitespace-nowrap shrink-0"
             >
               <span>See how to improve this →</span>
             </button>
@@ -624,7 +622,7 @@ export default function ResultsPage() {
               <Trophy size={20} className="text-yellow-400" />
             </div>
             <div>
-              <h4 className="text-sm font-bold">Want a personalized action plan to improve your score?</h4>
+              <h4 className="text-sm font-semibold">Want a personalized action plan to improve your score?</h4>
               <p className="text-[10px] text-slate-400 mt-0.5">Get step-by-step recommendations tailored to your portfolio.</p>
             </div>
           </div>
