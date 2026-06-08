@@ -473,30 +473,30 @@ export default function DimensionDetailsPage() {
         </footer>
       </div>
 
-      {/* Co-Pilot AI Chatbox Drawer */}
+      {/* Co-Pilot AI Chatbox Drawer (Floating Bubble UI) */}
       {chatOpen && (
-        <div className="fixed inset-y-0 right-0 z-[100] w-full max-w-md bg-white shadow-2xl border-l border-slate-150 flex flex-col justify-between animate-fade-in-right">
+        <div className="fixed bottom-6 right-6 z-[100] w-[calc(100vw-3rem)] sm:w-[400px] h-[550px] max-h-[calc(100vh-6rem)] bg-white shadow-[0_20px_50px_rgba(23,37,84,0.15)] border border-slate-100 rounded-[32px] flex flex-col justify-between overflow-hidden animate-fade-in-up">
           {/* Header */}
-          <div className="h-16 border-b border-slate-100 px-6 flex items-center justify-between bg-brand-900 text-white">
-            <div className="flex items-center gap-2">
-              <div className="h-7 w-7 rounded-lg bg-white/10 flex items-center justify-center">
-                <MessageCircle size={15} className="text-sky-300" />
+          <div className="h-16 px-6 flex items-center justify-between bg-brand-900 text-white rounded-t-[30px]">
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-2xl bg-white/10 flex items-center justify-center">
+                <MessageCircle size={16} className="text-sky-300 animate-pulse" />
               </div>
               <div>
                 <h4 className="text-xs font-bold leading-none">Design Co-Pilot</h4>
-                <span className="text-[9px] text-sky-100/70 font-semibold mt-0.5 block">Calibrated for {activeDim.label}</span>
+                <span className="text-[9px] text-sky-100/70 font-semibold mt-0.5 block">Your Design Lead Best Friend</span>
               </div>
             </div>
             <button 
               onClick={() => setChatOpen(false)}
-              className="p-1 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="px-3 py-1 rounded-xl text-xs font-semibold text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             >
               Close
             </button>
           </div>
 
           {/* Messages List */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/50">
+          <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-slate-50/50">
             {chatMessages.map((msg, i) => (
               <div 
                 key={i} 
@@ -512,20 +512,20 @@ export default function DimensionDetailsPage() {
               </div>
             ))}
             {chatLoading && (
-              <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold pl-1 uppercase animate-pulse">
-                <span>Co-Pilot is thinking...</span>
+              <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold pl-1.5 uppercase animate-pulse">
+                <span>Thinking up improvements...</span>
               </div>
             )}
           </div>
 
           {/* Form Input */}
-          <form onSubmit={handleSendChatMessage} className="p-4 border-t border-slate-100 bg-white">
+          <form onSubmit={handleSendChatMessage} className="p-4 border-t border-slate-100 bg-white rounded-b-[30px]">
             <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-2.5 focus-within:border-brand-900/30 focus-within:bg-white transition-all">
               <input 
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                placeholder={`Ask about your ${activeDim.label} score...`}
+                placeholder={`Ask about your ${activeDim.label}...`}
                 className="w-full bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none"
                 disabled={chatLoading}
               />
