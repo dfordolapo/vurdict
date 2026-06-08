@@ -4,16 +4,14 @@ const getApiUrl = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined' && window.location) {
     if (window.location.port === '5173') {
       return 'http://localhost:3001';
     }
     return '';
   }
-  return 'http://localhost:3001';
+  return '';
 };
-
-const API_URL = getApiUrl();
 
 export const AnalysisContext = createContext(undefined);
 
@@ -160,7 +158,8 @@ export function AnalysisProvider({ children }) {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 seconds max timeout
 
-      const response = await fetch(`${API_URL}/api/analyze`, {
+      const apiEndpoint = `${getApiUrl()}/api/analyze`;
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url, goal, experience }),
