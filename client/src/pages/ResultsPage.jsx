@@ -634,6 +634,7 @@ export default function ResultsPage() {
             <ArrowRight size={14} />
           </button>
         </div>
+        </div>
 
       </div>
 
