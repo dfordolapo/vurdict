@@ -84,4 +84,6 @@ Vurdict grades portfolios against six distinct hiring dimensions:
 ## ⚙️ MVP Boundaries & Core Rules
 * **Role Support:** Exclusively Product Designer roles.
 * **Stateless:** No user accounts, database persistence, or long-term storage (results are transient).
-* **Dark Mode Only:** A premium, "Linear-style" design aesthetics built with gradients, shadows, and glassmorphism.
+* **Focused Experience & Single Workflow:** An opinionated, single-task flow. Designers input their portfolio link, choose their goal, and immediately receive feedback without accounts or distractions.
+* **Clean Typographic Aesthetic:** A high-contrast light theme design featuring deep navy brand colors, Poppins typography, subtle micro-animations (like AI radar scans), and clean layouts.
+
