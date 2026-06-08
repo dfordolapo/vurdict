@@ -34,7 +34,7 @@ import {
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
-import comingSoonIllustration from '../assets/coming_soon_illustration.png';
+import emailComingSoonIllustration from '../assets/email_coming_soon_illustration.png';
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -688,7 +688,7 @@ export default function ResultsPage() {
               <>
                 <div className="mb-6 flex justify-center">
                   <img 
-                    src={comingSoonIllustration} 
+                    src={emailComingSoonIllustration} 
                     alt="Coming soon illustration" 
                     className="w-48 h-auto object-contain select-none"
                     loading="lazy"
