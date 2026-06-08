@@ -61,80 +61,59 @@ export default function AnalyzingPage() {
     const isTimeout = state.errorCode === 'TIMEOUT';
     const isAnalysisUnavailable = state.errorCode === 'ANALYSIS_UNAVAILABLE';
 
+    const tryAgainCTA = {
+      label: "Try Again",
+      icon: RotateCw,
+      onClick: () => startAnalysis(url, goal, experience, mock)
+    };
+
+    const returnHomeCTA = {
+      label: "Return Home",
+      icon: Home,
+      onClick: () => navigate('/')
+    };
+
     if (isPrivate) {
       return {
         icon: Lock,
-        title: "This portfolio is locked.",
-        desc: "We couldn't access the content because this page is private, password-protected, or restricted.",
-        advice: "Ensure your portfolio is public and accessible without credentials.",
-        primary: {
-          label: "Edit URL",
-          icon: Link2,
-          onClick: () => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)
-        },
-        secondary: {
-          label: "Return Home",
-          icon: Home,
-          onClick: () => navigate('/')
-        }
+        title: "Access Restricted",
+        desc: "This page is private or restricted.",
+        advice: "Ensure the portfolio is public and accessible without a password or login.",
+        primary: tryAgainCTA,
+        secondary: returnHomeCTA
       };
     }
 
     if (isInvalidUrl) {
       return {
         icon: Link2,
-        title: "We couldn’t find that portfolio.",
-        desc: "Double-check the spelling of your link. Make sure the website exists and loads correctly in your browser.",
-        advice: "Verify the link opens correctly in a browser. Try copy-pasting the exact URL.",
-        primary: {
-          label: "Edit URL",
-          icon: Link2,
-          onClick: () => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)
-        },
-        secondary: {
-          label: "Return Home",
-          icon: Home,
-          onClick: () => navigate('/')
-        }
+        title: "Portfolio Not Found",
+        desc: "We couldn't locate a portfolio at this link.",
+        advice: "Double-check your link spelling. Make sure it loads correctly in a normal browser tab.",
+        primary: tryAgainCTA,
+        secondary: returnHomeCTA
       };
     }
 
     if (isTimeout) {
       return {
         icon: Clock,
-        title: "The connection timed out.",
-        desc: "The portfolio site took too long to load. Your server might be running slow or temporarily busy.",
-        advice: "Please wait a moment and try again. Your portfolio server might be running slowly.",
-        primary: {
-          label: "Try Again",
-          icon: RotateCw,
-          onClick: () => startAnalysis(url, goal, experience, mock)
-        },
-        secondary: {
-          label: "Edit URL",
-          icon: Link2,
-          onClick: () => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)
-        }
+        title: "Connection Timeout",
+        desc: "The page took too long to load.",
+        advice: "Wait a moment and try again. Your portfolio server might be slow or offline.",
+        primary: tryAgainCTA,
+        secondary: returnHomeCTA
       };
     }
 
     if (isAnalysisUnavailable) {
       return {
         icon: ShieldAlert,
-        title: "Vurdict is currently busy.",
-        desc: "We are receiving too many requests right now. Please wait a moment and try again, or bypass using our interactive Mock Mode.",
-        advice: "Try again in a few minutes, or use Mock Mode to explore the dashboard instantly.",
-        primary: {
-          label: "Try Again",
-          icon: RotateCw,
-          onClick: () => startAnalysis(url, goal, experience, mock)
-        },
-        secondary: {
-          label: "Return Home",
-          icon: Home,
-          onClick: () => navigate('/')
-        },
-        // Allow mock bypass as an additional option
+        title: "Service Temporarily Busy",
+        desc: "We are receiving too many requests right now.",
+        advice: "Please try again in a few minutes, or use Mock Mode to explore the dashboard immediately.",
+        primary: tryAgainCTA,
+        secondary: returnHomeCTA,
         allowMock: true
       };
     }
@@ -142,19 +121,11 @@ export default function AnalyzingPage() {
     // Default Fallback
     return {
       icon: ShieldAlert,
-      title: "Something went wrong.",
-      desc: "An unexpected issue occurred while analyzing your portfolio. Please try again.",
-      advice: "Wait a moment and try again. If the issue persists, contact support.",
-      primary: {
-        label: "Try Again",
-        icon: RotateCw,
-        onClick: () => startAnalysis(url, goal, experience, mock)
-      },
-      secondary: {
-        label: "Return Home",
-        icon: Home,
-        onClick: () => navigate('/')
-      }
+      title: "Unexpected Error",
+      desc: "Something went wrong while analyzing your portfolio.",
+      advice: "Please try again. If the issue persists, try a different portfolio link.",
+      primary: tryAgainCTA,
+      secondary: returnHomeCTA
     };
   };
 
@@ -283,7 +254,7 @@ export default function AnalyzingPage() {
                     {React.createElement(errorConfig.icon, { size: 14 })}
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-slate-900">Troubleshooting Guidance</h5>
+                    <h5 className="text-xs font-bold text-slate-900">What to do next</h5>
                     <p className="text-[10px] text-slate-600 font-semibold mt-0.5">{errorConfig.advice}</p>
                   </div>
                 </div>
