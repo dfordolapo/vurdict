@@ -42,8 +42,7 @@ export default function ResultsPage() {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [saveEmail, setSaveEmail] = useState('');
   const [saveSubmitted, setSaveSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [sendError, setSendError] = useState('');
+
 
   const handleDownload = () => {
     const dims = [
@@ -169,44 +168,16 @@ export default function ResultsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleSaveSubmit = async (e) => {
+  const handleSaveSubmit = (e) => {
     e.preventDefault();
-    setSendError('');
     if (!saveEmail.trim()) return;
-
-    const apiBase = import.meta.env.VITE_API_URL || (window.location.port === '5173' ? 'http://localhost:3001' : '');
-    setSending(true);
-    try {
-      const res = await fetch(`${apiBase}/api/send-report`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: saveEmail.trim(),
-          url: state.url,
-          goal: state.goal,
-          experience: state.experience,
-          formattedDateTime,
-          report,
-          statusLabel,
-        }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Failed to send report. Please try again.');
-      }
-      setSaveSubmitted(true);
-    } catch (err) {
-      setSendError(err.message);
-    } finally {
-      setSending(false);
-    }
+    setSaveSubmitted(true);
   };
 
   const closeSaveModal = () => {
     setSaveModalOpen(false);
     setSaveSubmitted(false);
     setSaveEmail('');
-    setSendError('');
   };
 
   const handleShare = () => {
@@ -700,30 +671,16 @@ export default function ResultsPage() {
                         onChange={(e) => setSaveEmail(e.target.value)}
                         placeholder="you@example.com"
                         required
-                        disabled={sending}
-                        className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none disabled:opacity-50"
+                        className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
                       />
                     </div>
                   </div>
-                  {sendError && (
-                    <div className="text-xs text-red-500 font-medium text-center">{sendError}</div>
-                  )}
                   <button
                     type="submit"
-                    disabled={sending}
-                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
                   >
-                    {sending ? (
-                      <span className="flex items-center gap-2">
-                        <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Sending...
-                      </span>
-                    ) : (
-                      <>
-                        <Mail size={14} />
-                        <span>Send to My Email</span>
-                      </>
-                    )}
+                    <Mail size={14} />
+                    <span>Send to My Email</span>
                   </button>
                 </form>
               </>
@@ -732,9 +689,12 @@ export default function ResultsPage() {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-5">
                   <CheckCircle size={22} className="text-emerald-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-1">Report sent!</h3>
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center mb-5">
+                  <Sparkles size={22} className="text-amber-500" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-1">Coming Soon</h3>
                 <p className="text-sm text-slate-500 font-normal leading-relaxed">
-                  We've sent your report to <strong className="text-slate-700 font-semibold">{saveEmail}</strong>. Check your inbox.
+                  Email delivery isn't ready yet. We'll let <strong className="text-slate-700 font-semibold">{saveEmail}</strong> know as soon as it's available — along with everyone else on the waitlist.
                 </p>
                 <button
                   onClick={closeSaveModal}
