@@ -132,10 +132,10 @@ export default function AnalyzingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-hidden select-none font-sans">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
       {/* Header Logostrip */}
-      <div className="bg-white py-4 px-6 md:px-12 border-b border-slate-100 z-20">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
         <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
           <Logo onClick={() => navigate('/')} />
           <button 
@@ -146,6 +146,7 @@ export default function AnalyzingPage() {
           </button>
         </div>
       </div>
+      <div className="h-16 shrink-0" />
 
       {state.status === 'error' && minTimeElapsed ? (
         /* Light mode Error Page body */

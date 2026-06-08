@@ -74,11 +74,11 @@ export default function AnalyzePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col relative overflow-hidden select-none font-sans">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col relative overflow-x-hidden select-none font-sans">
 
       {/* Header */}
-    <header className="bg-white py-4 px-6 md:px-12 border-b border-slate-100">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
+      <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
         <Logo onClick={() => navigate('/')} />
         <button
           onClick={() => navigate('/')}
@@ -88,6 +88,7 @@ export default function AnalyzePage() {
         </button>
       </div>
     </header>
+    <div className="h-16 shrink-0" />
 
       {/* Wave to navy */}
       <div className="w-full bg-white">
@@ -124,7 +125,7 @@ export default function AnalyzePage() {
                       placeholder="https://yourportfolio.com"
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
-                      className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-500 focus:outline-none font-semibold"
+                      className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-500 placeholder:font-normal focus:outline-none font-semibold"
                     />
                   </div>
                 </div>
