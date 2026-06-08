@@ -32,9 +32,12 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-    // Basic URL format check
+    // Strict URL validation and protocol check
     try {
-      new URL(url);
+      const parsedUrl = new URL(url);
+      if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+        return res.status(400).json({ error: 'Only HTTP and HTTPS URLs are supported.' });
+      }
     } catch {
       return res.status(400).json({ error: 'The provided URL is not valid.' });
     }

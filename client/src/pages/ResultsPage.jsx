@@ -156,6 +156,18 @@ export default function ResultsPage() {
     return `https://image.thum.io/get/width/400/crop/800/${cleanUrl}`;
   };
 
+  const getSafeHref = (urlStr) => {
+    if (!urlStr) return '#';
+    try {
+      const cleanUrl = /^https?:\/\//i.test(urlStr) ? urlStr : 'https://' + urlStr;
+      const parsed = new URL(cleanUrl);
+      if (['http:', 'https:'].includes(parsed.protocol)) {
+        return parsed.toString();
+      }
+    } catch {}
+    return '#';
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
@@ -239,7 +251,7 @@ export default function ResultsPage() {
               </div>
               <div className="space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Domain Link</span>
-                <a href={state.url || "#"} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
+                <a href={getSafeHref(state.url)} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-brand-900 hover:underline block truncate">{state.url || 'yourportfolio.com'}</a>
                 <span className="text-[9px] text-slate-400 font-semibold block pt-1">{formattedDateTime}</span>
               </div>
             </div>
