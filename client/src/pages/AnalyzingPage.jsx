@@ -239,10 +239,10 @@ export default function AnalyzingPage() {
             {/* Left panel */}
             <div className="lg:col-span-6 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 leading-tight text-balance">
+                <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 leading-tight text-balance">
                   {errorConfig.title}
                 </h1>
-                <p className="mt-2 text-slate-500 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-md">
+                <p className="mt-2 text-slate-500 text-xs sm:text-sm font-normal leading-relaxed text-balance max-w-md">
                   {errorConfig.desc}
                 </p>
               </div>
@@ -254,8 +254,8 @@ export default function AnalyzingPage() {
                     {React.createElement(errorConfig.icon, { size: 14 })}
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-slate-900">What to do next</h5>
-                    <p className="text-[10px] text-slate-600 font-semibold mt-0.5">{errorConfig.advice}</p>
+                    <h5 className="text-xs font-semibold text-slate-900">What to do next</h5>
+                    <p className="text-[10px] text-slate-500 font-normal mt-0.5">{errorConfig.advice}</p>
                   </div>
                 </div>
               </div>
@@ -265,7 +265,7 @@ export default function AnalyzingPage() {
                 {/* Primary Button */}
                 <button
                   onClick={errorConfig.primary.onClick}
-                  className="w-full sm:w-auto rounded-xl btn-brand flex items-center justify-center gap-2 px-5 py-3 text-xs font-semibold shadow-md transition-all cursor-pointer whitespace-nowrap"
+                  className="w-full sm:w-auto rounded-xl btn-brand flex items-center justify-center gap-2 px-5 py-3 text-xs font-medium shadow-md transition-all cursor-pointer whitespace-nowrap"
                 >
                   {React.createElement(errorConfig.primary.icon, { size: 13, className: "text-white" })}
                   <span>{errorConfig.primary.label}</span>
@@ -274,7 +274,7 @@ export default function AnalyzingPage() {
                 {/* Secondary Button */}
                 <button
                   onClick={errorConfig.secondary.onClick}
-                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap"
+                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-medium transition-all cursor-pointer whitespace-nowrap"
                 >
                   {React.createElement(errorConfig.secondary.icon, { size: 13, className: "text-slate-500" })}
                   <span>{errorConfig.secondary.label}</span>
@@ -284,7 +284,7 @@ export default function AnalyzingPage() {
                 {errorConfig.allowMock && (
                   <button
                     onClick={toggleMockFallback}
-                    className="w-full sm:w-auto rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap"
+                    className="w-full sm:w-auto rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-medium transition-all cursor-pointer whitespace-nowrap"
                   >
                     <Sparkles size={13} className="text-brand-900" />
                     <span>Bypass with Mock Report</span>
