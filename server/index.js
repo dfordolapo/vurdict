@@ -17,15 +17,17 @@ const rateLimitWindowMs = 15 * 60 * 1000; // 15 minutes
 const rateLimitMaxRequests = 20; // 20 requests per window
 const ipRequests = new Map();
 
-// Periodic cleanup of rate limiting map memory
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, data] of ipRequests.entries()) {
-    if (now - data.windowStart > rateLimitWindowMs) {
-      ipRequests.delete(ip);
+// Periodic cleanup of rate limiting map memory (skipped in Vercel serverless functions)
+if (!process.env.VERCEL) {
+  setInterval(() => {
+    const now = Date.now();
+    for (const [ip, data] of ipRequests.entries()) {
+      if (now - data.windowStart > rateLimitWindowMs) {
+        ipRequests.delete(ip);
+      }
     }
-  }
-}, 5 * 60 * 1000);
+  }, 5 * 60 * 1000);
+}
 
 function rateLimiter(req, res, next) {
   const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
