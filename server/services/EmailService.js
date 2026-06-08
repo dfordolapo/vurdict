@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM_EMAIL = process.env.FROM_EMAIL || 'reports@vurdict.vercel.app';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev';
 
 export async function sendReportByEmail({ email, url, goal, experience, report, statusLabel, formattedDateTime }) {
   const dims = [
