@@ -578,9 +578,9 @@ export default function DimensionDetailsPage() {
             </div>
 
              <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Examples coming soon</h3>
-             <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
-               We are writing a small handbook of real case studies to show how designers implement these improvements.
-             </p>
+              <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
+                We are compiling real case studies from top designers to show what these improvements look like in practice.
+              </p>
              <button
                onClick={() => setExamplesModalOpen(false)}
                className="w-full mt-6 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white py-3.5 text-sm font-medium transition-all cursor-pointer shadow-lg shadow-brand-950/10"
