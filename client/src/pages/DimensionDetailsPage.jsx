@@ -507,13 +507,10 @@ export default function DimensionDetailsPage() {
               />
             </div>
             
-            <div className="space-y-2.5">
-              <h3 className="text-base font-bold text-slate-900">Co-Pilot is Tuning Up! 🚀</h3>
+            <div className="space-y-1.5">
+              <h3 className="text-base font-bold text-slate-900">Co-Pilot is moving in! ✈️</h3>
               <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
-                Hey! Your AI design partner is currently in the workshop getting calibrated on advanced recruiter rubrics. 
-              </p>
-              <p className="text-[11px] text-slate-400 font-medium leading-relaxed max-w-xs mx-auto pt-1">
-                We'll launch interactive chat feedback in the next update. Stay tuned!
+                Your AI design bestie is wrapping up school. We'll be chatting here super soon!
               </p>
             </div>
           </div>
