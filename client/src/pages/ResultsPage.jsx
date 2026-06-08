@@ -338,6 +338,8 @@ export default function ResultsPage() {
       }
     } catch {}
     return '#';
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
