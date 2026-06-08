@@ -55,47 +55,110 @@ export default function AnalyzingPage() {
     { label: 'Positioning Clarity', desc: 'Reviewing specialization, target alignment, and role definition.' }
   ];
 
-  const getCleanErrorMessage = (errStr) => {
-    return errStr || "Something went wrong while analyzing this portfolio. Please try again.";
+  const getErrorConfig = () => {
+    const isPrivate = state.errorCode === 'PRIVATE_PORTFOLIO';
+    const isInvalidUrl = state.errorCode === 'INVALID_URL';
+    const isTimeout = state.errorCode === 'TIMEOUT';
+    const isAnalysisUnavailable = state.errorCode === 'ANALYSIS_UNAVAILABLE';
+
+    if (isPrivate) {
+      return {
+        icon: Lock,
+        title: "This portfolio is locked.",
+        desc: "We couldn't access the content because this page is private, password-protected, or restricted.",
+        advice: "Ensure your portfolio is public and accessible without credentials.",
+        primary: {
+          label: "Edit URL",
+          icon: Link2,
+          onClick: () => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)
+        },
+        secondary: {
+          label: "Return Home",
+          icon: Home,
+          onClick: () => navigate('/')
+        }
+      };
+    }
+
+    if (isInvalidUrl) {
+      return {
+        icon: Link2,
+        title: "We couldn’t find that portfolio.",
+        desc: "Double-check the spelling of your link. Make sure the website exists and loads correctly in your browser.",
+        advice: "Verify the link opens correctly in a browser. Try copy-pasting the exact URL.",
+        primary: {
+          label: "Edit URL",
+          icon: Link2,
+          onClick: () => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)
+        },
+        secondary: {
+          label: "Return Home",
+          icon: Home,
+          onClick: () => navigate('/')
+        }
+      };
+    }
+
+    if (isTimeout) {
+      return {
+        icon: Clock,
+        title: "The connection timed out.",
+        desc: "The portfolio site took too long to load. Your server might be running slow or temporarily busy.",
+        advice: "Please wait a moment and try again. Your portfolio server might be running slowly.",
+        primary: {
+          label: "Try Again",
+          icon: RotateCw,
+          onClick: () => startAnalysis(url, goal, experience, mock)
+        },
+        secondary: {
+          label: "Edit URL",
+          icon: Link2,
+          onClick: () => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)
+        }
+      };
+    }
+
+    if (isAnalysisUnavailable) {
+      return {
+        icon: ShieldAlert,
+        title: "Vurdict is currently busy.",
+        desc: "We are receiving too many requests right now. Please wait a moment and try again, or bypass using our interactive Mock Mode.",
+        advice: "Try again in a few minutes, or use Mock Mode to explore the dashboard instantly.",
+        primary: {
+          label: "Try Again",
+          icon: RotateCw,
+          onClick: () => startAnalysis(url, goal, experience, mock)
+        },
+        secondary: {
+          label: "Return Home",
+          icon: Home,
+          onClick: () => navigate('/')
+        },
+        // Allow mock bypass as an additional option
+        allowMock: true
+      };
+    }
+
+    // Default Fallback
+    return {
+      icon: ShieldAlert,
+      title: "Something went wrong.",
+      desc: "An unexpected issue occurred while analyzing your portfolio. Please try again.",
+      advice: "Wait a moment and try again. If the issue persists, contact support.",
+      primary: {
+        label: "Try Again",
+        icon: RotateCw,
+        onClick: () => startAnalysis(url, goal, experience, mock)
+      },
+      secondary: {
+        label: "Return Home",
+        icon: Home,
+        onClick: () => navigate('/')
+      }
+    };
   };
 
-  const isPrivate = state.errorCode === 'PRIVATE_PORTFOLIO';
-  const isInvalidUrl = state.errorCode === 'INVALID_URL';
-  const isTimeout = state.errorCode === 'TIMEOUT';
-  const isAnalysisUnavailable = state.errorCode === 'ANALYSIS_UNAVAILABLE';
-
-  const reasons = [
-    {
-      icon: Lock,
-      title: 'Restricted Access',
-      desc: 'The portfolio site might require a login, password, or has access limitations.',
-      active: isPrivate,
-      advice: 'Ensure your portfolio is public and accessible without credentials.'
-    },
-    {
-      icon: Link2,
-      title: 'Invalid URL',
-      desc: 'The URL entered might be incorrect or unreachable.',
-      active: isInvalidUrl,
-      advice: 'Double-check the spelling of the URL and verify it opens in your browser.'
-    },
-    {
-      icon: Clock,
-      title: 'Connection Timeout',
-      desc: 'The website took too long to load or respond.',
-      active: isTimeout,
-      advice: 'Please wait a moment and try again. Your portfolio server might be running slowly.'
-    },
-    {
-      icon: ShieldAlert,
-      title: 'High Traffic / Server Busy',
-      desc: 'We are experiencing too much traffic right now or the analysis engine is temporarily busy.',
-      active: isAnalysisUnavailable || (!isPrivate && !isInvalidUrl && !isTimeout),
-      advice: 'Try again in a few minutes, or use the "Bypass with Mock Report" button to explore the dashboard instantly.'
-    }
-  ];
-
-  const activeReason = reasons.find(r => r.active);
+  const errorConfig = getErrorConfig();
 
 
   // Kick off analysis on mount
@@ -206,83 +269,66 @@ export default function AnalyzingPage() {
             <div className="lg:col-span-6 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 leading-tight text-balance">
-                  We couldn't analyze this portfolio.
+                  {errorConfig.title}
                 </h1>
-                <p className="mt-2 text-slate-500 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
-                  {getCleanErrorMessage(state.error)}
+                <p className="mt-2 text-slate-500 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-md">
+                  {errorConfig.desc}
                 </p>
               </div>
 
-              {activeReason && (
-                <div className="space-y-3 max-w-md w-full">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block text-left">Reason:</span>
-                  <div className="flex gap-4 p-3.5 border border-red-200 bg-red-50/40 ring-1 ring-red-200 rounded-2xl shadow-sm text-slate-900 text-left">
-                    <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border text-red-700 bg-red-100/50 border-red-200">
-                      {React.createElement(activeReason.icon, { size: 14 })}
-                    </div>
-                    <div>
-                      <h5 className="text-xs font-bold text-slate-900">{activeReason.title}</h5>
-                      <p className="text-[10px] text-slate-500 font-semibold mt-0.5">{activeReason.desc}</p>
-                    </div>
+              {/* Specific Reason Card */}
+              <div className="space-y-3 max-w-md w-full">
+                <div className="flex gap-4 p-3.5 border border-red-200 bg-red-50/40 ring-1 ring-red-200 rounded-2xl shadow-sm text-slate-900 text-left">
+                  <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0 border text-red-700 bg-red-100/50 border-red-200">
+                    {React.createElement(errorConfig.icon, { size: 14 })}
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-slate-900">Troubleshooting Guidance</h5>
+                    <p className="text-[10px] text-slate-600 font-semibold mt-0.5">{errorConfig.advice}</p>
                   </div>
                 </div>
-              )}
-
-              {/* Dynamic Actionable Guidance / How to Fix */}
-              {activeReason && (
-                <div className="w-full max-w-md bg-blue-50/50 border border-blue-150 p-4 rounded-2xl text-left space-y-1">
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-blue-700 block">How to fix this:</span>
-                  <p className="text-xs text-slate-700 font-semibold leading-relaxed">
-                    {activeReason.advice}
-                  </p>
-                </div>
-              )}
-
-              <div className="flex flex-wrap items-center gap-3 pt-2 w-full max-w-md justify-center">
-                <button
-                  onClick={() => startAnalysis(url, goal, experience, mock)}
-                  className="w-full sm:w-auto rounded-xl btn-brand flex items-center justify-center gap-2 px-5 py-3 text-xs font-semibold shadow-md transition-all cursor-pointer whitespace-nowrap"
-                >
-                  <RotateCw size={13} className="text-white" />
-                  <span>Try Again</span>
-                </button>
-
-                <button
-                  onClick={() => navigate(`/analyze?url=${encodeURIComponent(url)}&goal=${goal}&experience=${experience}`)}
-                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap"
-                >
-                  <Link2 size={13} className="text-slate-500" />
-                  <span>Edit URL</span>
-                </button>
-                
-                <button
-                  onClick={toggleMockFallback}
-                  className={`w-full sm:w-auto rounded-xl flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-                    isAnalysisUnavailable 
-                      ? 'bg-brand-900 text-white hover:bg-brand-800 shadow-md ring-2 ring-sky-300' 
-                      : 'bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900'
-                  }`}
-                >
-                  <Sparkles size={13} className={isAnalysisUnavailable ? 'text-white' : 'text-brand-900'} />
-                  <span>Bypass with Mock Report</span>
-                </button>
               </div>
 
-              <div className="flex items-center gap-6 pt-4 text-xs font-bold text-slate-400">
-                <button 
-                  onClick={() => navigate('/')} 
-                  className="flex items-center gap-1.5 hover:text-brand-900 transition-colors"
+              {/* Standard Primary & Secondary Action CTAs */}
+              <div className="flex flex-wrap items-center gap-3 pt-2 w-full max-w-md justify-center">
+                {/* Primary Button */}
+                <button
+                  onClick={errorConfig.primary.onClick}
+                  className="w-full sm:w-auto rounded-xl btn-brand flex items-center justify-center gap-2 px-5 py-3 text-xs font-semibold shadow-md transition-all cursor-pointer whitespace-nowrap"
                 >
-                  <Home size={13} />
-                  <span>Return Home</span>
+                  {React.createElement(errorConfig.primary.icon, { size: 13, className: "text-white" })}
+                  <span>{errorConfig.primary.label}</span>
                 </button>
-                <span className="h-3 w-px bg-slate-200" />
+
+                {/* Secondary Button */}
+                <button
+                  onClick={errorConfig.secondary.onClick}
+                  className="w-full sm:w-auto rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap"
+                >
+                  {React.createElement(errorConfig.secondary.icon, { size: 13, className: "text-slate-500" })}
+                  <span>{errorConfig.secondary.label}</span>
+                </button>
+
+                {/* Optional Mock Bypass button if allowed */}
+                {errorConfig.allowMock && (
+                  <button
+                    onClick={toggleMockFallback}
+                    className="w-full sm:w-auto rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 flex items-center justify-center gap-1.5 px-5 py-3 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap"
+                  >
+                    <Sparkles size={13} className="text-brand-900" />
+                    <span>Bypass with Mock Report</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Bottom Support Link */}
+              <div className="flex items-center justify-center pt-4 text-xs font-bold text-slate-400 w-full">
                 <a 
                   href="mailto:support@vurdict.com?subject=Vurdict%20Portfolio%20Analysis%20Issue" 
                   className="flex items-center gap-1.5 hover:text-brand-900 transition-colors"
                 >
                   <Mail size={13} />
-                  <span>Contact Support</span>
+                  <span>Need help? Contact Support</span>
                 </a>
               </div>
             </div>
