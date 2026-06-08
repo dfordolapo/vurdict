@@ -222,7 +222,7 @@ export default function AnalyzingPage() {
             onClick={() => navigate('/analyze')} 
             className="text-xs font-medium text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
           >
-            <span>← Back to Home</span>
+            <span>← Back to Analyze</span>
           </button>
         </div>
       </div>
