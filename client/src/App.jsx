@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
 import LandingPage from './pages/LandingPage.jsx'
-import AnalyzePage from './pages/AnalyzePage.jsx'
-import AnalyzingPage from './pages/AnalyzingPage.jsx'
-import ResultsPage from './pages/ResultsPage.jsx'
-import DimensionDetailsPage from './pages/DimensionDetailsPage.jsx'
-import OfflinePage from './pages/OfflinePage.jsx'
 import { AnalysisProvider } from './context/AnalysisContext'
+
+const AnalyzePage = lazy(() => import('./pages/AnalyzePage.jsx'))
+const AnalyzingPage = lazy(() => import('./pages/AnalyzingPage.jsx'))
+const ResultsPage = lazy(() => import('./pages/ResultsPage.jsx'))
+const DimensionDetailsPage = lazy(() => import('./pages/DimensionDetailsPage.jsx'))
+const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'))
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -25,19 +26,29 @@ export default function App() {
   }, [])
 
   if (!isOnline) {
-    return <OfflinePage />
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-white"></div>}>
+        <OfflinePage />
+      </Suspense>
+    )
   }
 
   return (
     <AnalysisProvider>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/analyze" element={<AnalyzePage />} />
-        <Route path="/analyzing" element={<AnalyzingPage />} />
-        <Route path="/results" element={<ResultsPage />} />
-        <Route path="/results/:dimSlug" element={<DimensionDetailsPage />} />
-        <Route path="/offline" element={<OfflinePage />} />
-      </Routes>
+      <Suspense fallback={
+        <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-slate-100 border-t-brand-900 animate-spin"></div>
+        </div>
+      }>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/analyze" element={<AnalyzePage />} />
+          <Route path="/analyzing" element={<AnalyzingPage />} />
+          <Route path="/results" element={<ResultsPage />} />
+          <Route path="/results/:dimSlug" element={<DimensionDetailsPage />} />
+          <Route path="/offline" element={<OfflinePage />} />
+        </Routes>
+      </Suspense>
     </AnalysisProvider>
   )
 }

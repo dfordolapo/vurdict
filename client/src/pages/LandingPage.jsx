@@ -153,6 +153,7 @@ function HeroVisual() {
         alt="Vurdict Portfolio Evaluation"
         className="w-full h-auto object-contain select-none"
         loading="eager"
+        fetchpriority="high"
         style={{
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',

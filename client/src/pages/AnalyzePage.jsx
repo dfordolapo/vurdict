@@ -92,7 +92,7 @@ export default function AnalyzePage() {
         <Logo onClick={() => navigate('/')} />
         <button
           onClick={() => navigate('/')}
-          className="text-xs font-medium text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+          className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
         >
           <span>← Back to Home</span>
         </button>
