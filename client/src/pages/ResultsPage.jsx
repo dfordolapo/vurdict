@@ -62,7 +62,7 @@ export default function ResultsPage() {
         <tr>
           <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#1e293b;font-weight:600;">${d.label}</td>
           <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;text-align:center;">
-            <span style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;color:${color};background:${color}10;border:1px solid ${color}30;">${score}/100</span>
+            <span class="score-badge" style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;color:${color};background:${color}10;border:1px solid ${color}30;">${score}/100</span>
           </td>
           <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:12px;color:#64748b;line-height:1.5;">${cat?.explanation || ''}</td>
         </tr>`;
@@ -78,12 +78,24 @@ export default function ResultsPage() {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vurdict Report</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @media (max-width: 480px) {
+      .report-body { padding: 20px 16px !important; }
+      .report-header { padding: 24px 16px !important; }
+      .dim-table td, .dim-table th { padding: 8px !important; font-size: 11px !important; }
+      .dim-table td:last-child { font-size: 11px !important; word-break: break-word; }
+      .dim-table .score-badge { font-size: 10px !important; padding: 1px 6px !important; }
+      .rec-card { padding: 16px !important; }
+      .meta-table td { font-size: 12px !important; }
+      .outer-wrap { padding: 0 12px !important; margin: 20px auto !important; }
+    }
+  </style>
 </head>
 <body style="margin:0;padding:0;font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;">
-  <div style="max-width:720px;margin:40px auto;padding:0 20px;">
+  <div class="outer-wrap" style="max-width:720px;margin:40px auto;padding:0 20px;">
 
     <!-- Header -->
-    <div style="background:#172554;border-radius:16px 16px 0 0;padding:32px 40px;text-align:center;">
+    <div class="report-header" style="background:#172554;border-radius:16px 16px 0 0;padding:32px 40px;text-align:center;">
       <div style="margin-bottom:12px;">
         <span style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;">vurdict</span>
       </div>
@@ -91,10 +103,10 @@ export default function ResultsPage() {
     </div>
 
     <!-- Body -->
-    <div style="background:#fff;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 16px 16px;padding:32px 40px;">
+    <div class="report-body" style="background:#fff;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 16px 16px;padding:32px 40px;">
 
       <!-- Meta -->
-      <table style="width:100%;font-size:13px;border-collapse:collapse;">
+      <table class="meta-table" style="width:100%;font-size:13px;border-collapse:collapse;">
         <tr><td style="padding:6px 0;color:#64748b;">URL</td><td style="padding:6px 0;font-weight:500;color:#0f172a;">${state.url || 'N/A'}</td></tr>
         <tr><td style="padding:6px 0;color:#64748b;">Date</td><td style="padding:6px 0;font-weight:500;color:#0f172a;">${formattedDateTime}</td></tr>
         <tr><td style="padding:6px 0;color:#64748b;">Goal</td><td style="padding:6px 0;font-weight:500;color:#0f172a;">${goalLabel}</td></tr>
@@ -113,7 +125,7 @@ export default function ResultsPage() {
       <!-- Dimension Scores -->
       <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Dimension Breakdown</h2>
       <p style="font-size:12px;color:#94a3b8;margin:0 0 16px;">How your case study scored across each evaluation dimension.</p>
-      <table style="width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
+      <table class="dim-table" style="width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
         <thead>
           <tr style="background:#f8fafc;">
             <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #e2e8f0;">Dimension</th>
@@ -125,7 +137,7 @@ export default function ResultsPage() {
       </table>
 
       <!-- Top Recommendation -->
-      <div style="margin-top:28px;padding:20px 24px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;">
+      <div class="rec-card" style="margin-top:28px;padding:20px 24px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
           <span style="font-size:16px;">⭐</span>
           <span style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.5px;">Top Recommendation</span>
