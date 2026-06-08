@@ -78,7 +78,7 @@ export default function AnalyzingPage() {
         icon: Lock,
         title: "Access Restricted",
         desc: "This page is private or restricted.",
-        advice: "Ensure the portfolio is public and accessible without a password or login.",
+        advice: "Ensure the case study is public and accessible without a password or login.",
         primary: tryAgainCTA,
         secondary: returnHomeCTA
       };
@@ -87,8 +87,8 @@ export default function AnalyzingPage() {
     if (isInvalidUrl) {
       return {
         icon: Link2,
-        title: "Portfolio Not Found",
-        desc: "We couldn't locate a portfolio at this link.",
+        title: "Case Study Not Found",
+        desc: "We couldn't locate a page at this link.",
         advice: "Double-check your link spelling. Make sure it loads correctly in a normal browser tab.",
         primary: tryAgainCTA,
         secondary: returnHomeCTA
@@ -100,7 +100,7 @@ export default function AnalyzingPage() {
         icon: Clock,
         title: "Connection Timeout",
         desc: "The page took too long to load.",
-        advice: "Wait a moment and try again. Your portfolio server might be slow or offline.",
+        advice: "Wait a moment and try again. The page might be slow or temporarily offline.",
         primary: tryAgainCTA,
         secondary: returnHomeCTA
       };
@@ -122,8 +122,8 @@ export default function AnalyzingPage() {
     return {
       icon: ShieldAlert,
       title: "Unexpected Error",
-      desc: "Something went wrong while analyzing your portfolio.",
-      advice: "Please try again. If the issue persists, try a different portfolio link.",
+      desc: "Something went wrong while analyzing your case study.",
+      advice: "Please try again. If the issue persists, try a different case study link.",
       primary: tryAgainCTA,
       secondary: returnHomeCTA
     };
@@ -335,7 +335,7 @@ export default function AnalyzingPage() {
               <div className="lg:col-span-5 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
                 <div className="flex flex-col items-center text-center">
                   <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
-                    Reviewing Your Portfolio
+                    Reviewing Your Case Study
                   </h1>
                   <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
                     We're evaluating your work across six hiring dimensions.
@@ -455,7 +455,7 @@ export default function AnalyzingPage() {
       <div className="bg-white py-8 px-6 md:px-12 border-t border-slate-100">
         <div className="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-500 text-xs font-semibold text-left">
           {[
-            { icon: Check, text: 'Your portfolio is safe', sub: 'We analyze your publicly available content only. We never store or share your portfolio.' },
+            { icon: Check, text: 'Your case study is safe', sub: 'We analyze your publicly available content only. We never store or share it.' },
             { icon: Sparkles, text: 'No signup required', sub: 'Get your full report instantly. Create an account later if you\'d like to save and track your progress.' }
           ].map((item, idx) => {
             const ItemIcon = item.icon;

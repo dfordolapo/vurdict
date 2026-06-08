@@ -49,7 +49,7 @@ export default function OfflinePage() {
               Connection Lost
             </h1>
             <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto">
-              Vurdict requires an active internet connection to crawl your portfolio and generate high-fidelity AI feedback.
+              Vurdict requires an active internet connection to crawl your case study and generate high-fidelity AI feedback.
             </p>
           </div>
 

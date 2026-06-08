@@ -104,7 +104,7 @@ function Navbar() {
             to="/analyze"
             className="btn-brand flex items-center gap-1.5 md:gap-2 px-3.5 md:px-5 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-medium group whitespace-nowrap shrink-0"
           >
-            <span>Analyze Portfolio</span>
+            <span>Analyze Case Study</span>
             <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
               <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
             </div>
@@ -192,11 +192,11 @@ function HeroSection() {
       <div className="bg-brand-900 py-12 px-6 text-center text-white relative">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
-            <span className="md:whitespace-nowrap">See Your Portfolio Through</span> <br className="hidden md:inline" />
+            <span className="md:whitespace-nowrap">See Your Case Study Through</span> <br className="hidden md:inline" />
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-            Paste your portfolio link and get structured feedback on what's helping and what to fix first.
+            Paste your case study link and get structured feedback on what's helping and what to fix first.
           </p>
 
           {/* Form container */}
@@ -213,7 +213,7 @@ function HeroSection() {
                     navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
                   }
                 }}
-                placeholder="https://yourportfolio.com"
+                placeholder="https://notion.so/your-case-study"
                 className="w-full py-2 bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
               />
             </div>
@@ -269,7 +269,7 @@ function HeroSection() {
               }}
               className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0"
             >
-              <span>Analyze Portfolio</span>
+              <span>Analyze Case Study</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
                 <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
               </div>
@@ -281,7 +281,7 @@ function HeroSection() {
             {[
               { icon: Shield, text: 'No signup required' },
               { icon: Zap, text: 'Results in minutes' },
-              { icon: CheckCircle, text: 'Any portfolio URL works' },
+              { icon: CheckCircle, text: 'Any case study URL works' },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2 text-sky-200/60 text-xs font-semibold group">
                 <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_10px_rgba(255,255,255,0.1)]">
@@ -416,7 +416,7 @@ function HowItWorksSection() {
     {
       num: '1',
       title: 'Paste URL',
-      desc: 'Submit your live portfolio or case study link.',
+      desc: 'Submit your live case study link — Notion, Framer, Webflow, or your own site.',
     },
     {
       num: '2',
@@ -439,7 +439,7 @@ function HowItWorksSection() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
-            Portfolio Feedback in <span className="text-[#3b82f6]">Minutes</span>
+            Case Study Feedback in <span className="text-[#3b82f6]">Minutes</span>
           </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Identify the changes most likely to improve your chances of getting noticed
@@ -504,7 +504,7 @@ function FrameworkSection() {
     {
       icon: Terminal,
       title: 'Positioning Clarity',
-      desc: 'Verifies whether the portfolio communicates who the designer is and what they specialize in.',
+      desc: 'Verifies whether the case study communicates who the designer is and what they specialize in.',
     },
   ]
 
@@ -516,7 +516,7 @@ function FrameworkSection() {
             The 6-Dimension Evaluation Framework
           </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            We review what actually determines your portfolio's success
+            We review what actually determines your case study's success
           </p>
         </div>
 
@@ -655,16 +655,16 @@ function FAQSection() {
 
   const faqs = [
     {
-      q: 'What kinds of portfolio URLs does Vurdict support?',
-      a: 'Any publicly accessible link works — Dribbble, Behance, Notion, Framer, Webflow, personal websites, or a direct link to a case study.',
+      q: 'What kinds of case study URLs does Vurdict support?',
+      a: 'Any publicly accessible case study link works — Notion, Framer, Webflow, personal websites, or a dedicated case study page. Full portfolio analysis is coming in v2.',
     },
     {
-      q: 'How is Vurdict different from just asking ChatGPT to review my portfolio?',
+      q: 'How is Vurdict different from just asking ChatGPT to review my case study?',
       a: 'ChatGPT uses general knowledge. Vurdict is calibrated against a specific 6-dimension design rubric with context settings for either full-time job seeking or client-winning freelance work.',
     },
     {
-      q: 'Is my portfolio data stored or shared?',
-      a: 'No. We only scrape and inspect your publicly available details. We do not store or share your designs or content.',
+      q: 'Is my case study data stored or shared?',
+      a: 'No. We only scrape and inspect your publicly available content. We do not store or share your designs or case study details.',
     },
     {
       q: 'How accurate is the AI scoring?',
@@ -734,7 +734,7 @@ function FinalCTASection() {
           See What Hirers See Before They Do
         </h2>
           <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            Great portfolios don't happen by accident
+            Great case studies don't happen by accident
           </p>
       </div>
 
@@ -759,7 +759,7 @@ function FinalCTASection() {
               onClick={() => navigate('/analyze')}
               className="w-full bg-white text-brand-900 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-4 md:py-5 rounded-xl font-medium text-sm md:text-base hover:bg-sky-50 transition-colors shadow-xl cursor-pointer group whitespace-nowrap shrink-0"
             >
-                <span>Analyze Your Portfolio</span>
+                <span>Analyze Your Case Study</span>
               <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-900/10">
                 <ArrowRight size={16} className="text-brand-900 transition-all duration-200 group-hover:translate-x-1" />
               </div>
