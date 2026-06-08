@@ -42,6 +42,8 @@ export default function ResultsPage() {
   const [saveModalOpen, setSaveModalOpen] = useState(false);
   const [saveEmail, setSaveEmail] = useState('');
   const [saveSubmitted, setSaveSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
 
   const handleDownload = () => {
     const dims = [
@@ -167,10 +169,36 @@ export default function ResultsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleSaveSubmit = (e) => {
+  const handleSaveSubmit = async (e) => {
     e.preventDefault();
-    if (saveEmail.trim()) {
+    setSendError('');
+    if (!saveEmail.trim()) return;
+
+    const apiBase = import.meta.env.VITE_API_URL || (window.location.port === '5173' ? 'http://localhost:3001' : '');
+    setSending(true);
+    try {
+      const res = await fetch(`${apiBase}/api/send-report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: saveEmail.trim(),
+          url: state.url,
+          goal: state.goal,
+          experience: state.experience,
+          formattedDateTime,
+          report,
+          statusLabel,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Failed to send report. Please try again.');
+      }
       setSaveSubmitted(true);
+    } catch (err) {
+      setSendError(err.message);
+    } finally {
+      setSending(false);
     }
   };
 
@@ -178,6 +206,7 @@ export default function ResultsPage() {
     setSaveModalOpen(false);
     setSaveSubmitted(false);
     setSaveEmail('');
+    setSendError('');
   };
 
   const handleShare = () => {
@@ -671,16 +700,30 @@ export default function ResultsPage() {
                         onChange={(e) => setSaveEmail(e.target.value)}
                         placeholder="you@example.com"
                         required
-                        className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+                        disabled={sending}
+                        className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none disabled:opacity-50"
                       />
                     </div>
                   </div>
+                  {sendError && (
+                    <div className="text-xs text-red-500 font-medium text-center">{sendError}</div>
+                  )}
                   <button
                     type="submit"
-                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
+                    disabled={sending}
+                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Mail size={14} />
-                    <span>Send to My Email</span>
+                    {sending ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </span>
+                    ) : (
+                      <>
+                        <Mail size={14} />
+                        <span>Send to My Email</span>
+                      </>
+                    )}
                   </button>
                 </form>
               </>
