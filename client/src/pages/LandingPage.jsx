@@ -89,7 +89,7 @@ function Navbar() {
               href={link.href}
               className={`text-sm font-normal transition-all pb-1 pt-1 border-b-2 ${
                 activeSection === link.href 
-                  ? 'text-blue-600 border-blue-600 font-medium' 
+                  ? 'text-blue-600 border-blue-600 font-normal' 
                   : 'text-slate-500 hover:text-brand-900 border-transparent hover:border-slate-300'
               }`}
             >
