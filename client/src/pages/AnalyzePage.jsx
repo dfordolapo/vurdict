@@ -115,11 +115,11 @@ export default function AnalyzePage() {
             <div className="lg:col-span-5 space-y-7">
               {/* Header */}
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
+                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
                   Analyze Your Portfolio
                 </h1>
-                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
-                  Paste a portfolio link and choose what you're optimizing for.
+                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-normal leading-relaxed text-balance max-w-sm">
+                  Paste a case study link and choose what you're optimizing for.
                 </p>
               </div>
 
@@ -171,7 +171,7 @@ export default function AnalyzePage() {
                             <span className={`block text-sm font-semibold leading-tight ${isSelected ? 'text-slate-900' : 'text-white'}`}>
                               {item.label}
                             </span>
-                            <span className={`block text-xs mt-0.5 leading-normal font-medium ${isSelected ? 'text-slate-500' : 'text-white/60'}`}>
+                            <span className={`block text-xs mt-0.5 leading-normal font-normal ${isSelected ? 'text-slate-500' : 'text-white/60'}`}>
                               {item.desc}
                             </span>
                           </div>
@@ -252,13 +252,13 @@ export default function AnalyzePage() {
                 </button>
 
                 {/* Secondary text */}
-                <p className="text-center text-xs text-sky-200/60 font-medium">
+                <p className="text-center text-xs text-sky-200/60 font-normal">
                   No signup required. Your review will be generated instantly.
                 </p>
 
                 {/* Error */}
                 {error && (
-                  <div className="flex items-center gap-2 text-xs text-red-300 font-semibold justify-center bg-red-500/10 border border-red-500/20 p-3 rounded-2xl">
+                  <div className="flex items-center gap-2 text-xs text-red-300 font-normal justify-center bg-red-500/10 border border-red-500/20 p-3 rounded-2xl">
                     <AlertCircle size={14} className="shrink-0" />
                     <span>{error}</span>
                   </div>
@@ -283,7 +283,7 @@ export default function AnalyzePage() {
 
       {/* Bottom strip */}
       <div className="bg-white py-8 px-6 md:px-12 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 text-slate-500 text-xs font-semibold">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 text-slate-500 text-xs font-normal">
           {[
             { icon: CheckCircle, text: 'No signup required', sub: 'Get your results instantly.' },
             { icon: Shield, text: 'Works with any portfolio', sub: 'Personal websites, Notion, Framer, Webflow & more.' },
@@ -296,8 +296,8 @@ export default function AnalyzePage() {
                   <Icon size={14} className="text-brand-900" />
                 </div>
                 <div>
-                  <p className="text-slate-800 font-semibold">{item.text}</p>
-                  <p className="text-[10px] text-slate-400 font-medium mt-0.5">{item.sub}</p>
+                  <p className="text-slate-800 font-normal">{item.text}</p>
+                  <p className="text-[10px] text-slate-400 font-normal mt-0.5">{item.sub}</p>
                 </div>
               </div>
             );

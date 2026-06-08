@@ -184,8 +184,8 @@ export default function DimensionDetailsPage() {
           <div className="lg:col-span-3 space-y-4">
             <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4">
               <div>
-                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Review by Dimension</h3>
-                <span className="text-[9px] text-slate-400 font-semibold block mt-0.5">Click a dimension to view details</span>
+                <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wide">Review by Dimension</h3>
+                <span className="text-[9px] text-slate-400 font-normal block mt-0.5">Click a dimension to view details</span>
               </div>
 
               <div className="space-y-2">
@@ -237,8 +237,8 @@ export default function DimensionDetailsPage() {
                   <DimIcon size={22} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-900">{activeDim.label}</h2>
-                  <p className="text-xs text-slate-450 font-semibold leading-relaxed max-w-xl mt-1">{activeDim.desc}</p>
+                  <h2 className="text-xl font-semibold text-slate-900">{activeDim.label}</h2>
+                  <p className="text-xs text-slate-450 font-normal leading-relaxed max-w-xl mt-1">{activeDim.desc}</p>
                 </div>
               </div>
 

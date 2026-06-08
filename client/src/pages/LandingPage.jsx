@@ -128,9 +128,9 @@ function Navbar() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-sm font-semibold transition-all py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50/70 hover:text-brand-900 ${
+                className={`text-sm font-normal transition-all py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50/70 hover:text-brand-900 ${
                   activeSection === link.href 
-                    ? 'text-blue-600 bg-blue-50/50 border-l-4 border-l-blue-600 pl-5 font-bold' 
+                    ? 'text-blue-600 bg-blue-50/50 border-l-4 border-l-blue-600 pl-5 font-normal' 
                     : 'text-slate-600 border-l-4 border-l-transparent pl-5 active:bg-brand-900 active:text-white'
                 }`}
               >
@@ -191,11 +191,11 @@ function HeroSection() {
       {/* Navy blue container */}
       <div className="bg-brand-900 py-12 px-6 text-center text-white relative">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 tracking-tight">
             <span className="md:whitespace-nowrap">See Your Portfolio Through</span> <br className="hidden md:inline" />
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
-          <p className="text-sky-100/70 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
+          <p className="text-sky-100/70 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
             Paste your case study link and get structured feedback on what's helping and what to fix first.
           </p>
 
@@ -333,7 +333,7 @@ function ProblemSection() {
     <section id="why-vurdict" className="py-12 md:py-20 bg-white relative">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
             Most portfolio feedback is <br className="hidden md:inline" />{" "}
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
@@ -438,7 +438,7 @@ function HowItWorksSection() {
     <section id="how-it-works" className="py-10 md:py-16 bg-white border-y border-slate-100/80">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
             Case Study Feedback in <span className="text-[#3b82f6]">Minutes</span>
           </h2>
           <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -512,7 +512,7 @@ function FrameworkSection() {
     <section id="framework" className="py-10 md:py-16 bg-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
             The 6-Dimension Evaluation Framework
           </h2>
           <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
@@ -554,10 +554,10 @@ function ReportCardSection() {
     <section id="report-card" className="relative bg-white pt-10">
       {/* Heading area on White background */}
       <div className="text-center mb-10 px-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
           The <span className="text-[#3b82f6]">Vurdict</span> Report Card
         </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Don't settle for "Nice work!" See where you actually stand
           </p>
       </div>
@@ -684,10 +684,10 @@ function FAQSection() {
     <section id="faq" className="py-10 md:py-16 bg-white relative">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">Everything you need to know about the evaluation.</p>
+          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">Everything you need to know about the evaluation.</p>
         </div>
 
         <div className="space-y-4 max-w-2xl mx-auto">
@@ -730,10 +730,10 @@ function FinalCTASection() {
     <div className="bg-white">
       {/* Heading area on White background */}
       <div className="pt-16 pb-8 px-6 text-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
           See What Hirers See Before They Do
         </h2>
-          <p className="text-slate-500 font-medium max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Great case studies don't happen by accident
           </p>
       </div>

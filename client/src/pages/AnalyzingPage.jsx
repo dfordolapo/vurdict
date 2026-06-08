@@ -334,10 +334,10 @@ export default function AnalyzingPage() {
               {/* Left panel: Timeline Checklist */}
               <div className="lg:col-span-5 space-y-6 flex flex-col items-center text-center animate-fade-in-up">
                 <div className="flex flex-col items-center text-center">
-                  <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
+                  <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
                     Reviewing Your Case Study
                   </h1>
-                  <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance max-w-sm">
+                  <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-normal leading-relaxed text-balance max-w-sm">
                     We're evaluating your work across six hiring dimensions.
                   </p>
                 </div>

@@ -45,7 +45,7 @@ export default function OfflinePage() {
           </div>
 
           <div className="space-y-3">
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-3xl font-semibold tracking-tight text-slate-900">
               Connection Lost
             </h1>
             <p className="text-slate-500 text-sm leading-relaxed max-w-sm mx-auto">

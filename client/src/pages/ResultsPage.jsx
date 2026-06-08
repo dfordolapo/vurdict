@@ -230,10 +230,10 @@ export default function ResultsPage() {
         <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20 mb-8 animate-fade-in-up">
           <div className="lg:col-span-8 space-y-6 flex flex-col items-center lg:items-start text-center lg:text-left">
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight text-balance">
+              <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
                 Your <span className="text-sky-300">Vurdict</span> Report Card
               </h1>
-              <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-medium leading-relaxed text-balance">
+              <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-normal leading-relaxed text-balance">
                 Here's how your portfolio performs across the six hiring dimensions.
               </p>
             </div>
