@@ -320,17 +320,6 @@ export default function AnalyzingPage() {
                   </button>
                 )}
               </div>
-
-              {/* Bottom Support Link */}
-              <div className="flex items-center justify-center pt-4 text-xs font-bold text-slate-400 w-full">
-                <a 
-                  href="mailto:support@vurdict.com?subject=Vurdict%20Portfolio%20Analysis%20Issue" 
-                  className="flex items-center gap-1.5 hover:text-brand-900 transition-colors"
-                >
-                  <Mail size={13} />
-                  <span>Need help? Contact Support</span>
-                </a>
-              </div>
             </div>
 
             {/* Right panel warning graphic */}
