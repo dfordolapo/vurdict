@@ -405,9 +405,8 @@ export default function DimensionDetailsPage() {
             </p>
           </div>
           <div className="flex gap-6 font-semibold">
-            {['Privacy', 'Terms', 'Contact'].map(link => (
-              <a key={link} href="#" className="hover:text-brand-900 transition-colors">{link}</a>
-            ))}
+            <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
+            <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
           </div>
         </footer>
       </div>

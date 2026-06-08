@@ -785,9 +785,8 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-6 text-xs font-semibold text-slate-500">
-          {['Privacy', 'Terms', 'Contact', 'Twitter'].map(link => (
-            <a key={link} href="#" className="hover:text-brand-900 transition-colors">{link}</a>
-          ))}
+          <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
+          <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
         </div>
       </div>
     </footer>

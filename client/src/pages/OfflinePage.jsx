@@ -68,6 +68,10 @@ export default function OfflinePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-100 py-6 px-6 text-center text-xs text-slate-400 bg-white">
+        <div className="flex items-center justify-center gap-6 mb-3 font-semibold">
+          <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
+          <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
+        </div>
         <p>© {new Date().getFullYear()} Vurdict. Offline Mode.</p>
       </footer>
     </div>
