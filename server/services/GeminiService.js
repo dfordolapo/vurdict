@@ -75,7 +75,7 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent)
     apiKey: process.env.GEMINI_API_KEY,
   });
 
-  const maxRetries = 3;
+  const maxRetries = 4;
   let attempt = 0;
 
   while (attempt < maxRetries) {
@@ -125,8 +125,8 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent)
         throw new Error(cleanMsg || 'Gemini service is currently unavailable. Please try again.');
       }
       
-      // Wait before retrying (exponential backoff)
-      await new Promise(resolve => setTimeout(resolve, attempt * 1500));
+      // Wait before retrying (longer backoff for rate limits)
+      await new Promise(resolve => setTimeout(resolve, attempt * 4000));
     }
   }
 }
