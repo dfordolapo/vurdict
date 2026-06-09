@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "VurdictAIResponseSchema",
-  "description": "Structured JSON response format returned by the Claude Service after portfolio evaluation.",
+  "description": "Structured JSON response format returned by the Gemini/Claude Service after case study evaluation.",
   "type": "object",
   "required": [
     "overall_score",
@@ -12,7 +12,7 @@
   "properties": {
     "overall_score": {
       "type": "number",
-      "description": "The aggregated score (0-100) representing overall portfolio readiness based on the selected goal weights.",
+      "description": "The aggregated score (0-100) representing overall case study readiness based on the selected goal weights.",
       "minimum": 0,
       "maximum": 100
     },
@@ -105,7 +105,7 @@
     },
     "summary": {
       "type": "string",
-      "description": "A high-level executive summary of the portfolio evaluation, explaining key strengths and the primary bottlenecks."
+      "description": "A high-level executive summary of the case study evaluation, explaining key strengths and the primary bottlenecks."
     }
   }
 }

@@ -20,7 +20,6 @@ import MicroscopeIllustration from '../../components/MicroscopeIllustration';
 const GOAL_LIST = [
   { key: 'get_hired' as GoalType, label: 'Get Hired', desc: 'Land a full-time product design role', icon: Briefcase },
   { key: 'win_clients' as GoalType, label: 'Win Freelance Clients', desc: 'Attract and convert more freelance opportunities', icon: Users },
-  { key: 'improve_portfolio' as GoalType, label: 'Improve Portfolio Quality', desc: 'Level up your portfolio regardless of career stage', icon: TrendingUp },
 ];
 
 export default function AnalyzePage() {

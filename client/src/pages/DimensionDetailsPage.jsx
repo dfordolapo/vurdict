@@ -6,18 +6,19 @@ import WaveDivider from '../components/WaveDivider';
 import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
 import {
-  Compass,
-  Brain,
-  Palette,
-  BarChart2,
-  FileText,
-  Terminal,
+  Workflow,
+  Microscope,
+  SwatchBook,
+  TrendingUp,
+  Feather,
+  Target,
   ChevronRight,
   CheckCircle,
   AlertTriangle,
   ExternalLink,
   HelpCircle,
   MessageCircle,
+  FileText,
   X
 } from 'lucide-react';
 
@@ -47,12 +48,12 @@ export default function DimensionDetailsPage() {
 
   // Dimension specifications mapped
   const dimensionsList = [
-    { label: 'Structural Logic', slug: 'structural_logic', key: 'process_visibility', icon: Compass, desc: 'Evaluates the flow of your case study, ensuring problem statements connect logically to delivered solutions.', benchmark: 85 },
-    { label: 'Critical Thinking', slug: 'critical_thinking', key: 'problem_framing', icon: Brain, desc: 'Checks for evidence of research-driven decisions rather than purely aesthetic choices.', benchmark: 75 },
-    { label: 'Visual Execution', slug: 'visual_execution', key: 'visual_quality', icon: Palette, desc: 'Analysis of spacing, typography, hierarchy, and adherence to modern UI principles and accessibility.', benchmark: 80 },
-    { label: 'Impact Evidence', slug: 'impact_evidence', key: 'outcome_impact', icon: BarChart2, desc: 'Scans for quantifiable metrics and business outcomes that demonstrate the value of your work.', benchmark: 70 },
-    { label: 'Narrative Tone', slug: 'narrative_tone', key: 'trust_cta', icon: FileText, desc: 'Assesses professional voice and clarity, ensuring your writing is concise yet persuasive.', benchmark: 75 },
-    { label: 'Positioning Clarity', slug: 'positioning_clarity', key: 'niche_positioning', icon: Terminal, desc: 'Verifies whether the portfolio communicates who the designer is and what they specialize in.', benchmark: 80 }
+    { label: 'Structural Logic', slug: 'structural_logic', key: 'process_visibility', icon: Workflow, desc: 'Evaluates the flow of your case study, ensuring problem statements connect logically to delivered solutions.', benchmark: 85 },
+    { label: 'Critical Thinking', slug: 'critical_thinking', key: 'problem_framing', icon: Microscope, desc: 'Checks for evidence of research-driven decisions rather than purely aesthetic choices.', benchmark: 75 },
+    { label: 'Visual Execution', slug: 'visual_execution', key: 'visual_quality', icon: SwatchBook, desc: 'Analysis of spacing, typography, hierarchy, and adherence to modern UI principles and accessibility.', benchmark: 80 },
+    { label: 'Impact Evidence', slug: 'impact_evidence', key: 'outcome_impact', icon: TrendingUp, desc: 'Scans for quantifiable metrics and business outcomes that demonstrate the value of your work.', benchmark: 70 },
+    { label: 'Narrative Tone', slug: 'narrative_tone', key: 'trust_cta', icon: Feather, desc: 'Assesses professional voice and clarity, ensuring your writing is concise yet persuasive.', benchmark: 75 },
+    { label: 'Positioning Clarity', slug: 'positioning_clarity', key: 'niche_positioning', icon: Target, desc: 'Verifies whether the portfolio communicates who the designer is and what they specialize in.', benchmark: 80 }
   ];
 
   const activeDim = dimensionsList.find(d => d.slug === dimSlug) || dimensionsList[0];
@@ -81,7 +82,7 @@ export default function DimensionDetailsPage() {
             { title: 'Final Outcomes Shown', desc: 'Final designs and results are displayed for each case study.' }
           ],
           improve: [
-            { title: 'Connect Decisions to Problems', desc: 'Every design decision should explicitly reference the user need or constraint that drove it — no unexplained choices.' },
+            { title: 'Connect Decisions to Problems', desc: 'Every design decision should explicitly reference the user need or constraint that drove it, with no unexplained choices.' },
             { title: 'Add Milestone Headers', desc: 'Break your process into 3-5 scannable phases (Discover → Define → Design → Deliver) so recruiters can follow your narrative in seconds.' },
             { title: 'Include Before/After Comparison', desc: 'Add a side-by-side visual showing the problem state vs. your solution for immediate impact.' }
           ],
@@ -96,7 +97,7 @@ export default function DimensionDetailsPage() {
               'Open each case study with a 2-sentence hook: "What was the challenge, and what was the result?" This lets readers grasp the value before diving into details.',
               'Organize your process into exactly 3-5 phases with descriptive headers (e.g., "Research → Define → Ideate → Build → Launch"). Each phase should have 2-3 bullet points max.',
               'For every major design decision shown in your screenshots, add a 1-line annotation explaining the reasoning: "Moved the CTA above the fold because heatmaps showed 73% of users never scrolled past the hero."',
-              'Close with a results section that includes a before/after comparison (visual or data) and at least 1 quantifiable outcome — even an estimate is better than nothing.'
+              'Close with a results section that includes a before/after comparison (visual or data) and at least 1 quantifiable outcome (even an estimate is better than nothing).'
             ]
           }
         };
@@ -110,8 +111,8 @@ export default function DimensionDetailsPage() {
           ],
           improve: [
             { title: 'Add Verbatim Interview Quotes', desc: 'Include 3-5 direct user quotes per project to make insights tangible and credible.' },
-            { title: 'Include a Competitor Analysis Matrix', desc: 'Show a simple 2x2 grid comparing 3-5 competitors across key features — this proves market awareness.' },
-            { title: 'Document Problem Validation', desc: 'Show how you validated the problem existed before designing — survey data, analytics, support tickets, or usability test findings.' }
+            { title: 'Include a Competitor Analysis Matrix', desc: 'Show a simple 2x2 grid comparing 3-5 competitors across key features to prove market awareness.' },
+            { title: 'Document Problem Validation', desc: 'Show how you validated the problem existed before designing, such as survey data, analytics, support tickets, or usability test findings.' }
           ],
           evidence: [
             { title: 'User Research (Project 1)', desc: '3 user interviews conducted. Good start but lacks synthesized insights.' },
@@ -120,7 +121,7 @@ export default function DimensionDetailsPage() {
           ],
           recommendation: {
             title: 'Validate Every Design Decision with Qualitative and Quantitative Research',
-            desc: 'The difference between a good designer and a great one is evidence. Every claim in your case study should be backed by research — user quotes, analytics data, competitive analysis, or usability metrics. Make your thinking visible and provable.',
+            desc: 'The difference between a good designer and a great one is evidence. Every claim in your case study should be backed by research: user quotes, analytics data, competitive analysis, or usability metrics. Make your thinking visible and provable.',
             steps: [
               'For each project, include at least 3 verbatim user quotes that directly influenced your design decisions. Format them as pull quotes so they\'re scannable.',
               'Create a competitive analysis matrix (columns = competitors, rows = features/approaches). Highlight where your solution differs and why that decision was made.',
@@ -131,7 +132,7 @@ export default function DimensionDetailsPage() {
         };
       case 'visual_execution':
         return {
-          why: "Your visual foundations are solid — good typography and grid usage. The gaps are in accessibility compliance, responsive behavior at breakpoints, and micro-interaction polish.",
+          why: "Your visual foundations are solid, featuring good typography and grid usage. The gaps are in accessibility compliance, responsive behavior at breakpoints, and micro-interaction polish.",
           working: [
             { title: 'Clean Typography Scale', desc: 'Systematic type scaling using modern sans-serif creates premium readability and hierarchy.' },
             { title: 'Consistent Grid System', desc: 'Alignment to a structured column grid keeps layouts organized and professional.' },
@@ -148,9 +149,9 @@ export default function DimensionDetailsPage() {
           ],
           recommendation: {
             title: 'Audit Your Visual System for Accessibility, Responsiveness, and Micro-Interactions',
-            desc: 'You\'re 80% of the way to a polished visual system. The remaining 20% — contrast compliance, responsive edge cases, and interaction design — is what separates good from great. These are quick wins that dramatically improve perceived quality.',
+            desc: 'You\'re 80% of the way to a polished visual system. The remaining 20% (contrast compliance, responsive edge cases, and interaction design) is what separates good from great. These are quick wins that dramatically improve perceived quality.',
             steps: [
-              'Run every color pairing through a WCAG contrast checker (use Stark or axe DevTools). Fix any pairings below 4.5:1 ratio for small text or 3:1 for large text. Start with badges, captions, and placeholder text — those are the most common failures.',
+              'Run every color pairing through a WCAG contrast checker (use Stark or axe DevTools). Fix any pairings below 4.5:1 ratio for small text or 3:1 for large text. Start with badges, captions, and placeholder text, which are the most common failures.',
               'Open your portfolio at 320px width. If any layout breaks (overflow, cramped cards, collapsed menus), fix it with responsive utility classes. Test again at 768px and 1440px.',
               'Add micro-interactions to all interactive elements: buttons should scale 1.02 on hover, cards should lift with shadow, links should underline smoothly. These take 30 minutes to implement and dramatically improve the feel.',
               'Standardize your spacing to an 8px grid. Check that all margins, paddings, and gaps are multiples of 8 (or 4 for tight spacing). Inconsistent spacing is the #1 visual tell of an amateur portfolio.'
@@ -159,13 +160,13 @@ export default function DimensionDetailsPage() {
         };
       case 'impact_evidence':
         return {
-          why: "Your projects describe what you did but rarely show what happened as a result. Recruiters and clients need proof that your work drives measurable business or user impact — not just screenshots.",
+          why: "Your projects describe what you did but rarely show what happened as a result. Recruiters and clients need proof that your work drives measurable business or user impact, not just screenshots.",
           working: [
             { title: 'Project Results Mentioned', desc: 'You reference outcomes in some project descriptions, establishing a results-oriented mindset.' },
             { title: 'Visual Artifacts Shown', desc: 'Final screens, prototypes, and deliverables are displayed clearly.' }
           ],
           improve: [
-            { title: 'Add 3+ Metrics Per Project', desc: 'Include specific numbers for each project — time saved, conversion lift, engagement rate, support ticket reduction, NPS score, etc.' },
+            { title: 'Add 3+ Metrics Per Project', desc: 'Include specific numbers for each project: time saved, conversion lift, engagement rate, support ticket reduction, NPS score, etc.' },
             { title: 'Show Before/After Data', desc: 'Use a simple comparison (table, inline stat, or visual) so the improvement is instantly visible and undeniable.' },
             { title: 'Include Stakeholder Testimonials with Numbers', desc: 'A client quote like "Revenue grew 25% after the redesign" is infinitely more powerful than "The client was happy with the work."' }
           ],
@@ -174,19 +175,19 @@ export default function DimensionDetailsPage() {
             { title: 'Client Feedback (Project 2)', desc: 'Positive testimonial included but no quantifiable outcomes referenced.' }
           ],
           recommendation: {
-            title: 'Quantify Every Outcome — If You Can\'t Measure It, Frame It',
+            title: 'Quantify Every Outcome: If You Can\'t Measure It, Frame It',
             desc: 'Impact is not subjective. Train yourself to identify concrete metrics for every project. Even qualitative outcomes can be quantified: "Shipped to 50K+ users with zero critical bugs" or "Approved by stakeholders on first presentation." If you don\'t have hard data, use proxy metrics that demonstrate scale or quality.',
             steps: [
               'Audit each project and find at least 3 metrics you can report: time saved, conversion rate change, engagement increase, NPS score, support tickets reduced, pages per session, task success rate, or revenue impact. Look in analytics, client reports, or post-launch data.',
               'Present every metric as a before/after comparison. Template: "Reduced X by Y% (from A to B)" or "Improved Z from A to B in [timeframe]." If exact data is unavailable, use reasonable estimates and label them as such.',
-              'Include a 1-line impact summary at the top of each case study — right after the project title. Example: "Redesigned the onboarding flow, resulting in a 34% increase in completed registrations and a 12% decrease in support tickets." This hooks skimmers immediately.',
+              'Include a 1-line impact summary at the top of each case study, right after the project title. Example: "Redesigned the onboarding flow, resulting in a 34% increase in completed registrations and a 12% decrease in support tickets." This hooks skimmers immediately.',
               'For projects with no accessible metrics, use scale proxies: "Served 200K+ monthly active users," "Used by the design team of 12 across 3 product lines," or "Presented to C-suite stakeholders who approved on first review."'
             ]
           }
         };
       case 'narrative_tone':
         return {
-          why: "Your writing is grammatically sound but lacks the persuasive edge needed to turn readers into clients or hires. Your case studies read as reports, not pitches — passive voice, buried outcomes, and no call to action.",
+          why: "Your writing is grammatically sound but lacks the persuasive edge needed to turn readers into clients or hires. Your case studies read as reports, not pitches: passive voice, buried outcomes, and no call to action.",
           working: [
             { title: 'Professional Language', desc: 'Your writing is polished with appropriate design terminology and good grammar.' },
             { title: 'Clear Section Organization', desc: 'Case studies are structured into readable, logical sections.' }
@@ -204,7 +205,7 @@ export default function DimensionDetailsPage() {
             title: 'Rewrite Every Case Study with Active Voice, Outcome-First Hooks, and Strong CTAs',
             desc: 'Your portfolio is a sales document, not a case study repository. Every sentence should either inform, persuade, or drive action. Strip passive language, lead with results, and always tell the reader what to do next. This single shift transforms how recruiters perceive your work.',
             steps: [
-              'Audit every case study and flag every passive construction ("was done," "were created," "was designed"). Replace each one with active voice using "I" or "we." This immediately signals ownership and confidence — it is the highest-leverage edit you can make.',
+              'Audit every case study and flag every passive construction ("was done," "were created," "was designed"). Replace each one with active voice using "I" or "we." This immediately signals ownership and confidence; it is the highest-leverage edit you can make.',
               'Rewrite the first 2 sentences of each case study using this template: "[Action] resulted in [outcome] for [audience]." Example: "Redesigned the checkout flow, resulting in a 28% increase in completed purchases for 50K+ monthly users." Then explain your process below.',
               'End every case study with a specific call to action: "View the live product," "Read the full case study," or "Interested in a similar project? Let\'s talk." Link to your contact page or a working prototype.',
               'Read each case study aloud. If any sentence feels passive, uncertain, or vague, rewrite it. Your default tone should be: "I identified a problem, I solved it, and here\'s the proof." Confidence is contagious.'
@@ -213,7 +214,7 @@ export default function DimensionDetailsPage() {
         };
       case 'positioning_clarity':
         return {
-          why: "Your portfolio doesn't clearly communicate what you specialize in or who you design for. Recruiters scanning your work should know your niche within 3 seconds — if they have to guess, they move on.",
+          why: "Your portfolio doesn't clearly communicate what you specialize in or who you design for. Recruiters scanning your work should know your niche within 3 seconds. If they have to guess, they move on.",
           working: [
             { title: 'Projects Well Displayed', desc: 'Your portfolio showcases multiple projects with strong visuals and descriptions.' },
             { title: 'Design Competency Evident', desc: 'Your work clearly demonstrates strong product design skills across projects.' }
@@ -229,10 +230,10 @@ export default function DimensionDetailsPage() {
           ],
           recommendation: {
             title: 'Define Your Niche and Make It the First Thing Every Visitor Sees',
-            desc: 'The best portfolios answer one question in under 3 seconds: "What does this designer specialize in?" If yours doesn\'t, recruiters will not invest time figuring it out. Decide what you want to be known for — then make it impossible to miss on every page.',
+            desc: 'The best portfolios answer one question in under 3 seconds: "What does this designer specialize in?" If yours doesn\'t, recruiters will not invest time figuring it out. Decide what you want to be known for, then make it impossible to miss on every page.',
             steps: [
               'Write a 1-sentence positioning statement: "I design [type of product] for [specific audience] that [key outcome]." Example: "I design B2B SaaS platforms for fintech startups that simplify complex financial workflows." This goes in your homepage hero, right below your name.',
-              'Categorize every project by industry or domain (fintech, healthtech, e-commerce, etc.). If 3+ projects fall in the same space, that\'s your niche — reorder your portfolio to show those first.',
+              'Categorize every project by industry or domain (fintech, healthtech, e-commerce, etc.). If 3+ projects fall in the same space, that\'s your niche; reorder your portfolio to show those first.',
               'Add a 2-paragraph About section to your portfolio: paragraph 1 states your specialization, design philosophy, and the type of problems you solve best. Paragraph 2 covers your experience, tools, and what you\'re seeking next. Include a professional headshot.',
               'Ensure your portfolio URL, LinkedIn headline, and resume all use the same positioning language. Consistency across channels signals intentionality and builds trust with recruiters.'
             ]

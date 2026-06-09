@@ -57,7 +57,7 @@ export async function sendReportByEmail({ email, url, goal, experience, report, 
         <div style="display:inline-flex;flex-direction:column;align-items:center;">
           <span style="font-size:48px;font-weight:800;color:${scoreColor};line-height:1;">${report.overall_score}</span>
           <span style="font-size:13px;color:#94a3b8;font-weight:600;margin-top:2px;">out of 100</span>
-          <span style="margin-top:8px;display:inline-block;padding:4px 16px;border-radius:999px;font-size:12px;font-weight:700;color:${scoreColor};background:${scoreColor}10;border:1px solid ${scoreColor}30;">${statusLabel} Portfolio</span>
+          <span style="margin-top:8px;display:inline-block;padding:4px 16px;border-radius:999px;font-size:12px;font-weight:700;color:${scoreColor};background:${scoreColor}10;border:1px solid ${scoreColor}30;">${statusLabel}</span>
         </div>
       </div>
       <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Dimension Breakdown</h2>

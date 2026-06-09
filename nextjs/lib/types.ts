@@ -1,4 +1,4 @@
-export type GoalType = 'get_hired' | 'win_clients' | 'improve_portfolio';
+export type GoalType = 'get_hired' | 'win_clients';
 export type ExperienceLevel = 'junior' | 'mid' | 'senior';
 
 export interface EvidenceItem {

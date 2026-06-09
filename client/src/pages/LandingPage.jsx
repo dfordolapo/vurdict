@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import {
-  ArrowRight, Link2, Briefcase, Users, Shield, Zap,
-  CheckCircle, Star, ChevronDown, ChevronUp, BarChart2, Eye,
-  Target, Layers, BookOpen, Code2, Award, Quote, Sparkles,
-  Compass, Brain, Palette, FileText, Terminal, Menu, X
+  ArrowRight, Globe, Briefcase, Users, Lock, Zap,
+  CheckCircle, Star, ChevronDown, ChevronUp, TrendingUp, Eye,
+  Target, Layers, BookOpen, Code2, Quote, Sparkles,
+  Workflow, Microscope, SwatchBook, Feather, Menu, X
 } from 'lucide-react'
 import heroIllustration from '../assets/hero-illustration.png'
 import ctaIllustration from '../assets/cta-illustration.jpg'
@@ -172,8 +172,7 @@ function HeroSection() {
 
   const goalsList = {
     get_hired: { label: 'Get Hired', icon: Briefcase },
-    win_clients: { label: 'Win Clients', icon: Users },
-    improve_portfolio: { label: 'Improve Portfolio', icon: Sparkles }
+    win_clients: { label: 'Win Clients', icon: Users }
   }
 
   const selectedGoal = goalsList[goal];
@@ -197,13 +196,13 @@ function HeroSection() {
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-            Paste your case study link and get structured feedback on what's helping and what to fix first.
+            Paste your case study link, select your goal, and get structured feedback on what's helping and what to fix first.
           </p>
 
           {/* Form container */}
           <div className="bg-white p-2.5 rounded-2xl shadow-xl flex flex-col md:flex-row gap-2 max-w-2xl mx-auto text-slate-900 relative">
             <div className="flex-1 flex items-center gap-2.5 px-3">
-              <Link2 size={18} className="text-slate-400 shrink-0" />
+              <Globe size={18} className="text-slate-400 shrink-0" />
               <input
                 type="url"
                 value={url}
@@ -280,7 +279,7 @@ function HeroSection() {
           {/* Bullet sub-badges */}
           <div className="flex flex-wrap justify-center gap-6 mt-8">
             {[
-              { icon: Shield, text: 'No signup required' },
+              { icon: Lock, text: 'No signup required' },
               { icon: Zap, text: 'Results in minutes' },
               { icon: CheckCircle, text: 'Any case study URL works' },
             ].map(({ icon: Icon, text }) => (
@@ -350,23 +349,23 @@ function ProblemSection() {
             <table className="w-full text-left border-separate border-spacing-0 min-w-[768px] md:min-w-[850px] table-fixed">
               <colgroup>
                 <col className="w-[22%]" />
-                <col className="w-[24%]" />
-                <col className="w-[26%]" />
                 <col className="w-[28%]" />
+                <col className="w-[26%]" />
+                <col className="w-[24%]" />
               </colgroup>
               <thead>
                 <tr>
                   <th className="py-6 text-xs font-semibold text-slate-800 uppercase tracking-wider pl-4 border-b border-slate-100">
                     Dimension
                   </th>
+                  <th className="py-6 text-xs font-semibold text-blue-600 uppercase tracking-wider px-6 bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 border-t-2 border-t-blue-500 border-b border-b-blue-200/60 rounded-t-2xl">
+                    Vurdict Intelligence
+                  </th>
                   <th className="py-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
                     Generic AI
                   </th>
                   <th className="py-6 text-xs font-bold text-slate-400 uppercase tracking-wider px-4 border-b border-slate-100">
                     Community Feedback
-                  </th>
-                  <th className="py-6 text-xs font-semibold text-blue-600 uppercase tracking-wider px-6 bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 border-t-2 border-t-blue-500 border-b border-b-blue-200/60 rounded-t-2xl">
-                    Vurdict Intelligence
                   </th>
                 </tr>
               </thead>
@@ -378,18 +377,18 @@ function ProblemSection() {
                       <td className="py-6 text-xs font-medium text-slate-800 pl-4 border-b border-slate-100/80">
                         {row.dimension}
                       </td>
-                      <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
-                        {row.generic}
-                      </td>
-                      <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
-                        {row.community}
-                      </td>
                       <td className={`py-6 text-xs text-blue-600 px-6 font-medium leading-relaxed bg-[#e6f0ff]/85 border-l-2 border-l-blue-500 border-r-2 border-r-blue-500 ${
                         isLast 
                           ? 'border-b-2 border-b-blue-500 rounded-b-2xl' 
                           : 'border-b border-b-blue-200/60'
                       }`}>
                         {row.vurdict}
+                      </td>
+                      <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
+                        {row.generic}
+                      </td>
+                      <td className="py-6 text-xs text-slate-500 px-4 leading-relaxed font-medium border-b border-slate-100/80">
+                        {row.community}
                       </td>
                     </tr>
                   )
@@ -417,7 +416,7 @@ function HowItWorksSection() {
     {
       num: '1',
       title: 'Paste URL',
-      desc: 'Submit your live case study link — Notion, Framer, Webflow, or your own site.',
+      desc: 'Submit your live case study link (Notion, Framer, Webflow, or your own site).',
     },
     {
       num: '2',
@@ -427,11 +426,7 @@ function HowItWorksSection() {
     {
       num: '3',
       title: 'Receive Review',
-      desc: (
-        <>
-          Receive your comprehensive <strong className="font-bold text-slate-800">Vurdict</strong> Report Card.
-        </>
-      ),
+      desc: 'Get a scored breakdown of what to fix, in priority order.',
     },
   ]
 
@@ -478,32 +473,32 @@ function HowItWorksSection() {
 function FrameworkSection() {
   const dimensions = [
     {
-      icon: Compass,
+      icon: Workflow,
       title: 'Structural Logic',
       desc: 'Evaluates the flow of your case study, ensuring problem statements connect logically to delivered solutions.',
     },
     {
-      icon: Brain,
+      icon: Microscope,
       title: 'Critical Thinking',
       desc: 'Checks for evidence of research-driven decisions rather than purely aesthetic choices.',
     },
     {
-      icon: Palette,
+      icon: SwatchBook,
       title: 'Visual Execution',
       desc: 'Analysis of spacing, typography, hierarchy, and adherence to modern UI principles and accessibility.',
     },
     {
-      icon: BarChart2,
+      icon: TrendingUp,
       title: 'Impact Evidence',
       desc: 'Scans for quantifiable metrics and business outcomes that demonstrate the value of your work.',
     },
     {
-      icon: FileText,
+      icon: Feather,
       title: 'Narrative Tone',
       desc: 'Assesses professional voice and clarity, ensuring your writing is concise yet persuasive.',
     },
     {
-      icon: Terminal,
+      icon: Target,
       title: 'Positioning Clarity',
       desc: 'Verifies whether the case study communicates who the designer is and what they specialize in.',
     },
@@ -579,7 +574,7 @@ function ReportCardSection() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-slate-900">vurdict.com/analysis</h4>
-                  <p className="text-[10px] text-slate-400 font-medium">May 2026 · 100% Objective AI Review</p>
+                  <p className="text-[10px] text-slate-400 font-medium">May 2026 · Structured Review</p>
                 </div>
               </div>
               <div className="text-right">
@@ -657,7 +652,7 @@ function FAQSection() {
   const faqs = [
     {
       q: 'What kinds of case study URLs does Vurdict support?',
-      a: 'Any publicly accessible case study link works — Notion, Framer, Webflow, personal websites, or a dedicated case study page. Full portfolio analysis is coming in v2.',
+      a: 'Any publicly accessible case study link works: Notion, Framer, Webflow, personal websites, or a dedicated case study page. Full portfolio analysis is coming in v2.',
     },
     {
       q: 'How is Vurdict different from just asking ChatGPT to review my case study?',
@@ -673,11 +668,11 @@ function FAQSection() {
     },
     {
       q: 'If my portfolio has won awards, will Vurdict score it higher?',
-      a: 'Not necessarily. Awards typically judge aesthetic polish or narrative craft, while Vurdict evaluates how effectively your portfolio signals the specific competencies hiring managers look for — problem-framing, process visibility, and measurable impact. A visually stunning portfolio can still score low on structural logic or positioning clarity if those signals are buried. Think of Vurdict as the hiring manager who reads case studies, not the award judge who flips through hero shots.',
+      a: 'Not necessarily. Awards typically judge aesthetic polish or narrative craft, while Vurdict evaluates how effectively your portfolio signals the specific competencies hiring managers look for: problem-framing, process visibility, and measurable impact. A visually stunning portfolio can still score low on structural logic or positioning clarity if those signals are buried. Think of Vurdict as the hiring manager who reads case studies, not the award judge who flips through hero shots.',
     },
     {
       q: 'Could optimizing for Vurdict make my portfolio worse for real humans?',
-      a: 'Only if you blindly optimize for scores over storytelling. Vurdict\'s dimensions — structural logic, visual hierarchy, business impact — align with what top design leaders actually look for when hiring. The difference is Vurdict is explicit about what human reviewers often leave unsaid. The portfolios that score highest on Vurdict tend to be the same ones that convert in real interviews because they communicate clearly, show process, and prove value — which is exactly what makes a portfolio memorable to both an AI and a person.',
+      a: 'Only if you blindly optimize for scores over storytelling. Vurdict\'s dimensions (structural logic, visual hierarchy, business impact) align with what top design leaders actually look for when hiring. The difference is Vurdict is explicit about what human reviewers often leave unsaid. The portfolios that score highest on Vurdict tend to be the same ones that convert in real interviews because they communicate clearly, show process, and prove value, which is exactly what makes a portfolio memorable to both an AI and a person.',
     },
   ]
 
@@ -732,7 +727,7 @@ function FinalCTASection() {
       {/* Heading area on White background */}
       <div className="pt-16 pb-8 px-6 text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
-          See What Hirers See Before They Do
+          See What Recruiters See Before They Do
         </h2>
           <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Great case studies don't happen by accident

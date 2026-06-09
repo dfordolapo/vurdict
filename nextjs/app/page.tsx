@@ -179,7 +179,6 @@ export default function LandingPage() {
                     <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(99,102,241,0.15)]">
                       {goal === 'get_hired' && <Briefcase className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110" />}
                       {goal === 'win_clients' && <Users className="h-4 w-4 text-brand-violet transition-all duration-200 group-hover:scale-110" />}
-                      {goal === 'improve_portfolio' && <TrendingUp className="h-4 w-4 text-brand-blue transition-all duration-200 group-hover:scale-110" />}
                     </div>
                     {GOALS[goal].label}
                   </span>
@@ -203,7 +202,6 @@ export default function LandingPage() {
                         <span className="text-xs font-bold flex items-center gap-1.5">
                           {key === 'get_hired' && <Briefcase className="h-3.5 w-3.5" />}
                           {key === 'win_clients' && <Users className="h-3.5 w-3.5" />}
-                          {key === 'improve_portfolio' && <TrendingUp className="h-3.5 w-3.5" />}
                           {GOALS[key].label}
                         </span>
                         <span className="text-[10px] text-slate-500 leading-tight">
@@ -583,7 +581,7 @@ export default function LandingPage() {
       <section className="py-16 md:py-24 bg-navy-900/50 border-t border-navy-900/60">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            See What Hirers See Before They Do
+            See What Recruiters See Before They Do
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-xl">
             Submit your link and get your audit in minutes.

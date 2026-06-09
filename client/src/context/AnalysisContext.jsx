@@ -78,7 +78,7 @@ export function getMockReport(url, goal, experience = 'junior') {
   const fix_this_first = isGetHired ? {
     title: experience === 'senior' ? "Validate Strategic Business Value" : "Document Measurable Success Metrics",
     description: experience === 'senior'
-      ? "As a Senior candidate, your portfolio needs to prove strategic revenue and conversion impact. Detail the business parameters of your case studies."
+      ? "As a Senior candidate, your case study needs to prove strategic revenue and conversion impact. Detail the business parameters of your work."
       : "Your 'Outcome & Impact' score is currently bottlenecking your hireability. Add specific business and user outcomes (e.g. conversion rates, task time reduction) to your fintech case study to increase shortlisting odds.",
     priority_score: 9
   } : {
@@ -92,7 +92,7 @@ export function getMockReport(url, goal, experience = 'junior') {
     categories,
     fix_this_first,
     summary: isGetHired
-      ? `Strong ${expLabel} portfolio overall. The major blocker is outcomes: case studies lack quantitative metrics indicating how your designs improved business or usability goals.`
+      ? `Strong ${expLabel} case study overall. The major blocker is outcomes: case studies lack quantitative metrics indicating how your designs improved business or usability goals.`
       : `Excellent premium ${expLabel} presentation. You communicate a strong niche and make booking inquiries low-friction.`
   };
 }

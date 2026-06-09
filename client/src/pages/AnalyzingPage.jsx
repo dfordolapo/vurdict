@@ -18,16 +18,15 @@ import {
   Layers,
   Search,
   Eye,
-  FileText,
+  Feather,
   TrendingUp,
   ShieldAlert,
   HelpCircle,
   Code,
-  Compass,
-  Brain,
-  Palette,
-  BarChart2,
-  Terminal,
+  Workflow,
+  Microscope,
+  SwatchBook,
+  Target,
   Home,
   Mail
 } from 'lucide-react';
@@ -343,7 +342,7 @@ export default function AnalyzingPage() {
                 </div>
 
                 {/* Checklist timeline */}
-                <div className="bg-white text-slate-900 p-6 rounded-3xl shadow-xl border border-slate-100 space-y-4 max-w-md">
+                <div className="bg-white text-slate-900 p-6 rounded-3xl shadow-xl border border-slate-100 space-y-4 max-w-md w-full text-left">
                   {steps.map((step, idx) => {
                     const isDone = idx < currentStep;
                     const isActive = idx === currentStep;
@@ -414,12 +413,12 @@ export default function AnalyzingPage() {
                   </div>
 
                   {/* Orbiting Labels - Styled for dark bg */}
-                  {renderOrbitNode('Structural Logic', Compass, 0, '-top-6')}
-                  {renderOrbitNode('Visual Execution', Palette, 2, '-right-12 top-1/4')}
-                  {renderOrbitNode('Critical Thinking', Brain, 1, '-right-8 bottom-1/4')}
-                  {renderOrbitNode('Impact Evidence', BarChart2, 3, '-left-12 top-1/4')}
-                  {renderOrbitNode('Narrative Tone', FileText, 4, '-left-8 bottom-1/4')}
-                  {renderOrbitNode('Positioning Clarity', Terminal, 5, '-bottom-6')}
+                  {renderOrbitNode('Structural Logic', Workflow, 0, '-top-6')}
+                  {renderOrbitNode('Visual Execution', SwatchBook, 2, '-right-12 top-1/4')}
+                  {renderOrbitNode('Critical Thinking', Microscope, 1, '-right-8 bottom-1/4')}
+                  {renderOrbitNode('Impact Evidence', TrendingUp, 3, '-left-12 top-1/4')}
+                  {renderOrbitNode('Narrative Tone', Feather, 4, '-left-8 bottom-1/4')}
+                  {renderOrbitNode('Positioning Clarity', Target, 5, '-bottom-6')}
 
                   <div className="absolute w-[280px] h-[280px] rounded-full border border-dashed border-sky-500/20 animate-spin-slow" />
                 </div>

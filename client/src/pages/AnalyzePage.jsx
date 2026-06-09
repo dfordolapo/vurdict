@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowRight,
-  Link2,
+  Globe,
   Briefcase,
   Users,
-  TrendingUp,
   Sparkles,
   AlertCircle,
   CheckCircle,
-  Shield,
+  Lock,
   Zap,
   Server,
+  Shield,
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
@@ -29,12 +29,6 @@ const GOALS = [
     label: 'Win Freelance Clients',
     desc: 'Attract and convert more freelance opportunities',
     icon: Users,
-  },
-  {
-    key: 'improve_portfolio',
-    label: 'Improve Portfolio Quality',
-    desc: 'Level up your portfolio regardless of career stage',
-    icon: TrendingUp,
   },
 ];
 
@@ -129,7 +123,7 @@ export default function AnalyzePage() {
                 {/* URL Input */}
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 rounded-2xl border border-white bg-white px-4 py-3.5 focus-within:border-sky-300/70 transition-all">
-                    <Link2 size={18} className="text-sky-300/70 shrink-0" />
+                    <Globe size={18} className="text-sky-300/70 shrink-0" />
                     <input
                       type="text"
                       placeholder="https://yourportfolio.com"

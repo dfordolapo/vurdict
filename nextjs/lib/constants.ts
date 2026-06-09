@@ -50,11 +50,6 @@ export const GOALS: Record<GoalType, { label: string; description: string; icon:
     description: 'Focus on highlighting value proposition, testimonials, and clear call-to-actions.',
     icon: 'Users',
   },
-  improve_portfolio: {
-    label: 'Improve My Portfolio',
-    description: 'Evaluate general UX/UI quality, structure, and design system alignment.',
-    icon: 'TrendingUp',
-  },
 };
 
 export const FAQS = [
@@ -80,10 +75,10 @@ export const FAQS = [
   },
   {
     question: 'Does a high Vurdict score guarantee I\'ll get hired?',
-    answer: 'No, and we\'d be wary of any tool that promised that. A high score means your portfolio effectively communicates the signals that correlate with hiring — clear problem statements, visible process, measurable outcomes. But hiring also depends on culture fit, interview performance, and market timing. Vurdict helps you remove the \'portfolio ambiguity\' variable from the equation so you can focus on everything else.',
+    answer: 'No, and we\'d be wary of any tool that promised that. A high score means your portfolio effectively communicates the signals that correlate with hiring (clear problem statements, visible process, measurable outcomes). But hiring also depends on culture fit, interview performance, and market timing. Vurdict helps you remove the \'portfolio ambiguity\' variable from the equation so you can focus on everything else.',
   },
   {
     question: 'Why does Vurdict care about business impact when I\'m applying for a purely creative role?',
-    answer: 'Even in roles centered on craft, hiring managers need to justify headcount to stakeholders. A portfolio that demonstrates business awareness — conversion lifts, user retention, shipped features — makes you a lower-risk hire. Vurdict flags this not because aesthetics don\'t matter, but because the designers who get offers almost always speak both languages: visual craft and business outcomes.',
+    answer: 'Even in roles centered on craft, hiring managers need to justify headcount to stakeholders. A portfolio that demonstrates business awareness (conversion lifts, user retention, shipped features) makes you a lower-risk hire. Vurdict flags this not because aesthetics don\'t matter, but because the designers who get offers almost always speak both languages: visual craft and business outcomes.',
   },
 ];

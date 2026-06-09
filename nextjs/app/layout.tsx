@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Vurdict — AI Portfolio Audit for Product Designers',
-  description: 'See your design portfolio through a hiring manager\'s eyes. Get goal-aware, objective, high-fidelity portfolio feedback in minutes.',
+  title: 'Vurdict • AI Portfolio Audit for Product Designers',
+  description: 'See your design portfolio through a hiring manager\'s eyes. Get goal-aware, high-fidelity portfolio feedback using structured reviews in minutes.',
 };
 
 export default function RootLayout({

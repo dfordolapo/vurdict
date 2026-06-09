@@ -162,7 +162,7 @@ export default function ResultsPage() {
               <div className="mt-5 flex flex-col items-center gap-1">
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest font-mono">Portfolio Status</span>
                 <span className={cn("text-lg font-extrabold", scoreTheme.text)}>
-                  {statusLabel} Portfolio
+                  {statusLabel}
                 </span>
               </div>
 

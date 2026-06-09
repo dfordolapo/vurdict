@@ -19,7 +19,7 @@ export default defineConfig({
       manifest: {
         name: 'Vurdict',
         short_name: 'Vurdict',
-        description: 'Objective, goal-aware portfolio feedback using high-fidelity AI analysis',
+        description: 'Structured, goal-aware portfolio reviews using high-fidelity AI analysis',
         theme_color: '#172554',
         background_color: '#172554',
         display: 'standalone',
