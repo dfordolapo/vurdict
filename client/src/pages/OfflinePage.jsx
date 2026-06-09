@@ -69,7 +69,7 @@ export default function OfflinePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-100 py-6 px-6 text-center text-xs text-slate-400 bg-white">
-        <div className="flex items-center justify-center gap-6 mb-3 font-semibold text-slate-500">
+        <div className="flex items-center justify-center gap-6 mb-3 font-normal text-slate-500">
           <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
           <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>

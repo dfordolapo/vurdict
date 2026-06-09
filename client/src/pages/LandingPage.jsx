@@ -780,7 +780,7 @@ function Footer() {
             © 2026 Vurdict. The Reviewer's Perspective.
           </p>
         </div>
-        <div className="flex flex-wrap gap-6 text-xs font-semibold text-slate-500">
+        <div className="flex flex-wrap gap-6 text-xs font-normal text-slate-500">
           <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
           <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
