@@ -9,10 +9,10 @@ const AMOUNTS = [1000, 2000, 5000];
 const DONATION_UNAVAILABLE = 'Support payments are temporarily unavailable. Please try again later.';
 
 const CURRENCIES = [
-  { code: 'NGN', symbol: '\u20A6' },
-  { code: 'USD', symbol: '$' },
-  { code: 'GBP', symbol: '\u00A3' },
-  { code: 'EUR', symbol: '\u20AC' },
+  { code: 'NGN', symbol: '\u20A6', min: 100 },
+  { code: 'USD', symbol: '$', min: 1 },
+  { code: 'GBP', symbol: '\u00A3', min: 1 },
+  { code: 'EUR', symbol: '\u20AC', min: 1 },
 ];
 
 export default function SupportPage() {
@@ -47,9 +47,10 @@ export default function SupportPage() {
   };
 
   const handlePay = () => {
+    const minAmount = CURRENCIES.find(c => c.code === currency)?.min || 100;
     const finalAmount = useCustom ? parseInt(customAmount) : selectedAmount;
-    if (!finalAmount || finalAmount < 100) {
-      setPayError('The minimum amount acceptable is ' + currencySymbol + '100.');
+    if (!finalAmount || finalAmount < minAmount) {
+      setPayError('The minimum amount acceptable is ' + currencySymbol + minAmount.toLocaleString('en-US') + '.');
       return;
     }
 
