@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Heart, Sparkles } from 'lucide-react';
+import { Sparkles, Cpu, Server, Code2, Globe } from 'lucide-react';
 
 export default function SupportPage() {
   return (
@@ -15,8 +15,8 @@ export default function SupportPage() {
           >
             ← Back to Home
           </Link>
-          <div className="w-fit rounded-xl p-2 bg-indigo-500/10 text-indigo-400 mt-4">
-            <Heart size={20} className="fill-indigo-400 text-indigo-400 animate-pulse" />
+          <div className="w-full max-w-[200px] mb-4 mt-6">
+            <img src="/assets/support_illustration.png" alt="Support Vurdict illustration" className="w-full h-auto object-contain select-none" />
           </div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight mt-2">
             Support Vurdict
@@ -30,16 +30,24 @@ export default function SupportPage() {
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">What Your Support Covers</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request." },
-              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable." },
-              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support." },
-              { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London." }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-navy-900/40 border border-navy-800/60 p-4 rounded-xl space-y-1">
-                <h3 className="text-xs font-bold text-white">{item.title}</h3>
-                <p className="text-xs text-slate-400 font-medium leading-normal">{item.desc}</p>
-              </div>
-            ))}
+              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Cpu },
+              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Server },
+              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support.", icon: Code2 },
+              { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: Globe }
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={idx} className="bg-navy-900/40 border border-navy-850 p-5 rounded-2xl space-y-3 flex flex-col text-left group hover:border-brand-indigo/30 hover:bg-navy-900/60 transition-all duration-200">
+                  <div className="w-fit rounded-xl p-2 bg-navy-950 border border-navy-800 text-brand-indigo transition-all duration-200 group-hover:border-brand-indigo/30">
+                    <Icon size={16} className="text-brand-indigo transition-all duration-200 group-hover:scale-110" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xs font-bold text-white">{item.title}</h3>
+                    <p className="text-xs text-slate-400 font-medium leading-normal">{item.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -48,14 +56,14 @@ export default function SupportPage() {
             <Sparkles size={14} className="text-indigo-400" />
             <span>How to Support Us</span>
           </div>
-          <p className="text-sm text-slate-300 leading-relaxed">
+          <p className="text-sm text-slate-300 leading-relaxed font-semibold">
             You can make a one-time contribution of any amount via Paystack. No account required.
           </p>
           <a
             href="https://paystack.com/pay/support-vurdict" 
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3.5 text-sm font-semibold transition-all shadow-md"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3.5 text-sm font-semibold transition-all shadow-md hover:-translate-y-0.5"
           >
             <span>Support Vurdict on Paystack →</span>
           </a>

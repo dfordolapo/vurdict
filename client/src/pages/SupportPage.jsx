@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Logo from '../components/Logo';
-import { Sparkles, Heart } from 'lucide-react';
+import { Sparkles, Cpu, Server, Code2, Globe } from 'lucide-react';
+import supportIllustration from '../assets/support_illustration.png';
 
 export default function SupportPage() {
   const navigate = useNavigate();
@@ -24,8 +25,8 @@ export default function SupportPage() {
       {/* Main Content */}
       <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-left space-y-8 select-text">
         <div className="space-y-3 border-b border-slate-100 pb-6">
-          <div className="w-fit rounded-2xl p-2.5 bg-blue-50/50 border border-blue-100/50 text-blue-600">
-            <Heart size={24} className="fill-blue-600 text-blue-600 animate-pulse" />
+          <div className="w-full max-w-[200px] mb-4">
+            <img src={supportIllustration} alt="Support Vurdict illustration" className="w-full h-auto object-contain select-none" />
           </div>
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Support Vurdict</h1>
           <p className="text-sm text-slate-500 leading-relaxed font-normal">
@@ -37,16 +38,24 @@ export default function SupportPage() {
           <h2 className="text-lg font-bold text-slate-900 mt-6 uppercase tracking-wider">What Your Support Covers</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request." },
-              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable." },
-              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support." },
-              { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London." }
-            ].map((item, idx) => (
-              <div key={idx} className="bg-slate-50/50 border border-slate-100/70 p-4 rounded-2xl space-y-1">
-                <h3 className="text-xs font-bold text-slate-900">{item.title}</h3>
-                <p className="text-xs text-slate-500 font-normal leading-normal">{item.desc}</p>
-              </div>
-            ))}
+              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Cpu },
+              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Server },
+              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support.", icon: Code2 },
+              { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: Globe }
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={idx} className="bg-slate-50/50 border border-slate-100/70 p-5 rounded-2xl space-y-3 flex flex-col text-left group hover:bg-slate-50 hover:border-slate-200 transition-all">
+                  <div className="w-fit rounded-xl p-2 bg-blue-50/80 border border-blue-100/60 text-blue-600 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200">
+                    <Icon size={16} className="text-blue-600 transition-all duration-200 group-hover:scale-110" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xs font-bold text-slate-900">{item.title}</h3>
+                    <p className="text-xs text-slate-500 font-normal leading-normal">{item.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
