@@ -281,7 +281,6 @@ function HeroSection() {
             {[
               { icon: Lock, text: 'No signup required' },
               { icon: Zap, text: 'Results in minutes' },
-              { icon: CheckCircle, text: 'Any case study URL works' },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2 text-sky-200/60 text-xs font-semibold group">
                 <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_10px_rgba(255,255,255,0.1)]">
