@@ -49,7 +49,7 @@ export default function SupportPage() {
   const handlePay = () => {
     const finalAmount = useCustom ? parseInt(customAmount) : selectedAmount;
     if (!finalAmount || finalAmount < 100) {
-      setPayError('Minimum amount is ' + currencySymbol + '100.');
+      setPayError('The minimum amount acceptable is ' + currencySymbol + '100.');
       return;
     }
 
