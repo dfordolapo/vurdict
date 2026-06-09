@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, Cpu, Server, Code2, Globe } from 'lucide-react';
+import { Heart, Brain, Cloud, Terminal, HeartHandshake } from 'lucide-react';
 
 export default function SupportPage() {
   return (
@@ -30,10 +30,10 @@ export default function SupportPage() {
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">What Your Support Covers</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Cpu },
-              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Server },
-              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support.", icon: Code2 },
-              { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: Globe }
+              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Brain },
+              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Cloud },
+              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support.", icon: Terminal },
+              { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: HeartHandshake }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -53,7 +53,7 @@ export default function SupportPage() {
 
         <section className="space-y-5 bg-indigo-950/30 border border-indigo-900/50 p-6 rounded-2xl mt-8">
           <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 uppercase">
-            <Sparkles size={14} className="text-indigo-400" />
+            <Heart size={14} className="text-indigo-400 fill-indigo-400/10" />
             <span>How to Support Us</span>
           </div>
           <p className="text-sm text-slate-300 leading-relaxed font-semibold">
