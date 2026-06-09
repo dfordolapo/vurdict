@@ -41,21 +41,21 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">2. What We Collect</h2>
           <p className="text-sm text-slate-300 leading-relaxed font-semibold">When you analyze a case study:</p>
-          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
-            <li>The URL you submit for analysis</li>
-            <li>Your selected goal (Get Hired, Win Freelance Clients, Improve Portfolio Quality)</li>
-            <li>Your selected experience level (Junior, Mid-Level, Senior)</li>
+          <ul className="list-none space-y-2 text-sm text-slate-300">
+            <li>&mdash; The URL you submit for analysis</li>
+            <li>&mdash; Your selected goal (Get Hired, Win Freelance Clients, Improve Portfolio Quality)</li>
+            <li>&mdash; Your selected experience level (Junior, Mid-Level, Senior)</li>
           </ul>
 
           <p className="text-sm text-slate-300 leading-relaxed font-semibold pt-2">When you join the waitlist or save a report:</p>
-          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
-            <li>Your email address</li>
+          <ul className="list-none space-y-2 text-sm text-slate-300">
+            <li>&mdash; Your email address</li>
           </ul>
 
           <p className="text-sm text-slate-300 leading-relaxed font-semibold pt-2">Automatically:</p>
-          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
-            <li>Basic usage data (pages visited, time on site) via Vercel Analytics</li>
-            <li>Your device type and browser (for performance optimization)</li>
+          <ul className="list-none space-y-2 text-sm text-slate-300">
+            <li>&mdash; Basic usage data (pages visited, time on site) via Vercel Analytics</li>
+            <li>&mdash; Your device type and browser (for performance optimization)</li>
           </ul>
 
           <p className="text-sm text-slate-300 leading-relaxed pt-2">
@@ -133,10 +133,10 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">6. Your Rights</h2>
           <p className="text-sm text-slate-300 leading-relaxed">You have the right to:</p>
-          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
-            <li>Request a copy of any personal data we hold about you</li>
-            <li>Request deletion of your email address from our waitlist</li>
-            <li>Withdraw consent at any time</li>
+          <ul className="list-none space-y-2 text-sm text-slate-300">
+            <li>&mdash; Request a copy of any personal data we hold about you</li>
+            <li>&mdash; Request deletion of your email address from our waitlist</li>
+            <li>&mdash; Withdraw consent at any time</li>
           </ul>
           <p className="text-sm text-slate-300 leading-relaxed pt-2">
             To exercise any of these rights, email us at{" "}
