@@ -18,19 +18,23 @@ export default function PWAInstallPrompt() {
     if (isStandalone) return;
 
     // 2. Local storage constraints
-    const isPermanentlyDismissed = localStorage.getItem('vurdict_pwa_dismissed_permanent') === 'true';
-    if (isPermanentlyDismissed) return;
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    
+    if (!isLocalhost) {
+      const isPermanentlyDismissed = localStorage.getItem('vurdict_pwa_dismissed_permanent') === 'true';
+      if (isPermanentlyDismissed) return;
 
-    const dismissedAt = localStorage.getItem('vurdict_pwa_dismissed_at');
-    if (dismissedAt) {
-      const threeDays = 3 * 24 * 60 * 60 * 1000;
-      if (Date.now() - parseInt(dismissedAt, 10) < threeDays) {
-        return;
+      const dismissedAt = localStorage.getItem('vurdict_pwa_dismissed_at');
+      if (dismissedAt) {
+        const threeDays = 3 * 24 * 60 * 60 * 1000;
+        if (Date.now() - parseInt(dismissedAt, 10) < threeDays) {
+          return;
+        }
       }
-    }
 
-    // 4. Session check (Show at most once per session)
-    if (sessionStorage.getItem('vurdict_pwa_session_shown') === 'true') return;
+      // 4. Session check (Show at most once per session on production)
+      if (sessionStorage.getItem('vurdict_pwa_session_shown') === 'true') return;
+    }
 
     // 5. Detect platform
     const ua = navigator.userAgent.toLowerCase();
