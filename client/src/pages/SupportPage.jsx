@@ -6,7 +6,7 @@ import supportIllustration from '../assets/support_illustration.png';
 
 const AMOUNTS = [1000, 2000, 5000];
 
-const DONATION_UNAVAILABLE = 'Donations are temporarily unavailable. Please check back later.';
+const DONATION_UNAVAILABLE = 'Support payments are temporarily unavailable. Please try again later.';
 
 const CURRENCIES = [
   { code: 'NGN', symbol: '\u20A6' },
