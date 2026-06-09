@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Logo from '../components/Logo';
-import WaveDivider from '../components/WaveDivider';
 import { Heart, Brain, Cloud, Terminal, HeartHandshake, X, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
 import supportIllustration from '../assets/support_illustration.png';
 
 const AMOUNTS = [1000, 2000, 5000];
+
+const DONATION_UNAVAILABLE = 'Donations are temporarily unavailable. Please check back later.';
 
 const CURRENCIES = [
   { code: 'NGN', symbol: '\u20A6' },
@@ -59,7 +60,7 @@ export default function SupportPage() {
 
     if (!paystackKey || paystackKey === 'pk_test_xxxxxxxxxxxxx') {
       setPaying(false);
-      setPayError('Payment is not configured yet. Please set your Paystack public key in the .env file.');
+      setPayError(DONATION_UNAVAILABLE);
       return;
     }
 
@@ -69,7 +70,7 @@ export default function SupportPage() {
       script.onload = () => startPayment(paystackKey, 'guest@vurdict.app', finalAmount, currency);
       script.onerror = () => {
         setPaying(false);
-        setPayError('Failed to load payment gateway. Please try again.');
+        setPayError(DONATION_UNAVAILABLE);
       };
       document.body.appendChild(script);
     } else {
@@ -113,7 +114,7 @@ export default function SupportPage() {
           if (result.verified) {
             setPaid(true);
           } else {
-            setPayError('Payment could not be verified. Please contact support at hellovurdict@gmail.com.');
+            setPayError(DONATION_UNAVAILABLE);
           }
         },
         onClose: () => {
@@ -123,7 +124,7 @@ export default function SupportPage() {
       handler.openIframe();
     } catch (err) {
       setPaying(false);
-      setPayError('Something went wrong. Please try again.');
+      setPayError(DONATION_UNAVAILABLE);
     }
   };
 
@@ -192,7 +193,6 @@ export default function SupportPage() {
 
         <section className="space-y-5 bg-blue-50/30 border border-blue-100/50 p-6 rounded-3xl mt-8">
           <div className="flex items-center justify-center gap-2 text-xs font-semibold text-blue-700 uppercase">
-            <Heart size={14} className="text-blue-600 fill-blue-600/10" />
             <span>How to Support Us</span>
           </div>
           <p className="text-sm text-slate-600 leading-relaxed font-normal">
@@ -200,7 +200,7 @@ export default function SupportPage() {
           </p>
           <button
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white px-6 py-3.5 text-sm font-semibold transition-all shadow-md hover:-translate-y-0.5 cursor-pointer mx-auto"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white px-6 py-3.5 text-sm font-normal transition-all shadow-md hover:-translate-y-0.5 cursor-pointer mx-auto"
           >
             <Heart size={16} className="fill-white/20" />
             <span>Support Vurdict</span>
@@ -234,31 +234,25 @@ export default function SupportPage() {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeModal} />
           <div className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden animate-fade-in-up">
             
-            {/* Navy wave header */}
-            <div className="bg-brand-900">
-              <WaveDivider fill="#ffffff" flip={false} noGap className="[&>svg]:h-[30px] [&>svg]:md:h-[50px]" />
+            {/* Navy top bar */}
+            <div className="bg-brand-900 h-12 relative">
+              <button
+                onClick={closeModal}
+                disabled={paying}
+                className="absolute top-3 right-3 z-20 p-1.5 rounded-lg text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <X size={14} />
+              </button>
             </div>
-
-            {/* Close button */}
-            <button
-              onClick={closeModal}
-              disabled={paying}
-              className="absolute top-3 right-3 z-20 p-1.5 rounded-lg text-white hover:bg-white/10 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <X size={14} />
-            </button>
 
             <div className="px-6 pb-5">
               {!paid ? (
                 <>
                   {/* Header */}
                   <div className="flex flex-col items-center text-center pt-3 pb-5">
-                    <div className="w-9 h-9 rounded-lg bg-brand-900 flex items-center justify-center mb-2">
-                      <Heart size={16} className="text-white fill-white/30" />
-                    </div>
-                    <h3 className="text-sm font-semibold text-slate-900">Support Vurdict</h3>
+                    <h3 className="text-base font-semibold text-slate-900">Support Vurdict</h3>
                     <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
-                      Every contribution helps keep Vurdict free for designers.
+                      Every contribution helps make Vurdict accessible to all designers.
                     </p>
                   </div>
 
@@ -340,7 +334,7 @@ export default function SupportPage() {
                   <button
                     onClick={handlePay}
                     disabled={paying}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-brand-900 hover:bg-brand-800 text-white text-sm font-medium transition-all cursor-pointer shadow-lg shadow-brand-950/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-brand-900 hover:bg-brand-800 text-white text-sm font-normal transition-all cursor-pointer shadow-lg shadow-brand-950/10 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {paying ? (
                       <>
