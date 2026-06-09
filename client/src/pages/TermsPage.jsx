@@ -21,7 +21,7 @@ export default function TermsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-left space-y-8 select-text">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-center space-y-8 select-text">
         <div className="space-y-2 border-b border-slate-100 pb-6">
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Terms of Use</h1>
           <p className="text-xs text-slate-400 font-medium">
@@ -46,7 +46,7 @@ export default function TermsPage() {
             Vurdict is an AI-powered tool that analyzes publicly accessible design portfolio case studies and returns structured, scored feedback based on a defined evaluation framework.
           </p>
           <p className="text-sm text-slate-600 leading-relaxed font-normal font-semibold pt-2">Vurdict is not:</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>A professional career advisory service</li>
             <li>A guarantee of employment or freelance success</li>
             <li>A substitute for feedback from human hiring managers, design leads, or industry professionals</li>
@@ -62,7 +62,7 @@ export default function TermsPage() {
           <p className="text-sm text-slate-600 leading-relaxed font-normal">
             You agree to use Vurdict only for lawful purposes. You must not:
           </p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>Submit URLs designed to harm, exploit, or test the security of our systems</li>
             <li>Attempt to reverse-engineer, scrape, or replicate Vurdict’s evaluation pipeline</li>
             <li>Submit case studies that contain content that is illegal, harmful, or violates third-party rights</li>
@@ -86,7 +86,7 @@ export default function TermsPage() {
           <p className="text-sm text-slate-600 leading-relaxed font-normal">
             The Service is provided “as is” and “as available” without warranties of any kind, express or implied. We do not warrant that:
           </p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>The Service will be uninterrupted or error-free</li>
             <li>AI-generated scores will be accurate, complete, or suitable for any specific purpose</li>
             <li>The Service will be compatible with all portfolio platforms or URL types</li>

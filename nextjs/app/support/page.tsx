@@ -5,7 +5,7 @@ import { Heart, Brain, Cloud, Terminal, HeartHandshake } from 'lucide-react';
 export default function SupportPage() {
   return (
     <div className="flex-1 bg-navy-950 bg-grid-pattern py-12 md:py-20 select-text">
-      <div className="mx-auto max-w-3xl px-6 space-y-8">
+      <div className="mx-auto max-w-3xl px-6 space-y-8 text-center">
         
         {/* Navigation Breadcrumb */}
         <div className="mb-6 border-b border-navy-800/60 pb-5">
@@ -15,7 +15,7 @@ export default function SupportPage() {
           >
             ← Back to Home
           </Link>
-          <div className="w-full max-w-[200px] mb-4 mt-6">
+          <div className="w-full max-w-[200px] mb-4 mt-6 mx-auto">
             <img src="/assets/support_illustration.png" alt="Support Vurdict illustration" className="w-full h-auto object-contain select-none" />
           </div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight mt-2">
@@ -37,8 +37,8 @@ export default function SupportPage() {
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
-                <div key={idx} className="bg-navy-900/40 border border-navy-850 p-5 rounded-2xl space-y-3 flex flex-col text-left group hover:border-brand-indigo/30 hover:bg-navy-900/60 transition-all duration-200">
-                  <div className="w-fit rounded-xl p-2 bg-navy-950 border border-navy-800 text-brand-indigo transition-all duration-200 group-hover:border-brand-indigo/30">
+                <div key={idx} className="bg-navy-900/40 border border-navy-850 p-5 rounded-2xl space-y-3 flex flex-col items-center text-center group hover:border-brand-indigo/30 hover:bg-navy-900/60 transition-all duration-200">
+                  <div className="w-fit mx-auto rounded-xl p-2 bg-navy-950 border border-navy-800 text-brand-indigo transition-all duration-200 group-hover:border-brand-indigo/30">
                     <Icon size={16} className="text-brand-indigo transition-all duration-200 group-hover:scale-110" />
                   </div>
                   <div className="space-y-1">
@@ -52,7 +52,7 @@ export default function SupportPage() {
         </section>
 
         <section className="space-y-5 bg-indigo-950/30 border border-indigo-900/50 p-6 rounded-2xl mt-8">
-          <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 uppercase">
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold text-indigo-400 uppercase">
             <Heart size={14} className="text-indigo-400 fill-indigo-400/10" />
             <span>How to Support Us</span>
           </div>

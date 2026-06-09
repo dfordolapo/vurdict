@@ -23,9 +23,9 @@ export default function SupportPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-left space-y-8 select-text">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-center space-y-8 select-text">
         <div className="space-y-3 border-b border-slate-100 pb-6">
-          <div className="w-full max-w-[200px] mb-4">
+          <div className="w-full max-w-[200px] mb-4 mx-auto">
             <img src={supportIllustration} alt="Support Vurdict illustration" className="w-full h-auto object-contain select-none" />
           </div>
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Support Vurdict</h1>
@@ -45,8 +45,8 @@ export default function SupportPage() {
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
-                <div key={idx} className="bg-slate-50/50 border border-slate-100/70 p-5 rounded-2xl space-y-3 flex flex-col text-left group hover:bg-slate-50 hover:border-slate-200 transition-all">
-                  <div className="w-fit rounded-xl p-2 bg-blue-50/80 border border-blue-100/60 text-blue-600 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200">
+                <div key={idx} className="bg-slate-50/50 border border-slate-100/70 p-5 rounded-2xl space-y-3 flex flex-col items-center text-center group hover:bg-slate-50 hover:border-slate-200 transition-all">
+                  <div className="w-fit mx-auto rounded-xl p-2 bg-blue-50/80 border border-blue-100/60 text-blue-600 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200">
                     <Icon size={16} className="text-blue-600 transition-all duration-200 group-hover:scale-110" />
                   </div>
                   <div className="space-y-1">
@@ -60,7 +60,7 @@ export default function SupportPage() {
         </section>
 
         <section className="space-y-5 bg-blue-50/30 border border-blue-100/50 p-6 rounded-3xl mt-8">
-          <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase">
+          <div className="flex items-center justify-center gap-2 text-xs font-semibold text-blue-700 uppercase">
             <Heart size={14} className="text-blue-600 fill-blue-600/10" />
             <span>How to Support Us</span>
           </div>
@@ -90,7 +90,7 @@ export default function SupportPage() {
           </p>
         </section>
 
-        <section className="space-y-4 border-t border-slate-100 pt-6 text-center sm:text-left">
+        <section className="space-y-4 border-t border-slate-100 pt-6 text-center">
           <h2 className="text-lg font-bold text-slate-900 uppercase tracking-wider">Thank You</h2>
           <p className="text-sm text-slate-500 leading-relaxed font-normal italic">
             Whether you contribute financially or simply share Vurdict with a designer who needs honest feedback, you are part of why this exists.

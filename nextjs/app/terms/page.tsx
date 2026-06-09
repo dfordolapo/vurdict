@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function TermsPage() {
   return (
     <div className="flex-1 bg-navy-950 bg-grid-pattern py-12 md:py-20 select-text">
-      <div className="mx-auto max-w-3xl px-6 space-y-8">
+      <div className="mx-auto max-w-3xl px-6 space-y-8 text-center">
         
         {/* Navigation Breadcrumb */}
         <div className="mb-6 border-b border-navy-800/60 pb-5">
@@ -39,7 +39,7 @@ export default function TermsPage() {
             Vurdict is an AI-powered tool that analyzes publicly accessible design portfolio case studies and returns structured, scored feedback based on a defined evaluation framework.
           </p>
           <p className="text-sm text-slate-300 leading-relaxed font-semibold pt-2">Vurdict is not:</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-300">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
             <li>A professional career advisory service</li>
             <li>A guarantee of employment or freelance success</li>
             <li>A substitute for feedback from human hiring managers, design leads, or industry professionals</li>
@@ -55,7 +55,7 @@ export default function TermsPage() {
           <p className="text-sm text-slate-300 leading-relaxed">
             You agree to use Vurdict only for lawful purposes. You must not:
           </p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-300">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
             <li>Submit URLs designed to harm, exploit, or test the security of our systems</li>
             <li>Attempt to reverse-engineer, scrape, or replicate Vurdict’s evaluation pipeline</li>
             <li>Submit case studies that contain content that is illegal, harmful, or violates third-party rights</li>
@@ -79,7 +79,7 @@ export default function TermsPage() {
           <p className="text-sm text-slate-300 leading-relaxed">
             The Service is provided “as is” and “as available” without warranties of any kind, express or implied. We do not warrant that:
           </p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-300">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-300">
             <li>The Service will be uninterrupted or error-free</li>
             <li>AI-generated scores will be accurate, complete, or suitable for any specific purpose</li>
             <li>The Service will be compatible with all portfolio platforms or URL types</li>

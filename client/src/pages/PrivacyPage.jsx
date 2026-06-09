@@ -21,7 +21,7 @@ export default function PrivacyPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-left space-y-8 select-text">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-center space-y-8 select-text">
         <div className="space-y-2 border-b border-slate-100 pb-6">
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Privacy Policy</h1>
           <p className="text-xs text-slate-400 font-medium">
@@ -48,19 +48,19 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-slate-900 mt-6 uppercase tracking-wider">2. What We Collect</h2>
           <p className="text-sm text-slate-600 leading-relaxed font-normal font-semibold">When you analyze a case study:</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>The URL you submit for analysis</li>
             <li>Your selected goal (Get Hired, Win Freelance Clients, Improve Portfolio Quality)</li>
             <li>Your selected experience level (Junior, Mid-Level, Senior)</li>
           </ul>
 
           <p className="text-sm text-slate-600 leading-relaxed font-normal font-semibold pt-2">When you join the waitlist or save a report:</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>Your email address</li>
           </ul>
 
           <p className="text-sm text-slate-600 leading-relaxed font-normal font-semibold pt-2">Automatically:</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>Basic usage data (pages visited, time on site) via Vercel Analytics</li>
             <li>Your device type and browser (for performance optimization)</li>
           </ul>
@@ -73,11 +73,11 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-slate-900 mt-6 uppercase tracking-wider">3. How We Use Your Data</h2>
           <div className="overflow-x-auto border border-slate-100 rounded-2xl">
-            <table className="w-full text-left border-collapse text-xs">
+            <table className="w-full text-center border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100 text-slate-800 font-semibold">
-                  <th className="p-4">Data</th>
-                  <th className="p-4">Purpose</th>
+                  <th className="p-4 text-center">Data</th>
+                  <th className="p-4 text-center">Purpose</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-600 font-normal">
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-lg font-bold text-slate-900 mt-6 uppercase tracking-wider">6. Your Rights</h2>
           <p className="text-sm text-slate-600 leading-relaxed font-normal">You have the right to:</p>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 font-normal">
+          <ul className="list-disc list-inside space-y-2 text-sm text-slate-600 font-normal">
             <li>Request a copy of any personal data we hold about you</li>
             <li>Request deletion of your email address from our waitlist</li>
             <li>Withdraw consent at any time</li>
