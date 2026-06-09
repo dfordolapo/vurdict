@@ -76,8 +76,8 @@ export default function SupportPage() {
           </p>
           <p className="text-sm text-slate-300 leading-relaxed">
             Reach out at:{" "}
-            <a href="mailto:vurdict@gmail.com" className="text-indigo-400 font-semibold hover:underline">
-              vurdict@gmail.com
+            <a href="mailto:hellovurdict@gmail.com" className="text-indigo-400 font-semibold hover:underline">
+              hellovurdict@gmail.com
             </a>
           </p>
         </section>

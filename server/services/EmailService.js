@@ -27,7 +27,7 @@ export async function sendReportByEmail({ email, url, goal, experience, report, 
       </tr>`;
   }).join('');
 
-  const goalLabel = goal === 'win_clients' ? 'Win Freelance Clients' : goal === 'improve_portfolio' ? 'Improve Portfolio Quality' : 'Get Hired';
+  const goalLabel = goal === 'win_clients' ? 'Win Freelance Clients' : 'Get Hired';
   const scoreColor = report.overall_score >= 80 ? '#059669' : report.overall_score >= 70 ? '#2563eb' : report.overall_score >= 55 ? '#d97706' : '#e11d48';
 
   const html = `<!DOCTYPE html>

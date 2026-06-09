@@ -32,8 +32,8 @@ export default function PrivacyPage() {
           </p>
           <p className="text-sm text-slate-300 leading-relaxed">
             For privacy-related questions, contact us at:{" "}
-            <a href="mailto:vurdict@gmail.com" className="text-indigo-400 font-medium hover:underline">
-              vurdict@gmail.com
+            <a href="mailto:hellovurdict@gmail.com" className="text-indigo-400 font-medium hover:underline">
+              hellovurdict@gmail.com
             </a>
           </p>
         </section>
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           <p className="text-sm text-slate-300 leading-relaxed font-semibold">When you analyze a case study:</p>
           <ul className="list-none space-y-2 text-sm text-slate-300">
             <li>&mdash; The URL you submit for analysis</li>
-            <li>&mdash; Your selected goal (Get Hired, Win Freelance Clients, Improve Portfolio Quality)</li>
+            <li>&mdash; Your selected goal (Get Hired, Win Freelance Clients)</li>
             <li>&mdash; Your selected experience level (Junior, Mid-Level, Senior)</li>
           </ul>
 
@@ -140,8 +140,8 @@ export default function PrivacyPage() {
           </ul>
           <p className="text-sm text-slate-300 leading-relaxed pt-2">
             To exercise any of these rights, email us at{" "}
-            <a href="mailto:vurdict@gmail.com" className="text-indigo-400 font-medium hover:underline">
-              vurdict@gmail.com
+            <a href="mailto:hellovurdict@gmail.com" className="text-indigo-400 font-medium hover:underline">
+              hellovurdict@gmail.com
             </a>{" "}
             and we will respond within 7 business days.
           </p>
@@ -151,8 +151,8 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">7. Children</h2>
           <p className="text-sm text-slate-300 leading-relaxed">
             Vurdict is not directed at children under the age of 13. We do not knowingly collect data from children. If you believe a child has submitted information to us, contact us at{" "}
-            <a href="mailto:vurdict@gmail.com" className="text-indigo-400 font-medium hover:underline">
-              vurdict@gmail.com
+            <a href="mailto:hellovurdict@gmail.com" className="text-indigo-400 font-medium hover:underline">
+              hellovurdict@gmail.com
             </a>{" "}
             and we will delete it promptly.
           </p>
@@ -169,8 +169,8 @@ export default function PrivacyPage() {
           <h2 className="text-lg font-bold text-white uppercase tracking-wider">9. Contact</h2>
           <p className="text-sm text-slate-300 leading-relaxed">
             For any privacy concerns or data requests:{" "}
-            <a href="mailto:vurdict@gmail.com" className="text-indigo-400 font-semibold hover:underline">
-              vurdict@gmail.com
+            <a href="mailto:hellovurdict@gmail.com" className="text-indigo-400 font-semibold hover:underline">
+              hellovurdict@gmail.com
             </a>
           </p>
         </section>

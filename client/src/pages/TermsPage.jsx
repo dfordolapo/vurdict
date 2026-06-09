@@ -125,8 +125,8 @@ export default function TermsPage() {
           <h2 className="text-lg font-bold text-slate-900 uppercase tracking-wider">10. Contact</h2>
           <p className="text-sm text-slate-600 leading-relaxed font-normal">
             For questions about these Terms:{" "}
-            <a href="mailto:vurdict@gmail.com" className="text-brand-900 font-semibold hover:underline">
-              vurdict@gmail.com
+            <a href="mailto:hellovurdict@gmail.com" className="text-brand-900 font-semibold hover:underline">
+              hellovurdict@gmail.com
             </a>
           </p>
         </section>

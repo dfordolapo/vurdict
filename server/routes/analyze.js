@@ -4,7 +4,7 @@ import { evaluatePortfolio } from '../services/GeminiService.js';
 
 const router = Router();
 
-const VALID_GOALS = ['get_hired', 'win_clients', 'improve_portfolio'];
+const VALID_GOALS = ['get_hired', 'win_clients'];
 
 const EXPERIENCE_LABELS = {
   junior: 'Junior',
