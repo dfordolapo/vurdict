@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect, Suspense, lazy } from 'react'
 import LandingPage from './pages/LandingPage.jsx'
 import { AnalysisProvider } from './context/AnalysisContext'
+import PWAInstallPrompt from './components/PWAInstallPrompt.jsx'
 
 const AnalyzePage = lazy(() => import('./pages/AnalyzePage.jsx'))
 const AnalyzingPage = lazy(() => import('./pages/AnalyzingPage.jsx'))
@@ -26,6 +27,12 @@ export default function App() {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
     }
+  }, [])
+
+  useEffect(() => {
+    // Visit count tracking for smart PWA prompt
+    const currentCount = parseInt(localStorage.getItem('vurdict_visit_count') || '0', 10);
+    localStorage.setItem('vurdict_visit_count', (currentCount + 1).toString());
   }, [])
 
   if (!isOnline) {
@@ -54,6 +61,7 @@ export default function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/support" element={<SupportPage />} />
         </Routes>
+        <PWAInstallPrompt />
       </Suspense>
     </AnalysisProvider>
   )
