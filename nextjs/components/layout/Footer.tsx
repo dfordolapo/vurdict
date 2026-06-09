@@ -20,15 +20,15 @@ export default function Footer() {
         </div>
 
         {/* Right: Links */}
-        <div className="flex gap-6 text-xs text-slate-500">
-          <Link href="#" className="hover:text-slate-300 transition-colors">
-            Terms of Service
-          </Link>
-          <Link href="#" className="hover:text-slate-300 transition-colors">
+        <div className="flex gap-6 text-xs text-slate-500 font-semibold">
+          <Link href="/privacy" className="hover:text-slate-300 transition-colors">
             Privacy Policy
           </Link>
-          <Link href="#" className="hover:text-slate-300 transition-colors">
-            Contact
+          <Link href="/terms" className="hover:text-slate-300 transition-colors">
+            Terms of Use
+          </Link>
+          <Link href="/support" className="hover:text-slate-300 transition-colors">
+            Support Us
           </Link>
         </div>
       </div>

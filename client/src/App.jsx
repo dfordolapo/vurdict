@@ -8,6 +8,9 @@ const AnalyzingPage = lazy(() => import('./pages/AnalyzingPage.jsx'))
 const ResultsPage = lazy(() => import('./pages/ResultsPage.jsx'))
 const DimensionDetailsPage = lazy(() => import('./pages/DimensionDetailsPage.jsx'))
 const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'))
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage.jsx'))
+const TermsPage = lazy(() => import('./pages/TermsPage.jsx'))
+const SupportPage = lazy(() => import('./pages/SupportPage.jsx'))
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -47,6 +50,9 @@ export default function App() {
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/results/:dimSlug" element={<DimensionDetailsPage />} />
           <Route path="/offline" element={<OfflinePage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/support" element={<SupportPage />} />
         </Routes>
       </Suspense>
     </AnalysisProvider>

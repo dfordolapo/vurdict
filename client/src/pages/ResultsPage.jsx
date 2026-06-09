@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import { 
   ArrowLeft, 
@@ -720,9 +720,10 @@ export default function ResultsPage() {
               © 2026 Vurdict. The Reviewer's Perspective.
             </p>
           </div>
-          <div className="flex gap-6 text-xs font-semibold">
-            <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
-            <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
+          <div className="flex gap-6 text-xs font-semibold text-slate-500">
+            <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
+            <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
           </div>
         </div>
       </footer>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
@@ -619,9 +619,10 @@ export default function DimensionDetailsPage() {
               © 2026 Vurdict. The Reviewer's Perspective.
             </p>
           </div>
-          <div className="flex gap-6 font-semibold">
-            <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
-            <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
+          <div className="flex gap-6 font-semibold text-slate-500">
+            <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
+            <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
           </div>
         </footer>
       </div>

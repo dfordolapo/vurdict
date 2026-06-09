@@ -1,5 +1,6 @@
 import { WifiOff, RotateCw } from 'lucide-react';
 import Logo from '../components/Logo';
+import { Link } from 'react-router-dom';
 
 export default function OfflinePage() {
   const handleReload = () => {
@@ -68,9 +69,10 @@ export default function OfflinePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-100 py-6 px-6 text-center text-xs text-slate-400 bg-white">
-        <div className="flex items-center justify-center gap-6 mb-3 font-semibold">
-          <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
-          <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
+        <div className="flex items-center justify-center gap-6 mb-3 font-semibold text-slate-500">
+          <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
+          <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
         </div>
         <p>© {new Date().getFullYear()} Vurdict. Offline Mode.</p>
       </footer>

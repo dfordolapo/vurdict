@@ -781,8 +781,9 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-6 text-xs font-semibold text-slate-500">
-          <a href="/" className="hover:text-brand-900 transition-colors">Home</a>
-          <a href="/#faq" className="hover:text-brand-900 transition-colors">FAQ</a>
+          <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
+          <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
         </div>
       </div>
     </footer>
