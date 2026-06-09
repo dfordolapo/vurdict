@@ -241,7 +241,7 @@ export default function AnalyzePage() {
                       : 'bg-white text-brand-900 hover:bg-sky-50 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0'
                   }`}
                 >
-                  <span>Analyze Portfolio</span>
+                  <span>                  Analyze Portfolio</span>
                   <ArrowRight size={16} />
                 </button>
 

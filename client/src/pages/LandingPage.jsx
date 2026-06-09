@@ -325,7 +325,7 @@ function ProblemSection() {
       dimension: 'Turnaround',
       generic: 'Instant',
       community: 'Days to Weeks',
-      vurdict: 'Instant + 48hr Human Review',
+      vurdict: '2-5 Minutes',
     },
   ]
 
@@ -344,8 +344,8 @@ function ProblemSection() {
         </div>
 
         {/* Comparison Table */}
-        <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.015)] p-4 md:p-8 relative">
-          <div className="overflow-x-auto scrollbar-thin">
+        <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.015)] p-4 md:p-8 relative mr-4 md:mr-0">
+          <div className="overflow-x-auto scrollbar-thin pr-4 md:pr-0">
             <table className="w-full text-left border-separate border-spacing-0 min-w-[768px] md:min-w-[850px] table-fixed">
               <colgroup>
                 <col className="w-[22%]" />

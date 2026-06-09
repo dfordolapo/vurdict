@@ -58,7 +58,7 @@ router.post('/', async (req, res, next) => {
     const portfolioContent = await extractContent(url);
 
     // ── Step 2: Run AI evaluation ────────────────────────────────────────────
-    const evaluation = await evaluatePortfolio(goal, experienceLabel, portfolioContent);
+    const evaluation = await evaluatePortfolio(goal, experienceLabel, portfolioContent, url);
 
     return res.json({ success: true, evaluation });
   } catch (err) {

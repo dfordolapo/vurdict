@@ -88,7 +88,7 @@ export default function TermsPage() {
           </p>
           <ul className="list-none space-y-2 text-sm text-slate-600 font-normal">
             <li>&mdash; The Service will be uninterrupted or error-free</li>
-            <li>&mdash; AI-generated scores will be accurate, complete, or suitable for any specific purpose</li>
+            <li>&mdash; AI-generated scores will guarantee hiring or clients</li>
             <li>&mdash; The Service will be compatible with all portfolio platforms or URL types</li>
           </ul>
         </section>
