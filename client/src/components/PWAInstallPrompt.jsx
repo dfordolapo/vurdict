@@ -124,8 +124,8 @@ export default function PWAInstallPrompt() {
         {/* 2. BODY CONTENT (Navy background with Wave Dividers) */}
         <div className="relative bg-[#172554] text-white overflow-hidden flex-1">
           {/* Top Wave (white transitioning to navy blue) */}
-          <div className="w-full overflow-hidden leading-none bg-white -mt-0.5">
-            <svg viewBox="0 0 1440 200" preserveAspectRatio="none" className="block w-full h-[18px] text-[#172554] fill-current">
+          <div className="w-full overflow-hidden leading-none bg-white -mt-[2px]">
+            <svg viewBox="0 0 1440 200" preserveAspectRatio="none" shapeRendering="geometricPrecision" className="block w-full h-[18px] text-[#172554] fill-current">
               <path d="M0,0 Q360,200 720,0 Q1080,200 1440,0 L1440,200 L0,200 Z" />
             </svg>
           </div>
@@ -134,7 +134,7 @@ export default function PWAInstallPrompt() {
           <div className="px-5 py-3 relative z-10">
             {step === 'prompt' ? (
               <p className="text-xs text-sky-100/90 leading-relaxed font-normal">
-                Access instant goal-aware portfolio feedback directly from your home screen with offline capability.
+                Add Vurdict to your home screen for faster access and a seamless app-like experience
               </p>
             ) : (
               <div>
@@ -184,8 +184,8 @@ export default function PWAInstallPrompt() {
           </div>
 
           {/* Bottom Wave (navy blue transitioning back to white) */}
-          <div className="w-full overflow-hidden leading-none bg-white -mb-0.5">
-            <svg viewBox="0 0 1440 200" preserveAspectRatio="none" className="block w-full h-[18px] text-[#172554] fill-current rotate-180">
+          <div className="w-full overflow-hidden leading-none bg-white -mb-[2px]">
+            <svg viewBox="0 0 1440 200" preserveAspectRatio="none" shapeRendering="geometricPrecision" className="block w-full h-[18px] text-[#172554] fill-current rotate-180">
               <path d="M0,0 Q360,200 720,0 Q1080,200 1440,0 L1440,200 L0,200 Z" />
             </svg>
           </div>
@@ -197,7 +197,7 @@ export default function PWAInstallPrompt() {
             <div className="flex flex-col gap-2.5">
               <button
                 onClick={handleInstallClick}
-                className="w-full py-2.5 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer outline-none focus:outline-none"
               >
                 <Download size={13} />
                 <span>Install Vurdict</span>
@@ -224,13 +224,13 @@ export default function PWAInstallPrompt() {
                   localStorage.setItem('vurdict_pwa_dismissed_permanent', 'true');
                   setIsVisible(false);
                 }}
-                className="flex-1 py-2 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow cursor-pointer"
+                className="flex-1 py-2 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow cursor-pointer outline-none focus:outline-none"
               >
                 Done
               </button>
               <button
                 onClick={() => setStep('prompt')}
-                className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-all border border-slate-200 cursor-pointer"
+                className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-all border border-slate-200 cursor-pointer outline-none focus:outline-none"
               >
                 Back
               </button>
