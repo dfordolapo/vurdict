@@ -98,7 +98,7 @@ export default function PWAInstallPrompt() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 p-4 md:p-6 flex justify-center md:justify-end animate-in slide-in-from-bottom duration-300">
-      <div className="w-full max-w-sm bg-white border border-slate-200 shadow-2xl text-slate-800 rounded-2xl relative overflow-hidden flex flex-col">
+      <div className="w-full max-w-sm bg-white shadow-2xl text-slate-800 rounded-2xl relative overflow-hidden flex flex-col">
         {/* Glow accent */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -111,8 +111,8 @@ export default function PWAInstallPrompt() {
           <X size={16} />
         </button>
 
-        {/* 1. HEADER (White background) */}
-        <div className="p-5 pb-3 bg-white z-10 flex items-center gap-3">
+        {/* 1. HEADER */}
+        <div className="p-5 pb-3 bg-white flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#172554] shrink-0">
             <Smartphone size={20} />
           </div>
@@ -121,17 +121,16 @@ export default function PWAInstallPrompt() {
           </h3>
         </div>
 
-        {/* 2. BODY CONTENT (Navy background with Wave Dividers) */}
-        <div className="relative bg-[#172554] text-white overflow-hidden flex-1">
-          {/* Top Wave (white transitioning to navy blue) */}
-          <div className="w-full overflow-hidden leading-none bg-white -mt-[2px]">
-            <svg viewBox="0 0 1440 200" preserveAspectRatio="none" shapeRendering="geometricPrecision" className="block w-full h-[18px] text-[#172554] fill-current">
-              <path d="M0,0 Q360,200 720,0 Q1080,200 1440,0 L1440,200 L0,200 Z" />
-            </svg>
-          </div>
+        {/* Top Wave */}
+        <div className="w-full overflow-hidden leading-none -mb-[1px]">
+          <svg viewBox="0 0 1440 200" preserveAspectRatio="none" className="block w-full h-[18px]">
+            <path d="M0,0 Q360,200 720,0 Q1080,200 1440,0 L1440,200 L0,200 Z" fill="#172554" />
+          </svg>
+        </div>
 
-          {/* Main Content Area */}
-          <div className="px-5 py-3 relative z-10">
+        {/* 2. BODY CONTENT */}
+        <div className="relative bg-[#172554] text-white flex-1">
+          <div className="px-5 py-3">
             {step === 'prompt' ? (
               <p className="text-xs text-sky-100/90 leading-relaxed font-normal">
                 Add Vurdict to your home screen for faster access and a seamless app-like experience
@@ -182,22 +181,22 @@ export default function PWAInstallPrompt() {
               </div>
             )}
           </div>
-
-          {/* Bottom Wave (navy blue transitioning back to white) */}
-          <div className="w-full overflow-hidden leading-none bg-white -mb-[2px]">
-            <svg viewBox="0 0 1440 200" preserveAspectRatio="none" shapeRendering="geometricPrecision" className="block w-full h-[18px] text-[#172554] fill-current rotate-180">
-              <path d="M0,0 Q360,200 720,0 Q1080,200 1440,0 L1440,200 L0,200 Z" />
-            </svg>
-          </div>
         </div>
 
-        {/* 3. CTAS (White background) */}
-        <div className="p-5 pt-5 bg-white z-10">
+        {/* Bottom Wave */}
+        <div className="w-full overflow-hidden leading-none -mt-[1px]">
+          <svg viewBox="0 0 1440 200" preserveAspectRatio="none" className="block w-full h-[18px] rotate-180">
+            <path d="M0,0 Q360,200 720,0 Q1080,200 1440,0 L1440,200 L0,200 Z" fill="#172554" />
+          </svg>
+        </div>
+
+        {/* 3. CTAS */}
+        <div className="p-5 pt-5 bg-white">
           {step === 'prompt' ? (
             <div className="flex flex-col gap-2.5">
               <button
                 onClick={handleInstallClick}
-                className="w-full py-2.5 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer outline-none focus:outline-none"
+                className="w-full py-2.5 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-normal transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer outline-none focus:outline-none"
               >
                 <Download size={13} />
                 <span>Install Vurdict</span>
@@ -224,7 +223,7 @@ export default function PWAInstallPrompt() {
                   localStorage.setItem('vurdict_pwa_dismissed_permanent', 'true');
                   setIsVisible(false);
                 }}
-                className="flex-1 py-2 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow cursor-pointer outline-none focus:outline-none"
+                className="flex-1 py-2 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-normal transition-all shadow cursor-pointer outline-none focus:outline-none"
               >
                 Done
               </button>
