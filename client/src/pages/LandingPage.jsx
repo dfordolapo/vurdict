@@ -610,9 +610,9 @@ function ReportCardSection() {
                 <div className="space-y-3">
                   {scores.map((s, i) => (
                     <div key={i} className="space-y-1">
-                      <div className="flex justify-between text-xs font-bold">
+                      <div className="flex justify-between text-xs">
                         <span className="text-slate-700">{s.label}</span>
-                        <span className="text-slate-900">{s.score}/100</span>
+                        <span className="text-slate-700">{s.score}/100</span>
                       </div>
                       <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div className={`h-full ${s.color} rounded-full`} style={{ width: `${s.score}%` }} />
@@ -630,8 +630,8 @@ function ReportCardSection() {
               </div>
               <div>
                 <h6 className="text-xs font-bold text-amber-900 mb-0.5">Top Recommendation</h6>
-                <p className="text-xs text-amber-800/80 leading-relaxed font-medium">
-                  Your "Outcome & Impact" score is currently bottlenecking your results. Add specific metrics (e.g. conversion rates, user satisfaction scores) to your case studies to increase shortlisting odds.
+                <p className="text-xs text-amber-800/80 leading-relaxed">
+                  Your Impact Evidence score (62/100) is the biggest drag on your overall result. This case study describes what you did but doesn't show what happened. Add specific metrics — conversion rates, task time reductions, or user satisfaction scores — to prove your design drove real outcomes.
                 </p>
               </div>
             </div>
