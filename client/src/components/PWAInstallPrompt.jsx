@@ -23,15 +23,11 @@ export default function PWAInstallPrompt() {
 
     const dismissedAt = localStorage.getItem('vurdict_pwa_dismissed_at');
     if (dismissedAt) {
-      const sevenDays = 7 * 24 * 60 * 60 * 1000;
-      if (Date.now() - parseInt(dismissedAt, 10) < sevenDays) {
+      const threeDays = 3 * 24 * 60 * 60 * 1000;
+      if (Date.now() - parseInt(dismissedAt, 10) < threeDays) {
         return;
       }
     }
-
-    // 3. Visit count check (Must be second visit or later)
-    const visitCount = parseInt(localStorage.getItem('vurdict_visit_count') || '0', 10);
-    if (visitCount < 2) return;
 
     // 4. Session check (Show at most once per session)
     if (sessionStorage.getItem('vurdict_pwa_session_shown') === 'true') return;
@@ -57,20 +53,17 @@ export default function PWAInstallPrompt() {
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    // 7. Active browsing timer (30 seconds on Landing page)
-    let timer;
-    if (location.pathname === '/') {
-      timer = setTimeout(() => {
-        setIsVisible(true);
-        sessionStorage.setItem('vurdict_pwa_session_shown', 'true');
-      }, 30000); // 30 seconds
-    }
+    // 7. Active browsing timer (10 seconds globally)
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+      sessionStorage.setItem('vurdict_pwa_session_shown', 'true');
+    }, 10000); // 10 seconds
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      if (timer) clearTimeout(timer);
+      clearTimeout(timer);
     };
-  }, [location.pathname]);
+  }, []);
 
   const handleInstallClick = async () => {
     if (deferredPrompt) {
@@ -200,7 +193,7 @@ export default function PWAInstallPrompt() {
             <div className="flex flex-col gap-2.5">
               <button
                 onClick={handleInstallClick}
-                className="w-full py-2.5 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Download size={13} />
                 <span>Install Vurdict</span>
@@ -227,13 +220,13 @@ export default function PWAInstallPrompt() {
                   localStorage.setItem('vurdict_pwa_dismissed_permanent', 'true');
                   setIsVisible(false);
                 }}
-                className="flex-1 py-2 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow cursor-pointer"
+                className="flex-1 py-2 rounded-xl bg-[#172554] hover:bg-blue-900 text-white text-xs font-medium transition-all shadow cursor-pointer"
               >
                 Done
               </button>
               <button
                 onClick={() => setStep('prompt')}
-                className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all border border-slate-200 cursor-pointer"
+                className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-all border border-slate-200 cursor-pointer"
               >
                 Back
               </button>
