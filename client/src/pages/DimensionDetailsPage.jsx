@@ -55,9 +55,7 @@ function getEvidenceIcon(title) {
 function EvidenceIcon({ title }) {
   const Icon = getEvidenceIcon(title);
   return (
-    <div className="h-8 w-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center shrink-0 mt-0.5">
-      <Icon size={14} className="text-indigo-500" />
-    </div>
+    <Icon size={18} className="text-indigo-500 shrink-0 mt-0.5" />
   );
 }
 
@@ -100,10 +98,11 @@ export default function DimensionDetailsPage() {
 
   // Status badge helper
   const getBadge = (score) => {
-    if (score >= 80) return { label: 'Strong', style: 'text-emerald-700 bg-emerald-50 border-emerald-100' };
-    if (score >= 70) return { label: 'Good', style: 'text-blue-700 bg-blue-50 border-blue-100' };
-    if (score >= 55) return { label: 'Needs Improvement', style: 'text-amber-700 bg-amber-50 border-amber-100' };
-    return { label: 'Critical', style: 'text-rose-700 bg-rose-50 border-rose-100' };
+    if (score >= 86) return { label: 'Exceptional', style: 'text-violet-700 bg-violet-50 border-violet-100' };
+    if (score >= 71) return { label: 'Strong', style: 'text-emerald-700 bg-emerald-50 border-emerald-100' };
+    if (score >= 51) return { label: 'Competitive', style: 'text-amber-700 bg-amber-50 border-amber-100' };
+    if (score >= 31) return { label: 'Early Foundation', style: 'text-orange-700 bg-orange-50 border-orange-100' };
+    return { label: 'Significant Gaps', style: 'text-rose-700 bg-rose-50 border-rose-100' };
   };
 
   const badge = getBadge(activeData.score);
@@ -421,11 +420,7 @@ export default function DimensionDetailsPage() {
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`h-8 w-8 rounded-xl flex items-center justify-center border ${
-                          isSelected ? 'bg-brand-900/10 border-brand-900/20 text-brand-900' : 'bg-white border-slate-100 text-slate-400 group-hover:text-slate-600'
-                        }`}>
-                          <SidebarIcon size={14} />
-                        </div>
+                        <SidebarIcon size={18} className={`${isSelected ? 'text-brand-900' : 'text-slate-400 group-hover:text-slate-600'} shrink-0`} />
                         <div>
                           <div className={`text-xs font-semibold ${isSelected ? 'text-brand-900 font-semibold' : 'text-slate-700 group-hover:text-slate-950'}`}>{dim.label}</div>
                           <div className={`text-[8px] font-medium uppercase mt-0.5 ${scoreBadge.style.split(' ')[0]}`}>{scoreBadge.label}</div>
@@ -448,9 +443,7 @@ export default function DimensionDetailsPage() {
             {/* Main header block */}
             <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-2xl bg-brand-900/5 border border-brand-900/10 flex items-center justify-center text-brand-900 shrink-0">
-                  <DimIcon size={22} />
-                </div>
+                <DimIcon size={26} className="text-brand-900 shrink-0" />
                 <div>
                   <h2 className="text-xl font-semibold text-slate-900">{activeDim.label}</h2>
                   <p className="text-xs text-slate-455 font-normal leading-relaxed max-w-xl mt-1">{activeDim.desc}</p>
@@ -496,9 +489,7 @@ export default function DimensionDetailsPage() {
                 <div className="space-y-4">
                   {details.working.map((item, i) => (
                     <div key={i} className="flex gap-2">
-                      <div className="h-4 w-4 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
-                        <CheckCircle size={10} className="text-emerald-600" />
-                      </div>
+                      <CheckCircle size={14} className="text-emerald-600 shrink-0 mt-0.5" />
                       <div>
                         <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
                         <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
@@ -517,9 +508,7 @@ export default function DimensionDetailsPage() {
                 <div className="space-y-4">
                   {details.improve.map((item, i) => (
                     <div key={i} className="flex gap-2">
-                      <div className="h-4 w-4 rounded bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0 mt-0.5">
-                        <AlertTriangle size={10} className="text-amber-600" />
-                      </div>
+                      <AlertTriangle size={14} className="text-amber-600 shrink-0 mt-0.5" />
                       <div>
                         <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
                         <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
@@ -676,9 +665,7 @@ export default function DimensionDetailsPage() {
             </div>
             
             <div className="flex items-center gap-2.5 relative z-10">
-              <div className="h-8 w-8 rounded-2xl bg-white/10 flex items-center justify-center">
-                <MessageCircle size={16} className="text-sky-300 animate-pulse" />
-              </div>
+              <MessageCircle size={20} className="text-sky-300 animate-pulse" />
               <div>
                 <h4 className="text-xs font-semibold leading-none">Design Co-Pilot</h4>
                 <span className="text-[9px] text-sky-100/70 font-normal mt-0.5 block">Your Design Lead Best Friend</span>

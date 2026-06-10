@@ -25,6 +25,23 @@ export const MOCK_REPORT: VurdictReport = {
     stat: 'Case studies showing quantifiable outcomes see a 3.4x higher shortlist rate from hiring managers.',
     dimensionSlug: 'business_impact',
   },
+  priorityActionPlan: {
+    critical_fixes: [
+      { title: 'Add Quantifiable Business Metrics', description: 'Hiring managers need to see measurable outcomes. Add specific metrics (conversion rates, time savings, revenue impact) to your case studies.' },
+      { title: 'Strengthen Problem Validation', description: 'Show evidence that the problem you solved was real and validated. Include user quotes, survey data, or analytics that drove your design decisions.' },
+      { title: 'Improve Narrative Structure', description: 'Restructure case studies to follow a clear arc: Context → Problem → Process → Outcome. Lead with results to hook readers immediately.' },
+    ],
+    medium_priority: [
+      { title: 'Enhance Visual Consistency', description: 'Standardize typography, spacing, and color usage across all case studies for a cohesive brand experience.' },
+      { title: 'Add Process Artifacts', description: 'Include sketches, wireframes, and iteration documentation to demonstrate your thinking process.' },
+      { title: 'Incorporate Social Proof', description: 'Add testimonials, client logos, or recognition badges to build credibility and trust with evaluators.' },
+    ],
+    nice_to_have: [
+      { title: 'Add Interactive Prototypes', description: 'Embed clickable prototypes so evaluators can experience the interaction design firsthand.' },
+      { title: 'Include a Personal Touch', description: 'Add a brief "Why I Design" section to humanize your portfolio.' },
+      { title: 'Optimize for Mobile Viewing', description: 'Ensure case studies are fully readable on mobile devices.' },
+    ],
+  },
   dimensions: {
     structure_flow: {
       score: 88,

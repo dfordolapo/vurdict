@@ -293,15 +293,9 @@ export default function SupportPage() {
                   {/* Reason */}
                   <div className="flex items-center gap-3 px-1 mb-4">
                     <div className="flex -space-x-1">
-                      <div className="w-5 h-5 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center">
-                        <Brain size={10} className="text-blue-600" />
-                      </div>
-                      <div className="w-5 h-5 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center">
-                        <Cloud size={10} className="text-sky-600" />
-                      </div>
-                      <div className="w-5 h-5 rounded-full bg-violet-100 border border-violet-200 flex items-center justify-center">
-                        <Terminal size={10} className="text-violet-600" />
-                      </div>
+                      <Brain size={14} className="text-blue-600" />
+                      <Cloud size={14} className="text-sky-600" />
+                      <Terminal size={14} className="text-violet-600" />
                     </div>
                     <p className="text-[11px] text-slate-500 leading-relaxed">
                       Funds go toward <span className="text-slate-700 font-medium">AI costs</span>,{' '}
@@ -358,9 +352,7 @@ export default function SupportPage() {
               ) : (
                 /* Success state */
                 <div className="flex flex-col items-center text-center pt-8 pb-4">
-                  <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-5">
-                    <CheckCircle size={32} className="text-emerald-600" />
-                  </div>
+                  <CheckCircle size={38} className="text-emerald-600 mb-5" />
                   <h3 className="text-xl font-semibold text-slate-900 mb-1">Thank You!</h3>
                   <p className="text-sm text-slate-500 font-normal leading-relaxed max-w-xs mb-6">
                     Your support means the world to us. Every contribution helps us keep Vurdict free and improve it for everyone.

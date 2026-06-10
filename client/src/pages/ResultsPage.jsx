@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
-import { 
+import { useAnalysis, getScoreStatus, getScoreBand } from '../context/AnalysisContext';
+import {
   ArrowLeft, 
   Sparkles, 
   Flame, 
@@ -29,7 +29,8 @@ import {
   Feather,
   Target,
   X,
-  Mail
+  Mail,
+  ClipboardList
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
@@ -230,9 +231,10 @@ export default function ResultsPage() {
   
   // Dynamic color helper
   const getColors = (score) => {
-    if (score >= 80) return { text: 'text-blue-600', border: 'border-blue-200', bg: 'bg-blue-50/50' };
-    if (score >= 70) return { text: 'text-blue-500', border: 'border-blue-150', bg: 'bg-blue-50/30' };
-    if (score >= 55) return { text: 'text-amber-600', border: 'border-amber-200', bg: 'bg-amber-50/30' };
+    if (score >= 86) return { text: 'text-violet-600', border: 'border-violet-200', bg: 'bg-violet-50/50' };
+    if (score >= 71) return { text: 'text-blue-600', border: 'border-blue-200', bg: 'bg-blue-50/50' };
+    if (score >= 51) return { text: 'text-amber-600', border: 'border-amber-200', bg: 'bg-amber-50/30' };
+    if (score >= 31) return { text: 'text-orange-600', border: 'border-orange-200', bg: 'bg-orange-50/30' };
     return { text: 'text-rose-600', border: 'border-rose-200', bg: 'bg-rose-50/30' };
   };
 
@@ -285,21 +287,27 @@ export default function ResultsPage() {
   const bottomWeaknesses = sortedCategories.slice(-3).reverse();
 
   const readinessLevel =
-    report.overall_score >= 80 ? 'High' :
-    report.overall_score >= 70 ? 'Medium' : 'Low';
+    report.overall_score >= 71 ? 'High' :
+    report.overall_score >= 51 ? 'Medium' : 'Low';
 
   const readinessWidth =
-    report.overall_score >= 80 ? '100%' :
-    report.overall_score >= 70 ? '66%' :
-    report.overall_score >= 55 ? '33%' : '10%';
+    report.overall_score >= 71 ? '100%' :
+    report.overall_score >= 51 ? '66%' :
+    report.overall_score >= 31 ? '33%' : '10%';
 
   const summaryText = report.summary || 'Your portfolio shows strong potential. With a few strategic improvements, you will be in a great position to stand out.';
+  const scoreBand = getScoreBand(report.overall_score);
+
   const statusSummary =
-    report.overall_score >= 80
-      ? { title: 'Great work!', text: 'Your portfolio shows strong potential and a clear point of view.' }
-      : report.overall_score >= 70
-        ? { title: 'Solid foundation!', text: 'You are on the right track. A few refinements can help you stand out even more.' }
-        : { title: 'Room for growth.', text: 'Focus on the areas below to strengthen your portfolio and attract better opportunities.' };
+    report.overall_score >= 86
+      ? { title: 'Outstanding!', text: 'Your portfolio demonstrates exceptional quality and differentiation.' }
+      : report.overall_score >= 71
+        ? { title: 'Great work!', text: 'Your portfolio shows strong execution and hiring readiness.' }
+        : report.overall_score >= 51
+          ? { title: 'Solid foundation!', text: 'You have a good base. A few refinements can take it to the next level.' }
+          : report.overall_score >= 31
+            ? { title: 'Early stage.', text: 'Some fundamentals are present. Focus on closing the important gaps identified below.' }
+            : { title: 'Significant gaps.', text: 'Major improvements are needed. Start with the critical fixes below.' };
 
   const fixFirst = report.fix_this_first || { title: 'Improve Your Portfolio', description: 'Review the detailed breakdown below for specific recommendations.', priority_score: 5 };
 
@@ -467,13 +475,13 @@ export default function ResultsPage() {
                 </div>
               </div>
 
-              <div className={`mt-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-250 bg-emerald-50`}>
-                <span className={`w-1.5 h-1.5 rounded-full bg-emerald-500`} />
-                <span className={`text-xs font-semibold text-emerald-700`}>{statusLabel}</span>
+              <div className={`mt-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${overallColors.border} ${overallColors.bg}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${overallColors.text.replace('text-', 'bg-')}`} />
+                <span className={`text-xs font-semibold ${overallColors.text}`}>{statusLabel}</span>
               </div>
 
               <p className="text-[10px] text-slate-500 font-medium max-w-xs mt-3 leading-normal">
-                {statusSummary.title} {statusSummary.text}
+                {scoreBand.description}
               </p>
 
               {/* Hiring readiness progress handle bar */}
@@ -553,9 +561,7 @@ export default function ResultsPage() {
             <div className="space-y-4">
               {topStrengths.map((str, i) => (
                 <div key={i} className="flex gap-2">
-                  <div className="h-4 w-4 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle size={10} className="text-emerald-600" />
-                  </div>
+                  <CheckCircle size={14} className="text-emerald-600 shrink-0 mt-0.5" />
                   <div>
                     <h5 className="text-xs font-semibold text-slate-900">{str.label}</h5>
                     <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{str.score}/100 • {str.explanation.slice(0, 80)}...</p>
@@ -574,9 +580,7 @@ export default function ResultsPage() {
             <div className="space-y-4">
               {bottomWeaknesses.map((weak, i) => (
                 <div key={i} className="flex gap-2">
-                  <div className="h-4 w-4 rounded bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0 mt-0.5">
-                    <AlertTriangle size={10} className="text-amber-600" />
-                  </div>
+                  <AlertTriangle size={14} className="text-amber-600 shrink-0 mt-0.5" />
                   <div>
                     <h5 className="text-xs font-semibold text-slate-900">{weak.label}</h5>
                     <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{weak.score}/100 • {weak.explanation.slice(0, 80)}...</p>
@@ -616,12 +620,76 @@ export default function ResultsPage() {
 
         </div>
 
+        {/* Priority Action Plan */}
+        <div className="max-w-7xl w-full mx-auto animate-fade-in-up mt-6">
+          <div className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-6">
+              <ClipboardList size={20} className="text-brand-900" />
+              <div>
+                <h3 className="text-sm font-semibold text-slate-900">Priority Action Plan</h3>
+                <p className="text-[10px] text-slate-400 font-medium">Ranked by impact — start here to improve your portfolio.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {/* Critical Fixes */}
+              <div className="bg-rose-50/50 border border-rose-100 rounded-2xl p-5 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-rose-700 uppercase">
+                  <span className="h-5 w-5 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center text-[10px] font-bold text-rose-600">1</span>
+                  Critical Fixes
+                </div>
+                <p className="text-[9px] text-rose-600/70 font-medium">Highest impact. Most likely to affect outcomes.</p>
+                <div className="space-y-3">
+                  {(report.priority_action_plan?.critical_fixes || []).slice(0, 3).map((item, i) => (
+                    <div key={i} className="space-y-0.5">
+                      <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
+                      <p className="text-[10px] text-slate-500 font-normal leading-relaxed">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Medium Priority */}
+              <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-5 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-amber-700 uppercase">
+                  <span className="h-5 w-5 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-[10px] font-bold text-amber-600">2</span>
+                  Medium Priority
+                </div>
+                <p className="text-[9px] text-amber-600/70 font-medium">Valuable enhancements that strengthen your case study.</p>
+                <div className="space-y-3">
+                  {(report.priority_action_plan?.medium_priority || []).slice(0, 3).map((item, i) => (
+                    <div key={i} className="space-y-0.5">
+                      <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
+                      <p className="text-[10px] text-slate-500 font-normal leading-relaxed">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Nice-to-Have */}
+              <div className="bg-slate-50/50 border border-slate-100 rounded-2xl p-5 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase">
+                  <span className="h-5 w-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-400">3</span>
+                  Nice-to-Have
+                </div>
+                <p className="text-[9px] text-slate-400/70 font-medium">Optional refinements for further polish.</p>
+                <div className="space-y-3">
+                  {(report.priority_action_plan?.nice_to_have || []).slice(0, 3).map((item, i) => (
+                    <div key={i} className="space-y-0.5">
+                      <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
+                      <p className="text-[10px] text-slate-500 font-normal leading-relaxed">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Row: Action Banner */}
         <div className="max-w-7xl w-full mx-auto bg-brand-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in-up mt-6">
           <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-              <Trophy size={20} className="text-yellow-400" />
-            </div>
+            <Trophy size={24} className="text-yellow-400 shrink-0" />
             <div>
               <h4 className="text-sm font-semibold">Want a personalized action plan to improve your score?</h4>
               <p className="text-[10px] text-slate-400 mt-0.5 md:mt-0">Get step-by-step recommendations tailored to your portfolio.</p>
@@ -651,9 +719,7 @@ export default function ResultsPage() {
 
             {!saveSubmitted ? (
               <>
-                <div className="w-12 h-12 rounded-2xl bg-brand-900 flex items-center justify-center mb-5">
-                  <Bookmark size={22} className="text-white" />
-                </div>
+                <Bookmark size={26} className="text-white mb-5" />
                 <h3 className="text-xl font-semibold text-slate-900 mb-1">Get Your Report</h3>
                 <p className="text-sm text-slate-500 font-normal mb-6 leading-relaxed">
                   Enter your email and we'll send you a copy of this report.

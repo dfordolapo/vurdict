@@ -70,9 +70,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center">
           {/* Badge */}
           <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-indigo/30 bg-brand-indigo/10 px-3.5 py-1.5 text-xs font-semibold text-brand-indigo animate-pulse-slow group hover:bg-brand-indigo/20 hover:border-brand-indigo/50 transition-all duration-300 cursor-default">
-            <div className="rounded-md p-0.5 transition-all duration-300 group-hover:bg-brand-indigo/20 group-hover:shadow-[0_0_12px_rgba(99,102,241,0.25)]">
-              <Sparkles className="h-3.5 w-3.5 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12" />
-            </div>
+            <Sparkles className="h-5 w-5 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12" />
             Vurdict AI Audit v1.0
           </div>
           
@@ -109,9 +107,7 @@ export default function LandingPage() {
                 {/* Floating Quote 1 */}
                 <div className="hidden md:block absolute top-8 -left-40 bg-navy-950/90 border border-brand-indigo/40 rounded-2xl p-3 shadow-xl max-w-[200px] animate-float">
                   <div className="flex items-center gap-1.5 text-xs text-brand-indigo font-bold mb-1 group">
-                    <div className="rounded-md p-1 transition-all duration-200 group-hover:bg-brand-indigo/20 group-hover:shadow-[0_0_8px_rgba(99,102,241,0.2)]">
-                      <MessageSquare className="h-3 w-3 transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
-                    </div>
+                    <MessageSquare className="h-5 w-5 transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
                     Hiring Manager Feedback
                   </div>
                   <p className="text-[10px] text-slate-300 leading-relaxed italic">
@@ -122,9 +118,7 @@ export default function LandingPage() {
                 {/* Floating Quote 2 */}
                 <div className="hidden md:block absolute bottom-8 -left-20 bg-navy-950/90 border border-brand-violet/40 rounded-2xl p-3 shadow-xl max-w-[220px] animate-float-delayed">
                   <div className="flex items-center gap-1.5 text-xs text-brand-violet font-bold mb-1 group">
-                    <div className="rounded-md p-1 transition-all duration-200 group-hover:bg-brand-violet/20 group-hover:shadow-[0_0_8px_rgba(139,92,246,0.2)]">
-                      <MessageSquare className="h-3 w-3 transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
-                    </div>
+                    <MessageSquare className="h-5 w-5 transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
                     Recruiter Insight
                   </div>
                   <p className="text-[10px] text-slate-300 leading-relaxed italic">
@@ -133,9 +127,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Central Icon */}
-                <div className="h-24 w-24 rounded-full bg-gradient-to-tr from-brand-indigo/35 to-brand-violet/35 border border-brand-indigo/50 flex items-center justify-center mx-auto shadow-lg shadow-brand-indigo/20 animate-pulse">
-                  <MessageSquare className="h-10 w-10 text-white" />
-                </div>
+                <MessageSquare className="h-14 w-14 text-white/90 mx-auto animate-pulse" />
               </div>
             </div>
           </div>
@@ -218,9 +210,7 @@ export default function LandingPage() {
                 className="shrink-0 rounded-xl bg-gradient-to-r from-brand-indigo to-brand-violet hover:from-brand-indigo hover:to-brand-indigo/90 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-indigo/20 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-1.5 group"
               >
                 {loading ? 'Processing...' : 'Analyze My Portfolio'}
-                <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
-                  <ArrowRight className="h-4 w-4 transition-all duration-200 group-hover:translate-x-1" />
-                </div>
+                <ArrowRight className="h-5 w-5 transition-all duration-200 group-hover:translate-x-1" />
               </button>
             </div>
 
@@ -542,13 +532,11 @@ export default function LandingPage() {
                       className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm sm:text-base font-bold text-white focus:outline-none group/faq"
                     >
                       {faq.question}
-                      <div className="rounded-lg p-1.5 transition-all duration-200 group-hover/faq:bg-navy-800 group-hover/faq:shadow-[0_0_8px_rgba(0,0,0,0.2)]">
-                        {isOpen ? (
-                          <ChevronUp className="h-5 w-5 text-slate-500 shrink-0 transition-all duration-200 group-hover/faq:scale-110 group-hover/faq:text-white" />
-                        ) : (
-                          <ChevronDown className="h-5 w-5 text-slate-500 shrink-0 transition-all duration-200 group-hover/faq:scale-110 group-hover/faq:text-white" />
-                        )}
-                      </div>
+                      {isOpen ? (
+                        <ChevronUp className="h-6 w-6 text-slate-500 shrink-0 transition-all duration-200 group-hover/faq:scale-110 group-hover/faq:text-white" />
+                      ) : (
+                        <ChevronDown className="h-6 w-6 text-slate-500 shrink-0 transition-all duration-200 group-hover/faq:scale-110 group-hover/faq:text-white" />
+                      )}
                     </button>
                   
                   {isOpen && (
@@ -602,9 +590,7 @@ export default function LandingPage() {
             className="mt-12 rounded-xl bg-gradient-to-r from-brand-indigo to-brand-violet hover:from-brand-indigo hover:to-brand-indigo/90 px-8 py-3 text-sm font-bold text-white shadow-xl shadow-brand-indigo/20 transition-all duration-200 hover:scale-[1.01] flex items-center gap-1.5 group"
           >
             Analyze Your Portfolio
-            <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-white/20">
-              <ArrowRight className="h-4.5 w-4.5 transition-all duration-200 group-hover:translate-x-1" />
-            </div>
+            <ArrowRight className="h-5 w-5 transition-all duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
       </section>

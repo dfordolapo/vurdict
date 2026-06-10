@@ -17,10 +17,24 @@ export const AnalysisContext = createContext(undefined);
 
 // Helper to determine status label
 export function getScoreStatus(score) {
-  if (score >= 80) return 'Strong';
-  if (score >= 70) return 'Good';
-  if (score >= 55) return 'Needs Work';
-  return 'Critical';
+  if (score >= 86) return 'Exceptional';
+  if (score >= 71) return 'Strong';
+  if (score >= 51) return 'Competitive';
+  if (score >= 31) return 'Early Foundation';
+  return 'Significant Gaps';
+}
+
+// Score band framework for interpretation
+export const SCORE_BANDS = [
+  { min: 86, max: 100, label: 'Exceptional', description: 'Represents outstanding quality and differentiation.' },
+  { min: 71, max: 85, label: 'Strong', description: 'Demonstrates strong execution and hiring readiness.' },
+  { min: 51, max: 70, label: 'Competitive', description: 'Shows a solid foundation with room for improvement.' },
+  { min: 31, max: 50, label: 'Early Foundation', description: 'Some fundamentals are present, but important gaps remain.' },
+  { min: 0, max: 30, label: 'Significant Gaps', description: 'Major weaknesses were identified. Substantial improvements are needed.' },
+];
+
+export function getScoreBand(score) {
+  return SCORE_BANDS.find(b => score >= b.min && score <= b.max) || SCORE_BANDS[4];
 }
 
 // Generate realistic fallback mock data matching the backend schema
@@ -87,10 +101,58 @@ export function getMockReport(url, goal, experience = 'junior') {
     priority_score: 8
   };
 
+  const priority_action_plan = {
+    critical_fixes: [
+      {
+        title: isGetHired ? "Add Quantifiable Business Metrics" : "Add Clear Service Packages & Pricing",
+        description: isGetHired
+          ? "Hiring managers need to see measurable outcomes. Add specific metrics (conversion rates, time savings, revenue impact) to your case studies."
+          : "Clients want to know what they're buying. Clearly outline your service tiers, deliverables, and pricing to reduce friction in the decision process."
+      },
+      {
+        title: "Strengthen Problem Validation",
+        description: "Show evidence that the problem you solved was real and validated. Include user quotes, survey data, or analytics that drove your design decisions."
+      },
+      {
+        title: "Improve Narrative Structure",
+        description: "Restructure case studies to follow a clear arc: Context → Problem → Process → Outcome. Lead with results to hook readers immediately."
+      }
+    ],
+    medium_priority: [
+      {
+        title: "Enhance Visual Consistency",
+        description: "Standardize typography, spacing, and color usage across all case studies for a cohesive brand experience."
+      },
+      {
+        title: "Add Process Artifacts",
+        description: "Include sketches, wireframes, and iteration documentation to demonstrate your thinking process, not just polished final outputs."
+      },
+      {
+        title: "Incorporate Social Proof",
+        description: "Add testimonials, client logos, or recognition badges to build credibility and trust with evaluators."
+      }
+    ],
+    nice_to_have: [
+      {
+        title: "Add Interactive Prototypes",
+        description: "Embed clickable prototypes (Figma, ProtoPie) so evaluators can experience the interaction design firsthand."
+      },
+      {
+        title: "Include a Personal Touch",
+        description: "Add a brief 'Why I Design' section to humanize your portfolio and create an emotional connection with readers."
+      },
+      {
+        title: "Optimize for Mobile Viewing",
+        description: "Ensure case studies are fully readable and visually appealing on mobile devices, where many initial screenings happen."
+      }
+    ]
+  };
+
   return {
     overall_score,
     categories,
     fix_this_first,
+    priority_action_plan,
     summary: isGetHired
       ? `Strong ${expLabel} case study overall. The major blocker is outcomes: case studies lack quantitative metrics indicating how your designs improved business or usability goals.`
       : `Excellent premium ${expLabel} presentation. You communicate a strong niche and make booking inquiries low-friction.`

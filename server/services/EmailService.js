@@ -13,10 +13,26 @@ export async function sendReportByEmail({ email, url, goal, experience, report, 
     { label: 'Positioning Clarity', key: 'niche_positioning' },
   ];
 
+  const getScoreColor = (score) => {
+    if (score >= 86) return '#8b5cf6';
+    if (score >= 71) return '#059669';
+    if (score >= 51) return '#2563eb';
+    if (score >= 31) return '#d97706';
+    return '#e11d48';
+  };
+
+  const getBandLabel = (score) => {
+    if (score >= 86) return 'Exceptional';
+    if (score >= 71) return 'Strong';
+    if (score >= 51) return 'Competitive';
+    if (score >= 31) return 'Early Foundation';
+    return 'Significant Gaps';
+  };
+
   const dimRows = dims.map((d) => {
     const cat = report.categories?.[d.key];
     const score = cat?.score ?? 0;
-    const color = score >= 80 ? '#059669' : score >= 70 ? '#2563eb' : score >= 55 ? '#d97706' : '#e11d48';
+    const color = getScoreColor(score);
     return `
       <tr>
         <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#1e293b;font-weight:600;">${d.label}</td>
@@ -28,7 +44,8 @@ export async function sendReportByEmail({ email, url, goal, experience, report, 
   }).join('');
 
   const goalLabel = goal === 'win_clients' ? 'Win Freelance Clients' : 'Get Hired';
-  const scoreColor = report.overall_score >= 80 ? '#059669' : report.overall_score >= 70 ? '#2563eb' : report.overall_score >= 55 ? '#d97706' : '#e11d48';
+  const scoreColor = getScoreColor(report.overall_score);
+  const bandLabel = getBandLabel(report.overall_score);
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -57,7 +74,8 @@ export async function sendReportByEmail({ email, url, goal, experience, report, 
         <div style="display:inline-flex;flex-direction:column;align-items:center;">
           <span style="font-size:48px;font-weight:800;color:${scoreColor};line-height:1;">${report.overall_score}</span>
           <span style="font-size:13px;color:#94a3b8;font-weight:600;margin-top:2px;">out of 100</span>
-          <span style="margin-top:8px;display:inline-block;padding:4px 16px;border-radius:999px;font-size:12px;font-weight:700;color:${scoreColor};background:${scoreColor}10;border:1px solid ${scoreColor}30;">${statusLabel}</span>
+          <span style="margin-top:8px;display:inline-block;padding:4px 16px;border-radius:999px;font-size:12px;font-weight:700;color:${scoreColor};background:${scoreColor}10;border:1px solid ${scoreColor}30;">${bandLabel}</span>
+          <span style="margin-top:4px;font-size:11px;color:#94a3b8;font-weight:500;display:block;">${bandLabel === 'Exceptional' ? 'Represents outstanding quality and differentiation.' : bandLabel === 'Strong' ? 'Demonstrates strong execution and hiring readiness.' : bandLabel === 'Competitive' ? 'Shows a solid foundation with room for improvement.' : bandLabel === 'Early Foundation' ? 'Some fundamentals are present, but important gaps remain.' : 'Major weaknesses were identified. Substantial improvements are needed.'}</span>
         </div>
       </div>
       <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Dimension Breakdown</h2>

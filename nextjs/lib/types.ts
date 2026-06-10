@@ -23,6 +23,17 @@ export interface DimensionResult {
   };
 }
 
+export interface PriorityActionItem {
+  title: string;
+  description: string;
+}
+
+export interface PriorityActionPlan {
+  critical_fixes: PriorityActionItem[];
+  medium_priority: PriorityActionItem[];
+  nice_to_have: PriorityActionItem[];
+}
+
 export interface VurdictReport {
   id: string;
   portfolioUrl: string;
@@ -40,6 +51,7 @@ export interface VurdictReport {
     stat: string;
     dimensionSlug: string;
   };
+  priorityActionPlan?: PriorityActionPlan;
   dimensions: {
     structure_flow: DimensionResult;
     visual_hierarchy: DimensionResult;

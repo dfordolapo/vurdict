@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAnalysis } from '../../hooks/use-analysis';
 import { DIMENSIONS } from '../../lib/constants';
-import { getScoreColor, getScoreStatus } from '../../lib/utils';
+import { getScoreColor, getScoreStatus, getScoreBand } from '../../lib/utils';
 import { MOCK_REPORT } from '../../lib/mock-data';
 import { 
   ArrowLeft, 
@@ -23,7 +23,8 @@ import {
   Search, 
   MessageSquare, 
   Code,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ClipboardList
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -44,6 +45,7 @@ export default function ResultsPage() {
 
   const scoreTheme = getScoreColor(report.overallScore);
   const statusLabel = getScoreStatus(report.overallScore);
+  const scoreBand = getScoreBand(report.overallScore);
 
   // Map icon component dynamically
   const getDimensionIcon = (slug: string) => {
@@ -74,15 +76,13 @@ export default function ResultsPage() {
               onClick={handleNewAudit}
               className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white transition-colors group"
             >
-              <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(0,0,0,0.2)]">
-                <ArrowLeft className="h-4 w-4 transition-all duration-200 group-hover:-translate-x-1" />
-              </div>
+              <ArrowLeft className="h-5 w-5 transition-all duration-200 group-hover:-translate-x-1" />
               New Audit Page
             </button>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
               Portfolio Audit Results
-              <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs text-emerald-400 font-bold border border-emerald-500/20">
-                High readiness
+              <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-bold border", scoreTheme.bg, scoreTheme.text, scoreTheme.border)}>
+                {scoreBand.label}
               </span>
             </h1>
           </div>
@@ -90,15 +90,11 @@ export default function ResultsPage() {
           {/* Action buttons */}
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <button className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-xl border border-navy-800 bg-navy-900/40 px-4 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-navy-800/60 hover:border-navy-700 transition-all group">
-              <div className="rounded-md p-1 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(99,102,241,0.15)]">
-                <Download className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
-              </div>
+              <Download className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110" />
               Download Report
             </button>
             <button className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 rounded-xl border border-navy-800 bg-navy-900/40 px-4 py-2.5 text-xs font-bold text-slate-300 hover:text-white hover:bg-navy-800/60 hover:border-navy-700 transition-all group">
-              <div className="rounded-md p-1 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(99,102,241,0.15)]">
-                <Share2 className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
-              </div>
+              <Share2 className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110" />
               Share Report
             </button>
           </div>
@@ -122,14 +118,15 @@ export default function ResultsPage() {
             <div className="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 h-16 w-16 bg-gradient-to-br from-brand-indigo/10 to-transparent blur-lg" />
               <div className="flex items-center gap-2 text-xs font-bold text-brand-indigo uppercase tracking-wider group">
-                <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-brand-indigo/10 group-hover:shadow-[0_0_10px_rgba(99,102,241,0.2)]">
-                  <Sparkles className="h-4 w-4 transition-all duration-200 group-hover:scale-125 group-hover:rotate-12" />
-                </div>
+              <Sparkles className="h-5 w-5 transition-all duration-200 group-hover:scale-125 group-hover:rotate-12" />
                 Vurdict Review
               </div>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-semibold">
                 {report.summary}
               </p>
+              <div className={cn("rounded-xl px-3 py-2 text-[10px] font-bold border", scoreTheme.bg, scoreTheme.text, scoreTheme.border)}>
+                {scoreBand.description}
+              </div>
             </div>
           </div>
 
@@ -185,9 +182,7 @@ export default function ResultsPage() {
               {/* Strengths */}
               <div className="glass-panel rounded-2xl p-5 space-y-3 border-emerald-500/20">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider group">
-                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-emerald-500/10 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.15)]">
-                    <CheckCircle2 className="h-4 w-4 transition-all duration-200 group-hover:scale-110" />
-                  </div>
+              <CheckCircle2 className="h-5 w-5 transition-all duration-200 group-hover:scale-110" />
                   Key Strengths
                 </div>
                 <ul className="space-y-2 text-xs text-slate-300 font-semibold leading-relaxed">
@@ -203,9 +198,7 @@ export default function ResultsPage() {
               {/* Areas to Improve */}
               <div className="glass-panel rounded-2xl p-5 space-y-3 border-amber-500/20">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider group">
-                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-amber-500/10 group-hover:shadow-[0_0_8px_rgba(251,191,36,0.15)]">
-                    <AlertTriangle className="h-4 w-4 transition-all duration-200 group-hover:scale-110" />
-                  </div>
+              <AlertTriangle className="h-5 w-5 transition-all duration-200 group-hover:scale-110" />
                   Areas to Improve
                 </div>
                 <ul className="space-y-2 text-xs text-slate-300 font-semibold leading-relaxed">
@@ -241,9 +234,7 @@ export default function ResultsPage() {
                       className="group flex items-center justify-between p-3 rounded-xl border border-navy-800 bg-navy-900/10 hover:bg-navy-900/40 hover:border-brand-indigo/30 transition-all duration-200"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-lg bg-navy-900 border border-navy-850 flex items-center justify-center group-hover:border-brand-indigo/30 transition-colors">
-                          <Icon className="h-4.5 w-4.5 text-brand-indigo" />
-                        </div>
+                        <Icon className="h-6 w-6 text-brand-indigo group-hover:scale-110 transition-all duration-200" />
                         <div>
                           <div className="text-xs font-bold text-white">{dim.label}</div>
                           <div className="text-[10px] text-slate-500 font-semibold uppercase">{result.status}</div>
@@ -275,9 +266,7 @@ export default function ResultsPage() {
               <div className="absolute -top-10 -right-10 h-24 w-24 bg-brand-violet/10 rounded-full blur-xl" />
               
               <div className="flex items-center gap-2 text-xs font-bold text-brand-violet uppercase tracking-wider group">
-                <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-amber-500/10 group-hover:shadow-[0_0_8px_rgba(251,191,36,0.15)]">
-                  <Flame className="h-4 w-4 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-400" />
-                </div>
+              <Flame className="h-5 w-5 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-400" />
                 Fix This First
               </div>
 
@@ -297,11 +286,75 @@ export default function ResultsPage() {
                 className="w-full rounded-xl bg-navy-900 hover:bg-navy-850 px-4 py-2.5 text-xs font-bold text-white border border-navy-800/80 flex items-center justify-center gap-1.5 transition-colors group"
               >
                 See how to improve this
-                <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-violet/20">
-                  <ArrowRight className="h-3.5 w-3.5 text-brand-violet transition-all duration-200 group-hover:translate-x-1" />
-                </div>
+                <ArrowRight className="h-5 w-5 text-brand-violet transition-all duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
+
+            {/* Priority Action Plan */}
+            {report.priorityActionPlan && (
+              <div className="glass-panel rounded-2xl p-6 space-y-5">
+                <div className="flex items-center gap-2">
+                  <ClipboardList className="h-5 w-5 text-brand-indigo" />
+                  <div>
+                    <h3 className="text-sm font-bold text-white">Priority Action Plan</h3>
+                    <p className="text-[10px] text-slate-500 font-semibold">Ranked by impact — start here to improve.</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {/* Critical Fixes */}
+                  <div className="rounded-xl bg-rose-500/5 border border-rose-500/20 p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-wider">
+                      <span className="h-5 w-5 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-[9px] font-bold text-rose-400">1</span>
+                      Critical Fixes
+                    </div>
+                    <p className="text-[9px] text-rose-400/60 font-semibold">Highest impact. Most likely to affect outcomes.</p>
+                    <div className="space-y-3">
+                      {report.priorityActionPlan.critical_fixes.slice(0, 3).map((item, i) => (
+                        <div key={i} className="space-y-0.5">
+                          <h5 className="text-xs font-bold text-white">{item.title}</h5>
+                          <p className="text-[10px] text-slate-400 leading-relaxed font-medium">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Medium Priority */}
+                  <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider">
+                      <span className="h-5 w-5 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-[9px] font-bold text-amber-400">2</span>
+                      Medium Priority
+                    </div>
+                    <p className="text-[9px] text-amber-400/60 font-semibold">Valuable enhancements that strengthen your case study.</p>
+                    <div className="space-y-3">
+                      {report.priorityActionPlan.medium_priority.slice(0, 3).map((item, i) => (
+                        <div key={i} className="space-y-0.5">
+                          <h5 className="text-xs font-bold text-white">{item.title}</h5>
+                          <p className="text-[10px] text-slate-400 leading-relaxed font-medium">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Nice-to-Have */}
+                  <div className="rounded-xl bg-slate-500/5 border border-slate-500/20 p-4 space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                      <span className="h-5 w-5 rounded-full bg-slate-500/20 border border-slate-500/30 flex items-center justify-center text-[9px] font-bold text-slate-400">3</span>
+                      Nice-to-Have
+                    </div>
+                    <p className="text-[9px] text-slate-400/60 font-semibold">Optional refinements for further polish.</p>
+                    <div className="space-y-3">
+                      {report.priorityActionPlan.nice_to_have.slice(0, 3).map((item, i) => (
+                        <div key={i} className="space-y-0.5">
+                          <h5 className="text-xs font-bold text-white">{item.title}</h5>
+                          <p className="text-[10px] text-slate-400 leading-relaxed font-medium">{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
           </div>
 

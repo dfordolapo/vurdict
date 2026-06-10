@@ -106,6 +106,52 @@
     "summary": {
       "type": "string",
       "description": "A high-level executive summary of the case study evaluation, explaining key strengths and the primary bottlenecks."
+    },
+    "priority_action_plan": {
+      "type": "object",
+      "description": "Prioritized action recommendations derived from the evaluation findings, ranked by impact.",
+      "required": ["critical_fixes", "medium_priority", "nice_to_have"],
+      "properties": {
+        "critical_fixes": {
+          "type": "array",
+          "description": "Highest-impact improvements most likely to affect outcomes. Maximum 3 items.",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["title", "description"],
+            "properties": {
+              "title": { "type": "string", "description": "Actionable title for the improvement." },
+              "description": { "type": "string", "description": "Why this matters and how to address it." }
+            }
+          }
+        },
+        "medium_priority": {
+          "type": "array",
+          "description": "Valuable enhancements that strengthen the case study. Maximum 3 items.",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["title", "description"],
+            "properties": {
+              "title": { "type": "string", "description": "Actionable title for the improvement." },
+              "description": { "type": "string", "description": "Why this matters and how to address it." }
+            }
+          }
+        },
+        "nice_to_have": {
+          "type": "array",
+          "description": "Optional refinements for further polish. Maximum 3 items.",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["title", "description"],
+            "properties": {
+              "title": { "type": "string", "description": "Actionable title for the improvement." },
+              "description": { "type": "string", "description": "Why this matters and how to address it." }
+            }
+          }
+        }
+      }
     }
   }
 }

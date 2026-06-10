@@ -93,9 +93,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
             href="/results"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white transition-colors group"
           >
-            <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(0,0,0,0.2)]">
-              <ArrowLeft className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:-translate-x-1" />
-            </div>
+            <ArrowLeft className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:-translate-x-1" />
             Back to Report Card
           </Link>
           <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-2 flex items-center gap-2">
@@ -150,9 +148,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
             {/* Improve Card */}
             <div className="glass-panel rounded-2xl p-5 border-brand-violet/20 bg-gradient-to-br from-navy-900/30 to-navy-900/10 space-y-4">
               <div className="flex items-center gap-2 text-xs font-bold text-brand-violet uppercase tracking-wider group">
-                <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-amber-500/10 group-hover:shadow-[0_0_8px_rgba(251,191,36,0.15)]">
-                  <Award className="h-4 w-4 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-400" />
-                </div>
+              <Award className="h-5 w-5 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-400" />
                 Want to improve?
               </div>
               <p className="text-xs text-slate-400 leading-relaxed font-semibold">
@@ -163,9 +159,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
                 className="w-full rounded-xl bg-navy-900 hover:bg-navy-850 px-4 py-2.5 text-xs font-bold text-white border border-navy-800/80 flex items-center justify-center gap-1.5 transition-colors group"
               >
                 Re-analyze Portfolio
-                <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-violet/20">
-                  <ArrowRight className="h-3.5 w-3.5 text-brand-violet transition-all duration-200 group-hover:translate-x-1" />
-                </div>
+                <ArrowRight className="h-5 w-5 text-brand-violet transition-all duration-200 group-hover:translate-x-1" />
               </button>
             </div>
 
@@ -215,9 +209,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
               {/* What's Working */}
               <div className="glass-panel rounded-2xl p-5 space-y-3 border-emerald-500/10 bg-navy-900/10">
                 <h3 className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider group">
-                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-emerald-500/10 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.15)]">
-                    <CheckCircle className="h-4 w-4 shrink-0 transition-all duration-200 group-hover:scale-110" />
-                  </div>
+                  <CheckCircle className="h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110" />
                   What's Working
                 </h3>
                 <ul className="space-y-3 text-xs text-slate-300 leading-relaxed font-semibold">
@@ -233,9 +225,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
               {/* Where to Improve */}
               <div className="glass-panel rounded-2xl p-5 space-y-3 border-amber-500/10 bg-navy-900/10">
                 <h3 className="flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider group">
-                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-amber-500/10 group-hover:shadow-[0_0_8px_rgba(251,191,36,0.15)]">
-                    <AlertTriangle className="h-4 w-4 shrink-0 transition-all duration-200 group-hover:scale-110" />
-                  </div>
+                  <AlertTriangle className="h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110" />
                   Where to Improve
                 </h3>
                 <ul className="space-y-3 text-xs text-slate-300 leading-relaxed font-semibold">
@@ -251,9 +241,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
               {/* Evidence Found */}
               <div className="glass-panel rounded-2xl p-5 space-y-3 border-navy-800 bg-navy-900/10">
                 <h3 className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider group">
-                  <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(0,0,0,0.2)]">
-                    <Search className="h-4 w-4 shrink-0 transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
-                  </div>
+                  <Search className="h-5 w-5 shrink-0 transition-all duration-200 group-hover:scale-110" />
                   Evidence Found
                 </h3>
                 <div className="space-y-3">
@@ -282,9 +270,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
             {/* Recommendation Detail card */}
             <div className="glass-panel rounded-2xl p-6 md:p-8 border-brand-indigo/30 bg-gradient-to-r from-navy-900/40 to-navy-900/20 space-y-6">
               <div className="flex items-center gap-2 text-xs font-bold text-brand-indigo uppercase tracking-wider group">
-                <div className="rounded-xl p-1.5 transition-all duration-200 group-hover:bg-amber-500/10 group-hover:shadow-[0_0_10px_rgba(251,191,36,0.15)]">
-                  <Lightbulb className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-amber-400" />
-                </div>
+              <Lightbulb className="h-6 w-6 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-amber-400" />
                 Actionable Recommendation
               </div>
 
@@ -315,9 +301,7 @@ export default function DimensionPage({ params }: DimensionPageProps) {
                   className="rounded-xl bg-navy-900 hover:bg-navy-850 px-5 py-2.5 text-xs font-bold text-white border border-navy-800/80 flex items-center gap-1.5 transition-all group"
                 >
                   See Real-World Examples
-                  <div className="rounded-md p-0.5 transition-all duration-200 group-hover:bg-brand-indigo/20">
-                    <ArrowRight className="h-3.5 w-3.5 text-brand-indigo transition-all duration-200 group-hover:translate-x-1" />
-                  </div>
+                  <ArrowRight className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:translate-x-1" />
                 </a>
               </div>
             </div>

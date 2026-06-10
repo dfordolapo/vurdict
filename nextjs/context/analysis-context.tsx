@@ -54,6 +54,7 @@ function mapServerReport(data: any): VurdictReport {
       stat: base.fixThisFirst.stat,
       dimensionSlug: base.fixThisFirst.dimensionSlug,
     },
+    priorityActionPlan: data.priority_action_plan || base.priorityActionPlan,
   };
 }
 
