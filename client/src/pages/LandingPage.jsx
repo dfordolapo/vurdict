@@ -195,7 +195,9 @@ function HeroSection() {
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-            Paste your case study link, select your goal, and get structured feedback on what's helping and what to fix first.
+            Paste your case study link<span className="md:hidden"><br /></span><span className="hidden md:inline">, select your goal,<br /></span>
+            <span className="md:hidden">select your goal, and get feedback<br /></span>
+            <span className="hidden md:inline">and get feedback </span>on what's helping and what to fix first.
           </p>
 
           {/* Form container */}
@@ -281,7 +283,7 @@ function HeroSection() {
               { icon: Lock, text: 'No signup required' },
               { icon: Zap, text: 'Results in minutes' },
             ].map(({ icon: Icon, text }) => (
-              <div key={text} className="flex items-center gap-2 text-sky-200/60 text-xs font-semibold group">
+              <div key={text} className="flex items-center gap-2 text-sky-200/60 text-[10px] font-normal group">
                 <Icon size={15} className="text-sky-300 transition-all duration-200 group-hover:text-white group-hover:scale-110" />
                 <span className="transition-colors duration-200 group-hover:text-sky-200">{text}</span>
               </div>
@@ -326,7 +328,7 @@ function ProblemSection() {
   ]
 
   return (
-    <section id="why-vurdict" className="py-12 md:py-20 bg-white relative">
+    <section id="why-vurdict" className="py-12 md:py-20 bg-white relative scroll-mt-1">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
@@ -442,7 +444,7 @@ function FrameworkSection() {
   ]
 
   return (
-    <section id="framework" className="py-10 md:py-16 bg-white">
+    <section id="framework" className="py-10 md:py-16 bg-white scroll-mt-1">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
@@ -482,15 +484,13 @@ function ReportCardSection() {
   ]
 
   return (
-    <section id="report-card" className="relative bg-white pt-10">
+    <section id="report-card" className="relative bg-white pt-10 scroll-mt-1">
       {/* Heading area on White background */}
       <div className="text-center mb-10 px-6">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
           The <span className="text-[#3b82f6]">Vurdict</span> Report Card
         </h2>
-          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            Don't settle for "Nice work!" See where you actually stand
-          </p>
+
       </div>
 
       {/* Wave top */}
@@ -610,13 +610,13 @@ function FAQSection() {
   ]
 
   return (
-    <section id="faq" className="py-10 md:py-16 bg-white relative">
+    <section id="faq" className="py-10 md:py-16 bg-white relative scroll-mt-1">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">Everything you need to know about the evaluation.</p>
+
         </div>
 
         <div className="space-y-4 max-w-2xl mx-auto">

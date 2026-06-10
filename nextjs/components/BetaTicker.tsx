@@ -9,15 +9,15 @@ export default function BetaTicker() {
       <div className="flex whitespace-nowrap animate-scroll-ticker">
         <span className="flex items-center gap-2 px-4 py-2 text-[11px] md:text-xs text-brand-indigo font-semibold">
           <Info size={14} className="text-brand-indigo/70 shrink-0" />
-          Beta: For the most accurate results, submit individual UX case studies. Full portfolio website reviews are coming soon.
+          For the most accurate results, submit individual UX case studies. Full portfolio website reviews are coming soon.
         </span>
         <span className="flex items-center gap-2 px-4 py-2 text-[11px] md:text-xs text-brand-indigo font-semibold">
           <Info size={14} className="text-brand-indigo/70 shrink-0" />
-          Beta: For the most accurate results, submit individual UX case studies. Full portfolio website reviews are coming soon.
+          For the most accurate results, submit individual UX case studies. Full portfolio website reviews are coming soon.
         </span>
         <span className="flex items-center gap-2 px-4 py-2 text-[11px] md:text-xs text-brand-indigo font-semibold">
           <Info size={14} className="text-brand-indigo/70 shrink-0" />
-          Beta: For the most accurate results, submit individual UX case studies. Full portfolio website reviews are coming soon.
+          For the most accurate results, submit individual UX case studies. Full portfolio website reviews are coming soon.
         </span>
       </div>
     </div>
