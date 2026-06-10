@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Logo from '../components/Logo';
 import { Heart, Brain, Cloud, Terminal, HeartHandshake, X, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
 import supportIllustration from '../assets/support_illustration.png';
-
-const AMOUNTS = [1000, 2000, 5000];
 
 const DONATION_UNAVAILABLE = 'Support payments are temporarily unavailable. Please try again later.';
 
@@ -28,6 +26,13 @@ export default function SupportPage() {
   const [payError, setPayError] = useState('');
 
   const currencySymbol = CURRENCIES.find(c => c.code === currency)?.symbol || '\u20A6';
+  const AMOUNTS = currency === 'NGN' ? [1000, 2000, 5000] : [10, 20, 50];
+
+  useEffect(() => {
+    setSelectedAmount(AMOUNTS[0]);
+    setUseCustom(false);
+    setCustomAmount('');
+  }, [currency]);
 
   const formatAmount = (val) => {
     return new Intl.NumberFormat('en-US').format(val);
@@ -173,15 +178,13 @@ export default function SupportPage() {
             {[
               { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Brain },
               { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Cloud },
-              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support.", icon: Terminal },
+              { title: "Development", desc: "Your support helps fund new features like Re:Vurdict, a curated Case Study Reference Library, email-delivered reports, expanded role support, smarter evaluation systems, and ongoing platform development.", icon: Terminal },
               { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: HeartHandshake }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div key={idx} className="bg-slate-50/50 border border-slate-100/70 p-5 rounded-2xl space-y-3 flex flex-col items-center text-center group hover:bg-slate-50 hover:border-slate-200 transition-all">
-                  <div className="w-fit mx-auto rounded-xl p-2 bg-blue-50/80 border border-blue-100/60 text-blue-600 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200">
-                    <Icon size={16} className="text-blue-600 transition-all duration-200 group-hover:scale-110" />
-                  </div>
+                  <Icon size={18} className="text-blue-600 transition-all duration-200 group-hover:scale-110" />
                   <div className="space-y-1">
                     <h3 className="text-xs font-bold text-slate-900">{item.title}</h3>
                     <p className="text-xs text-slate-500 font-normal leading-normal">{item.desc}</p>
@@ -390,6 +393,8 @@ export default function SupportPage() {
             <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
             <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
+            <span className="text-slate-200">|</span>
+            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold">Re:Vurdict</Link>
           </div>
         </div>
       </footer>

@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense, lazy } from 'react'
 import LandingPage from './pages/LandingPage.jsx'
 import { AnalysisProvider } from './context/AnalysisContext'
 import PWAInstallPrompt from './components/PWAInstallPrompt.jsx'
+import BetaTicker from './components/BetaTicker'
 
 const AnalyzePage = lazy(() => import('./pages/AnalyzePage.jsx'))
 const AnalyzingPage = lazy(() => import('./pages/AnalyzingPage.jsx'))
@@ -12,6 +13,7 @@ const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage.jsx'))
 const TermsPage = lazy(() => import('./pages/TermsPage.jsx'))
 const SupportPage = lazy(() => import('./pages/SupportPage.jsx'))
+const ReVurdictPage = lazy(() => import('./pages/ReVurdictPage.jsx'))
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -45,12 +47,16 @@ export default function App() {
 
   return (
     <AnalysisProvider>
+      <div className="fixed top-16 left-0 right-0 z-40">
+        <BetaTicker />
+      </div>
       <Suspense fallback={
         <div className="min-h-screen bg-white flex flex-col items-center justify-center">
           <div className="w-8 h-8 rounded-full border-2 border-slate-100 border-t-brand-900 animate-spin"></div>
         </div>
       }>
-        <Routes>
+        <div className="pt-8">
+          <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/analyze" element={<AnalyzePage />} />
           <Route path="/analyzing" element={<AnalyzingPage />} />
@@ -60,7 +66,9 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/support" element={<SupportPage />} />
+          <Route path="/revurdict" element={<ReVurdictPage />} />
         </Routes>
+        </div>
         <PWAInstallPrompt />
       </Suspense>
     </AnalysisProvider>

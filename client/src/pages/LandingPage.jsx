@@ -283,9 +283,7 @@ function HeroSection() {
               { icon: Zap, text: 'Results in minutes' },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2 text-sky-200/60 text-xs font-semibold group">
-                <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-white/10 group-hover:shadow-[0_0_10px_rgba(255,255,255,0.1)]">
-                  <Icon size={13} className="text-sky-300 transition-all duration-200 group-hover:text-white group-hover:scale-110" />
-                </div>
+                <Icon size={15} className="text-sky-300 transition-all duration-200 group-hover:text-white group-hover:scale-110" />
                 <span className="transition-colors duration-200 group-hover:text-sky-200">{text}</span>
               </div>
             ))}
@@ -520,9 +518,7 @@ function FrameworkSection() {
             const Icon = dim.icon;
             return (
               <div key={idx} className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.012)] hover:shadow-md hover:border-blue-100 transition-all flex flex-col text-left group">
-                <div className="w-fit rounded-xl p-2.5 bg-blue-50/50 border border-blue-100/50 transition-all duration-200 group-hover:bg-blue-100 group-hover:border-blue-200 group-hover:shadow-[0_0_16px_rgba(59,130,246,0.15)]">
-                  <Icon size={20} className="text-blue-600 transition-all duration-200 group-hover:text-blue-500 group-hover:scale-110" />
-                </div>
+                <Icon size={22} className="text-blue-600 transition-all duration-200 group-hover:text-blue-500 group-hover:scale-110" />
                 <h3 className="text-slate-950 font-semibold text-base mb-2 mt-3">{dim.title}</h3>
                 <p className="text-slate-500 text-xs leading-relaxed font-normal">{dim.desc}</p>
               </div>
@@ -624,9 +620,7 @@ function ReportCardSection() {
 
             {/* Recommendation Footer Banner inside card */}
             <div className="mt-8 bg-amber-50 border border-amber-100 rounded-2xl p-4 flex gap-3 group hover:bg-amber-100/80 transition-colors">
-              <div className="rounded-lg p-2 bg-amber-100/50 transition-all duration-200 group-hover:bg-amber-200 group-hover:shadow-[0_0_12px_rgba(217,119,6,0.15)]">
-                <Sparkles className="text-amber-600 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-500" size={16} />
-              </div>
+              <Sparkles className="text-amber-600 transition-all duration-200 group-hover:scale-110 group-hover:text-amber-500 shrink-0 mt-0.5" size={18} />
               <div>
                 <h6 className="text-xs font-bold text-amber-900 mb-0.5">Top Recommendation</h6>
                 <p className="text-xs text-amber-800/80 leading-relaxed">
@@ -783,6 +777,8 @@ function Footer() {
           <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
           <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
+          <span className="text-slate-200">|</span>
+          <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold">Re:Vurdict</Link>
         </div>
       </div>
     </footer>

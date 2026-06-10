@@ -30,6 +30,10 @@ export default function Footer() {
           <Link href="/support" className="hover:text-slate-300 transition-colors">
             Support Us
           </Link>
+          <span className="text-navy-700">|</span>
+          <Link href="/revurdict" className="text-brand-indigo hover:text-white transition-colors font-bold">
+            Re:Vurdict
+          </Link>
         </div>
       </div>
     </footer>

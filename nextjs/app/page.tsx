@@ -176,10 +176,8 @@ export default function LandingPage() {
                   className="flex w-full md:w-44 items-center justify-between gap-2 rounded-xl bg-navy-900/50 px-4 py-2.5 text-sm font-semibold text-slate-200 border border-navy-800/40 hover:text-white transition-colors group"
                 >
                   <span className="flex items-center gap-1.5">
-                    <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-navy-800 group-hover:shadow-[0_0_8px_rgba(99,102,241,0.15)]">
-                      {goal === 'get_hired' && <Briefcase className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110" />}
-                      {goal === 'win_clients' && <Users className="h-4 w-4 text-brand-violet transition-all duration-200 group-hover:scale-110" />}
-                    </div>
+                    {goal === 'get_hired' && <Briefcase className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110" />}
+                    {goal === 'win_clients' && <Users className="h-5 w-5 text-brand-violet transition-all duration-200 group-hover:scale-110" />}
                     {GOALS[goal].label}
                   </span>
                   <ChevronDown className={cn("h-4 w-4 text-slate-500 transition-transform duration-200", isGoalDropdownOpen && "rotate-180")} />
@@ -238,21 +236,15 @@ export default function LandingPage() {
           {/* Social Proof Strip */}
           <div className="mt-8 flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-xs font-semibold text-slate-500">
             <span className="flex items-center gap-1.5 group cursor-default">
-              <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-emerald-500/10 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.15)]">
-                <CheckCircle className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-emerald-400" />
-              </div>
+              <CheckCircle className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-emerald-400" />
               Free portfolio audit
             </span>
             <span className="flex items-center gap-1.5 group cursor-default">
-              <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-emerald-500/10 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.15)]">
-                <CheckCircle className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-emerald-400" />
-              </div>
+              <CheckCircle className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-emerald-400" />
               Goal-aware feedback
             </span>
             <span className="flex items-center gap-1.5 group cursor-default">
-              <div className="rounded-lg p-1 transition-all duration-200 group-hover:bg-emerald-500/10 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.15)]">
-                <CheckCircle className="h-4 w-4 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-emerald-400" />
-              </div>
+              <CheckCircle className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-emerald-400" />
               Standard results in minutes
             </span>
           </div>
@@ -297,9 +289,7 @@ export default function LandingPage() {
             <div className="rounded-2xl border border-brand-indigo/35 bg-navy-900/80 p-6 md:p-8 shadow-xl shadow-brand-indigo/5 relative overflow-hidden">
               <div className="absolute top-0 right-0 h-24 w-24 bg-gradient-to-br from-brand-indigo/10 to-brand-violet/10 blur-xl" />
               <h3 className="text-lg font-bold text-brand-indigo border-b border-navy-800 pb-4 flex items-center gap-2 group">
-                <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-brand-indigo/10 group-hover:shadow-[0_0_10px_rgba(99,102,241,0.2)]">
-                  <Sparkles className="h-4 w-4 transition-all duration-200 group-hover:scale-125 group-hover:rotate-12" />
-                </div>
+                <Sparkles className="h-5 w-5 transition-all duration-200 group-hover:scale-125 group-hover:rotate-12" />
                 Vurdict's Actionable Feedback
               </h3>
               <ul className="mt-6 space-y-5">
@@ -408,9 +398,7 @@ export default function LandingPage() {
               },
             ].map((dim, idx) => (
               <div key={idx} className="glass-panel-interactive rounded-2xl p-6 flex gap-4 group">
-                <div className="h-10 w-10 shrink-0 rounded-xl bg-brand-indigo/10 border border-brand-indigo/20 flex items-center justify-center transition-all duration-200 group-hover:bg-brand-indigo/30 group-hover:border-brand-indigo/60 group-hover:scale-110 group-hover:shadow-[0_0_16px_rgba(99,102,241,0.2)]">
-                  <dim.icon className="h-5 w-5 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:text-white" />
-                </div>
+                <dim.icon className="h-6 w-6 text-brand-indigo shrink-0 mt-0.5 transition-all duration-200 group-hover:scale-110" />
                 <div>
                   <h3 className="text-base font-bold text-white">{dim.title}</h3>
                   <p className="mt-2 text-xs text-slate-400 leading-relaxed">{dim.desc}</p>
@@ -528,9 +516,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center justify-center gap-2 group">
-              <div className="rounded-xl p-1.5 transition-all duration-200 group-hover:bg-brand-indigo/10 group-hover:shadow-[0_0_14px_rgba(99,102,241,0.2)]">
-                <HelpCircle className="h-6 w-6 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
-              </div>
+              <HelpCircle className="h-7 w-7 text-brand-indigo transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
               Frequently Asked Questions
             </h2>
             <p className="mt-4 text-base sm:text-lg text-slate-400">

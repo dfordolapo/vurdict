@@ -134,6 +134,30 @@ body {
   position: relative;
 }
 
+/* Fade in up */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Scroll ticker */
+@keyframes scroll-ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+.animate-scroll-ticker {
+  animation: scroll-ticker 45s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .animate-scroll-ticker {
+    animation-duration: 10s;
+  }
+}
+
 .wave-bottom::after {
   content: '';
   position: absolute;

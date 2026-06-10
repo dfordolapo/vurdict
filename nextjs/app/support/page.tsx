@@ -32,15 +32,13 @@ export default function SupportPage() {
             {[
               { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Brain },
               { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Cloud },
-              { title: "Development", desc: "New features like Co-Pilot, email delivery, and expanded role support.", icon: Terminal },
+              { title: "Development", desc: "Your support helps fund new features like Re:Vurdict, a curated Case Study Reference Library, email-delivered reports, expanded role support, smarter evaluation systems, and ongoing platform development.", icon: Terminal },
               { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: HeartHandshake }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div key={idx} className="bg-navy-900/40 border border-navy-850 p-5 rounded-2xl space-y-3 flex flex-col items-center text-center group hover:border-brand-indigo/30 hover:bg-navy-900/60 transition-all duration-200">
-                  <div className="w-fit mx-auto rounded-xl p-2 bg-navy-950 border border-navy-800 text-brand-indigo transition-all duration-200 group-hover:border-brand-indigo/30">
-                    <Icon size={16} className="text-brand-indigo transition-all duration-200 group-hover:scale-110" />
-                  </div>
+                  <Icon size={18} className="text-brand-indigo transition-all duration-200 group-hover:scale-110" />
                   <div className="space-y-1">
                     <h3 className="text-xs font-bold text-white">{item.title}</h3>
                     <p className="text-xs text-slate-400 font-medium leading-normal">{item.desc}</p>
