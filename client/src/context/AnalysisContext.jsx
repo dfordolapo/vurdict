@@ -205,7 +205,28 @@ export function AnalysisProvider({ children }) {
     try {
       const saved = sessionStorage.getItem('vurdict_analysis');
       if (saved) {
-        setState(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        // Backfill priority_action_plan for reports cached before the feature was added
+        if (parsed.report && !parsed.report.priority_action_plan) {
+          parsed.report.priority_action_plan = {
+            critical_fixes: [
+              { title: 'Add Quantifiable Business Metrics', description: 'Hiring managers need to see measurable outcomes. Add specific metrics to your case studies.' },
+              { title: 'Strengthen Problem Validation', description: 'Show evidence that the problem you solved was validated through research.' },
+              { title: 'Improve Narrative Structure', description: 'Restructure case studies to follow a clear arc: Context → Problem → Process → Outcome.' }
+            ],
+            medium_priority: [
+              { title: 'Enhance Visual Consistency', description: 'Standardize typography, spacing, and color usage across all case studies.' },
+              { title: 'Add Process Artifacts', description: 'Include sketches, wireframes, and iteration documentation.' },
+              { title: 'Incorporate Social Proof', description: 'Add testimonials, client logos, or recognition badges.' }
+            ],
+            nice_to_have: [
+              { title: 'Add Interactive Prototypes', description: 'Embed clickable prototypes for evaluators.' },
+              { title: 'Include a Personal Touch', description: 'Add a brief "Why I Design" section.' },
+              { title: 'Optimize for Mobile Viewing', description: 'Ensure case studies are readable on mobile devices.' }
+            ]
+          };
+        }
+        setState(parsed);
       }
     } catch (e) {
       console.error('Failed to load session state', e);
