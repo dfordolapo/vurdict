@@ -55,10 +55,26 @@ export default function ResultsPage() {
       { label: 'Positioning Clarity', key: 'niche_positioning' },
     ];
 
+    const getScoreColor = (score) => {
+      if (score >= 86) return '#8b5cf6';
+      if (score >= 71) return '#059669';
+      if (score >= 51) return '#2563eb';
+      if (score >= 31) return '#d97706';
+      return '#e11d48';
+    };
+    const getBandDesc = (score) => {
+      if (score >= 86) return 'Represents outstanding quality and differentiation.';
+      if (score >= 71) return 'Demonstrates strong execution and hiring readiness.';
+      if (score >= 51) return 'Shows a solid foundation with room for improvement.';
+      if (score >= 31) return 'Some fundamentals are present, but important gaps remain.';
+      return 'Major weaknesses were identified. Substantial improvements are needed.';
+    };
+    const bandDesc = getBandDesc(report.overall_score);
+
     const dimRows = dims.map((d) => {
       const cat = report.categories[d.key];
       const score = cat?.score ?? 0;
-      const color = score >= 80 ? '#059669' : score >= 70 ? '#2563eb' : score >= 55 ? '#d97706' : '#e11d48';
+      const color = getScoreColor(score);
       return `
         <tr>
           <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#1e293b;font-weight:600;">${d.label}</td>
@@ -70,7 +86,7 @@ export default function ResultsPage() {
     }).join('');
 
     const goalLabel = state.goal === 'win_clients' ? 'Win Freelance Clients' : 'Get Hired';
-    const scoreColor = report.overall_score >= 80 ? '#059669' : report.overall_score >= 70 ? '#2563eb' : report.overall_score >= 55 ? '#d97706' : '#e11d48';
+    const scoreColor = getScoreColor(report.overall_score);
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -120,6 +136,7 @@ export default function ResultsPage() {
           <span style="font-size:52px;font-weight:800;color:${scoreColor};line-height:1;">${report.overall_score}</span>
           <span style="font-size:13px;color:#94a3b8;font-weight:600;margin-top:2px;">out of 100</span>
           <span style="margin-top:8px;display:inline-block;padding:4px 16px;border-radius:999px;font-size:12px;font-weight:700;color:${scoreColor};background:${scoreColor}10;border:1px solid ${scoreColor}30;">${statusLabel}</span>
+          <span style="margin-top:4px;font-size:11px;color:#94a3b8;font-weight:500;">${bandDesc}</span>
         </div>
       </div>
 
@@ -147,6 +164,34 @@ export default function ResultsPage() {
         <p style="margin:0;font-size:13px;color:#78716c;line-height:1.6;">${report.fix_this_first?.description || ''}</p>
         ${report.fix_this_first?.priority_score ? `<span style="display:inline-block;margin-top:10px;font-size:11px;font-weight:600;color:#92400e;">Priority Score: ${report.fix_this_first.priority_score}/10</span>` : ''}
       </div>
+
+      <!-- Priority Action Plan -->
+      ${report.priority_action_plan ? `
+      <div style="margin-top:28px;">
+        <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Priority Action Plan</h2>
+        <p style="font-size:12px;color:#94a3b8;margin:0 0 16px;">Ranked by impact — start here to improve your portfolio.</p>
+        ${['critical_fixes', 'medium_priority', 'nice_to_have'].map((tier, ti) => {
+          const tierLabels = ['Critical Fixes', 'Medium Priority', 'Nice-to-Have'];
+          const tierColors = ['#e11d48', '#d97706', '#64748b'];
+          const items = report.priority_action_plan[tier] || [];
+          if (items.length === 0) return '';
+          return `
+            <div style="margin-bottom:12px;padding:16px 20px;border-radius:10px;border:1px solid ${tierColors[ti]}30;background:${tierColors[ti]}08;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;background:${tierColors[ti]}15;border:1px solid ${tierColors[ti]}30;font-size:10px;font-weight:700;color:${tierColors[ti]};">${ti + 1}</span>
+                <span style="font-size:11px;font-weight:700;color:${tierColors[ti]};text-transform:uppercase;letter-spacing:0.5px;">${tierLabels[ti]}</span>
+              </div>
+              ${items.map(item => `
+                <div style="margin-bottom:6px;">
+                  <div style="font-size:12px;font-weight:600;color:#1e293b;">${item.title}</div>
+                  <div style="font-size:11px;color:#64748b;line-height:1.5;">${item.description}</div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }).join('')}
+      </div>
+      ` : ''}
 
       <!-- Footer -->
       <div style="margin-top:32px;padding-top:20px;border-top:1px solid #f1f5f9;text-align:center;font-size:11px;color:#94a3b8;">

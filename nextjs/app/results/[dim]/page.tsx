@@ -183,6 +183,9 @@ export default function DimensionPage({ params }: DimensionPageProps) {
                       {dimResult.score}
                     </span>
                     <span className="text-[10px] text-slate-500 font-mono tracking-wider uppercase">Your Score</span>
+                    <span className="text-[9px] text-slate-500 font-medium block mt-0.5 max-w-[120px] leading-tight">
+                      {getScoreStatus(dimResult.score) === 'Exceptional' ? 'Outstanding quality.' : getScoreStatus(dimResult.score) === 'Strong' ? 'Strong execution.' : getScoreStatus(dimResult.score) === 'Competitive' ? 'Solid foundation.' : getScoreStatus(dimResult.score) === 'Early Foundation' ? 'Gaps remain.' : 'Major gaps.'}
+                    </span>
                   </div>
                   <div className="h-8 w-px bg-navy-800" />
                   <div className="text-center">

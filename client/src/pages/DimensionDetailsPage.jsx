@@ -458,6 +458,9 @@ export default function DimensionDetailsPage() {
                   <span className={`inline-block text-[8px] font-normal uppercase tracking-wide px-2 py-0.5 rounded-full border mt-1.5 ${badge.style}`}>
                     {badge.label}
                   </span>
+                  <span className="text-[9px] text-slate-400 font-medium block mt-1 max-w-[140px] leading-tight">
+                    {badge.label === 'Exceptional' ? 'Outstanding quality and differentiation.' : badge.label === 'Strong' ? 'Strong execution and hiring readiness.' : badge.label === 'Competitive' ? 'Solid foundation with room to grow.' : badge.label === 'Early Foundation' ? 'Fundamentals present, gaps remain.' : 'Major improvements needed.'}
+                  </span>
                 </div>
                 <div>
                   <span className="text-[9px] font-normal uppercase tracking-wide text-slate-455 block">Industry Benchmark</span>
