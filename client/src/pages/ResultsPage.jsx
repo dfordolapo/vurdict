@@ -475,14 +475,15 @@ export default function ResultsPage() {
                 </div>
               </div>
 
-              <div className={`mt-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${overallColors.border} ${overallColors.bg}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${overallColors.text.replace('text-', 'bg-')}`} />
-                <span className={`text-xs font-semibold ${overallColors.text}`}>{statusLabel}</span>
+              <div className="mt-5 text-center space-y-1">
+                <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${overallColors.border} ${overallColors.bg}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${overallColors.text.replace('text-', 'bg-')}`} />
+                  <span className={`text-xs font-semibold ${overallColors.text}`}>{statusLabel}</span>
+                </div>
+                <p className="text-xs text-slate-500 font-medium leading-normal max-w-xs mx-auto">
+                  {scoreBand.description}
+                </p>
               </div>
-
-              <p className="text-[10px] text-slate-500 font-medium max-w-xs mt-3 leading-normal">
-                {scoreBand.description}
-              </p>
 
               {/* Hiring readiness progress handle bar */}
               <div className="w-full mt-6 border-t border-slate-100 pt-5 space-y-2 text-left">

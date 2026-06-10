@@ -161,6 +161,9 @@ export default function ResultsPage() {
                 <span className={cn("text-lg font-extrabold", scoreTheme.text)}>
                   {statusLabel}
                 </span>
+                <span className="text-[11px] text-slate-400 font-medium max-w-[220px] leading-tight">
+                  {scoreBand.description}
+                </span>
               </div>
 
               {/* Readiness bar */}
