@@ -381,11 +381,10 @@ export default function SupportPage() {
               &copy; 2026 Vurdict. The Reviewer's Perspective.
             </p>
           </div>
-          <div className="flex gap-6 text-xs font-normal text-slate-500">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-xs font-normal text-slate-500 justify-items-center md:flex md:gap-6">
             <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
             <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
-            <span className="text-slate-200">|</span>
             <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold">Re:Vurdict</Link>
           </div>
         </div>

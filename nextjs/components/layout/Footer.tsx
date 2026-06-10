@@ -20,7 +20,7 @@ export default function Footer() {
         </div>
 
         {/* Right: Links */}
-        <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-6 text-xs text-slate-500 font-semibold">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-1 items-center text-xs text-slate-500 font-semibold justify-items-center md:flex md:gap-6">
           <Link href="/privacy" className="hover:text-slate-300 transition-colors whitespace-nowrap">
             Privacy Policy
           </Link>
