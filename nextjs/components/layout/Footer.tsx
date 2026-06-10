@@ -20,18 +20,17 @@ export default function Footer() {
         </div>
 
         {/* Right: Links */}
-        <div className="flex gap-6 text-xs text-slate-500 font-semibold">
-          <Link href="/privacy" className="hover:text-slate-300 transition-colors">
+        <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-6 text-xs text-slate-500 font-semibold">
+          <Link href="/privacy" className="hover:text-slate-300 transition-colors whitespace-nowrap">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="hover:text-slate-300 transition-colors">
+          <Link href="/terms" className="hover:text-slate-300 transition-colors whitespace-nowrap">
             Terms of Use
           </Link>
-          <Link href="/support" className="hover:text-slate-300 transition-colors">
+          <Link href="/support" className="hover:text-slate-300 transition-colors whitespace-nowrap">
             Support Us
           </Link>
-          <span className="text-navy-700">|</span>
-          <Link href="/revurdict" className="text-brand-indigo hover:text-white transition-colors font-bold">
+          <Link href="/revurdict" className="text-brand-indigo hover:text-white transition-colors font-bold whitespace-nowrap">
             Re:Vurdict
           </Link>
         </div>

@@ -69,10 +69,11 @@ export default function OfflinePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-100 py-6 px-6 text-center text-xs text-slate-400 bg-white">
-        <div className="flex items-center justify-center gap-6 mb-3 font-normal text-slate-500">
-          <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
-          <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
-          <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-1.5 md:gap-6 mb-3 font-normal text-slate-500">
+          <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
+          <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
+          <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
         </div>
         <p>© {new Date().getFullYear()} Vurdict. Offline Mode.</p>
       </footer>

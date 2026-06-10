@@ -68,7 +68,6 @@ function Navbar() {
 
   const navLinks = [
     { label: 'Why Vurdict', href: '#why-vurdict' },
-    { label: 'How It Works', href: '#how-it-works' },
     { label: 'Framework', href: '#framework' },
     { label: 'Report Card', href: '#report-card' },
     { label: 'FAQ', href: '#faq' },
@@ -407,65 +406,6 @@ function ProblemSection() {
   )
 }
 
-/* ─── HOW IT WORKS (Steps) ─── */
-function HowItWorksSection() {
-  const steps = [
-    {
-      num: '1',
-      title: 'Paste URL',
-      desc: 'Submit your live case study link (Notion, Framer, Webflow, or your own site).',
-    },
-    {
-      num: '2',
-      title: 'Choose Goal',
-      desc: "Tell us if you're job hunting or trying to win freelance clients.",
-    },
-    {
-      num: '3',
-      title: 'Receive Review',
-      desc: 'Get a scored breakdown of what to fix, in priority order.',
-    },
-  ]
-
-  return (
-    <section id="how-it-works" className="py-10 md:py-16 bg-white border-y border-slate-100/80">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-10">
-           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
-            Case Study Feedback in <span className="text-[#3b82f6]">Minutes</span>
-          </h2>
-          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            Identify the changes most likely to improve your chances of getting noticed
-          </p>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-8 md:gap-4 max-w-4xl mx-auto">
-          {steps.map((step, idx) => (
-            <div key={idx} className="flex flex-col md:flex-row items-center md:items-start flex-1 justify-center w-full">
-              <div className="flex-1 flex flex-col items-center text-center max-w-[260px] md:max-w-none w-full">
-                <div className="w-8 h-8 rounded-xl bg-blue-50/80 border border-blue-100/60 text-blue-600 flex items-center justify-center font-bold text-xs mb-4">
-                  {step.num}
-                </div>
-                <h3 className="text-slate-900 font-semibold text-sm mb-2">{step.title}</h3>
-                <p className="text-slate-500 text-xs leading-relaxed font-normal">{step.desc}</p>
-              </div>
-              
-              {/* Arrow spacer for desktop */}
-              {idx < steps.length - 1 && (
-                <div className="hidden md:flex items-center justify-center pt-8 text-slate-400 px-4">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
-                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 /* ─── FRAMEWORK SECTION ─── */
 function FrameworkSection() {
   const dimensions = [
@@ -773,12 +713,11 @@ function Footer() {
             © 2026 Vurdict. The Reviewer's Perspective.
           </p>
         </div>
-        <div className="flex flex-wrap gap-6 text-xs font-normal text-slate-500">
-          <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
-          <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
-          <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
-          <span className="text-slate-200">|</span>
-          <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold">Re:Vurdict</Link>
+        <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-6 text-xs font-normal text-slate-500">
+          <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
+          <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
+          <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
+          <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
         </div>
       </div>
     </footer>
@@ -805,7 +744,6 @@ export default function LandingPage() {
       <main>
         <HeroSection />
         <ProblemSection />
-        <HowItWorksSection />
         <FrameworkSection />
         <ReportCardSection />
         <FAQSection />

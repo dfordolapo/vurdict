@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { ArrowRight, Send, MessageSquare, Sparkles, Lightbulb, Target, Zap, Bot } from 'lucide-react'
+import { ArrowRight, Send, MessageSquare, Bot, MessageCircle, Compass, Radio, Rocket } from 'lucide-react'
 import Logo from '../components/Logo'
 
 const EXAMPLE_MESSAGES = [
@@ -69,21 +69,18 @@ export default function ReVurdictPage() {
               <div className="max-w-xl">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-200">
-                      <MessageSquare size={18} className="text-white" />
-                    </div>
-                    <span className="text-xl font-bold text-slate-900 tracking-tight">
-                      <span className="text-indigo-600">Re:</span>Vurdict
+                <span className="text-base font-bold text-slate-900 tracking-tight">
+                  <span className="text-sky-500">Re:</span>Vurdict
                     </span>
                   </div>
                   <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700">
                     Coming Soon
                   </span>
                 </div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-slate-900 tracking-tight mb-3">
+                <h1 className="text-xl md:text-2xl font-semibold text-slate-900 tracking-tight mb-2">
                   Your verdict doesn't have to be the final word.
                 </h1>
-                <p className="text-slate-500 font-normal text-sm md:text-base leading-relaxed max-w-lg">
+                <p className="text-slate-500 font-normal text-xs md:text-sm leading-relaxed max-w-lg">
                   Re:Vurdict is a conversational AI portfolio coach that helps you improve your case studies, 
                   positioning, and job readiness through chat. Ask questions, challenge feedback, and dig deeper 
                   into your scores.
@@ -92,17 +89,16 @@ export default function ReVurdictPage() {
               <div className="flex flex-col gap-3 w-full md:w-auto">
                 <Link
                   to="/analyze"
-                  className="btn-brand flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-medium group whitespace-nowrap"
+                  className="btn-brand flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[11px] font-medium group whitespace-nowrap"
                 >
-                  <Sparkles size={14} />
                   <span>Run a Vurdict Analysis</span>
-                  <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
+                  <ArrowRight size={12} className="transition-all duration-200 group-hover:translate-x-1" />
                 </Link>
                 <a
                   href="mailto:hellovurdict@gmail.com?subject=Re:Vurdict Waitlist"
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-medium text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all whitespace-nowrap"
+                  className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[11px] font-medium text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all whitespace-nowrap"
                 >
-                  <Lightbulb size={14} />
+                  <Rocket size={12} className="text-sky-500" />
                   <span>Join the Waitlist</span>
                 </a>
               </div>
@@ -113,7 +109,7 @@ export default function ReVurdictPage() {
               {/* Chat Header */}
               <div className="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center">
                     <Bot size={14} className="text-white" />
                   </div>
                   <div>
@@ -127,46 +123,46 @@ export default function ReVurdictPage() {
               </div>
 
               {/* Messages */}
-              <div className="px-5 py-6 space-y-5 max-h-[420px] overflow-y-auto">
+              <div className="px-4 py-4 space-y-4 max-h-[400px] overflow-y-auto">
                 {messages.map((msg, idx) => (
                   <div key={idx} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     {msg.role === 'assistant' && (
-                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shrink-0 mt-0.5">
-                        <Bot size={12} className="text-white" />
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center shrink-0 mt-0.5">
+                        <Bot size={10} className="text-white" />
                       </div>
                     )}
                     <div
-                      className={`max-w-[75%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${
+                      className={`max-w-[75%] rounded-2xl px-3.5 py-2.5 text-[11px] leading-relaxed ${
                         msg.role === 'user'
                           ? 'bg-brand-900 text-white rounded-tr-md'
                           : 'bg-slate-50 border border-slate-100 text-slate-700 rounded-tl-md'
                       }`}
                     >
                       {msg.text.split('\n').map((line, i) => {
-                        if (line.startsWith('**') && line.endsWith('**')) {
-                          return (
-                            <p key={i} className="font-semibold text-slate-900 mb-1">
-                              {line.replace(/\*\*/g, '')}
-                            </p>
-                          )
-                        }
+                        const parts = line.split(/(\*\*[^*]+\*\*)/g);
+                        const rendered = parts.map((part, j) => {
+                          if (part.startsWith('**') && part.endsWith('**')) {
+                            return <strong key={j} className="font-semibold text-slate-900">{part.slice(2, -2)}</strong>;
+                          }
+                          return part;
+                        });
                         if (line.match(/^\d+\./)) {
                           return (
                             <p key={i} className="text-slate-600 ml-2 mb-0.5 font-normal">
-                              {line}
+                              {rendered}
                             </p>
                           )
                         }
                         return (
                           <p key={i} className="mb-1 last:mb-0 font-normal">
-                            {line}
+                            {rendered}
                           </p>
                         )
                       })}
                     </div>
                     {msg.role === 'user' && (
-                      <div className="w-7 h-7 rounded-full bg-brand-900 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-white text-[10px] font-bold">U</span>
+                      <div className="w-6 h-6 rounded-full bg-brand-900 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-white text-[9px] font-bold">U</span>
                       </div>
                     )}
                   </div>
@@ -175,29 +171,29 @@ export default function ReVurdictPage() {
                 {/* Coming Soon Placeholder Response */}
                 {showPlaceholder && (
                   <div className="flex gap-3 justify-start animate-fade-in-up">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <Bot size={12} className="text-white" />
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center shrink-0 mt-0.5">
+                      <Bot size={10} className="text-white" />
                     </div>
-                    <div className="max-w-[75%] rounded-2xl px-5 py-4 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 text-slate-700 rounded-tl-md">
+                    <div className="max-w-[75%] rounded-2xl px-3.5 py-2.5 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 text-slate-700 rounded-tl-md">
                       <div className="flex items-center gap-2 mb-2">
-                        <MessageSquare size={13} className="text-indigo-500" />
-                        <span className="text-xs font-bold text-indigo-700">Re:Vurdict</span>
+                        <MessageSquare size={11} className="text-sky-500" />
+                        <span className="text-[11px] font-bold text-sky-600">Re:Vurdict</span>
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed font-normal mb-3">
+                      <p className="text-[11px] text-slate-600 leading-relaxed font-normal mb-2">
                         It's coming soon. While you wait, run a full Vurdict analysis to see where your portfolio stands today.
                       </p>
                       <Link
                         to="/analyze"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors group"
+                        className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-sky-600 hover:text-sky-700 transition-colors group"
                       >
-                        <Sparkles size={12} />
                         <span>Run a Vurdict Analysis</span>
-                        <ArrowRight size={12} className="transition-all duration-200 group-hover:translate-x-0.5" />
+                        <ArrowRight size={11} className="transition-all duration-200 group-hover:translate-x-0.5" />
                       </Link>
                     </div>
                   </div>
                 )}
-              </div>
+
+            </div>
 
               {/* Chat Input */}
               <div className="px-5 py-4 border-t border-slate-100 bg-white">
@@ -215,7 +211,7 @@ export default function ReVurdictPage() {
                     disabled={!input.trim()}
                     className="bg-brand-900 text-white p-2.5 rounded-xl hover:bg-brand-800 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    <Send size={14} />
+                    <Send size={14} className="text-white" />
                   </button>
                 </div>
                 <p className="text-[10px] text-slate-400 mt-2 text-center font-medium">
@@ -227,14 +223,14 @@ export default function ReVurdictPage() {
             {/* Feature Grid */}
             <div className="grid sm:grid-cols-3 gap-4 mt-10">
               {[
-                { icon: MessageSquare, title: 'Chat About Your Report', desc: 'Ask follow-ups about scores, dimensions, and recommendations from your Vurdict analysis.' },
-                { icon: Target, title: 'Career Coaching', desc: 'Get portfolio strategy advice, interview prep tips, and hiring manager perspective.' },
-                { icon: Zap, title: 'Real-Time Guidance', desc: 'Upload screenshots, discuss case studies, and challenge feedback in natural conversation.' },
+                { icon: MessageCircle, title: 'Chat About Your Report', desc: 'Ask follow-ups about scores, dimensions, and recommendations from your Vurdict analysis.' },
+                { icon: Compass, title: 'Career Coaching', desc: 'Get portfolio strategy advice, interview prep tips, and hiring manager perspective.' },
+                { icon: Radio, title: 'Real-Time Guidance', desc: 'Upload screenshots, discuss case studies, and challenge feedback in natural conversation.' },
               ].map((item, idx) => {
                 const Icon = item.icon
                 return (
                   <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-100/80 text-left">
-                    <Icon size={18} className="text-indigo-600 mb-3" />
+                    <Icon size={18} className="text-sky-500 mb-3" />
                     <h3 className="text-sm font-semibold text-slate-900 mb-1">{item.title}</h3>
                     <p className="text-xs text-slate-500 font-normal leading-relaxed">{item.desc}</p>
                   </div>
@@ -243,26 +239,25 @@ export default function ReVurdictPage() {
             </div>
 
             {/* Ecosystem CTA */}
-            <div className="mt-12 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 rounded-2xl p-8 text-center">
-              <h2 className="text-lg font-semibold text-slate-900 mb-2">Two Products, One Ecosystem</h2>
-              <p className="text-sm text-slate-500 max-w-lg mx-auto leading-relaxed mb-6 font-normal">
+            <div className="mt-12 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 rounded-2xl p-6 text-center">
+            <h2 className="text-sm font-semibold text-slate-900 mb-2">Two Products, One Ecosystem</h2>
+            <p className="text-xs text-slate-500 max-w-lg mx-auto leading-relaxed mb-4 font-normal">
                 <span className="font-semibold text-slate-700">Vurdict</span> delivers the verdict. <span className="font-semibold text-slate-700">Re:Vurdict</span> continues the conversation. 
                 Together, they form a complete portfolio improvement system.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link
                   to="/analyze"
-                  className="btn-brand flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-medium group"
+                  className="btn-brand flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-[11px] font-medium group"
                 >
-                  <Sparkles size={14} />
                   <span>Get Your Vurdict Report</span>
-                  <ArrowRight size={14} className="transition-all duration-200 group-hover:translate-x-1" />
+                  <ArrowRight size={12} className="transition-all duration-200 group-hover:translate-x-1" />
                 </Link>
                 <a
                   href="mailto:hellovurdict@gmail.com?subject=Re:Vurdict Waitlist"
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs font-medium text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-white transition-all"
+                  className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-[11px] font-medium text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-white transition-all"
                 >
-                  <Lightbulb size={14} />
+                  <Rocket size={12} className="text-sky-500" />
                   <span>Join Re:Vurdict Waitlist</span>
                 </a>
               </div>
@@ -280,12 +275,11 @@ export default function ReVurdictPage() {
               &copy; 2026 Vurdict. The Reviewer's Perspective.
             </p>
           </div>
-          <div className="flex flex-wrap gap-6 text-xs font-normal text-slate-500">
-            <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
-            <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
-            <span className="text-slate-300">|</span>
-            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold">Re:Vurdict</Link>
+          <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-6 text-xs font-normal text-slate-500">
+            <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
+            <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
+            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
           </div>
         </div>
       </footer>

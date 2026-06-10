@@ -143,10 +143,11 @@ export default function TermsPage() {
               &copy; 2026 Vurdict. The Reviewer's Perspective.
             </p>
           </div>
-          <div className="flex gap-6 text-xs font-normal text-slate-500">
-            <Link to="/privacy" className="hover:text-brand-900 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-brand-900 transition-colors">Terms of Use</Link>
-            <Link to="/support" className="hover:text-brand-900 transition-colors">Support Us</Link>
+          <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-6 text-xs font-normal text-slate-500">
+            <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
+            <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
+            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
           </div>
         </div>
       </footer>

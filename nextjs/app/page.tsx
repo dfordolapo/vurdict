@@ -300,48 +300,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Section 3: How It Works */}
-      <section id="how-it-works" className="py-16 md:py-24 bg-navy-900/50 border-y border-navy-900/60">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-              Portfolio Feedback in <span className="text-gradient-brand">Minutes</span>
-            </h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-400">
-              A simple, three-step process to get deep, actionable analysis of your portfolio.
-            </p>
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              {
-                step: '01',
-                title: 'Submit Link',
-                desc: 'Paste your portfolio link and select your current goal (e.g., Get Hired).',
-              },
-              {
-                step: '02',
-                title: 'AI Analysis',
-                desc: 'Vurdict parses your pages and scores them against our hiring rubric.',
-              },
-              {
-                step: '03',
-                title: 'Report Card',
-                desc: 'Get your overall scorecard, strengths, and detailed recommendations.',
-              },
-            ].map((step, idx) => (
-              <div key={idx} className="glass-panel-interactive rounded-2xl p-6 relative">
-                <span className="absolute top-4 right-6 text-3xl font-extrabold text-brand-indigo/15">
-                  {step.step}
-                </span>
-                <h3 className="text-lg font-bold text-white mt-4">{step.title}</h3>
-                <p className="mt-3 text-sm text-slate-400 leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Section 4: 6-Dimension Framework */}
       <section className="py-16 md:py-24 bg-navy-950">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
