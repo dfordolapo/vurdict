@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { Resend } from 'resend';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -7,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const router = Router();
 
+const resend = new Resend(process.env.RESEND_API_KEY);
 const STORAGE_PATH = path.join(__dirname, '..', 'waitlist-emails.json');
 
 function readEmails() {
@@ -24,7 +26,7 @@ function writeEmails(emails) {
   fs.writeFileSync(STORAGE_PATH, JSON.stringify(emails, null, 2), 'utf-8');
 }
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { email, feature } = req.body;
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -45,7 +47,17 @@ router.post('/', (req, res) => {
 
   writeEmails(emails);
 
-  console.log(`[Waitlist] New signup: ${email} (${feature || 'general'})`);
+  try {
+    await resend.emails.send({
+      from: process.env.FROM_EMAIL || 'reports@vurdict.vercel.app',
+      to: process.env.FROM_EMAIL || 'reports@vurdict.vercel.app',
+      subject: `New Waitlist Signup: ${feature || 'general'}`,
+      html: `<p><strong>Email:</strong> ${email}</p><p><strong>Feature:</strong> ${feature || 'general'}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
+    });
+    console.log(`[Waitlist] Notification sent for: ${email}`);
+  } catch (err) {
+    console.error('[Waitlist] Email notification failed:', err.message);
+  }
 
   res.json({ success: true, message: 'You\'re on the list!' });
 });
