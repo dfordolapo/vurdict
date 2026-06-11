@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
   try {
     await resend.emails.send({
       from: process.env.FROM_EMAIL || 'reports@vurdict.vercel.app',
-      to: process.env.FROM_EMAIL || 'reports@vurdict.vercel.app',
+      to: process.env.NOTIFY_EMAIL || 'hellovurdict@gmail.com',
       subject: `New Waitlist Signup: ${feature || 'general'}`,
       html: `<p><strong>Email:</strong> ${email}</p><p><strong>Feature:</strong> ${feature || 'general'}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
     });
