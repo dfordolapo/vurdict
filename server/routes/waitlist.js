@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const router = Router();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const STORAGE_PATH = path.join(__dirname, '..', 'waitlist-emails.json');
+const STORAGE_PATH = path.join(process.env.VERCEL ? '/tmp' : __dirname, '..', 'waitlist-emails.json');
 
 function readEmails() {
   try {
@@ -23,7 +23,11 @@ function readEmails() {
 }
 
 function writeEmails(emails) {
-  fs.writeFileSync(STORAGE_PATH, JSON.stringify(emails, null, 2), 'utf-8');
+  try {
+    fs.writeFileSync(STORAGE_PATH, JSON.stringify(emails, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('[Waitlist] Error writing storage:', err.message);
+  }
 }
 
 router.post('/', async (req, res) => {
