@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Mail, CheckCircle, Loader2 } from 'lucide-react'
 
+const apiUrl = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.port === '5173' ? 'http://localhost:3001' : '')
+
 export default function WaitlistForm({ feature = 'this feature', placeholder = 'you@example.com', buttonText = 'Notify Me' }) {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -21,7 +23,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
     setLoading(true)
 
     try {
-      await fetch('/api/waitlist', {
+      await fetch(`${apiUrl}/api/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), feature })
