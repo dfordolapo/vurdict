@@ -46,38 +46,38 @@ export function getMockReport(url, goal, experience = 'junior') {
     problem_framing: {
       score: experience === 'senior' ? 70 : experience === 'mid' ? 80 : 85,
       explanation: isGetHired 
-        ? `The Hiring Manager's perspective (${expLabel} Calibration): Good framing of user and product problems with clear boundaries. ${experience === 'senior' ? 'For a Senior role, we need deeper business integration details.' : 'Foundation matches expectations.'}`
-        : `The Client's perspective (${expLabel} Calibration): The target client can understand what problems you solve, though the messaging should focus more on business value.`
+        ? `Your case study includes a 'Problem Statement' section that identifies the user pain point — users were struggling to complete onboarding. However, the section does not cite any specific data (e.g., analytics drop-off rates, user interview quotes) that validates this problem as worth solving. From a hiring manager's perspective, this makes the problem framing feel assumed rather than researched, which reduces confidence in your user-centered thinking. Add a specific data point in the 'Problem Statement' section — for example, 'Only 34% of users completed onboarding in Q3 — our goal was to reach 70%' — to prove the problem was real and measurable.`
+        : `Your case study mentions a general user problem with onboarding, but does not frame it in business terms that a client would care about. Clients want to know that you understand how design problems connect to revenue or retention. Rewrite the problem statement to include both the user pain point and the business impact, for example: 'Users were abandoning onboarding at step 3, causing a 40% drop in activation rates and an estimated $200K in lost annual revenue.'`
     },
     process_visibility: {
       score: experience === 'senior' ? 75 : experience === 'mid' ? 80 : 65,
       explanation: isGetHired
-        ? `The Hiring Manager's perspective (${expLabel} Calibration): Decisions are mapped out systematically. ${experience === 'junior' ? 'Show why basic sketches were selected.' : 'Move to advanced level by documenting why specific iterations failed.'}`
-        : `The Client's perspective (${expLabel} Calibration): Process shows you are competent, but clients want a smoother summary. Condense complex maps into value steps.`
+        ? `Your case study has a 'Process' section that lists the steps taken — research, ideation, prototyping — but it reads as a linear checklist rather than a genuine account of iteration and decision-making. For example, you mention creating wireframes but do not show what changed between the first and final version or why. From a hiring manager's perspective, this hides your critical thinking. Add a specific example of a design decision that changed based on feedback or testing, with a before/after comparison: 'After user testing, we moved the primary CTA from the bottom to the top of the page because 4 out of 5 test participants missed it entirely.'`
+        : `The 'Process' section lists your workflow steps clearly, which shows competence. However, clients evaluating freelance designers care most about efficiency and results, not academic process detail. Condense the process into 3-4 key decision points and frame each as a trade-off you resolved: 'Chose a single-page layout over multi-step to reduce development time by 30%.' This positions you as a pragmatic problem-solver, which clients value highly.`
     },
     outcome_impact: {
       score: experience === 'senior' ? 50 : experience === 'mid' ? 60 : 70,
       explanation: isGetHired
-        ? `The Hiring Manager's perspective (${expLabel} Calibration): ${experience === 'senior' ? 'Senior standard requires quantitative business metrics. Mention metric shifts, conversions, or revenue.' : 'Add outcome metrics to support case study.'}`
-        : `The Client's perspective (${expLabel} Calibration): Clients want to see how your design generated revenue or saved costs. Frame outcomes as business wins.`
+        ? `${experience === 'senior' ? 'Your case study describes the final design but does not include any quantitative outcomes — no metrics, no test results, no business impact data. For a Senior-level role, this is the most critical gap. Hiring managers expect to see specific numbers that prove your design drove measurable results. Add at least 2-3 metrics such as conversion rate changes, task completion improvements, or time savings. For example: "After launch, checkout completion increased by 24% and support tickets related to payment errors dropped by 45%."' : 'Your case study mentions user feedback was positive but does not include any specific metrics. From a hiring manager\'s perspective, vague outcomes are nearly as concerning as no outcomes — they suggest the work was not measured. Add at least one concrete data point: a usability test metric, a before/after comparison, or even a "What I Would Measure" section if you do not have live data.'}`
+        : `Your case study does not tie the outcome directly to business value. Freelance clients want to see a return on their investment, not just a beautiful design. Frame the outcome section around client-relevant metrics: time saved, revenue increased, or user satisfaction improved. For example: 'The redesigned onboarding flow reduced user errors by 60%, which saved the client an estimated 200 support hours per month.'`
     },
     visual_quality: {
       score: experience === 'senior' ? 88 : experience === 'mid' ? 82 : 75,
       explanation: isGetHired
-        ? `The Hiring Manager's perspective (${expLabel} Calibration): Typography and grids are solid. ${experience === 'junior' ? 'Basic styling is clean but can be modernized.' : 'Adherence to spacing systems looks extremely premium.'}`
-        : `The Client's perspective (${expLabel} Calibration): Visually stunning landing page. Sleek Linear-style dark mode aesthetics establish strong credibility.`
+        ? `${experience === 'junior' ? 'Your case study shows clean, well-structured screens with consistent spacing and a clear typographic hierarchy. The layouts are functional but use a basic color palette (blue + white) that lacks personality. From a hiring manager\'s perspective, the execution is solid for Junior level but does not yet signal the visual craft expected at higher levels. Introduce a more distinct visual identity — a unique accent color, bolder typography choices, or subtle micro-interactions — to elevate the perceived quality.' : 'Your case study demonstrates exceptional attention to typographic detail: consistent 8px grid spacing, a clear type scale, and well-balanced composition. The dark-mode screens feel premium and modern. From a hiring manager\'s perspective, this level of visual execution signals senior-level craft and confidence. One refinement: ensure your screenshots are displayed at high enough resolution that spacing details are clearly visible on Retina displays.'}`
+        : `Your portfolio uses a sleek dark-mode theme with consistent spacing and modern typography — this immediately signals quality to potential clients. The visual presentation is strong enough to build trust quickly. To further elevate perceived value, add a brief annotation overlay on 1-2 key screenshots that calls out specific design decisions: '8px grid system applied throughout' or 'Accessible contrast ratio of 4.5:1 maintained on all text.' This positions you as a detail-oriented professional.`
     },
     niche_positioning: {
       score: experience === 'senior' ? 85 : experience === 'mid' ? 75 : 65,
       explanation: isGetHired
-        ? `The Hiring Manager's perspective (${expLabel} Calibration): Clear role definition as a Product Designer. ${experience === 'junior' ? 'Focus on founding your niche.' : 'Highlight SaaS, complex systems, or mobile-first design.'}`
-        : `The Client's perspective (${expLabel} Calibration): Highly optimized. You clearly target startups seeking fractional leadership, which attracts quality inquiries.`
+        ? `${experience === 'junior' ? 'Your portfolio identifies you as a Product Designer, but the case study does not communicate a specific area of focus or expertise. From a hiring manager\'s perspective, a generalist label without demonstrated depth makes it harder to distinguish you from other candidates. Add a clear positioning statement at the top of your case study: for example, "I specialize in designing B2B SaaS onboarding experiences for fintech companies." Then ensure the case study content reinforces this focus.' : 'Your case study clearly positions you as a Product Designer with a focus on complex B2B systems, and the project content aligns well with this positioning. From a hiring manager\'s perspective, this creates confidence that you have relevant depth. To strengthen further, add a short "Design Philosophy" statement that connects specialization to your approach: "I believe complex enterprise tools should feel as intuitive as consumer apps."'}`
+        : `Your portfolio positions you clearly as a senior product designer with a focus on early-stage startups. This niche is well-defined and the case study content supports it. From a client's perspective, this focused positioning signals that you understand their specific needs. Strengthen this by adding a 1-sentence 'Ideal Client' statement: 'I partner with seed-stage B2B SaaS founders to design onboarding experiences that convert and retain users.'`
     },
     trust_cta: {
       score: experience === 'senior' ? 80 : experience === 'mid' ? 70 : 60,
       explanation: isGetHired
-        ? `The Hiring Manager's perspective (${expLabel} Calibration): Resume link is present. ${experience === 'junior' ? 'Add a cleaner contact block.' : 'Recruiter response rate will increase with a direct scheduling widget.'}`
-        : `The Client's perspective (${expLabel} Calibration): Excellent placement of contact options. Having a direct scheduling link and testimonial stubs creates immediate trust.`
+        ? `${experience === 'junior' ? "Your case study includes a link to your resume and LinkedIn profile, which is the minimum expected. However, there is no direct CTA for the reader to take the next step — such as scheduling a portfolio chat or viewing more work. From a hiring manager's perspective, a missing CTA creates a passive impression. Add a 'Next Steps' section: \"Interested in my work? I'd love to chat about your team's design needs.\" or \"View my full portfolio for more case studies.\"" : 'Your portfolio has a resume link and LinkedIn profile, which is good. For a Senior role, consider adding a direct scheduling link (Calendly, Cal.com) so hiring managers can book a conversation with you immediately. This eliminates friction in the recruiting process and signals confidence in your candidacy.'}`
+        : `Your portfolio includes a contact form and LinkedIn link, but the CTA is passive ('Get in Touch'). For a freelance client, a passive CTA misses the opportunity to convert interest into action while the client's motivation is highest. Replace the generic CTA with a direct, low-friction action: 'Book a Free 15min Discovery Call' with a visible calendar link. Add 2-3 client logos or a testimonial quote above the CTA to reduce hesitation and build trust before the click.`
     }
   };
 
@@ -90,60 +90,60 @@ export function getMockReport(url, goal, experience = 'junior') {
   );
 
   const fix_this_first = isGetHired ? {
-    title: experience === 'senior' ? "Validate Strategic Business Value" : "Document Measurable Success Metrics",
+    title: experience === 'senior' ? "Validate Strategic Business Value with Outcome Metrics" : "Add Measurable Success Metrics to Your Case Study",
     description: experience === 'senior'
-      ? "As a Senior candidate, your case study needs to prove strategic revenue and conversion impact. Detail the business parameters of your work."
-      : "Your 'Outcome & Impact' score is currently bottlenecking your hireability. Add specific business and user outcomes (e.g. conversion rates, task time reduction) to your fintech case study to increase shortlisting odds.",
+      ? "Your case study walks through the process thoroughly, but the 'Results' section does not include any revenue, conversion, or efficiency metrics. For a Senior-level role, hiring managers expect to see quantified business outcomes that prove your design directly impacted the bottom line. Add 2-3 specific metrics (e.g., 'Checkout conversion increased by 18% after implementing the simplified flow') and state the measurement method (e.g., A/B test, pre/post analysis) to show you think in terms of business impact."
+      : "Your case study describes what you designed but the 'Outcome' section lacks concrete numbers. Hiring managers need to see specific metrics — not just 'positive feedback.' Add at least one quantifiable result (e.g., 'Task completion time dropped from 4min to 1.5min in user testing', 'Form abandonment decreased by 30%') and state how it was measured. If you don't have live metrics, include usability test results or a 'What I Would Measure' section that shows you think in terms of impact.",
     priority_score: 9
   } : {
-    title: "Sharpen Client-Facing CTAs",
-    description: "Make it easier for potential clients to hire you. Move from contact forms to a direct 'Book a 15min discovery call' calendar scheduler directly below your work grid.",
+    title: "Add a Direct Booking CTA with Social Proof",
+    description: "Your portfolio showcases strong visual work but the path to hiring you is unclear — the most prominent CTA is a generic 'Contact' link. Potential clients want to act immediately when they're impressed. Replace your contact button with a direct 'Book a Free 15min Discovery Call' calendar link (Calendly, Cal.com) and add 2-3 client testimonials or logos above it. This reduces friction from days to seconds and signals that you're actively taking clients.",
     priority_score: 8
   };
 
   const priority_action_plan = {
     critical_fixes: [
       {
-        title: isGetHired ? "Add Quantifiable Business Metrics" : "Add Clear Service Packages & Pricing",
+        title: isGetHired ? "Add Quantifiable Business Metrics to Every Case Study" : "Add Clear Service Packages with Pricing",
         description: isGetHired
-          ? "Hiring managers need to see measurable outcomes. Add specific metrics (conversion rates, time savings, revenue impact) to your case studies."
-          : "Clients want to know what they're buying. Clearly outline your service tiers, deliverables, and pricing to reduce friction in the decision process."
+          ? "Your case study shows screenshots and describes the process, but there are no measurable outcomes. Without metrics, hiring managers cannot assess the real-world impact of your work. Add specific numbers to each case study: conversion rates, time savings, user satisfaction scores, or revenue impact. Even a single data point like 'Reduced onboarding time from 8min to 3min' dramatically increases credibility. If you don't have production metrics, include usability test results and state: 'Based on usability testing with 5 users, task success rate improved from 60% to 90%.'"
+          : "Your portfolio showcases strong work but does not communicate what clients will actually get or how much it costs. This creates uncertainty that causes potential clients to hesitate. Add a clear 'Services & Pricing' section that outlines 2-3 service tiers (e.g., 'UX Audit — $2,500', 'Full Redesign — starting at $8,000') with brief descriptions of deliverables. Also add a direct scheduling link so clients can book a call immediately after reading your work."
       },
       {
-        title: "Strengthen Problem Validation",
-        description: "Show evidence that the problem you solved was real and validated. Include user quotes, survey data, or analytics that drove your design decisions."
+        title: "Strengthen Problem Validation with User Evidence",
+        description: "Your case study jumps quickly into the solution without showing how you validated the problem. Hiring managers and clients need to see evidence that the problem was real, not assumed. Add a 'Problem Validation' subsection that includes 1-2 direct user quotes from research, a data point from analytics (e.g., '70% of users dropped off at this step'), or a screenshot of a survey result. This proves your solution was grounded in real user needs, not just intuition."
       },
       {
-        title: "Improve Narrative Structure",
-        description: "Restructure case studies to follow a clear arc: Context → Problem → Process → Outcome. Lead with results to hook readers immediately."
+        title: "Restructure Case Studies with a Clear Problem-to-Outcome Arc",
+        description: "Your case study presents information but lacks a clear narrative structure that guides the reader from problem to outcome. Without this arc, evaluators struggle to follow your thinking. Restructure each case study to follow: Context (project type, timeline, team size) → Problem (user pain point, business goal) → Process (research, iterations, key decisions) → Outcome (metrics, impact, lessons learned). Use visible section headers so evaluators can quickly scan to the parts most relevant to them."
       }
     ],
     medium_priority: [
       {
-        title: "Enhance Visual Consistency",
-        description: "Standardize typography, spacing, and color usage across all case studies for a cohesive brand experience."
+        title: "Enhance Visual Consistency Across Case Studies",
+        description: "Your case studies use inconsistent typography, spacing, and color palettes, which makes the portfolio feel disjointed. A cohesive visual system signals professionalism and attention to detail. Create a simple design system for your portfolio: define 2 heading sizes, 1 body font, a consistent 24px grid, and a 3-color palette. Apply it uniformly across all case studies so the portfolio reads as a single, polished product."
       },
       {
-        title: "Add Process Artifacts",
-        description: "Include sketches, wireframes, and iteration documentation to demonstrate your thinking process, not just polished final outputs."
+        title: "Show Iteration Artifacts — Not Just Final Designs",
+        description: "Your case study shows only polished final mockups, which hides your design thinking process. Hiring managers want to see how you arrived at the solution, not just what the solution looks like. Add 2-3 process artifacts: a sketch photo, a wireframe iteration showing a different layout you considered and rejected, or a screenshot of a usability test finding that changed your direction. Label each artifact with a brief caption explaining why it matters."
       },
       {
-        title: "Incorporate Social Proof",
-        description: "Add testimonials, client logos, or recognition badges to build credibility and trust with evaluators."
+        title: "Add Social Proof and Credibility Signals",
+        description: "Your portfolio does not include testimonials, client logos, or recognition badges, which reduces trust. Evaluators want to see proof that others have valued your work. Add a 'Press & Recognition' section with logos of companies you've worked with, 1-2 client testimonials with names and titles, and any awards or publications. Position this near your CTA to reduce the perceived risk of hiring or advancing you."
       }
     ],
     nice_to_have: [
       {
-        title: "Add Interactive Prototypes",
-        description: "Embed clickable prototypes (Figma, ProtoPie) so evaluators can experience the interaction design firsthand."
+        title: "Embed Interactive Prototypes for Key Flows",
+        description: "Static screenshots require evaluators to imagine the interaction. Adding clickable prototypes lets them experience the design firsthand, which is far more compelling. Embed Figma or ProtoPie prototypes for 1-2 key user flows in your case study. Even a simple 3-screen flow demonstrating the main interaction pattern will help evaluators understand the quality of your interaction design."
       },
       {
-        title: "Include a Personal Touch",
-        description: "Add a brief 'Why I Design' section to humanize your portfolio and create an emotional connection with readers."
+        title: "Add a Personal 'Why I Design' Section",
+        description: "Your portfolio presents the work but does not introduce the person behind it. A brief personal section creates an emotional connection that makes evaluators remember you. Add 2-3 sentences at the end of your case study about what drives your design philosophy — for example, 'I'm passionate about simplifying complex financial tools because I believe everyone deserves access to clear financial information.'"
       },
       {
-        title: "Optimize for Mobile Viewing",
-        description: "Ensure case studies are fully readable and visually appealing on mobile devices, where many initial screenings happen."
+        title: "Optimize the Portfolio for Mobile Viewing",
+        description: "Many initial portfolio screenings happen on mobile devices (recruiters checking links during commute). If your case study images or layouts break on small screens, you risk being dismissed. Test every case study page on a 375px-wide viewport. Ensure text is readable without zooming, images scale properly, and interactive elements are tappable with sufficient touch targets."
       }
     ]
   };
@@ -154,8 +154,8 @@ export function getMockReport(url, goal, experience = 'junior') {
     fix_this_first,
     priority_action_plan,
     summary: isGetHired
-      ? `Strong ${expLabel} case study overall. The major blocker is outcomes: case studies lack quantitative metrics indicating how your designs improved business or usability goals.`
-      : `Excellent premium ${expLabel} presentation. You communicate a strong niche and make booking inquiries low-friction.`
+      ? `This case study demonstrates solid design execution and clear process documentation, which meet baseline expectations for a ${expLabel} role. However, the critical gap is in measurable outcomes — the case study describes what was done but does not provide specific metrics (conversion rates, time savings, satisfaction scores) that prove the design had real-world impact. The top priority is adding quantitative results to every case study, starting with the project that has the most accessible data. Once outcomes are documented, the portfolio will move from 'shows competence' to 'proves impact.'`
+      : `This portfolio presents a polished, visually cohesive brand that immediately signals quality to potential clients. The niche positioning is clear and the work samples are strong. The main bottleneck is the path from browsing to booking — there is no direct scheduling link and no pricing transparency, which creates hesitation at the critical conversion moment. Adding a direct calendar link and clear service tiers will transform passive interest into active client inquiries.`
   };
 }
 
@@ -210,19 +210,19 @@ export function AnalysisProvider({ children }) {
         if (parsed.report && !parsed.report.priority_action_plan) {
           parsed.report.priority_action_plan = {
             critical_fixes: [
-              { title: 'Add Quantifiable Business Metrics', description: 'Hiring managers need to see measurable outcomes. Add specific metrics to your case studies.' },
-              { title: 'Strengthen Problem Validation', description: 'Show evidence that the problem you solved was validated through research.' },
-              { title: 'Improve Narrative Structure', description: 'Restructure case studies to follow a clear arc: Context → Problem → Process → Outcome.' }
+              { title: 'Add Quantifiable Business Metrics', description: 'Your case study describes the work but does not include any measurable outcomes. Without metrics, hiring managers cannot assess real-world impact. Add specific numbers — conversion rates, time savings, satisfaction scores — to every case study. Even a single data point dramatically increases credibility.' },
+              { title: 'Strengthen Problem Validation with Data', description: 'Your case study jumps into the solution without showing how you validated the problem. Add a "Problem Validation" subsection with user quotes, analytics data, or survey results that prove the problem was real. This grounds your solution in evidence rather than intuition.' },
+              { title: 'Improve Narrative Structure with Clear Section Headers', description: 'Your case study lacks a clear narrative arc from problem to outcome. Restructure it to follow: Context → Problem → Process → Outcome → Impact. Use visible section headers so evaluators can quickly scan to the parts most relevant to them.' }
             ],
             medium_priority: [
-              { title: 'Enhance Visual Consistency', description: 'Standardize typography, spacing, and color usage across all case studies.' },
-              { title: 'Add Process Artifacts', description: 'Include sketches, wireframes, and iteration documentation.' },
-              { title: 'Incorporate Social Proof', description: 'Add testimonials, client logos, or recognition badges.' }
+              { title: 'Enhance Visual Consistency', description: 'Your case studies use inconsistent typography, spacing, and color palettes. A cohesive visual system signals professionalism. Define a simple design system with consistent heading sizes, body font, grid spacing, and a 3-color palette applied across all studies.' },
+              { title: 'Show Iteration Artifacts', description: 'Your case study shows only polished final mockups. Add 2-3 process artifacts — sketches, wireframe iterations, usability test findings — with brief captions explaining why each matters. This reveals your design thinking process.' },
+              { title: 'Incorporate Social Proof', description: 'Your portfolio lacks testimonials, client logos, or recognition badges. Add a "Press & Recognition" section with 1-2 client testimonials and company logos near your CTA to reduce perceived risk for evaluators.' }
             ],
             nice_to_have: [
-              { title: 'Add Interactive Prototypes', description: 'Embed clickable prototypes for evaluators.' },
-              { title: 'Include a Personal Touch', description: 'Add a brief "Why I Design" section.' },
-              { title: 'Optimize for Mobile Viewing', description: 'Ensure case studies are readable on mobile devices.' }
+              { title: 'Add Interactive Prototypes', description: 'Static screenshots require evaluators to imagine interactions. Embed a Figma or ProtoPie prototype for a key user flow to let them experience the design firsthand. Even a simple 3-screen flow is compelling.' },
+              { title: 'Include a Personal Touch', description: 'Add a brief "Why I Design" section that shares your design philosophy. This creates an emotional connection and makes evaluators remember you.' },
+              { title: 'Optimize for Mobile Viewing', description: 'Many screenings happen on mobile. Test every case study on a 375px viewport. Ensure text is readable, images scale, and touch targets are large enough.' }
             ]
           };
         }
@@ -270,7 +270,7 @@ export function AnalysisProvider({ children }) {
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 seconds max timeout
+      const timeoutId = setTimeout(() => controller.abort(), 90000); // 90 seconds max timeout — thorough extraction + analysis
 
       const apiEndpoint = `${getApiUrl()}/api/analyze`;
       const response = await fetch(apiEndpoint, {

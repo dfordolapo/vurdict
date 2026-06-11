@@ -25,6 +25,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { cn } from '../lib/utils';
+import BetaTicker from '../components/BetaTicker';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -65,6 +66,7 @@ export default function LandingPage() {
 
   return (
     <div className="flex-1 bg-navy-950 bg-grid-pattern">
+      <BetaTicker />
       {/* Hero Visual Block */}
       <section className="relative pt-12 pb-24 overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center">

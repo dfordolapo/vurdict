@@ -109,11 +109,26 @@ export default function DimensionDetailsPage() {
   const DimIcon = activeDim.icon;
 
   // Custom breakdowns depending on selected dimension
-  const getDetails = (slug) => {
+  const getDetails = (slug, goal, experience) => {
+    const audience = goal === 'win_clients' ? 'client' : 'hiring manager';
+    const audienceLabel = goal === 'win_clients' ? 'Potential clients' : 'Recruiters';
+    const audiencePlural = goal === 'win_clients' ? 'clients' : 'hiring managers';
+    const levelTrait = experience === 'senior' ? 'senior-level' : experience === 'mid' ? 'mid-level' : 'junior-level';
+
+    const roleExpectationWhy = (baseSenior, baseMid, baseJunior) => {
+      if (experience === 'senior') return baseSenior;
+      if (experience === 'mid') return baseMid;
+      return baseJunior;
+    };
+
     switch (slug) {
       case 'structural_logic':
         return {
-          why: "This case study presents information but lacks a clear narrative arc connecting the problem to your process to the final outcome. Recruiters need to follow your thinking start-to-finish without filling in gaps.",
+          why: roleExpectationWhy(
+            `As a senior designer, this case study should demonstrate not just what you did but the strategic narrative behind it. Hiring managers expect a clear problem-to-outcome arc that shows leadership thinking.`,
+            `This case study presents information but lacks a clear narrative arc connecting the problem to your process to the final outcome. ${audienceLabel} need to follow your thinking start-to-finish without filling in gaps.`,
+            `This case study presents information but lacks a clear narrative arc. At a junior level, ${audienceLabel} want to see that you understand the basic structure of a design project: problem → process → outcome. Make it easy to follow.`
+          ).replace(/Hiring managers/g, audience === 'client' ? 'Clients' : 'Hiring managers'),
           working: [
             { title: 'Problem Statement Provided', desc: 'The case study includes a problem statement that establishes context.' },
             { title: 'Process Sections Included', desc: 'Dedicated process sections show how you approached the project.' },
@@ -121,7 +136,7 @@ export default function DimensionDetailsPage() {
           ],
           improve: [
             { title: 'Connect Decisions to Problems', desc: 'Every design decision should explicitly reference the user need or constraint that drove it, with no unexplained choices.' },
-            { title: 'Add Milestone Headers', desc: 'Break your process into 3-5 scannable phases (Discover → Define → Design → Deliver) so recruiters can follow your narrative in seconds.' },
+            { title: 'Add Milestone Headers', desc: `Break your process into 3-5 scannable phases (Discover → Define → Design → Deliver) so ${audiencePlural} can follow your narrative in seconds.` },
             { title: 'Include Before/After Comparison', desc: 'Add a side-by-side visual showing the problem state vs. your solution for immediate impact.' }
           ],
           evidence: [
@@ -130,7 +145,7 @@ export default function DimensionDetailsPage() {
           ],
           recommendation: {
             title: 'Build a Tight Problem-to-Outcome Narrative for This Case Study',
-            desc: 'Recruiters decide whether to keep reading in under 10 seconds. This case study needs a tight arc: hook them with the outcome, walk them through your key decisions, and prove your impact with specific results.',
+            desc: `${audienceLabel} decide whether to keep reading in under 10 seconds. This case study needs a tight arc: hook them with the outcome, walk them through your key decisions, and prove your impact with specific results.`,
             steps: [
               'Open the case study with a 2-sentence hook: "What was the challenge, and what was the result?" This lets readers grasp the value before diving into details.',
               'Organize your process into exactly 3-5 phases with descriptive headers (e.g., "Research → Define → Ideate → Build → Launch"). Each phase should have 2-3 bullet points max.',
@@ -141,7 +156,11 @@ export default function DimensionDetailsPage() {
         };
       case 'critical_thinking':
         return {
-          why: "This case study shows surface-level research but lacks depth in user insights, competitive analysis, and problem validation. Recruiters look for evidence that your decisions are research-driven, not assumption-driven.",
+          why: roleExpectationWhy(
+            `At a senior level, ${audienceLabel} expect research rigor that drives strategy. This case study mentions research but lacks synthesized insights. Senior designers demonstrate how research directly shaped product direction, not just UI decisions.`,
+            `This case study shows surface-level research but lacks depth in user insights and competitive analysis. ${audienceLabel} look for evidence that your decisions are research-driven, not assumption-driven.`,
+            `At a junior level, ${audienceLabel} want to see that you understand the value of research. This case study mentions research but doesn't clearly show how it influenced your design decisions. Start connecting the dots between what you learned and what you built.`
+          ),
           working: [
             { title: 'User Interviews Mentioned', desc: 'You reference user interviews in the project, establishing a research baseline.' },
             { title: 'Personas Present', desc: 'Personas are included and map to the target audience.' },
@@ -170,7 +189,11 @@ export default function DimensionDetailsPage() {
         };
       case 'visual_execution':
         return {
-          why: "The visual foundations in this case study are solid, featuring good typography and grid usage. The gaps are in accessibility compliance, responsive behavior at breakpoints, and micro-interaction polish.",
+          why: roleExpectationWhy(
+            `For a senior designer, visual execution must be pixel-perfect and inclusive. The foundations here are solid but gaps in accessibility, responsiveness, and micro-interaction polish are significant — ${audienceLabel} expect senior-level craftsmanship across all edge cases.`,
+            `The visual foundations in this case study are solid, featuring good typography and grid usage. The gaps are in accessibility compliance, responsive behavior at breakpoints, and micro-interaction polish — ${audienceLabel} expect thoroughness at this level.`,
+            `Good visual foundations with solid typography and grid usage. At a junior level, ${audienceLabel} want to see that you understand the basics of spacing, hierarchy, and consistency. Closing the gaps on accessibility and responsiveness will show you're ready for the next level.`
+          ),
           working: [
             { title: 'Clean Typography Scale', desc: 'Systematic type scaling using modern sans-serif creates premium readability and hierarchy.' },
             { title: 'Consistent Grid System', desc: 'Alignment to a structured column grid keeps layouts organized and professional.' },
@@ -198,7 +221,11 @@ export default function DimensionDetailsPage() {
         };
       case 'impact_evidence':
         return {
-          why: "This case study describes what you did but rarely shows what happened as a result. Recruiters and clients need proof that your work drives measurable business or user impact, not just screenshots.",
+          why: roleExpectationWhy(
+            `At a senior level, ${audienceLabel} expect to see clear business impact tied to your strategic decisions. This case study describes what you did but doesn't quantify the outcome. Senior designers are expected to track and communicate measurable results.`,
+            `This case study describes what you did but rarely shows what happened as a result. ${audienceLabel} need proof that your work drives measurable business or user impact, not just screenshots.`,
+            `At a junior level, ${audienceLabel} want to see that you understand the importance of outcomes. This case study focuses on what you did — start practicing how to tie your work to results, even if the metrics are directional.`
+          ),
           working: [
             { title: 'Project Results Mentioned', desc: 'You reference outcomes in the project description, establishing a results-oriented mindset.' },
             { title: 'Visual Artifacts Shown', desc: 'Final screens, prototypes, and deliverables are displayed clearly.' }
@@ -225,7 +252,11 @@ export default function DimensionDetailsPage() {
         };
       case 'narrative_tone':
         return {
-          why: "Your writing is grammatically sound but lacks the persuasive edge needed to turn readers into clients or hires. This case study reads as a report, not a pitch: passive voice, buried outcomes, and no call to action.",
+          why: roleExpectationWhy(
+            `Senior designers are expected to communicate with authority and strategic clarity. Your writing is grammatically sound but lacks the persuasive edge needed to influence stakeholders. ${audienceLabel} expect senior-level communication that leads with outcomes and drives action.`,
+            `Your writing is grammatically sound but lacks the persuasive edge needed to turn readers into ${audience === 'client' ? 'paying clients' : 'hires'}. This case study reads as a report, not a pitch: passive voice, buried outcomes, and no call to action.`,
+            `At a junior level, ${audienceLabel} want to see clear, professional communication. Your writing is grammatically sound, but try using more active voice and leading with results to make your case studies more compelling.`
+          ),
           working: [
             { title: 'Professional Language', desc: 'Your writing is polished with appropriate design terminology and good grammar.' },
             { title: 'Clear Section Organization', desc: 'The case study is structured into readable, logical sections.' }
@@ -241,7 +272,7 @@ export default function DimensionDetailsPage() {
           ],
           recommendation: {
             title: 'Rewrite This Case Study with Active Voice, Outcome-First Hooks, and Strong CTAs',
-            desc: 'This case study is a sales document. Every sentence should either inform, persuade, or drive action. Strip passive language, lead with results, and always tell the reader what to do next. This single shift transforms how recruiters perceive your work.',
+            desc: `This case study is a sales document. Every sentence should either inform, persuade, or drive action. Strip passive language, lead with results, and always tell the reader what to do next. This single shift transforms how ${audiencePlural} perceive your work.`,
             steps: [
               'Audit the case study and flag every passive construction ("was done," "were created," "was designed"). Replace each one with active voice using "I" or "we." This immediately signals ownership and confidence; it is the highest-leverage edit you can make.',
               'Rewrite the first 2 sentences of this case study using this template: "[Action] resulted in [outcome] for [audience]." Example: "Redesigned the checkout flow, resulting in a 28% increase in completed purchases for 50K+ monthly users." Then explain your process below.',
@@ -252,7 +283,11 @@ export default function DimensionDetailsPage() {
         };
       case 'positioning_clarity':
         return {
-          why: "This case study doesn't clearly communicate what you specialize in or who you design for. Recruiters scanning your work should know your niche within 3 seconds. If they have to guess, they move on.",
+          why: roleExpectationWhy(
+            `For a senior designer, your positioning should be sharp and unmistakable. ${audienceLabel} scanning your work should immediately understand your niche, the problems you solve, and the impact you deliver. This case study doesn't communicate a clear specialty.`,
+            `This case study doesn't clearly communicate what you specialize in or who you design for. ${audienceLabel} scanning your work should know your niche within 3 seconds. If they have to guess, they move on.`,
+            `At a junior level, ${audienceLabel} understand you're still finding your niche. However, even early-career designers benefit from signaling what you're best at. Try framing this project around a specific type of problem you enjoy solving.`
+          ),
           working: [
             { title: 'Project Well Displayed', desc: 'The case study showcases your work with strong visuals and descriptions.' },
             { title: 'Design Competency Evident', desc: 'Your work clearly demonstrates strong product design skills.' }
@@ -268,12 +303,12 @@ export default function DimensionDetailsPage() {
           ],
           recommendation: {
             title: 'Define Your Niche and Make It the First Thing Readers See',
-            desc: 'The best case studies answer one question in under 3 seconds: "What does this designer specialize in?" If yours doesn\'t, recruiters will not invest time figuring it out. Decide what you want to be known for, then make it impossible to miss.',
+            desc: `The best case studies answer one question in under 3 seconds: "What does this designer specialize in?" If yours doesn't, ${audiencePlural} will not invest time figuring it out. Decide what you want to be known for, then make it impossible to miss.`,
             steps: [
               'Write a 1-sentence positioning statement: "I design [type of product] for [specific audience] that [key outcome]." Example: "I design B2B SaaS platforms for fintech startups that simplify complex financial workflows." This goes near the top of your case study.',
               'Categorize the case study by industry or domain (fintech, healthtech, e-commerce, etc.) so your specialization is immediately clear.',
               'Add a 1-paragraph section about your background: your specialization, design philosophy, and the type of problems you solve best.',
-              'Ensure your case study URL, LinkedIn headline, and resume all use the same positioning language. Consistency across channels signals intentionality and builds trust with recruiters.'
+              `Ensure your case study URL, LinkedIn headline, and resume all use the same positioning language. Consistency across channels signals intentionality and builds trust with ${audiencePlural}.`
             ]
           }
         };
@@ -304,7 +339,7 @@ export default function DimensionDetailsPage() {
     }
   };
 
-  const details = getDetails(activeDim.slug);
+  const details = getDetails(activeDim.slug, state.goal, state.experience);
 
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);

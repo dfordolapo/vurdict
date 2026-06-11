@@ -429,7 +429,7 @@ export default function ResultsPage() {
                 Your <span className="text-sky-300">Vurdict</span> Report Card
               </h1>
               <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-normal leading-relaxed text-balance">
-                Here's how your case study performs across the six hiring dimensions.
+                Analyzed for <span className="text-sky-200 font-semibold">{state.goal === 'win_clients' ? 'winning freelance clients' : 'getting hired'}</span> — {state.experience === 'senior' ? 'Senior' : state.experience === 'mid' ? 'Mid-Level' : 'Junior'} calibration applied.
               </p>
             </div>
 
@@ -533,7 +533,7 @@ export default function ResultsPage() {
               {/* Hiring readiness progress handle bar */}
               <div className="w-full mt-6 border-t border-slate-100 pt-5 space-y-2 text-left">
                 <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
-                  <span>Hiring Readiness</span>
+                  <span>{state.goal === 'win_clients' ? 'Client Readiness' : 'Hiring Readiness'}</span>
                   <span className={readinessLevel === 'High' ? 'text-emerald-700 font-semibold' : readinessLevel === 'Medium' ? 'text-amber-700 font-semibold' : 'text-rose-700 font-semibold'}>{readinessLevel}</span>
                 </div>
                 <div className="relative h-2 rounded bg-slate-100 overflow-hidden flex">
@@ -556,7 +556,7 @@ export default function ResultsPage() {
             <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg space-y-4 flex-1 flex flex-col justify-between">
               <div>
                 <h3 className="text-xs font-semibold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
-                  Scores by Hiring Dimension
+                  Scores by {state.goal === 'win_clients' ? 'Client' : 'Hiring'} Dimension
                 </h3>
 
                 <div className="space-y-3.5 pt-3">

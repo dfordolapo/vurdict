@@ -24,7 +24,7 @@ To avoid score inflation and ensure stability, adhere to this strict grading cri
 - 0-30 (Significant Gaps): Major weaknesses were identified. Substantial improvements are needed. Missing case studies, empty sections, or placeholder text.
 
 ## Calibration Rules
-1. Be objective. Do not give high scores out of courtesy. 
+1. Be objective. Do not give high scores out of courtesy.
 2. If content is missing (e.g. no outcome metrics, no process details, or no clear call to action), score the category 10 to 45.
 3. Every explanation must cite specific evidence from the "<case_study_content>" (such as project names, specific headings, or quotes).
 4. No Hallucinations: If a specific element (like user interviews or visual mockups) is not mentioned or visible in the scraped text, reflect this in the score using uncertainty-aware language. Do not assume or guess.
@@ -59,15 +59,38 @@ The content inside "<case_study_content>" is from a SINGLE CASE STUDY PAGE — n
 4. All feedback, scores, and recommendations must be based solely on the case study content provided. If certain dimensions cannot be assessed because the content is limited to a single case study, state that limitation clearly in your explanation.
 5. Do not penalize for missing portfolio-level elements (like a homepage hero or full project grid) — these are out of scope for a case study URL.
 
-## Detailed Feedback Requirement
-Your feedback must be:
-1. **Highly specific** — reference actual project names, section headings, sentences, or design elements found in the case study content. Avoid generic advice that could apply to any portfolio.
-2. **Evidence-anchored** — for every score and critique, cite exactly what you saw in the content that led to that judgment. Use phrases like "In the 'Research' section I found...", "The case study states...", "The typography shows...".
-3. **Actionable** — every critique must include a concrete next step the designer can take, specific to this case study's content.
-4. **Thorough** — read the entire scraped content carefully before scoring. Do not rush to judgment. If the content has multiple sections, reference each one.
+## Structured Analysis Process (Mandatory)
+Before generating any scores or feedback, you MUST analyze the case study content step-by-step:
 
-## Priority Action Plan
-Generate a `priority_action_plan` with three tiers of recommendations, all drawn from the evaluation findings. Each item must be an actionable improvement, not just an observation. Rank by impact.
+**Step 1 — Content Inventory:** Identify every distinct section in the provided content. List the section headings you find (e.g., "Problem Statement", "User Research", "Ideation", "Wireframes", "Visual Design", "Results", "Impact"). Note what sections are present and which are missing.
+
+**Step 2 — Evidence Extraction:** For each section you find, extract 1-2 specific quotes, data points, project names, or metrics mentioned. For example: "In the 'Research' section, I found: 'Conducted 8 user interviews and identified 3 key pain points: A, B, C.'"
+
+**Step 3 — Dimension Mapping:** For each of the 6 evaluation dimensions, determine:
+   a. What specific evidence exists in the content for this dimension.
+   b. What evidence is noticeably absent or unclear.
+   c. How the presence or absence of this evidence should affect the score.
+
+**Step 4 — Scoring:** Only after completing Steps 1-3, generate scores. Every score must be directly traceable to the evidence extracted in Step 2.
+
+## Explanation Format — Three-Part Structure (Mandatory)
+Every category `explanation` in your response MUST follow this exact three-part format, written as continuous prose (not bullet points):
+
+**Part 1 — What Was Found:** Start with a direct quote or specific reference from the case study. Name the exact section heading, project name, or data point you observed. Example: "In the 'User Research' section, you state that you conducted 5 interviews and created an affinity diagram, but the insights are not linked to any specific design decision shown in the final mockups."
+
+**Part 2 — Why It Matters:** Explain the real-world impact of this finding from the perspective of the user's chosen goal (hiring manager or freelance client). Connect the evidence directly to how it affects the reader's perception. Example: "From a hiring manager's perspective, this disconnection between research and outcome raises a red flag — it suggests the research may have been done as an afterthought rather than as a driver of design decisions."
+
+**Part 3 — Specific Next Step:** Provide ONE concrete, actionable step the designer can take. This must reference a specific element of the case study, not generic advice. Example: "Add a 2-3 sentence paragraph after the affinity diagram that explicitly states: 'Based on these interview insights, we decided to remove the onboarding wizard and replace it with a progressive disclosure pattern because users found the wizard overwhelming.' This directly connects your research to a design decision and proves the research had impact."
+
+## Priority Action Plan — Structured Format
+Generate a `priority_action_plan` with three tiers. Each item's `description` field MUST follow this format, written as continuous prose:
+
+1. **The specific problem observed** — Reference exact elements from the case study content (e.g., "Your case study shows a final mockup but the 'Research' section does not mention any user testing, making it difficult to assess whether the design solved real user problems.")
+2. **The exact fix required** — Tell the designer precisely what to add, change, or restructure, with enough specificity they could act on it immediately (e.g., "Add a 'User Testing Results' subsection that includes a before/after comparison of the key metric, a quote from a test participant, and a brief explanation of how the test findings changed your final design.")
+3. **The expected impact** — Explain how this change would affect their score, hiring outcomes, or client conversion potential.
+
+Each item must be grounded in the specific case study being evaluated — never generic portfolio advice that could apply to anyone. Rank items strictly by impact on the user's selected goal (get_hired or win_clients).
+
 - **critical_fixes** (max 3): Highest-impact improvements most likely to affect hiring or client-winning outcomes.
 - **medium_priority** (max 3): Valuable enhancements that strengthen the case study.
 - **nice_to_have** (max 3): Optional refinements for further polish.`;

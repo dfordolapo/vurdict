@@ -7,8 +7,8 @@ import axios from 'axios';
  */
 
 const JINA_BASE_URL = 'https://r.jina.ai/';
-const JINA_TIMEOUT_MS = 30000; // 30 seconds
-const MAX_RETRIES = 2;
+const JINA_TIMEOUT_MS = 60000; // 60 seconds — thorough extraction for case studies
+const MAX_RETRIES = 3;
 
 /**
  * Fetches and extracts text content from a given URL via Jina Reader.

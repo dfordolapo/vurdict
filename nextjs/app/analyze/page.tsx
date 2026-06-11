@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import MicroscopeIllustration from '../../components/MicroscopeIllustration';
+import BetaTicker from '../../components/BetaTicker';
 
 const GOAL_LIST = [
   { key: 'get_hired' as GoalType, label: 'Get Hired', desc: 'Land a full-time product design role', icon: Briefcase },
@@ -55,6 +56,7 @@ export default function AnalyzePage() {
 
   return (
     <div className="flex-1 bg-navy-950 flex items-center py-16">
+      <BetaTicker />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-12 gap-10 items-center">
 

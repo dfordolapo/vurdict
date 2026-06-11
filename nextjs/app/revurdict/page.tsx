@@ -3,8 +3,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Send, MessageSquare, Bot, MessageCircle, Compass, Radio, Rocket } from 'lucide-react';
-import BetaTicker from '../../components/BetaTicker';
-
 const EXAMPLE_MESSAGES = [
   {
     role: 'user',

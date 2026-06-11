@@ -10,6 +10,7 @@ import heroIllustration from '../assets/hero-illustration.png'
 import ctaIllustration from '../assets/cta-illustration.jpg'
 import Logo from '../components/Logo'
 import WaveDivider from '../components/WaveDivider'
+import BetaTicker from '../components/BetaTicker'
 
 
 
@@ -74,7 +75,7 @@ function Navbar() {
   ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-lg border-b border-slate-100 ${scrolled ? 'shadow-sm' : ''}`}>
+    <nav className={`transition-all duration-300 bg-white/95 backdrop-blur-lg border-b border-slate-100 ${scrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <Logo size="normal" />
@@ -740,7 +741,11 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 antialiased">
-      <Navbar />
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Navbar />
+        <BetaTicker />
+      </div>
+      <div className="h-[5.5rem]" />
       <main>
         <HeroSection />
         <ProblemSection />

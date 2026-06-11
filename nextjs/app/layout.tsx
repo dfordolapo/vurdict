@@ -4,8 +4,6 @@ import './globals.css';
 import { AnalysisProvider } from '../context/analysis-context';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import BetaTicker from '../components/BetaTicker';
-
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -26,7 +24,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-navy-950 font-sans text-slate-100">
         <AnalysisProvider>
           <Navbar />
-          <BetaTicker />
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
         </AnalysisProvider>

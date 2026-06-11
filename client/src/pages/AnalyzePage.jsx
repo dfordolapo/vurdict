@@ -7,7 +7,6 @@ import {
   Users,
   Sparkles,
   AlertCircle,
-  CheckCircle,
   Lock,
   Zap,
   Server,
@@ -15,6 +14,7 @@ import {
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
+import BetaTicker from '../components/BetaTicker';
 import analyzeIllustration from '../assets/analyze_illustration.png';
 
 const GOALS = [
@@ -80,19 +80,22 @@ export default function AnalyzePage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col relative overflow-x-hidden select-none font-sans">
 
-      {/* Header */}
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
-      <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
-        <Logo onClick={() => navigate('/')} />
-        <button
-          onClick={() => navigate('/')}
-          className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
-        >
-          <span>← Back to Home</span>
-        </button>
+      {/* Fixed header stack */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <header className="bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
+          <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
+            <Logo onClick={() => navigate('/')} />
+            <button
+              onClick={() => navigate('/')}
+              className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <span>← Back to Home</span>
+            </button>
+          </div>
+        </header>
+        <BetaTicker />
       </div>
-    </header>
-    <div className="h-16 shrink-0" />
+      <div className="h-[5.5rem] shrink-0" />
 
       {/* Wave to navy */}
       <div className="w-full bg-white">
@@ -245,11 +248,6 @@ export default function AnalyzePage() {
                   <ArrowRight size={16} />
                 </button>
 
-                {/* Secondary text */}
-                <p className="text-center text-xs text-sky-200/60 font-normal">
-                  No signup required. Your review will be generated instantly.
-                </p>
-
                 {/* Error */}
                 {error && (
                   <div className="flex items-center gap-2 text-xs text-red-300 font-normal justify-center bg-red-500/10 border border-red-500/20 p-3 rounded-2xl">
@@ -279,7 +277,6 @@ export default function AnalyzePage() {
       <div className="bg-white py-8 px-6 md:px-12 border-t border-slate-100">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 text-slate-500 text-xs font-normal">
           {[
-            { icon: CheckCircle, text: 'No signup required', sub: 'Get your results instantly.' },
             { icon: Shield, text: 'Works with any portfolio', sub: 'Personal websites, Notion, Framer, Webflow & more.' },
             { icon: Zap, text: 'Fast & automated', sub: 'Get your full analysis in under a minute.' },
           ].map((item, idx) => {
