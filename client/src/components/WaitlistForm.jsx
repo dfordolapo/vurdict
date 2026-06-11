@@ -6,6 +6,7 @@ const apiUrl = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' &&
 export default function WaitlistForm({ feature = 'this feature', placeholder = 'you@example.com', buttonText = 'Notify Me' }) {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [alreadyJoined, setAlreadyJoined] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -23,11 +24,15 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
     setLoading(true)
 
     try {
-      await fetch(`${apiUrl}/api/waitlist`, {
+      const res = await fetch(`${apiUrl}/api/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), feature })
       })
+      const data = await res.json()
+      if (data.message === 'Already on the waitlist.') {
+        setAlreadyJoined(true)
+      }
     } catch (err) {
       console.log('Waitlist signup:', { email: email.trim(), feature })
     }
@@ -40,7 +45,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
     return (
       <div className="flex items-center gap-2 text-xs text-emerald-600 font-medium">
         <CheckCircle size={14} />
-        <span>You're on the list! We'll let you know when {feature} is ready.</span>
+        <span>{alreadyJoined ? 'This email is already on the waitlist.' : `You're on the list! We'll let you know when ${feature} is ready.`}</span>
       </div>
     )
   }

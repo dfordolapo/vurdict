@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 
   const emails = readEmails();
 
-  if (emails.some((e) => e.email === email)) {
+  if (emails.some((e) => e.email === email && e.feature === (feature || 'general'))) {
     return res.json({ success: true, message: 'Already on the waitlist.' });
   }
 
@@ -48,15 +48,20 @@ router.post('/', async (req, res) => {
   writeEmails(emails);
 
   try {
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: process.env.NOTIFY_EMAIL || 'hellovurdict@gmail.com',
       subject: `New Waitlist Signup: ${feature || 'general'}`,
       html: `<p><strong>Email:</strong> ${email}</p><p><strong>Feature:</strong> ${feature || 'general'}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
     });
-    console.log(`[Waitlist] Notification sent for: ${email}`);
+
+    if (error) {
+      console.error('[Waitlist] Email notification failed:', error);
+    } else {
+      console.log(`[Waitlist] Notification sent for: ${email} (id: ${data?.id})`);
+    }
   } catch (err) {
-    console.error('[Waitlist] Email notification failed:', err.message);
+    console.error('[Waitlist] Email notification threw an exception:', err.message);
   }
 
   res.json({ success: true, message: 'You\'re on the list!' });

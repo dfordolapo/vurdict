@@ -42,8 +42,6 @@ export default function ResultsPage() {
   const { state, resetAnalysis, toggleMockFallback } = useAnalysis();
   const [copied, setCopied] = useState(false);
   const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const [saveEmail, setSaveEmail] = useState('');
-  const [saveSubmitted, setSaveSubmitted] = useState(false);
 
 
   const handleDownload = () => {
@@ -215,16 +213,8 @@ export default function ResultsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleSaveSubmit = (e) => {
-    e.preventDefault();
-    if (!saveEmail.trim()) return;
-    setSaveSubmitted(true);
-  };
-
   const closeSaveModal = () => {
     setSaveModalOpen(false);
-    setSaveSubmitted(false);
-    setSaveEmail('');
   };
 
   const handleShare = () => {
@@ -764,63 +754,27 @@ export default function ResultsPage() {
               <X size={16} />
             </button>
 
-            {!saveSubmitted ? (
-              <>
-                <Bookmark size={26} className="text-white mb-5" />
-                <h3 className="text-xl font-semibold text-slate-900 mb-1">Get Your Report</h3>
-                <p className="text-sm text-slate-500 font-normal mb-6 leading-relaxed">
-                  Enter your email and we'll send you a copy of this report.
-                </p>
-
-                <form onSubmit={handleSaveSubmit} className="space-y-4">
-                  <div>
-                    <label className="text-xs font-semibold text-slate-700 mb-1.5 block">Email address</label>
-                    <div className="flex items-center gap-2.5 rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 focus-within:border-brand-900/30 focus-within:bg-white transition-all">
-                      <Mail size={16} className="text-slate-400 shrink-0" />
-                      <input
-                        type="email"
-                        value={saveEmail}
-                        onChange={(e) => setSaveEmail(e.target.value)}
-                        placeholder="you@example.com"
-                        required
-                        className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full btn-brand flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium cursor-pointer"
-                  >
-                    <Mail size={14} />
-                    <span>Send to My Email</span>
-                  </button>
-                </form>
-              </>
-            ) : (
-              <>
-                <div className="mb-6 flex justify-center">
-                  <img 
-                    src={emailComingSoonIllustration} 
-                    alt="Coming soon illustration" 
-                    className="w-48 h-auto object-contain select-none"
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Coming Soon</h3>
-                <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
-                  Email delivery isn't ready yet. Get notified when it launches.
-                </p>
-                <div className="mt-5">
-                  <WaitlistForm feature="Email Delivery" buttonText="Notify Me" placeholder="your@email.com" />
-                </div>
-                <button
-                  onClick={closeSaveModal}
-                  className="w-full mt-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
-                >
-                  Got it
-                </button>
-              </>
-            )}
+            <div className="mb-6 flex justify-center">
+              <img 
+                src={emailComingSoonIllustration} 
+                alt="Coming soon illustration" 
+                className="w-48 h-auto object-contain select-none"
+                loading="lazy"
+              />
+            </div>
+            <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Coming Soon</h3>
+            <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
+              Email delivery isn't ready yet. Get notified when it launches.
+            </p>
+            <div className="mt-5">
+              <WaitlistForm feature="Email Delivery" buttonText="Notify Me" placeholder="your@email.com" />
+            </div>
+            <button
+              onClick={closeSaveModal}
+              className="w-full mt-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
+            >
+              Got it
+            </button>
           </div>
         </div>
       )}
