@@ -241,26 +241,26 @@ export default function ReVurdictPage() {
                   <svg viewBox="0 0 200 160" fill="none" className="w-full h-auto">
                     <defs>
                       <linearGradient id="vg" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#6366f1" />
-                        <stop offset="100%" stopColor="#4f46e5" />
+                        <stop offset="0%" stopColor="#1e3a5f" />
+                        <stop offset="100%" stopColor="#172554" />
                       </linearGradient>
                       <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#0ea5e9" />
-                        <stop offset="100%" stopColor="#0284c7" />
+                        <stop offset="0%" stopColor="#38bdf8" />
+                        <stop offset="100%" stopColor="#0ea5e9" />
                       </linearGradient>
                     </defs>
-                    <circle cx="75" cy="80" r="48" fill="url(#vg)" opacity="0.15" />
-                    <circle cx="125" cy="80" r="48" fill="url(#rg)" opacity="0.15" />
+                    <circle cx="75" cy="80" r="48" fill="url(#vg)" opacity="0.12" />
+                    <circle cx="125" cy="80" r="48" fill="url(#rg)" opacity="0.12" />
                     <circle cx="75" cy="80" r="32" stroke="url(#vg)" strokeWidth="2.5" fill="none" />
                     <circle cx="125" cy="80" r="32" stroke="url(#rg)" strokeWidth="2.5" fill="none" />
-                    <text x="67" y="85" fontSize="13" fontWeight="700" fill="#4f46e5" fontFamily="system-ui">V</text>
+                    <text x="67" y="85" fontSize="13" fontWeight="700" fill="#172554" fontFamily="system-ui">V</text>
                     <text x="115" y="85" fontSize="13" fontWeight="700" fill="#0ea5e9" fontFamily="system-ui">R</text>
                     <line x1="100" y1="50" x2="100" y2="110" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3" />
                     <circle cx="100" cy="80" r="8" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1" />
                     <text x="96" y="84" fontSize="9" fill="#64748b" fontFamily="system-ui">+</text>
-                    <path d="M100 88 Q100 120 60 130" stroke="#6366f1" strokeWidth="1.5" strokeDasharray="3 3" fill="none" opacity="0.4" />
+                    <path d="M100 88 Q100 120 60 130" stroke="#172554" strokeWidth="1.5" strokeDasharray="3 3" fill="none" opacity="0.4" />
                     <path d="M100 88 Q100 120 140 130" stroke="#0ea5e9" strokeWidth="1.5" strokeDasharray="3 3" fill="none" opacity="0.4" />
-                    <circle cx="60" cy="134" r="4" fill="#6366f1" opacity="0.6" />
+                    <circle cx="60" cy="134" r="4" fill="#172554" opacity="0.6" />
                     <circle cx="140" cy="134" r="4" fill="#0ea5e9" opacity="0.6" />
                   </svg>
                 </div>
