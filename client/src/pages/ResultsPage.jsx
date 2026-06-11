@@ -18,7 +18,6 @@ import {
   HelpCircle,
   Code,
   Download,
-  Bookmark,
   Share2,
   AlertTriangle,
   Trophy,
@@ -29,21 +28,15 @@ import {
   SwatchBook,
   Feather,
   Target,
-  X,
-  Mail,
   ClipboardList
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WaveDivider from '../components/WaveDivider';
-import WaitlistForm from '../components/WaitlistForm';
-import emailComingSoonIllustration from '../assets/email_coming_soon_illustration.png';
 
 export default function ResultsPage() {
   const navigate = useNavigate();
   const { state, resetAnalysis, toggleMockFallback } = useAnalysis();
   const [copied, setCopied] = useState(false);
-  const [saveModalOpen, setSaveModalOpen] = useState(false);
-
 
   const handleDownload = () => {
     const dims = [
@@ -212,10 +205,6 @@ export default function ResultsPage() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
-
-  const closeSaveModal = () => {
-    setSaveModalOpen(false);
   };
 
   const handleShare = () => {
@@ -419,13 +408,6 @@ export default function ResultsPage() {
               >
                 <Download size={14} className="text-brand-900" />
                 <span>Download</span>
-              </button>
-              <button
-                onClick={() => setSaveModalOpen(true)}
-                className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
-              >
-                <Bookmark size={14} />
-                <span>Save</span>
               </button>
               <button 
                 onClick={handleShare}
@@ -728,43 +710,6 @@ export default function ResultsPage() {
           </button>
         </div>
       </div>
-
-      {/* Save Modal */}
-      {saveModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeSaveModal} />
-          <div className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 animate-fade-in-up">
-            <button
-              onClick={closeSaveModal}
-              className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-all cursor-pointer"
-            >
-              <X size={16} />
-            </button>
-
-            <div className="mb-6 flex justify-center">
-              <img 
-                src={emailComingSoonIllustration} 
-                alt="Coming soon illustration" 
-                className="w-48 h-auto object-contain select-none"
-                loading="lazy"
-              />
-            </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Coming Soon</h3>
-            <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
-              Email delivery isn't ready yet. Get notified when it launches.
-            </p>
-            <div className="mt-5">
-              <WaitlistForm feature="Email Delivery" buttonText="Notify Me" placeholder="your@email.com" />
-            </div>
-            <button
-              onClick={closeSaveModal}
-              className="w-full mt-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
-            >
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
 
       <Footer />
 

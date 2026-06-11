@@ -196,9 +196,7 @@ function HeroSection() {
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-            Paste your case study link<span className="md:hidden"><br /></span><span className="hidden md:inline">, select your goal,<br /></span>
-            <span className="md:hidden">select your goal, and get feedback<br /></span>
-            <span className="hidden md:inline">and get feedback </span>on what's helping and what to fix first.
+            Paste your case study link, select your goal / and get feedback on what to fix.
           </p>
 
           {/* Form container */}
