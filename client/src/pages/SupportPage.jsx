@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Logo from '../components/Logo';
-import { Heart, Brain, Cloud, Terminal, HeartHandshake, X, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
+import { Heart, Brain, Cloud, Terminal, Server, HeartHandshake, X, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
 import supportIllustration from '../assets/support_illustration.png';
 
 const DONATION_UNAVAILABLE = 'Support payments are temporarily unavailable. Please try again later.';
@@ -161,7 +161,7 @@ export default function SupportPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-center space-y-8 select-text">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 pt-16 pb-16 md:pt-20 md:pb-20 text-center space-y-8 select-text">
         <div className="space-y-3 border-b border-slate-100 pb-6">
           <div className="w-full max-w-[200px] mb-4 mx-auto">
             <img src={supportIllustration} alt="Support Vurdict illustration" className="w-full h-auto object-contain select-none" />
@@ -176,8 +176,8 @@ export default function SupportPage() {
           <h2 className="text-lg font-bold text-slate-900 mt-6 uppercase tracking-wider">What Your Support Covers</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Brain },
-              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Cloud },
+              { title: "AI evaluation costs", desc: "Every analysis runs through the Gemini API, which has a cost per request.", icon: Cloud },
+              { title: "Infrastructure", desc: "Hosting, URL reading services, and keeping the platform fast and reliable.", icon: Server },
               { title: "Development", desc: "Your support helps fund new features like Re:Vurdict, a curated Case Study Reference Library, email-delivered reports, expanded role support, smarter evaluation systems, and ongoing platform development.", icon: Terminal },
               { title: "Keeping it free", desc: "Ensuring a junior designer in Lagos has access to the same quality feedback as one in London.", icon: HeartHandshake }
             ].map((item, idx) => {

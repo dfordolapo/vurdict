@@ -8,6 +8,7 @@ import analyzeRouter from './routes/analyze.js';
 import sendReportRouter from './routes/send-report.js';
 import chatRouter from './routes/chat.js';
 import paymentsRouter from './routes/payments.js';
+import waitlistRouter from './routes/waitlist.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -102,6 +103,7 @@ app.use('/api/analyze', rateLimiter, analyzeRouter);
 app.use('/api/send-report', sendReportRouter);
 app.use('/api/chat', chatRouter);
 app.use('/api/payments', paymentsRouter);
+app.use('/api/waitlist', waitlistRouter);
 
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
 app.get('*', (req, res) => {

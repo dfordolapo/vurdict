@@ -21,7 +21,7 @@ export default function TermsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 py-24 md:py-32 text-center space-y-8 select-text">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 pt-16 pb-16 md:pt-20 md:pb-20 text-center space-y-8 select-text">
         <div className="space-y-2 border-b border-slate-100 pb-6">
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Terms of Use</h1>
           <p className="text-xs text-slate-400 font-medium">

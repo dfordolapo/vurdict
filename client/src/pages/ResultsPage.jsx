@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
+import WaitlistForm from '../components/WaitlistForm';
 import emailComingSoonIllustration from '../assets/email_coming_soon_illustration.png';
 
 export default function ResultsPage() {
@@ -805,13 +806,16 @@ export default function ResultsPage() {
                     loading="lazy"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-1">Coming Soon</h3>
-                <p className="text-sm text-slate-500 font-normal leading-relaxed">
-                  Email delivery isn't ready yet. We'll let <strong className="text-slate-700 font-semibold">{saveEmail}</strong> know as soon as it's available, along with everyone else on the waitlist.
+                <h3 className="text-xl font-semibold text-slate-900 mb-1 text-center">Coming Soon</h3>
+                <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
+                  Email delivery isn't ready yet. Get notified when it launches.
                 </p>
+                <div className="mt-5">
+                  <WaitlistForm feature="Email Delivery" buttonText="Notify Me" placeholder="your@email.com" />
+                </div>
                 <button
                   onClick={closeSaveModal}
-                  className="w-full mt-6 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white py-3.5 text-sm font-medium transition-all cursor-pointer shadow-lg shadow-brand-950/10"
+                  className="w-full mt-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
                 >
                   Got it
                 </button>

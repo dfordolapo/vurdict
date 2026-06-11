@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { ArrowRight, Send, MessageSquare, Bot, MessageCircle, Compass, Radio, Rocket } from 'lucide-react'
+import { ArrowRight, Send, MessageSquare, Bot, MessageCircle, GraduationCap, Radio, Rocket } from 'lucide-react'
 import Logo from '../components/Logo'
+import WaitlistForm from '../components/WaitlistForm'
 
 const EXAMPLE_MESSAGES = [
   {
@@ -86,21 +87,22 @@ export default function ReVurdictPage() {
                   into your scores.
                 </p>
               </div>
-              <div className="flex flex-col gap-3 w-full md:w-auto">
-                <Link
-                  to="/analyze"
-                  className="btn-brand flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[11px] font-medium group whitespace-nowrap"
-                >
-                  <span>Run a Vurdict Analysis</span>
-                  <ArrowRight size={12} className="transition-all duration-200 group-hover:translate-x-1" />
-                </Link>
-                <a
-                  href="mailto:hellovurdict@gmail.com?subject=Re:Vurdict Waitlist"
-                  className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-[11px] font-medium text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all whitespace-nowrap"
-                >
-                  <Rocket size={12} className="text-sky-500" />
-                  <span>Join the Waitlist</span>
-                </a>
+              <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm w-full md:w-72 space-y-3">
+                <div>
+                  <h3 className="text-xs font-semibold text-slate-900">Join the Re:Vurdict Waitlist</h3>
+                  <p className="text-[10px] text-slate-500 mt-0.5 leading-relaxed">
+                    Be the first to chat with your AI portfolio coach.
+                  </p>
+                </div>
+                <ul className="space-y-1.5">
+                  {['Get instant feedback on any case study question', 'Deep-dive into your scores with follow-up chats', 'Early access to new AI coaching features'].map((benefit, i) => (
+                    <li key={i} className="flex items-start gap-2 text-[10px] text-slate-600">
+                      <span className="text-sky-500 mt-0.5 shrink-0">&#10003;</span>
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+                <WaitlistForm feature="Re:Vurdict" buttonText="Join the Waitlist" placeholder="your@email.com" />
               </div>
             </div>
 
@@ -179,16 +181,9 @@ export default function ReVurdictPage() {
                         <MessageSquare size={11} className="text-sky-500" />
                         <span className="text-[11px] font-bold text-sky-600">Re:Vurdict</span>
                       </div>
-                      <p className="text-[11px] text-slate-600 leading-relaxed font-normal mb-2">
-                        It's coming soon. While you wait, run a full Vurdict analysis to see where your portfolio stands today.
+                      <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
+                        It's coming soon. Join the waitlist above to get early access.
                       </p>
-                      <Link
-                        to="/analyze"
-                        className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-sky-600 hover:text-sky-700 transition-colors group"
-                      >
-                        <span>Run a Vurdict Analysis</span>
-                        <ArrowRight size={11} className="transition-all duration-200 group-hover:translate-x-0.5" />
-                      </Link>
                     </div>
                   </div>
                 )}
@@ -224,7 +219,7 @@ export default function ReVurdictPage() {
             <div className="grid sm:grid-cols-3 gap-4 mt-10">
               {[
                 { icon: MessageCircle, title: 'Chat About Your Report', desc: 'Ask follow-ups about scores, dimensions, and recommendations from your Vurdict analysis.' },
-                { icon: Compass, title: 'Career Coaching', desc: 'Get portfolio strategy advice, interview prep tips, and hiring manager perspective.' },
+                { icon: GraduationCap, title: 'Career Coaching', desc: 'Get portfolio strategy advice, interview prep tips, and hiring manager perspective.' },
                 { icon: Radio, title: 'Real-Time Guidance', desc: 'Upload screenshots, discuss case studies, and challenge feedback in natural conversation.' },
               ].map((item, idx) => {
                 const Icon = item.icon
@@ -239,27 +234,60 @@ export default function ReVurdictPage() {
             </div>
 
             {/* Ecosystem CTA */}
-            <div className="mt-12 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 rounded-2xl p-6 text-center">
-            <h2 className="text-sm font-semibold text-slate-900 mb-2">Two Products, One Ecosystem</h2>
-            <p className="text-xs text-slate-500 max-w-lg mx-auto leading-relaxed mb-4 font-normal">
-                <span className="font-semibold text-slate-700">Vurdict</span> delivers the verdict. <span className="font-semibold text-slate-700">Re:Vurdict</span> continues the conversation. 
-                Together, they form a complete portfolio improvement system.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                  to="/analyze"
-                  className="btn-brand flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-[11px] font-medium group"
-                >
-                  <span>Get Your Vurdict Report</span>
-                  <ArrowRight size={12} className="transition-all duration-200 group-hover:translate-x-1" />
-                </Link>
-                <a
-                  href="mailto:hellovurdict@gmail.com?subject=Re:Vurdict Waitlist"
-                  className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-[11px] font-medium text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-white transition-all"
-                >
-                  <Rocket size={12} className="text-sky-500" />
-                  <span>Join Re:Vurdict Waitlist</span>
-                </a>
+            <div className="mt-12 max-w-3xl mx-auto bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-100/80 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+              <div className="absolute w-72 h-72 rounded-full bg-sky-200/20 blur-[80px] -top-20 -right-20 pointer-events-none" />
+              <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                <div className="w-full max-w-[200px] shrink-0">
+                  <svg viewBox="0 0 200 160" fill="none" className="w-full h-auto">
+                    <defs>
+                      <linearGradient id="vg" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#6366f1" />
+                        <stop offset="100%" stopColor="#4f46e5" />
+                      </linearGradient>
+                      <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#0ea5e9" />
+                        <stop offset="100%" stopColor="#0284c7" />
+                      </linearGradient>
+                    </defs>
+                    <circle cx="75" cy="80" r="48" fill="url(#vg)" opacity="0.15" />
+                    <circle cx="125" cy="80" r="48" fill="url(#rg)" opacity="0.15" />
+                    <circle cx="75" cy="80" r="32" stroke="url(#vg)" strokeWidth="2.5" fill="none" />
+                    <circle cx="125" cy="80" r="32" stroke="url(#rg)" strokeWidth="2.5" fill="none" />
+                    <text x="67" y="85" fontSize="13" fontWeight="700" fill="#4f46e5" fontFamily="system-ui">V</text>
+                    <text x="115" y="85" fontSize="13" fontWeight="700" fill="#0ea5e9" fontFamily="system-ui">R</text>
+                    <line x1="100" y1="50" x2="100" y2="110" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3" />
+                    <circle cx="100" cy="80" r="8" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1" />
+                    <text x="96" y="84" fontSize="9" fill="#64748b" fontFamily="system-ui">+</text>
+                    <path d="M100 88 Q100 120 60 130" stroke="#6366f1" strokeWidth="1.5" strokeDasharray="3 3" fill="none" opacity="0.4" />
+                    <path d="M100 88 Q100 120 140 130" stroke="#0ea5e9" strokeWidth="1.5" strokeDasharray="3 3" fill="none" opacity="0.4" />
+                    <circle cx="60" cy="134" r="4" fill="#6366f1" opacity="0.6" />
+                    <circle cx="140" cy="134" r="4" fill="#0ea5e9" opacity="0.6" />
+                  </svg>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-sm font-semibold text-slate-900 mb-1">Two Products, One Ecosystem</h2>
+                  <p className="text-xs text-slate-500 max-w-md leading-relaxed mb-5 font-normal">
+                    <span className="font-semibold text-slate-700">Vurdict</span> delivers the verdict. <span className="font-semibold text-slate-700">Re:Vurdict</span> continues the conversation. 
+                    Together, they form a complete portfolio improvement system.
+                  </p>
+                  <div className="max-w-xs">
+                    <div className="bg-white/80 border border-sky-100/60 rounded-xl p-5 text-left space-y-3 shadow-sm">
+                      <div>
+                        <h3 className="text-[11px] font-semibold text-slate-900">Join the Re:Vurdict Waitlist</h3>
+                        <p className="text-[9px] text-slate-500 leading-relaxed mt-0.5">Be the first to experience AI-powered portfolio coaching.</p>
+                      </div>
+                      <ul className="space-y-1">
+                        {['Chat with your portfolio scores', 'Get rewrite suggestions for weak spots', 'Early adopter perks'].map((benefit, i) => (
+                          <li key={i} className="flex items-start gap-1.5 text-[9px] text-slate-600">
+                            <span className="text-sky-500 shrink-0">&#10003;</span>
+                            {benefit}
+                          </li>
+                        ))}
+                      </ul>
+                      <WaitlistForm feature="Re:Vurdict" buttonText="Join the Waitlist" placeholder="your@email.com" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
+import WaitlistForm from '../components/WaitlistForm';
 import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
 import {
@@ -645,9 +646,12 @@ export default function DimensionDetailsPage() {
               <p className="text-sm text-slate-500 font-normal leading-relaxed text-center">
                 We are compiling real case studies from top designers to show what these improvements look like in practice.
               </p>
+              <div className="mt-5">
+                <WaitlistForm feature="Example Case Studies" buttonText="Notify Me" placeholder="your@email.com" />
+              </div>
              <button
                onClick={() => setExamplesModalOpen(false)}
-               className="w-full mt-6 rounded-2xl bg-brand-900 hover:bg-brand-800 text-white py-3.5 text-sm font-medium transition-all cursor-pointer shadow-lg shadow-brand-950/10"
+               className="w-full mt-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 text-sm font-medium transition-all cursor-pointer"
              >
                Got it
              </button>
@@ -719,7 +723,7 @@ export default function DimensionDetailsPage() {
           </div>
 
           {/* Coming Soon Showcase Inside Chatbox */}
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white space-y-6">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white space-y-5">
             <div className="w-48 h-auto flex items-center justify-center">
               <img 
                 src={comingSoonIllustration} 
@@ -735,20 +739,9 @@ export default function DimensionDetailsPage() {
                 Your AI design bestie is wrapping up work. We'll be chatting here super soon!
               </p>
             </div>
-          </div>
 
-          {/* Disabled Form Input for Coming Soon */}
-          <div className="p-4 border-t border-slate-100 bg-white rounded-b-[30px]">
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-100 bg-slate-50/50 px-4 py-2.5 opacity-60">
-              <input 
-                type="text"
-                placeholder="Chat disabled during calibration..."
-                className="w-full bg-transparent text-xs text-slate-400 focus:outline-none cursor-not-allowed"
-                disabled
-              />
-              <span className="text-[10px] font-normal text-slate-350 uppercase shrink-0 select-none">
-                Send
-              </span>
+            <div className="w-full max-w-xs">
+              <WaitlistForm feature="Co-Pilot" buttonText="Notify Me" placeholder="your@email.com" />
             </div>
           </div>
         </div>

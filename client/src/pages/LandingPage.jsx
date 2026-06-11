@@ -4,7 +4,7 @@ import {
   ArrowRight, Globe, Briefcase, Users, Lock, Zap,
   CheckCircle, Star, ChevronDown, ChevronUp, TrendingUp, Eye,
   Target, Layers, BookOpen, Code2, Quote, Sparkles,
-  Workflow, Microscope, SwatchBook, Feather, Menu, X
+  Workflow, Brain, SwatchBook, Feather, Menu, X
 } from 'lucide-react'
 import heroIllustration from '../assets/hero-illustration.png'
 import ctaIllustration from '../assets/cta-illustration.jpg'
@@ -418,7 +418,7 @@ function FrameworkSection() {
       desc: 'Evaluates the flow of your case study, ensuring problem statements connect logically to delivered solutions.',
     },
     {
-      icon: Microscope,
+      icon: Brain,
       title: 'Critical Thinking',
       desc: 'Checks for evidence of research-driven decisions rather than purely aesthetic choices.',
     },
