@@ -34,7 +34,10 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
         setAlreadyJoined(true)
       }
     } catch (err) {
-      console.log('Waitlist signup:', { email: email.trim(), feature })
+      console.log('Waitlist signup error:', err.message)
+      setError('Something went wrong. Please try again.')
+      setLoading(false)
+      return
     }
 
     setLoading(false)

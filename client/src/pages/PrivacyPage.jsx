@@ -1,27 +1,14 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import Logo from '../components/Logo';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export default function PrivacyPage() {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between select-none font-sans relative overflow-x-hidden">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
-        <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
-          <Logo onClick={() => navigate('/')} />
-          <button
-            onClick={() => navigate('/')}
-            className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
-          >
-            <span>← Back to Home</span>
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Main Content */}
-      <main className="flex-1 max-w-3xl w-full mx-auto px-6 pt-16 pb-16 md:pt-20 md:pb-20 text-center space-y-8 select-text">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-20 text-center space-y-8 select-text">
         <div className="space-y-2 border-b border-slate-100 pb-6">
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Privacy Policy</h1>
           <p className="text-xs text-slate-400 font-medium">
@@ -183,25 +170,7 @@ export default function PrivacyPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-100 py-8 bg-white text-slate-500 z-10 shrink-0">
-        <div className="max-w-7xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col items-center md:items-start gap-1">
-            <div className="flex items-center">
-              <Logo size="small" />
-            </div>
-            <p className="text-[10px] text-slate-400 font-medium mt-1">
-              &copy; 2026 Vurdict. The Reviewer's Perspective.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-xs font-normal text-slate-500 justify-items-center md:flex md:gap-6">
-            <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
-            <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
-            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

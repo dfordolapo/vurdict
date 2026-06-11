@@ -12,6 +12,7 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage.jsx'))
 const TermsPage = lazy(() => import('./pages/TermsPage.jsx'))
 const SupportPage = lazy(() => import('./pages/SupportPage.jsx'))
 const ReVurdictPage = lazy(() => import('./pages/ReVurdictPage.jsx'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'))
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/revurdict" element={<ReVurdictPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         </div>
         <PWAInstallPrompt />

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
-import Logo from '../components/Logo';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import WaveDivider from '../components/WaveDivider';
 import WaitlistForm from '../components/WaitlistForm';
-import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
 import {
   Workflow,
@@ -405,18 +405,7 @@ export default function DimensionDetailsPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
-        <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
-          <Logo onClick={() => navigate('/')} />
-          <button 
-            onClick={() => navigate('/results')}
-            className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
-          >
-            <span>← Back to Report Card</span>
-          </button>
-        </div>
-      </div>
-      <div className="h-16 shrink-0" />
+      <Navbar />
 
       {/* Wave divider transitioning to Navy */}
       <div className="w-full bg-white z-10">
@@ -676,23 +665,7 @@ export default function DimensionDetailsPage() {
           </button>
         </div>
 
-        {/* Footer */}
-        <footer className="mt-8 pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-xs">
-          <div className="flex flex-col items-center md:items-start gap-1">
-            <div className="flex items-center">
-              <Logo size="small" />
-            </div>
-            <p className="text-[10px] text-slate-400 font-normal">
-              © 2026 Vurdict. The Reviewer's Perspective.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-1 font-normal text-slate-500 justify-items-center md:flex md:gap-6">
-            <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
-            <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
-            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
-          </div>
-        </footer>
+        <Footer />
       </div>
 
       {/* Co-Pilot AI Chatbox Drawer (Floating Bubble UI) */}
@@ -722,28 +695,78 @@ export default function DimensionDetailsPage() {
             </button>
           </div>
 
-          {/* Coming Soon Showcase Inside Chatbox */}
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white space-y-5">
-            <div className="w-48 h-auto flex items-center justify-center">
-              <img 
-                src={comingSoonIllustration} 
-                alt="Co-Pilot Coming Soon" 
-                className="w-full h-auto object-contain select-none"
-                loading="lazy"
-              />
-            </div>
-            
-            <div className="space-y-1.5">
-              <h3 className="text-base font-semibold text-slate-900">Co-Pilot is coming soon</h3>
-              <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
-                Your AI design bestie is wrapping up work. We'll be chatting here super soon!
-              </p>
-            </div>
-
-            <div className="w-full max-w-xs">
-              <WaitlistForm feature="Co-Pilot" buttonText="Notify Me" placeholder="your@email.com" />
+          {/* Dimension context badge */}
+          <div className="px-6 pt-3 pb-1 shrink-0">
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+              Helping with: <span className="text-slate-600 font-semibold">{activeDim.label}</span>
             </div>
           </div>
+
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto px-6 py-3 space-y-4 bg-white scroll-smooth">
+            {chatMessages.map((msg, idx) => (
+              <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                {msg.sender === 'ai' && (
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
+                    <MessageCircle size={12} className="text-white" />
+                  </div>
+                )}
+                <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed ${
+                  msg.sender === 'user'
+                    ? 'bg-brand-900 text-white rounded-tr-md'
+                    : 'bg-slate-50 text-slate-700 border border-slate-100 rounded-tl-md'
+                }`}>
+                  {msg.sender === 'ai' ? (
+                    <span dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
+                  ) : (
+                    msg.text
+                  )}
+                </div>
+              </div>
+            ))}
+            {chatLoading && (
+              <div className="flex justify-start">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
+                  <MessageCircle size={12} className="text-white" />
+                </div>
+                <div className="bg-slate-50 border border-slate-100 rounded-2xl rounded-tl-md px-4 py-3">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Chat Input */}
+          <form onSubmit={handleSendChatMessage} className="shrink-0 border-t border-slate-100 bg-white px-4 py-3 flex items-center gap-2">
+            <input
+              type="text"
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+              placeholder="Ask about your score, improvements, or examples..."
+              className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
+              disabled={chatLoading}
+            />
+            <button
+              type="submit"
+              disabled={!chatInput.trim() || chatLoading}
+              className="px-4 py-2.5 rounded-xl bg-brand-900 text-white text-xs font-semibold hover:bg-brand-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer shrink-0"
+            >
+              {chatLoading ? (
+                <span className="flex items-center gap-1">
+                  <span className="w-1 h-1 rounded-full bg-white animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1 h-1 rounded-full bg-white animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1 h-1 rounded-full bg-white animate-bounce" style={{ animationDelay: '300ms' }} />
+                </span>
+              ) : (
+                'Send'
+              )}
+            </button>
+          </form>
         </div>
       )}
 

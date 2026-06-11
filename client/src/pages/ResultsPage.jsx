@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 import { useAnalysis, getScoreStatus, getScoreBand } from '../context/AnalysisContext';
 import {
   ArrowLeft, 
@@ -32,7 +33,7 @@ import {
   Mail,
   ClipboardList
 } from 'lucide-react';
-import Logo from '../components/Logo';
+import Navbar from '../components/Navbar';
 import WaveDivider from '../components/WaveDivider';
 import WaitlistForm from '../components/WaitlistForm';
 import emailComingSoonIllustration from '../assets/email_coming_soon_illustration.png';
@@ -386,21 +387,7 @@ export default function ResultsPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
-        <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
-          <Logo onClick={() => { resetAnalysis(); navigate('/'); }} />
-          <button 
-            onClick={() => {
-              resetAnalysis();
-              navigate('/analyze');
-            }}
-            className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
-          >
-            <span>← Back to Analyze</span>
-          </button>
-        </div>
-      </div>
-      <div className="h-16 shrink-0" />
+      <Navbar />
 
       {/* Wave divider transitioning to Navy */}
       <div className="w-full bg-white z-10">
@@ -779,25 +766,7 @@ export default function ResultsPage() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-slate-100 py-8 bg-white text-slate-500 z-10">
-        <div className="max-w-7xl w-full mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-col items-center md:items-start gap-1">
-            <div className="flex items-center">
-              <Logo size="small" />
-            </div>
-            <p className="text-[10px] text-slate-400 font-medium">
-              © 2026 Vurdict. The Reviewer's Perspective.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-xs font-normal text-slate-500 justify-items-center md:flex md:gap-6">
-            <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
-            <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
-            <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   );

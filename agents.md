@@ -12,7 +12,7 @@ To provide product designers with objective, goal-aware portfolio feedback using
 - **Input**: URL only. No PDF uploads.
 - **Auth**: No user accounts. Stateless analysis.
 - **Persistence**: No database. Results are transient or shared via URL only (if implemented).
-- **Design**: Premium "Linear-style" dark mode. No light mode.
+- **Design**: Clean, modern light mode.
 
 ## 3. Technical Standards
 
