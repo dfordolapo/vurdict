@@ -74,7 +74,7 @@ Before generating any scores or feedback, you MUST analyze the case study conten
 **Step 4 — Scoring:** Only after completing Steps 1-3, generate scores. Every score must be directly traceable to the evidence extracted in Step 2.
 
 ## Explanation Format — Three-Part Structure (Mandatory)
-Every category `explanation` in your response MUST follow this exact three-part format, written as continuous prose (not bullet points):
+Every category \`explanation\` in your response MUST follow this exact three-part format, written as continuous prose (not bullet points):
 
 **Part 1 — What Was Found:** Start with a direct quote or specific reference from the case study. Name the exact section heading, project name, or data point you observed. Example: "In the 'User Research' section, you state that you conducted 5 interviews and created an affinity diagram, but the insights are not linked to any specific design decision shown in the final mockups."
 
@@ -83,7 +83,7 @@ Every category `explanation` in your response MUST follow this exact three-part 
 **Part 3 — Specific Next Step:** Provide ONE concrete, actionable step the designer can take. This must reference a specific element of the case study, not generic advice. Example: "Add a 2-3 sentence paragraph after the affinity diagram that explicitly states: 'Based on these interview insights, we decided to remove the onboarding wizard and replace it with a progressive disclosure pattern because users found the wizard overwhelming.' This directly connects your research to a design decision and proves the research had impact."
 
 ## Priority Action Plan — Structured Format
-Generate a `priority_action_plan` with three tiers. Each item's `description` field MUST follow this format, written as continuous prose:
+Generate a \`priority_action_plan\` with three tiers. Each item's \`description\` field MUST follow this format, written as continuous prose:
 
 1. **The specific problem observed** — Reference exact elements from the case study content (e.g., "Your case study shows a final mockup but the 'Research' section does not mention any user testing, making it difficult to assess whether the design solved real user problems.")
 2. **The exact fix required** — Tell the designer precisely what to add, change, or restructure, with enough specificity they could act on it immediately (e.g., "Add a 'User Testing Results' subsection that includes a before/after comparison of the key metric, a quote from a test participant, and a brief explanation of how the test findings changed your final design.")
