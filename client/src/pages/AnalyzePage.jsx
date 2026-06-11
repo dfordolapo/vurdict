@@ -8,9 +8,7 @@ import {
   Sparkles,
   AlertCircle,
   Lock,
-  Zap,
   Server,
-  Shield,
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
@@ -103,10 +101,10 @@ export default function AnalyzePage() {
       </div>
 
       {/* Navy section */}
-      <section className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden">
+      <section className="bg-brand-900 text-white pt-2 pb-3 md:pb-5 px-6 md:px-12 flex-1 relative overflow-hidden">
 
         <div className="max-w-7xl w-full mx-auto relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
             {/* ─── LEFT COLUMN: FORM ─── */}
             <div className="lg:col-span-5 space-y-7">
@@ -259,9 +257,9 @@ export default function AnalyzePage() {
             </div>
 
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}
-            <div className="lg:col-span-7 flex items-center justify-end mr-0 overflow-visible">
-                <div className="p-6 rounded-lg flex items-center justify-center">
-                    <img src={analyzeIllustration} alt="Portfolio analysis illustration" className="w-full max-w-[720px] h-auto select-none animate-float-slow flex-shrink-0" />
+            <div className="lg:col-span-7 flex justify-end mr-0 overflow-hidden">
+                <div className="flex items-center justify-center -m-4 sm:-m-6">
+                    <img src={analyzeIllustration} alt="Portfolio analysis illustration" className="w-full max-w-[600px] lg:max-w-[650px] h-auto select-none animate-float-slow flex-shrink-0" />
                 </div>
             </div>
             </div>
@@ -274,25 +272,16 @@ export default function AnalyzePage() {
       </div>
 
       {/* Bottom strip */}
-      <div className="bg-white py-8 px-6 md:px-12 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6 text-slate-500 text-xs font-normal">
-          {[
-            { icon: Shield, text: 'Works with any portfolio', sub: 'Personal websites, Notion, Framer, Webflow & more.' },
-            { icon: Zap, text: 'Fast & automated', sub: 'Get your full analysis in under a minute.' },
-          ].map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div key={idx} className="flex items-start gap-3">
-                <div className="h-8 w-8 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
-                  <Icon size={14} className="text-brand-900" />
-                </div>
-                <div>
-                  <p className="text-slate-800 font-normal">{item.text}</p>
-                  <p className="text-[10px] text-slate-400 font-normal mt-0.5">{item.sub}</p>
-                </div>
-              </div>
-            );
-          })}
+      <div className="bg-white py-5 md:py-6 px-6 md:px-12 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between gap-6 text-slate-500 text-xs font-normal">
+          <div>
+            <p className="text-slate-800 font-normal">Works with any portfolio</p>
+            <p className="text-[10px] text-slate-400 font-normal mt-0.5">Personal websites, Notion, Framer, Webflow & more.</p>
+          </div>
+          <div>
+            <p className="text-slate-800 font-normal">Fast & automated</p>
+            <p className="text-[10px] text-slate-400 font-normal mt-0.5">Get your full analysis in under 5 minutes.</p>
+          </div>
         </div>
       </div>
 
