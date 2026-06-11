@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import WaveDivider from '../components/WaveDivider';
 import WaitlistForm from '../components/WaitlistForm';
+import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
 import {
   Workflow,
@@ -342,73 +343,8 @@ export default function DimensionDetailsPage() {
 
   const details = getDetails(activeDim.slug, state.goal, state.experience);
 
-  const [devMode] = useState(() => localStorage.getItem('_vurdict_dev') || new URLSearchParams(window.location.search).has('dev'));
   const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([]);
-  const [chatInput, setChatInput] = useState('');
-  const [chatLoading, setChatLoading] = useState(false);
-  const [showPlaceholder, setShowPlaceholder] = useState(false);
   const [examplesModalOpen, setExamplesModalOpen] = useState(false);
-
-  // Initialize chat with a welcome message explaining the specific context of the active dimension
-  useEffect(() => {
-    if (chatOpen) {
-      setShowPlaceholder(false);
-      setChatMessages([
-        {
-          sender: 'ai',
-          text: `Hey! I'm your Vurdict Design Co-Pilot. I see you're looking at the **${activeDim.label}** dimension, where you scored **${activeData.score}/100**.\n\nAsk me anything about how this score was determined, how to resolve the issues found, or request concrete rewriting examples for your case study!`
-        }
-      ]);
-    }
-  }, [chatOpen, activeDim, activeData.score]);
-
-  const handleSendChatMessage = async (e) => {
-    e.preventDefault();
-    if (!chatInput.trim() || chatLoading) return;
-
-    if (!devMode) {
-      setShowPlaceholder(true);
-      return;
-    }
-
-    const userMsg = chatInput.trim();
-    setChatMessages(prev => [...prev, { sender: 'user', text: userMsg }]);
-    setChatInput('');
-    setChatLoading(true);
-
-    try {
-      // Direct call to Express backend Claude/Gemini API service
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: userMsg,
-          dimension: activeDim.label,
-          score: activeData.score,
-          explanation: activeData.explanation,
-          context: state.goal === 'win_clients' ? 'Win Freelance Clients' : 'Get Hired',
-          experience: state.experience
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setChatMessages(prev => [...prev, { sender: 'ai', text: data.reply }]);
-      } else {
-        throw new Error('API failed');
-      }
-    } catch (err) {
-      console.error(err);
-      // Fallback answers based on the dimension info to preserve reliability
-      setTimeout(() => {
-        let fallbackReply = `I'm sorry, I encountered a temporary connection issue. However, regarding your **${activeDim.label}** score of **${activeData.score}**, I highly recommend looking at the recommendation to **${details.recommendation.title.toLowerCase()}**. Let me know if you want me to write some text headers or outline blocks to solve this!`;
-        setChatMessages(prev => [...prev, { sender: 'ai', text: fallbackReply }]);
-      }, 800);
-    } finally {
-      setChatLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
@@ -692,7 +628,7 @@ export default function DimensionDetailsPage() {
               <MessageCircle size={20} className="text-sky-300 animate-pulse" />
               <div>
                 <h4 className="text-xs font-semibold leading-none">Design Co-Pilot</h4>
-                <span className="text-[9px] text-sky-100/70 font-normal mt-0.5 block">{devMode ? 'Your Design Lead Best Friend' : 'Coming Soon'}</span>
+                <span className="text-[9px] text-sky-100/70 font-normal mt-0.5 block">Your Design Lead Best Friend</span>
               </div>
             </div>
             <button 
@@ -703,94 +639,28 @@ export default function DimensionDetailsPage() {
             </button>
           </div>
 
-          {/* Dimension context badge */}
-          <div className="px-6 pt-3 pb-1 shrink-0">
-            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-              Helping with: <span className="text-slate-600 font-semibold">{activeDim.label}</span>
+          {/* Coming Soon Showcase Inside Chatbox */}
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white space-y-5">
+            <div className="w-48 h-auto flex items-center justify-center">
+              <img 
+                src={comingSoonIllustration} 
+                alt="Co-Pilot Coming Soon" 
+                className="w-full h-auto object-contain select-none"
+                loading="lazy"
+              />
+            </div>
+            
+            <div className="space-y-1.5">
+              <h3 className="text-base font-semibold text-slate-900">Co-Pilot is coming soon</h3>
+              <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
+                Your AI design bestie is wrapping up work. We'll be chatting here super soon!
+              </p>
+            </div>
+
+            <div className="w-full max-w-xs">
+              <WaitlistForm feature="Co-Pilot" buttonText="Notify Me" placeholder="your@email.com" />
             </div>
           </div>
-
-          {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto px-6 py-3 space-y-4 bg-white scroll-smooth">
-            {chatMessages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {msg.sender === 'ai' && (
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
-                    <MessageCircle size={12} className="text-white" />
-                  </div>
-                )}
-                <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed ${
-                  msg.sender === 'user'
-                    ? 'bg-brand-900 text-white rounded-tr-md'
-                    : 'bg-slate-50 text-slate-700 border border-slate-100 rounded-tl-md'
-                }`}>
-                  {msg.sender === 'ai' ? (
-                    <span dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
-                  ) : (
-                    msg.text
-                  )}
-                </div>
-              </div>
-            ))}
-            {showPlaceholder && !devMode && (
-              <div className="flex gap-3 justify-start animate-fade-in-up">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
-                  <MessageCircle size={12} className="text-white" />
-                </div>
-                <div className="max-w-[80%] rounded-2xl px-4 py-2.5 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 text-slate-700 rounded-tl-md">
-                  <div className="flex items-center gap-2 mb-2">
-                    <MessageCircle size={11} className="text-sky-500" />
-                    <span className="text-[11px] font-bold text-sky-600">Design Co-Pilot</span>
-                  </div>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
-                    It's coming soon. Join the waitlist to get early access.
-                  </p>
-                </div>
-              </div>
-            )}
-            {chatLoading && (
-              <div className="flex justify-start">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
-                  <MessageCircle size={12} className="text-white" />
-                </div>
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl rounded-tl-md px-4 py-3">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Chat Input */}
-          <form onSubmit={handleSendChatMessage} className="shrink-0 border-t border-slate-100 bg-white px-4 py-3 flex items-center gap-2">
-            <input
-              type="text"
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              placeholder={devMode ? 'Ask about your score, improvements, or examples...' : 'Coming soon — enter to see preview'}
-              className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
-              disabled={chatLoading}
-            />
-            <button
-              type="submit"
-              disabled={!chatInput.trim() || chatLoading}
-              className="px-4 py-2.5 rounded-xl bg-brand-900 text-white text-xs font-semibold hover:bg-brand-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer shrink-0"
-            >
-              {chatLoading ? (
-                <span className="flex items-center gap-1">
-                  <span className="w-1 h-1 rounded-full bg-white animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1 h-1 rounded-full bg-white animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1 h-1 rounded-full bg-white animate-bounce" style={{ animationDelay: '300ms' }} />
-                </span>
-              ) : (
-                'Send'
-              )}
-            </button>
-          </form>
         </div>
       )}
 
