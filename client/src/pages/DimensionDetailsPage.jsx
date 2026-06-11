@@ -342,15 +342,18 @@ export default function DimensionDetailsPage() {
 
   const details = getDetails(activeDim.slug, state.goal, state.experience);
 
+  const [devMode] = useState(() => localStorage.getItem('_vurdict_dev') || new URLSearchParams(window.location.search).has('dev'));
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState([]);
   const [chatInput, setChatInput] = useState('');
   const [chatLoading, setChatLoading] = useState(false);
+  const [showPlaceholder, setShowPlaceholder] = useState(false);
   const [examplesModalOpen, setExamplesModalOpen] = useState(false);
 
   // Initialize chat with a welcome message explaining the specific context of the active dimension
   useEffect(() => {
     if (chatOpen) {
+      setShowPlaceholder(false);
       setChatMessages([
         {
           sender: 'ai',
@@ -363,6 +366,11 @@ export default function DimensionDetailsPage() {
   const handleSendChatMessage = async (e) => {
     e.preventDefault();
     if (!chatInput.trim() || chatLoading) return;
+
+    if (!devMode) {
+      setShowPlaceholder(true);
+      return;
+    }
 
     const userMsg = chatInput.trim();
     setChatMessages(prev => [...prev, { sender: 'user', text: userMsg }]);
@@ -684,7 +692,7 @@ export default function DimensionDetailsPage() {
               <MessageCircle size={20} className="text-sky-300 animate-pulse" />
               <div>
                 <h4 className="text-xs font-semibold leading-none">Design Co-Pilot</h4>
-                <span className="text-[9px] text-sky-100/70 font-normal mt-0.5 block">Your Design Lead Best Friend</span>
+                <span className="text-[9px] text-sky-100/70 font-normal mt-0.5 block">{devMode ? 'Your Design Lead Best Friend' : 'Coming Soon'}</span>
               </div>
             </div>
             <button 
@@ -725,6 +733,22 @@ export default function DimensionDetailsPage() {
                 </div>
               </div>
             ))}
+            {showPlaceholder && !devMode && (
+              <div className="flex gap-3 justify-start animate-fade-in-up">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
+                  <MessageCircle size={12} className="text-white" />
+                </div>
+                <div className="max-w-[80%] rounded-2xl px-4 py-2.5 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 text-slate-700 rounded-tl-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <MessageCircle size={11} className="text-sky-500" />
+                    <span className="text-[11px] font-bold text-sky-600">Design Co-Pilot</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
+                    It's coming soon. Join the waitlist to get early access.
+                  </p>
+                </div>
+              </div>
+            )}
             {chatLoading && (
               <div className="flex justify-start">
                 <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center shrink-0 mr-2 mt-0.5">
@@ -747,7 +771,7 @@ export default function DimensionDetailsPage() {
               type="text"
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Ask about your score, improvements, or examples..."
+              placeholder={devMode ? 'Ask about your score, improvements, or examples...' : 'Coming soon — enter to see preview'}
               className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
               disabled={chatLoading}
             />

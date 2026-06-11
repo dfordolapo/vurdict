@@ -24,14 +24,22 @@ const EXAMPLE_MESSAGES = [
 ]
 
 export default function ReVurdictPage() {
+  const [devMode] = useState(() => localStorage.getItem('_vurdict_dev') || new URLSearchParams(window.location.search).has('dev'))
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState(EXAMPLE_MESSAGES)
   const [loading, setLoading] = useState(false)
+  const [showPlaceholder, setShowPlaceholder] = useState(false)
 
   const handleSend = async () => {
     if (!input.trim() || loading) return
     const userMessage = input.trim()
     setInput('')
+
+    if (!devMode) {
+      setShowPlaceholder(true)
+      return
+    }
+
     setMessages(prev => [...prev, { role: 'user', text: userMessage }])
     setLoading(true)
 
@@ -117,11 +125,11 @@ export default function ReVurdictPage() {
                   </div>
                   <div>
                     <span className="text-xs font-semibold text-slate-900">Re:Vurdict Coach</span>
-                    <span className="text-[10px] text-slate-400 ml-2 font-medium">Preview</span>
+                    <span className="text-[10px] text-slate-400 ml-2 font-medium">{devMode ? 'Live' : 'Preview'}</span>
                   </div>
                 </div>
-                  <span className="text-[10px] font-medium text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                    Live
+                  <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${devMode ? 'text-emerald-600 bg-emerald-50 border border-emerald-200' : 'text-amber-600 bg-amber-50 border border-amber-200'}`}>
+                    {devMode ? 'Live' : 'Coming Soon'}
                   </span>
               </div>
 
@@ -171,7 +179,23 @@ export default function ReVurdictPage() {
                   </div>
                 ))}
 
-                {loading && (
+                {showPlaceholder && !devMode && (
+                  <div className="flex gap-3 justify-start animate-fade-in-up">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center shrink-0 mt-0.5">
+                      <Bot size={10} className="text-white" />
+                    </div>
+                    <div className="max-w-[75%] rounded-2xl px-3.5 py-2.5 bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100/80 text-slate-700 rounded-tl-md">
+                      <div className="flex items-center gap-2 mb-2">
+                        <MessageSquare size={11} className="text-sky-500" />
+                        <span className="text-[11px] font-bold text-sky-600">Re:Vurdict</span>
+                      </div>
+                      <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
+                        It's coming soon. Join the waitlist above to get early access.
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {loading && devMode && (
                   <div className="flex gap-3 justify-start animate-fade-in-up">
                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center shrink-0 mt-0.5">
                       <Bot size={10} className="text-white" />
@@ -208,7 +232,7 @@ export default function ReVurdictPage() {
                   </button>
                 </div>
                 <p className="text-[10px] text-slate-400 mt-2 text-center font-medium">
-                  AI-powered portfolio coaching — ask anything about your case studies
+                  {devMode ? 'AI-powered portfolio coaching — ask anything about your case studies' : 'This is a preview — responses are not yet powered by AI'}
                 </p>
               </div>
             </div>
