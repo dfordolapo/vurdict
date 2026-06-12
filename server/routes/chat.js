@@ -1,13 +1,12 @@
 import { Router } from 'express';
 import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
-import Anthropic from '@anthropic-ai/sdk';
 
 const router = Router();
 const PROVIDER = process.env.AI_PROVIDER || 'openai';
 const OPENAI_MODEL = 'gpt-4o-mini';
 const GEMINI_MODEL = 'gemini-2.5-flash';
-const CLAUDE_MODEL = 'claude-3-5-haiku-latest';
+const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
 const DEEPSEEK_MODEL = 'deepseek-chat';
 
 const PROVIDER_CONFIG = {
@@ -97,15 +96,19 @@ RESPONSE LENGTH RULES (critical):
         break;
       }
       case 'claude': {
-        const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
-        const response = await anthropic.messages.create({
+        const client = new OpenAI({
+          apiKey: process.env.CLAUDE_API_KEY,
+          baseURL: 'https://api.evolink.ai/v1',
+        });
+        const response = await client.chat.completions.create({
           model: CLAUDE_MODEL,
-          system: systemInstruction,
-          messages: [{ role: 'user', content: message }],
-          max_tokens: 4096,
+          messages: [
+            { role: 'system', content: systemInstruction },
+            { role: 'user', content: message },
+          ],
           temperature: 0.7,
         });
-        text = response.content[0]?.text;
+        text = response.choices[0]?.message?.content;
         break;
       }
       case 'deepseek': {

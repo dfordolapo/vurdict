@@ -1,6 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
-import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -14,7 +13,7 @@ const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 const PROVIDER = process.env.AI_PROVIDER || 'openai';
 const OPENAI_MODEL = 'gpt-4o-mini';
 const GEMINI_MODEL = 'gemini-2.5-flash';
-const CLAUDE_MODEL = 'claude-3-5-haiku-latest';
+const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
 const DEEPSEEK_MODEL = 'deepseek-chat';
 
 const PROVIDER_CONFIG = {
@@ -214,15 +213,20 @@ async function callClaude(prompt, userContent) {
   if (!process.env.CLAUDE_API_KEY) {
     throw new Error('CLAUDE_API_KEY is not configured on the server.');
   }
-  const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
-  const response = await anthropic.messages.create({
+  const client = new OpenAI({
+    apiKey: process.env.CLAUDE_API_KEY,
+    baseURL: 'https://api.evolink.ai/v1',
+  });
+  const response = await client.chat.completions.create({
     model: CLAUDE_MODEL,
-    system: prompt + '\n\nYou MUST respond in valid JSON only. No markdown, no code fences — just raw JSON.',
-    messages: [{ role: 'user', content: userContent }],
-    max_tokens: 8192,
+    messages: [
+      { role: 'system', content: prompt + '\n\nYou MUST respond in valid JSON matching the provided JSON schema.' },
+      { role: 'user', content: userContent },
+    ],
+    response_format: { type: 'json_object' },
     temperature: 0.0,
   });
-  const rawText = response.content[0]?.text;
+  const rawText = response.choices[0]?.message?.content;
   if (!rawText) throw new Error('Claude returned an empty response.');
   return JSON.parse(rawText);
 }
