@@ -123,17 +123,24 @@ export default function SupportPage() {
             }
           ]
         },
-        callback: async (response) => {
+        callback: function (response) {
           console.log('[SupportPage] Paystack verification callback triggered, reference:', response.reference);
-          const result = await verifyPayment(response.reference);
-          setPaying(false);
-          if (result.verified) {
-            console.log('[SupportPage] Payment successfully verified.');
-            setPaid(true);
-          } else {
-            console.error('[SupportPage] Payment verification returned false.', result);
-            setPayError(DONATION_UNAVAILABLE);
-          }
+          verifyPayment(response.reference)
+            .then((result) => {
+              setPaying(false);
+              if (result.verified) {
+                console.log('[SupportPage] Payment successfully verified.');
+                setPaid(true);
+              } else {
+                console.error('[SupportPage] Payment verification returned false.', result);
+                setPayError(DONATION_UNAVAILABLE);
+              }
+            })
+            .catch((err) => {
+              console.error('[SupportPage] Error in verification handler:', err);
+              setPaying(false);
+              setPayError(DONATION_UNAVAILABLE);
+            });
         },
         onClose: () => {
           console.log('[SupportPage] Paystack iframe closed by user.');
