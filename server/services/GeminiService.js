@@ -1,5 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -13,6 +14,15 @@ const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 const PROVIDER = process.env.AI_PROVIDER || 'openai';
 const OPENAI_MODEL = 'gpt-4o-mini';
 const GEMINI_MODEL = 'gemini-2.5-flash';
+const CLAUDE_MODEL = 'claude-3-5-haiku-latest';
+const DEEPSEEK_MODEL = 'deepseek-chat';
+
+const PROVIDER_CONFIG = {
+  openai: { key: 'OPENAI_API_KEY', label: 'OpenAI' },
+  gemini: { key: 'GEMINI_API_KEY', label: 'Gemini' },
+  claude: { key: 'CLAUDE_API_KEY', label: 'Claude' },
+  deepseek: { key: 'DEEPSEEK_API_KEY', label: 'DeepSeek' },
+};
 
 const SYSTEM_PROMPT = `You are Vurdict, a brutal but fair Senior Design Lead and Hiring Manager at a top-tier tech firm (like Airbnb, Stripe, or Linear). Your job is to audit product design case studies and provide feedback that helps designers reach the next level.
 
@@ -165,9 +175,7 @@ async function callOpenAI(prompt, userContent) {
   if (!process.env.OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY is not configured on the server.');
   }
-
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
   const response = await openai.chat.completions.create({
     model: OPENAI_MODEL,
     messages: [
@@ -177,7 +185,6 @@ async function callOpenAI(prompt, userContent) {
     response_format: { type: 'json_object' },
     temperature: 0.0,
   });
-
   const rawText = response.choices[0]?.message?.content;
   if (!rawText) throw new Error('OpenAI returned an empty response.');
   return JSON.parse(rawText);
@@ -187,9 +194,7 @@ async function callGemini(prompt, userContent) {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY is not configured on the server.');
   }
-
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
   const response = await ai.models.generateContent({
     model: GEMINI_MODEL,
     contents: userContent,
@@ -200,18 +205,65 @@ async function callGemini(prompt, userContent) {
       temperature: 0.0,
     },
   });
-
   const rawText = response.text;
   if (!rawText) throw new Error('Gemini returned an empty response.');
   return JSON.parse(rawText);
 }
 
+async function callClaude(prompt, userContent) {
+  if (!process.env.CLAUDE_API_KEY) {
+    throw new Error('CLAUDE_API_KEY is not configured on the server.');
+  }
+  const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
+  const response = await anthropic.messages.create({
+    model: CLAUDE_MODEL,
+    system: prompt + '\n\nYou MUST respond in valid JSON only. No markdown, no code fences — just raw JSON.',
+    messages: [{ role: 'user', content: userContent }],
+    max_tokens: 8192,
+    temperature: 0.0,
+  });
+  const rawText = response.content[0]?.text;
+  if (!rawText) throw new Error('Claude returned an empty response.');
+  return JSON.parse(rawText);
+}
+
+async function callDeepSeek(prompt, userContent) {
+  if (!process.env.DEEPSEEK_API_KEY) {
+    throw new Error('DEEPSEEK_API_KEY is not configured on the server.');
+  }
+  const deepseek = new OpenAI({
+    apiKey: process.env.DEEPSEEK_API_KEY,
+    baseURL: 'https://api.deepseek.com',
+  });
+  const response = await deepseek.chat.completions.create({
+    model: DEEPSEEK_MODEL,
+    messages: [
+      { role: 'system', content: prompt + '\n\nYou MUST respond in valid JSON matching the provided JSON schema.' },
+      { role: 'user', content: userContent },
+    ],
+    response_format: { type: 'json_object' },
+    temperature: 0.0,
+  });
+  const rawText = response.choices[0]?.message?.content;
+  if (!rawText) throw new Error('DeepSeek returned an empty response.');
+  return JSON.parse(rawText);
+}
+
+const CALLERS = {
+  openai: callOpenAI,
+  gemini: callGemini,
+  claude: callClaude,
+  deepseek: callDeepSeek,
+};
+
 export async function evaluatePortfolio(goal, experienceLabel, portfolioContent, sourceUrl) {
   const prompt = SYSTEM_PROMPT;
   const userContent = buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl);
 
-  const caller = PROVIDER === 'gemini' ? callGemini : callOpenAI;
-  const providerName = PROVIDER === 'gemini' ? 'Gemini' : 'OpenAI';
+  const cfg = PROVIDER_CONFIG[PROVIDER];
+  if (!cfg) throw new Error(`Unknown AI_PROVIDER: ${PROVIDER}. Valid options: openai, gemini, claude, deepseek.`);
+
+  const caller = CALLERS[PROVIDER];
   const maxRetries = 4;
   let attempt = 0;
 
@@ -221,7 +273,7 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
       return computeOverallScore(parsed, goal);
     } catch (err) {
       attempt++;
-      console.warn(`[${providerName}Service] Attempt ${attempt} failed: ${err.message}`);
+      console.warn(`[${cfg.label}Service] Attempt ${attempt} failed: ${err.message}`);
 
       if (attempt >= maxRetries) {
         let cleanMsg = err.message;
@@ -232,10 +284,10 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
 
         const isQuota = cleanMsg.toLowerCase().includes('quota') || cleanMsg.toLowerCase().includes('limit') || cleanMsg.includes('429') || cleanMsg.includes('insufficient_quota');
         if (isQuota) {
-          throw new Error(`${providerName}QuotaExceeded: ${providerName} API quota has been exceeded. Please try again in a few minutes or switch providers.`);
+          throw new Error(`${cfg.label}QuotaExceeded: ${cfg.label} API quota has been exceeded. Please try again in a few minutes or switch providers.`);
         }
 
-        throw new Error(cleanMsg || `${providerName} service is currently unavailable. Please try again.`);
+        throw new Error(cleanMsg || `${cfg.label} service is currently unavailable. Please try again.`);
       }
 
       await new Promise(resolve => setTimeout(resolve, attempt * 4000));

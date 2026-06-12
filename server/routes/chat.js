@@ -1,11 +1,21 @@
 import { Router } from 'express';
 import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 
 const router = Router();
 const PROVIDER = process.env.AI_PROVIDER || 'openai';
 const OPENAI_MODEL = 'gpt-4o-mini';
 const GEMINI_MODEL = 'gemini-2.5-flash';
+const CLAUDE_MODEL = 'claude-3-5-haiku-latest';
+const DEEPSEEK_MODEL = 'deepseek-chat';
+
+const PROVIDER_CONFIG = {
+  openai: { key: 'OPENAI_API_KEY', label: 'OpenAI' },
+  gemini: { key: 'GEMINI_API_KEY', label: 'Gemini' },
+  claude: { key: 'CLAUDE_API_KEY', label: 'Claude' },
+  deepseek: { key: 'DEEPSEEK_API_KEY', label: 'DeepSeek' },
+};
 
 router.post('/', async (req, res) => {
   const { message, dimension, score, explanation, context, experience, allDimensions, overallScore, priorityActionPlan, fixThisFirst } = req.body;
@@ -35,10 +45,14 @@ router.post('/', async (req, res) => {
     fixFirstNote = `\nSingle most important fix: ${fixThisFirst.title}`;
   }
 
-  const missingKey = PROVIDER === 'gemini' ? 'GEMINI_API_KEY' : 'OPENAI_API_KEY';
-  if (!process.env[missingKey]) {
+  const cfg = PROVIDER_CONFIG[PROVIDER];
+  if (!cfg) {
+    return res.status(500).json({ error: `Unknown AI_PROVIDER: ${PROVIDER}` });
+  }
+
+  if (!process.env[cfg.key]) {
     return res.json({
-      reply: `I'm here as your Co-Pilot, but the server doesn't have a ${missingKey} configured. \n\nHere's a summary of your portfolio:\n\n${dimsOverview}\n\nYou're currently viewing **${dimension}** (${score}/100). Focus on the areas above to level up your portfolio for **${context}**.`
+      reply: `I'm here as your Co-Pilot, but the server doesn't have ${cfg.key} configured. \n\nHere's a summary of your portfolio:\n\n${dimsOverview}\n\nYou're currently viewing **${dimension}** (${score}/100). Focus on the areas above to level up your portfolio for **${context}**.`
     });
   }
 
@@ -71,29 +85,61 @@ RESPONSE LENGTH RULES (critical):
 
     let text;
 
-    if (PROVIDER === 'gemini') {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const response = await ai.models.generateContent({
-        model: GEMINI_MODEL,
-        contents: message,
-        config: { systemInstruction, temperature: 0.7 },
-      });
-      text = response.text;
-    } else {
-      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-      const response = await openai.chat.completions.create({
-        model: OPENAI_MODEL,
-        messages: [
-          { role: 'system', content: systemInstruction },
-          { role: 'user', content: message },
-        ],
-        temperature: 0.7,
-      });
-      text = response.choices[0]?.message?.content;
+    switch (PROVIDER) {
+      case 'gemini': {
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const response = await ai.models.generateContent({
+          model: GEMINI_MODEL,
+          contents: message,
+          config: { systemInstruction, temperature: 0.7 },
+        });
+        text = response.text;
+        break;
+      }
+      case 'claude': {
+        const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
+        const response = await anthropic.messages.create({
+          model: CLAUDE_MODEL,
+          system: systemInstruction,
+          messages: [{ role: 'user', content: message }],
+          max_tokens: 4096,
+          temperature: 0.7,
+        });
+        text = response.content[0]?.text;
+        break;
+      }
+      case 'deepseek': {
+        const deepseek = new OpenAI({
+          apiKey: process.env.DEEPSEEK_API_KEY,
+          baseURL: 'https://api.deepseek.com',
+        });
+        const response = await deepseek.chat.completions.create({
+          model: DEEPSEEK_MODEL,
+          messages: [
+            { role: 'system', content: systemInstruction },
+            { role: 'user', content: message },
+          ],
+          temperature: 0.7,
+        });
+        text = response.choices[0]?.message?.content;
+        break;
+      }
+      default: {
+        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        const response = await openai.chat.completions.create({
+          model: OPENAI_MODEL,
+          messages: [
+            { role: 'system', content: systemInstruction },
+            { role: 'user', content: message },
+          ],
+          temperature: 0.7,
+        });
+        text = response.choices[0]?.message?.content;
+      }
     }
 
     if (!text) {
-      return res.status(500).json({ error: `${PROVIDER === 'gemini' ? 'Gemini' : 'OpenAI'} returned an empty response.` });
+      return res.status(500).json({ error: `${cfg.label} returned an empty response.` });
     }
     res.json({ reply: text });
   } catch (err) {
