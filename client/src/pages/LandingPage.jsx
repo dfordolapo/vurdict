@@ -196,7 +196,7 @@ function HeroSection() {
             <span className="md:whitespace-nowrap">a <span className="text-sky-300">Hiring Manager's</span> Eyes</span>
           </h1>
           <p className="text-sky-100/70 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
-            Paste your case study link, select your goal / and get feedback on what to fix.
+            Paste your case study link, select your goal,<br /> and get feedback on what to fix.
           </p>
 
           {/* Form container */}

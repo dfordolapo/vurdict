@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import WaveDivider from '../components/WaveDivider';
 import WaitlistForm from '../components/WaitlistForm';
-import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
 import {
   Workflow,
@@ -45,6 +44,16 @@ const evidenceIconMap = {
   'focus': Target,
   'structure': Layers,
 };
+
+function renderBold(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
 
 function getEvidenceIcon(title) {
   const lower = title.toLowerCase();
@@ -343,8 +352,501 @@ export default function DimensionDetailsPage() {
 
   const details = getDetails(activeDim.slug, state.goal, state.experience);
 
+  const allDimensionsData = dimensionsList.map(dim => {
+    const dimData = report.categories[dim.key] || { score: 62, explanation: '' };
+    const dimDetails = getDetails(dim.slug, state.goal, state.experience);
+    return {
+      label: dim.label,
+      score: dimData.score,
+      explanation: dimData.explanation,
+      improve: dimDetails.improve,
+      working: dimDetails.working,
+      recommendation: dimDetails.recommendation,
+    };
+  });
+
+  const overallScore = report.overall_score || 0;
+  const allImproveItems = allDimensionsData.flatMap(d => d.improve);
+  const allWorkingItems = allDimensionsData.flatMap(d => d.working);
+
   const [chatOpen, setChatOpen] = useState(false);
   const [examplesModalOpen, setExamplesModalOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [chatInput, setChatInput] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
+  const lastTopicRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  const chatInputRef = useRef(null);
+
+  useEffect(() => {
+    if (chatOpen && chatInputRef.current) {
+      setTimeout(() => chatInputRef.current.focus(), 100);
+    }
+  }, [chatOpen]);
+
+  useEffect(() => {
+    if (messagesEndRef.current && (messages.length > 0 || chatLoading)) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, chatLoading]);
+
+  const getApiUrl = () => import.meta.env.VITE_API_URL || '';
+
+  const generateFallbackReply = (question, isFirst, history) => {
+    const q = question.toLowerCase().trim();
+    const dim = activeDim.label;
+    const dimScore = activeData.score;
+    const goalLabel = state.goal === 'get_hired' ? 'getting hired' : 'winning clients';
+    const prefix = isFirst ? 'Hi, bestie. ' : '';
+    const recSteps = details?.recommendation?.steps || [];
+    const improveData = details?.improve || [];
+    const workingData = details?.working || [];
+    const prevTopic = lastTopicRef.current;
+
+    const asstMessages = history ? history.filter(m => m.role === 'assistant') : [];
+    const lastAsst = asstMessages[asstMessages.length - 1];
+    const lastAsstContent = lastAsst?.content?.toLowerCase() || '';
+    const prevAsst = asstMessages[asstMessages.length - 2];
+    const prevAsstContent = prevAsst?.content?.toLowerCase() || '';
+
+    const pickItem = (arr, usedKey) => {
+      const used = asstMessages.map(m => m.content?.toLowerCase() || '');
+      const fresh = arr.filter((_, i) => !used.some(u => u.includes(arr[i][usedKey || 'title']?.toLowerCase()?.slice(0, 30) || '')));
+      return fresh.length > 0 ? fresh[0] : arr[0];
+    };
+
+    const wordCount = q.split(/\s+/).length;
+    const deepWords = ['how', 'what', 'why', 'tell', 'explain', 'elaborate', 'detail', 'dive', 'walk', 'break', 'describe', 'show', 'go', 'can you', 'could you', 'would you'];
+    const wordDepth = deepWords.filter(d => q.includes(d)).length;
+    const isFirstQuery = asstMessages.length === 0;
+    const isDeepQuery = wordCount > 8 || wordDepth >= 2 || deepWords.slice(0, 3).some(d => q.startsWith(d));
+    const isTerse = wordCount <= 3 && wordDepth === 0 && !isFirstQuery;
+    const depth = isTerse ? 0 : isDeepQuery ? 2 : 1;
+
+    const intents = [
+      {
+        name: 'greeting', weight: 12,
+        keywords: ['hello', 'hi', 'hey', 'howdy', 'good morning', 'good evening', 'sup', 'yo', 'whats up', 'what\'s up'],
+        response: (depth) => {
+          lastTopicRef.current = 'greeting';
+          const bench = activeDim.benchmark;
+          const diff = dimScore - bench;
+          if (depth === 0) {
+            const greet = isFirst ? 'Hi! ' : 'Hey! ';
+            return `${greet}You're looking at **${dim}** (${dimScore}/100). What do you want to know?`;
+          }
+          if (depth === 2) {
+            const gapStr = diff < 0 ? Math.abs(diff) + ' points below the ' + bench + ' benchmark' : diff + ' points above the ' + bench + ' benchmark \u2014 nice!';
+            const workNote = workingData[0] ? 'One thing working well: **' + workingData[0].title + '**' : '';
+            const improveNote = improveData[0] ? 'Biggest opportunity: **' + improveData[0].title + '**' : '';
+            return prefix + 'Great to see you digging into **' + dim + '**! Here\'s the lay of the land:\n\nYour score: **' + dimScore + '/100** \u2014 that\'s ' + gapStr + '.\n\n' + workNote + (workNote && improveNote ? '\n\n' : '') + improveNote + '\n\nWant to explore where to improve first, or understand why you scored what you did?';
+          }
+          const gap = diff < 0 ? `you're **${Math.abs(diff)} points** below the benchmark of **${bench}/100**, so there's real room to grow.` : `you're beating the benchmark by **${diff} points** — nice work!`;
+          return `${prefix}Welcome to the **${dim}** deep-dive. You scored **${dimScore}/100** here — ${gap}\n\nWant to explore where you can improve, or do you want the full breakdown of what's working?`;
+        },
+      },
+      {
+        name: 'joke', weight: 25,
+        keywords: ['joke', 'funny', 'make me laugh', 'humor', 'crack me', 'tell me a joke', 'hilarious', 'something funny'],
+        response: (_depth) => {
+          const jokes = [
+            'Why did the designer break up with their grid? Too many constraints. It was a spaced-out relationship anyway.',
+            'How many designers does it take to change a lightbulb? Just one, but they\'ll spend 3 hours debating whether it should be 8px or 12px from the ceiling, then ask "what\'s the user intent for turning it on?"',
+            'A UX designer walks into a bar… then leaves because the door was confusing. Comes back, tries to pull a door that clearly says PUSH. Files a usability report.',
+            'Why was the case study sad? It had no call to action. It just sat there, waiting for someone to care.',
+            'What does a hiring manager say to a portfolio with no metrics? "I\'ll keep your resume on file." (They won\'t.)',
+            'Why did the button get rejected? Low contrast. The hiring manager couldn\'t see the point.',
+            'A UI walks into a bar and says "I\'ll have a beer." The bartender says "That\'ll be $4." The UI says "Make it pop. And can you move the logo 2px left?"',
+            'Why don\'t designers ever play hide and seek? Because good visibility is their whole thing. Also, they\'d spend too long defining the game rules.',
+            'What\'s a designer\'s favorite color? Doesn\'t matter, as long as it\'s on brand and passes WCAG AA.',
+            'Why did the UX researcher break up with the developer? They weren\'t on the same page. Literally. The dev was on page 12 of the spec, the researcher was still recruiting participants.',
+            'What do you call a designer who doesn\'t use a grid? A layout casualty.',
+            'Why did the senior designer get promoted? They knew when to use 16px and when to use 20px. The juniors were still asking.',
+            'A designer\'s favorite exercise? Running user tests. Their least favorite? Running out of font licenses.',
+            'Why did the portfolio reviewer cry? There was too much Lorem Ipsum and not enough context.',
+            'What\'s a hiring manager\'s favorite GitHub repo? The one with a README that actually explains the design decisions.',
+            'Why don\'t designers trust atoms? They make up everything — including the 8px grid.',
+            'What did the button say to the CTA? "Stop pushing me, I\'m already converting."',
+            'Why did the wireframe go to therapy? It felt too boxed in and lacked visual hierarchy.',
+            'How do you know a designer has been working too late? They start kern-ing their grocery list.',
+            'A junior designer\'s portfolio: "Here\'s what I did." A senior designer\'s portfolio: "Here\'s why it mattered. And here\'s the revenue lift."',
+            'Why was the Figma file stressed? Too many unsolved conflicts and a component that turned into a nightmare.',
+            'What\'s the difference between a junior and a senior designer? The senior knows when to break the grid. The junior doesn\'t know there IS a grid.',
+            'A designer\'s love letter: "Roses are #FF0000, violets are #0000FF, my portfolio is responsive, and I\'d love to work with you."',
+            'What do you say to a designer who only uses auto-layout? "You\'ve got your life together, huh."',
+            'Why did the design system break up with the developer? The developer kept overriding its variables. That\'s not how relationships work.',
+          ];
+          lastTopicRef.current = 'joke';
+          const tip = pickItem(improveData, 'title') || recSteps[0] || null;
+          const action = tip
+            ? `Now back to business — here's one real thing you can do right now: **${tip.title || tip}**`
+            : `Alright, back to work — want me to walk through how to improve your **${dim}** score?`;
+          return `${prefix}${jokes[Math.floor(Math.random() * jokes.length)]}\n\n${action}`;
+        }
+      },
+      {
+        name: 'score', weight: 20,
+        keywords: ['score', 'scores', 'scored', 'rating', 'grade', 'rank', 'how did i do', 'how\'d i do', 'did i do', 'is this good', 'is that good', 'what does this mean', 'explain my', 'explain the', 'breakdown', 'analysis', 'result', 'results', 'overview', 'summary', 'interpret', 'understand', 'make sense', 'tell me about it', 'tell me about my', 'how is my', 'what\'s my', 'what is my', 'how am i doing', 'where do i stand', 'what do you think'],
+        response: (depth) => {
+          lastTopicRef.current = 'score';
+          const tip = pickItem(improveData, 'title');
+          const explanation = activeData.explanation || '';
+          const bench = activeDim.benchmark;
+          const status = dimScore >= 86 ? 'exceptional' : dimScore >= 71 ? 'strong' : dimScore >= 51 ? 'competitive' : 'early-stage';
+          if (depth === 0) {
+            return `${prefix}**${dimScore}/100** — ${status}. ${tip ? `Try: **${tip.title}**` : ''} Anything else?`;
+          }
+          if (depth === 2) {
+            const summary = explanation.split('. ').slice(0, 3).join('. ') || '';
+            const benchNote = dimScore >= bench
+              ? `You're **above** the **${bench}** benchmark — that's a strong position to optimize from.`
+              : `The **${bench}** benchmark is **${bench - dimScore} points** ahead — here's how to close that.`;
+            const tipNote = tip
+              ? `\n\nHighest-leverage move: **${tip.title}**\n${tip.desc}`
+              : '';
+            const steps = recSteps.length > 0 ? `\n\nQuick action plan:\n${recSteps.slice(0, 2).map((s, i) => `${i + 1}. ${s}`).join('\n')}` : '';
+            return `${prefix}Let's break down your **${dim}** score of **${dimScore}/100**.\n\n**${status}**. ${summary} ${benchNote}${tipNote}${steps}\n\nWant to dive deeper into any of these points, or move to another dimension?`;
+          }
+          const summary = explanation.split('. ').slice(0, 2).join('. ') || '';
+          const benchNote = dimScore >= bench
+            ? `You're actually **above** the industry benchmark of **${bench}/100**, which is a great sign.`
+            : `The industry benchmark is **${bench}/100**, so you've got **${bench - dimScore} points** of headroom.`;
+          const tipNote = tip
+            ? `\n\nIf you want to close that gap, start here: **${tip.title}** — ${tip.desc}`
+            : '';
+          return `${prefix}Your **${dim}** score is **${dimScore}/100** — that's **${status}**. ${summary} ${benchNote}${tipNote}\n\nWant me to walk you through the specific improvement steps, or compare this to another dimension?`;
+        },
+      },
+      {
+        name: 'improve', weight: 20,
+        keywords: ['improve', 'improvement', 'fix', 'better', 'how can i', 'how do i', 'what should i', 'tip', 'tips', 'advice', 'suggest', 'suggestion', 'recommend', 'recommendation', 'level up', 'upgrade', 'grow', 'enhance', 'strengthen', 'next step', 'next steps', 'where to start', 'what now', 'what next', 'what\'s next', 'action', 'actionable', 'priority', 'most important', 'biggest', 'weakness', 'weak', 'gaps', 'gap', 'what to do', 'what do i do', 'action plan', 'plan'],
+        response: (depth) => {
+          lastTopicRef.current = 'improve';
+          const fresh = pickItem(improveData, 'title');
+          if (depth === 0 && improveData.length > 0) {
+            return `${prefix}Quick win: **${improveData[0].title}**. ${improveData[0].desc.split('.')[0]}. Want more?`;
+          }
+          if (improveData.length > 0) {
+            const items = depth === 2 ? improveData : improveData.slice(0, 2);
+            const steps = items.map((i, idx) => `${idx + 1}. **${i.title}** — ${i.desc}`).join('\n\n');
+            const note = fresh ? '' : '\n\nI shared some of these before, but they\'re worth repeating — each one is impactful.';
+            const closer = depth === 2
+              ? `\n\nPick one and try it this week. Come back and tell me how it went — I can help you iterate.`
+              : `\n\nWhich one feels most relevant to your situation? I can break down exactly how to apply it.`;
+            return `${prefix}Here's your improvement roadmap for **${dim}**:\n\n${steps}${note}${closer}`;
+          }
+          if (recSteps.length > 0) {
+            const steps = recSteps.slice(0, depth === 2 ? undefined : 2).map((s, idx) => `${idx + 1}. ${s}`).join('\n\n');
+            return `${prefix}Here's where I'd start:\n\n${steps}\n\nPick any step and I'll walk you through it in detail.`;
+          }
+          return `${prefix}The key lever for **${dim}** is making your thinking visible. Focus on showing **why** you made each decision, not just **what** you did. Want me to give you a specific example?`;
+        },
+      },
+      {
+        name: 'elaborate', weight: 18,
+        keywords: ['elaborate', 'tell me more', 'go deeper', 'expand', 'more detail', 'more details', 'explain more', 'about that', 'can you explain', 'walk me', 'dive', 'dive deeper', 'break it down', 'break down', 'further', 'specific', 'particular', 'elaboration', 'in detail', 'details on', 'tell me about the', 'what does that', 'how does that', 'why is that', 'what do you mean', 'can you tell', 'i don\'t understand', "i don't understand", 'not sure what', 'confused'],
+        response: (depth) => {
+          lastTopicRef.current = 'elaborate';
+          if (depth === 0) {
+            if (improveData.length > 0) {
+              return `${prefix}Quick summary: **${improveData[0].title}** — ${improveData[0].desc.split('.')[0]}. Want the full breakdown?`;
+            }
+            return `${prefix}The core idea: show your reasoning behind every design choice. Want me to go deeper?`;
+          }
+          if (prevTopic === 'improve' && improveData.length > 0) {
+            const item = pickItem(improveData, 'title');
+            const extra = depth === 2
+              ? `\n\nHere's the deeper play: instead of just adding annotations, restructure your case study so every major section opens with the insight that drove it. Like: "Users told us X → so we did Y → which resulted in Z." That's the narrative arc hiring managers remember.`
+              : '';
+            return `${prefix}Let's go deeper on **${improveData[0].title}**. The idea is:\n\n${improveData[0].desc}\n\nHere's a concrete way to apply it: start by looking at your case study and identifying one place where you made a decision without explaining the reasoning. Add a single sentence that connects it to user research, business goals, or usability data. One small annotation can change how a hiring manager reads your entire case study.${extra}\n\nWant me to elaborate on another area?`;
+          }
+          if (prevTopic === 'score' || prevTopic === 'greeting') {
+            if (recSteps.length > 0) {
+              if (depth === 2) {
+                return `${prefix}Here's the full action plan with context:\n\n${recSteps.map((s, idx) => `${idx + 1}. ${s}`).join('\n\n')}\n\nEach step builds on the previous one. Step 1 sets the foundation — once you have a clear narrative arc, the metrics and positioning naturally fall into place. Want to start executing step 1 together?`;
+              }
+              return `${prefix}Here's the full action plan:\n\n${recSteps.map((s, idx) => `${idx + 1}. ${s}`).join('\n\n')}\n\nStep 1 is usually the highest-leverage move. Want to start there?`;
+            }
+          }
+          if (prevTopic === 'hiring') {
+            const extra = depth === 2
+              ? `\n\nLet me give you a concrete example. Instead of saying "I redesigned the onboarding flow," say "I redesigned the onboarding flow, which reduced drop-off by 34% and increased daily active users by 18%." See the difference? One describes activity, the other proves impact.`
+              : '';
+            return `${prefix}For hiring specifically, here's what matters most:\n\nHiring managers scan portfolios for **3 things** in under 10 seconds: (1) Do they solve real problems? (2) Can they measure impact? (3) Is their thinking clear?\n\nYour **${dim}** score of **${dimScore}/100** suggests ${dimScore >= 70 ? 'you\'re solid on clarity — now focus on quantifying your outcomes.' : 'there\'s an opportunity to make your thinking more explicit.'}${extra}\n\nWant me to show you a before/after example of how to reframe a case study section?`;
+          }
+          if (prevTopic === 'clients') {
+            const extra = depth === 2
+              ? `\n\nHere's a template you can copy-paste: "I help [type of company] solve [specific problem] through [your approach]. My work has resulted in [specific outcome] for [client name or industry]." Drop that at the top of your portfolio and watch how much faster clients reach out.`
+              : '';
+            return `${prefix}For winning clients, positioning is everything. Clients care about:\n\n1. **Can you solve my specific problem?** — niche expertise\n2. **Have you done this before?** — relevant case studies\n3. **Can I trust you?** — testimonials, process clarity\n\nYour portfolio signals quality but doesn't answer #1 fast enough. Add a one-liner at the top: "I design [X] for [Y] that achieve [Z]."${extra}\n\nWant me to help you draft that positioning statement?`;
+          }
+          if (recSteps.length > 0) {
+            const steps = depth === 2 ? recSteps : recSteps.slice(0, depth === 0 ? 1 : 3);
+            return `${prefix}Here's the breakdown:\n\n${steps.map((s, idx) => `${idx + 1}. ${s}`).join('\n\n')}\n\n${depth === 2 ? 'Each step is designed to compound — do them in order for maximum impact.' : 'Start with step 1 — it\'s the highest-leverage move.'} Want to dive into how to execute it?`;
+          }
+          if (improveData.length > 0) {
+            return `${prefix}Sure! Here's more depth on each area:\n\n${improveData.map((i, idx) => `${idx + 1}. **${i.title}**: ${i.desc}`).join('\n\n')}\n\nPick the one that resonates most and I'll give you a playbook.`;
+          }
+          return `${prefix}The secret to improving **${dim}** is making your reasoning visible. Every design choice should answer: "Why this, and why now?" Start by picking one decision in your case study that you made intuitively and write out the reasoning. That single habit transforms how evaluators read your work.`;
+        },
+      },
+      {
+        name: 'example', weight: 15,
+        keywords: ['example', 'show me', 'sample', 'template', 'reference', 'inspiration', 'similar', 'demonstrate', 'demo', 'mockup', 'real world', 'real-world', 'like this', 'for instance', 'preview', 'look like', 'show an', 'give an', 'show some'],
+        response: (depth) => {
+          lastTopicRef.current = 'example';
+          const work = workingData.length > 0 ? workingData[0] : null;
+          const improve = improveData.length > 0 ? improveData[0] : null;
+          if (depth === 0 && improve) {
+            return `${prefix}Here's the gist: **${improve.title}**. Want a full walkthrough?`;
+          }
+          const workNote = work ? `\n\nHere's something you're already doing well: **${work.title}** — ${work.desc}` : '';
+          const improveNote = improve ? `\n\nAnd here's what would level it up: **${improve.title}** — ${improve.desc}` : '';
+          return `${prefix}Great question! I can't show a live example in this chat, but I can describe exactly what a **${dim}**-strong case study looks like.\n\nA strong example would:${workNote}${improveNote}\n\nIf you want, I can walk you through step 1 of the recommendation above. Ready?`;
+        },
+      },
+      {
+        name: 'affirmation', weight: 8,
+        keywords: ['yes', 'sure', 'yeah', 'yep', 'absolutely', 'definitely', 'let\'s', 'lets', 'please do', 'go ahead', 'i want to', 'i would love', 'i\'d love', 'tell me'],
+        response: (depth) => {
+          lastTopicRef.current = 'affirmation';
+
+          if (prevTopic === 'joke') {
+            const tip = pickItem(improveData, 'title');
+            return `${prefix}Alright, back to business! Let's focus on **${dim}**. ${tip ? `Here's a concrete action: **${tip.title}** — ${tip.desc}` : `What aspect of **${dim}** do you want to tackle first?`}\n\nWant me to break it down further?`;
+          }
+
+          if (prevTopic === 'improve' || prevTopic === 'elaborate') {
+            const step = improveData.length > 1 ? improveData[1] : improveData[0];
+            if (step) {
+              return `${prefix}Perfect! Let's keep going. Here's another improvement area:\n\n**${step.title}** — ${step.desc}\n\nTry implementing this one next. Need help figuring out where to start?`;
+            }
+          }
+
+          if (lastAsstContent.includes('want me to walk you through') || lastAsstContent.includes('want to dive into') || lastAsstContent.includes('want me to elaborate')) {
+            const step = recSteps[0] || improveData[0];
+            if (step) {
+              const text = step.title || step;
+              const desc = step.desc || '';
+              return `${prefix}Great, let's do this. Here's the first move:\n\n**${text}**${desc ? ` — ${desc}` : ''}\n\nOnce you've made that change, come back and tell me how it went — or ask me about the next step.`;
+            }
+          }
+
+          if (lastAsstContent.includes('step 1') || lastAsstContent.includes('first step')) {
+            const step = recSteps[1] || recSteps[0];
+            return `${prefix}You're on a roll! Here's step 2:\n\n**${step}**\n\nHow does that sound? Want me to adjust based on your specific situation?`;
+          }
+
+          if (prevTopic === 'hiring' || prevTopic === 'clients') {
+            return `${prefix}Alright! Let's make this practical. Here's what I'd do first:\n\n**${recSteps[0] || improveData[0]?.title || 'Review your case study with a fresh pair of eyes'}**\n\nOnce you've done that, let me know how it felt and we'll refine further.`;
+          }
+
+          const step = recSteps[0] || improveData[0] || workingData[0];
+          const text = step?.title || step || 'Start by re-reading your case study and identifying one section that feels unclear.';
+          return `${prefix}Love the energy! Let's start here:\n\n**${text}**\n\nWhat do you think — does this feel like the right focus area?`;
+        }
+      },
+      {
+        name: 'hiring', weight: 16,
+        keywords: ['hire', 'hiring', 'hiring manager', 'recruit', 'recruiter', 'job', 'interview', 'hm', 'role', 'position', 'apply', 'application', 'career', 'promotion', 'senior', 'junior', 'mid-level', 'mid level', 'offer', 'land a', 'get hired', 'get a job', 'stand out', 'resume', 'cv', 'applicant', 'candidate', 'compete', 'competitive', 'portfolio for jobs'],
+        response: (depth) => {
+          lastTopicRef.current = 'hiring';
+          const tip = pickItem(improveData, 'title');
+          const exp = state.experience === 'senior' ? 'Senior-level' : state.experience === 'mid' ? 'Mid-level' : 'Junior-level';
+          if (depth === 0) {
+            const m = tip ? `Focus on: **${tip.title}**` : 'Hiring managers want metrics, not process.';
+            return `${prefix}${m} Want the full hiring breakdown?`;
+          }
+          const actionStep = tip
+            ? `\n\nFor hiring specifically, the sharpest move: **${tip.title}** — ${tip.desc}`
+            : recSteps[0]
+              ? `\n\nHigh-impact start: **${recSteps[0]}**`
+              : '';
+          if (depth === 2) {
+            return `${prefix}For **${exp}** roles, here's the unfiltered truth:\n\nHiring managers spend **6-10 seconds** on a case study before deciding. In that window, they're looking for:\n- Did they solve a real problem? (problem framing)\n- Can they prove it worked? (impact metrics)\n- Do they think strategically? (decision rationale)\n\nYour **${dim}** score (**${dimScore}/100**) suggests ${dimScore >= 70 ? 'you\'ve got the basics down. Now it\'s about proving impact with numbers.' : 'there\'s a gap in how clearly you communicate your thinking.'}${actionStep}\n\nHere's an exercise: pick one section of your case study and rewrite it as: "We discovered [insight] → which led us to [decision] → resulting in [outcome]." That structure alone will double your hit rate.\n\nWant to try it together?`;
+          }
+          return `${prefix}For **${exp}** roles, hiring managers are scanning for **signal, not process**. They want proof you can deliver impact, not a play-by-play of your workflow.\n\nYour **${dim}** score of **${dimScore}/100** tells me ${dimScore >= 70 ? 'you\'re in a good spot — the question is whether you\'re communicating that signal clearly.' : 'there\'s an opportunity to sharpen how you present your impact.'}${actionStep}\n\nWant me to reframe one of your case study sections through a hiring manager's eyes?`;
+        },
+      },
+      {
+        name: 'clients', weight: 16,
+        keywords: ['client', 'clients', 'freelance', 'freelancer', 'contract', 'gig', 'rate', 'pricing', 'proposal', 'pitch', 'sell', 'convince', 'win', 'portfolio for', 'business', 'revenue', 'income', 'pay', 'paying', 'customer', 'side project', 'agency'],
+        response: (depth) => {
+          lastTopicRef.current = 'clients';
+          const tip = pickItem(improveData, 'title');
+          if (depth === 0) {
+            const m = tip ? `Quick move: **${tip.title}**` : 'Clients want speed and confidence.';
+            return `${prefix}${m} Want the full client playbook?`;
+          }
+          const actionStep = tip
+            ? `\n\nClient-winning move: **${tip.title}** — ${tip.desc}`
+            : recSteps[0]
+              ? `\n\nTry this to convert faster: **${recSteps[0]}**`
+              : '';
+          if (depth === 2) {
+            return `${prefix}Clients are simple: they want to know you can solve their problem **faster and better** than they could themselves.\n\nHere's what they're thinking when they land on your portfolio:\n1. **"Do you understand my industry?"** — niche expertise signals this instantly\n2. **"Can you deliver?"** — case studies with outcomes prove capability\n3. **"How fast can we start?"** — a clear CTA with calendar link removes friction\n\nYour **${dim}** score (**${dimScore}/100**) ${dimScore >= 70 ? 'is strong. Now make sure your first sentence screams "I solve [your problem]."' : 'needs to reframe around outcomes, not process.'}${actionStep}\n\nWant to draft a client-facing one-paragraph pitch together? I'll help you write it.`;
+          }
+          return `${prefix}Clients buy **confidence and speed**. They want to know: "Can this person solve my problem without hand-holding?"\n\nYour **${dim}** of **${dimScore}/100** ${dimScore >= 70 ? 'says yes — now the trick is making that obvious in 3 seconds flat.' : 'needs to be framed around client outcomes, not design process.'}${actionStep}\n\nWant me to help you write a one-paragraph pitch for this case study?`;
+        },
+      },
+      {
+        name: 'gratitude', weight: 14,
+        keywords: ['thank', 'thanks', 'appreciate', 'grateful', 'you\'re helpful', 'that helps', 'that helped', 'good advice', 'great', 'perfect', 'awesome', 'got it', 'understood', 'makes sense', 'i see', 'clear'],
+        response: (depth) => {
+          lastTopicRef.current = 'gratitude';
+          if (depth === 0) {
+            const short = [`You got it! 🙌`, `Anytime!`, `Glad it helped!`];
+            return `${short[Math.floor(Math.random() * short.length)]}`;
+          }
+          const followups = [
+            `You're welcome! Keep iterating on **${dim}** — those small refinements compound into a much stronger portfolio. What else can I help you with?`,
+            `Glad that clicked! The more you refine, the more confident you'll feel. Want to tackle another dimension or go deeper on **${dim}**?`,
+            `Happy to help! That's literally why I'm here. Want to dig into another part of your analysis while we're at it?`,
+            `Anytime! One step at a time. What's next on your mind — another dimension or a specific question about your portfolio?`,
+            `Awesome, love that reaction! Remember, every portfolio is a work in progress. Want to explore a different angle?`,
+          ];
+          return `${followups[Math.floor(Math.random() * followups.length)]}`;
+        },
+      },
+      {
+        name: 'dismissal', weight: 30,
+        keywords: ['nah', 'nope', 'no thanks', 'no thank you', 'not really', 'not now', "i'm good", 'i am good', "i'm fine", 'i am fine', 'maybe later', 'stop', 'enough', "that's all", 'that is all', "i'll pass", 'ill pass', 'never mind', 'forget it', "don't worry", 'leave it', "don't bother"],
+        response: (_depth) => {
+          lastTopicRef.current = 'dismissal';
+          const replies = [
+            "No problem at all — I'm here whenever you want to pick this up.",
+            "Got it! I'll be right here when you need me.",
+            "Of course — no pressure at all. Just give me a shout when you're ready.",
+            "Totally understand. Your portfolio isn't going anywhere — come back anytime.",
+          ];
+          return `${prefix}${replies[Math.floor(Math.random() * replies.length)]}`;
+        },
+      },
+    ];
+
+    const bareNo = /^no[.!]?$/i.test(q);
+    if (bareNo) {
+      lastTopicRef.current = 'dismissal';
+      const replies = [
+        "No problem at all — I'm here whenever you want to pick this up.",
+        "Got it! I'll be right here when you need me.",
+        "Of course — no pressure at all. Just give me a shout when you're ready.",
+        "Totally understand. Your portfolio isn't going anywhere — come back anytime.",
+      ];
+      return `${prefix}${replies[Math.floor(Math.random() * replies.length)]}`;
+    }
+
+    const scored = intents.map(intent => {
+      let score = 0;
+      for (const kw of intent.keywords) {
+        if (q.includes(kw)) score += intent.weight;
+      }
+      return { ...intent, score };
+    });
+
+    const best = scored.reduce((a, b) => (a.score > b.score ? a : b));
+
+    if (best.score > 0) {
+      return best.response(depth);
+    }
+
+    const socialClues = ['how are you', "how's it going", 'how have you been', "what's up", 'are you ai', 'are you real', 'who are you', "what's your name", 'tell me about yourself', 'are you sentient', 'do you have feelings'];
+    if (socialClues.some(s => q.includes(s))) {
+      return `${prefix}I'm your Design Co-Pilot! I'm here to help with your portfolio — specifically your **${dim}** score. What would you like to explore?`;
+    }
+
+    const outWords = [
+      'weather', 'temperature', 'rain', 'sunny', 'cloudy', 'storm',
+      'recipe', 'cook', 'bake', 'food', 'drink', 'eat', 'dinner', 'lunch',
+      'news', 'politics', 'election', 'president', 'war',
+      'sport', 'sports', 'game', 'team', 'nba', 'nfl', 'soccer', 'football',
+      'movie', 'movies', 'film', 'show', 'tv', 'netflix',
+      'music', 'song', 'singer', 'album', 'spotify',
+      'code', 'program', 'programming', 'coding', 'python', 'javascript',
+      'math', 'calculate', 'translate', 'language',
+      'poem', 'poetry', 'story', 'draw', 'art',
+      'travel', 'vacation', 'trip',
+    ];
+    const words = q.split(/\s+/);
+    if (words.some(w => outWords.includes(w))) {
+      return `${prefix}I'm your portfolio co-pilot, so I stick to design career advice. Want to talk about your **${dim}** score instead?`;
+    }
+
+    const tip = pickItem(improveData, 'title');
+    const otherDim = allDimensionsData.find(d => d.label !== dim && d.improve.length > 0);
+    const crossTip = otherDim ? otherDim.improve[Math.floor(Math.random() * otherDim.improve.length)] : null;
+    if (depth === 0) {
+      return `${prefix}I can help with that. For **${goalLabel}**, your **${dim}** score is **${dimScore}/100**. ${tip ? `Try **${tip.title}**` : ''} Want to go deeper?`;
+    }
+    let action;
+    if (tip) {
+      action = `Here's a move that would help: **${tip.title}** — ${tip.desc}`;
+    } else if (crossTip) {
+      action = `Across your portfolio, one strong next step: **${crossTip.title}** (from **${otherDim.label}**) — ${crossTip.desc}`;
+    } else {
+      action = `The recommendations on this page have concrete next steps for **${dim}**.`;
+    }
+    const crossNote = (tip && crossTip)
+      ? `\n\nAcross your portfolio, also worth looking at **${crossTip.title}** in **${otherDim.label}**.`
+      : '';
+    const lastTopicRefNote = prevTopic ? `\n\nWe were just talking about **${prevTopic}** — want to pick up where we left off?` : '';
+    const deeper = depth === 2 ? `\n\nTell me more about what you're working on and I can tailor this further.` : '';
+    return `${prefix}For **${goalLabel}**, your **${dim}** score of **${dimScore}/100** is ${dimScore >= 70 ? 'solid, with clear room to go from good to exceptional.' : 'a foundation to build on — and I can help you level it up.'} ${action}${crossNote}${lastTopicRefNote}${deeper}`;
+  };
+
+  const handleChatSubmit = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim() || chatLoading) return;
+    const userMsg = chatInput.trim();
+    setChatInput('');
+    setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
+    setChatLoading(true);
+    let replied = false;
+    try {
+      const res = await fetch(`${getApiUrl()}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMsg,
+          dimension: activeDim.label,
+          score: activeData.score,
+          explanation: activeData.explanation,
+          context: state.goal === 'get_hired' ? 'Get Hired at a top-tier company' : 'Win Freelance Clients',
+          experience: state.experience,
+          allDimensions: allDimensionsData,
+          overallScore: overallScore,
+          priorityActionPlan: report.priority_action_plan || [],
+          fixThisFirst: report.fix_this_first || null,
+        }),
+        signal: AbortSignal.timeout(15000),
+      });
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        const text = await res.text();
+        data = { error: text || `Server returned ${res.status}` };
+      }
+      if (res.ok && data.reply) {
+        setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
+        replied = true;
+      } else if (res.status === 503) {
+        // Gemini unavailable — use local fallback
+      } else {
+        setMessages(prev => [...prev, { role: 'assistant', content: data.error || data.reply || `Server error (${res.status}). Please try again.` }]);
+        replied = true;
+      }
+    } catch {
+      // Server unreachable — use local fallback
+    } finally {
+      if (!replied) {
+        const isFirst = !messages.some(m => m.role === 'assistant');
+        const reply = generateFallbackReply(userMsg, isFirst, messages);
+        setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
+      }
+      setChatLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
@@ -639,28 +1141,63 @@ export default function DimensionDetailsPage() {
             </button>
           </div>
 
-          {/* Coming Soon Showcase Inside Chatbox */}
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center bg-white space-y-5">
-            <div className="w-48 h-auto flex items-center justify-center">
-              <img 
-                src={comingSoonIllustration} 
-                alt="Co-Pilot Coming Soon" 
-                className="w-full h-auto object-contain select-none"
-                loading="lazy"
-              />
-            </div>
-            
-            <div className="space-y-1.5">
-              <h3 className="text-base font-semibold text-slate-900">Co-Pilot is coming soon</h3>
-              <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
-                Your AI design bestie is wrapping up work.
-              </p>
-            </div>
-
-            <div className="w-full max-w-xs">
-              <WaitlistForm feature="Co-Pilot" buttonText="Notify Me" placeholder="your@email.com" />
-            </div>
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/30">
+            {messages.length === 0 && (
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-2 px-4">
+                <MessageCircle size={32} className="text-sky-300" />
+                <p className="text-xs text-slate-400 font-normal max-w-xs">
+                  Ask me anything about your <span className="font-semibold text-slate-600">{activeDim.label}</span> score or how to improve it.
+                </p>
+              </div>
+            )}
+            {messages.map((msg, i) => (
+              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-xs leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-brand-900 text-white rounded-br-md'
+                    : 'bg-white border border-slate-100 text-slate-700 rounded-bl-md shadow-sm'
+                }`}>
+                  {msg.content.split('\n').map((line, j) => (
+                    <span key={j}>{renderBold(line)}<br /></span>
+                  ))}
+                </div>
+              </div>
+            ))}
+            {chatLoading && (
+              <div className="flex justify-start">
+                <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-md px-4 py-2.5 shadow-sm">
+                  <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
+
+          {/* Chat Input */}
+          <form onSubmit={handleChatSubmit} className="shrink-0 p-3 border-t border-slate-100 bg-white">
+            <div className="flex gap-2">
+              <input
+                ref={chatInputRef}
+                type="text"
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                placeholder="Ask for advice..."
+                className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-sky-300 transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={!chatInput.trim() || chatLoading}
+                className="rounded-xl bg-brand-900 hover:bg-brand-800 disabled:bg-slate-200 disabled:text-slate-400 text-white px-4 py-2.5 text-xs font-medium transition-all cursor-pointer disabled:cursor-not-allowed shrink-0"
+              >
+                Send
+              </button>
+            </div>
+          </form>
         </div>
       )}
 

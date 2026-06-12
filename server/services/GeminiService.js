@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import OpenAI from 'openai';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 const schemaPath = join(__dirname, '../ai_response_schema.json');
 const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gpt-4o-mini';
 
 // ── System Prompt ─────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are Vurdict, a brutal but fair Senior Design Lead and Hiring Manager at a top-tier tech firm (like Airbnb, Stripe, or Linear). Your job is to audit product design case studies and provide feedback that helps designers reach the next level.
@@ -93,7 +93,9 @@ Each item must be grounded in the specific case study being evaluated — never 
 
 - **critical_fixes** (max 3): Highest-impact improvements most likely to affect hiring or client-winning outcomes.
 - **medium_priority** (max 3): Valuable enhancements that strengthen the case study.
-- **nice_to_have** (max 3): Optional refinements for further polish.`;
+- **nice_to_have** (max 3): Optional refinements for further polish.
+
+You MUST respond in valid JSON matching the provided JSON schema.`;
 
 // ── User Prompt Builder ───────────────────────────────────────────────────
 function buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl) {
@@ -146,7 +148,7 @@ ${portfolioContent.slice(0, 500000)}
 }
 
 /**
- * Evaluates a portfolio using Gemini with built-in retry logic.
+ * Evaluates a portfolio using OpenAI with built-in retry logic.
  * @param {string} goal - 'get_hired' | 'win_clients'
  * @param {string} experienceLabel - 'Junior' | 'Mid-Level' | 'Senior'
  * @param {string} portfolioContent - Raw text extracted from the portfolio URL.
@@ -154,12 +156,12 @@ ${portfolioContent.slice(0, 500000)}
  * @returns {Promise<Object>} - Parsed JSON evaluation result.
  */
 export async function evaluatePortfolio(goal, experienceLabel, portfolioContent, sourceUrl) {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY is not configured on the server.');
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY is not configured on the server.');
   }
 
-  const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   const maxRetries = 4;
@@ -167,18 +169,21 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
 
   while (attempt < maxRetries) {
     try {
-      const response = await ai.models.generateContent({
+      const response = await openai.chat.completions.create({
         model: MODEL,
-        contents: buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl),
-        config: {
-          systemInstruction: SYSTEM_PROMPT,
-          responseMimeType: 'application/json',
-          responseSchema: responseSchema,
-          temperature: 0.0, // Set temperature to 0 for maximum determinism and precision
-        },
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl) },
+        ],
+        response_format: { type: 'json_object' },
+        temperature: 0.0,
       });
 
-      const rawText = response.text;
+      const rawText = response.choices[0]?.message?.content;
+      if (!rawText) {
+        throw new Error('OpenAI returned an empty response.');
+      }
+
       const parsed = JSON.parse(rawText);
 
       // Programmatically derive the overall score based on the category scores and selected goal
@@ -193,14 +198,14 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
         derivedScore += score * weights[key];
         weightSum += weights[key];
       }
-      
+
       parsed.overall_score = Math.round(derivedScore / weightSum);
 
       return parsed;
     } catch (err) {
       attempt++;
-      console.warn(`[GeminiService] Attempt ${attempt} failed: ${err.message}`);
-      
+      console.warn(`[OpenAIService] Attempt ${attempt} failed: ${err.message}`);
+
       if (attempt >= maxRetries) {
         let cleanMsg = err.message;
         try {
@@ -208,14 +213,14 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
           cleanMsg = parsedErr.error?.message || cleanMsg;
         } catch {}
 
-        const isQuota = cleanMsg.toLowerCase().includes('quota') || cleanMsg.toLowerCase().includes('limit') || cleanMsg.includes('429');
+        const isQuota = cleanMsg.toLowerCase().includes('quota') || cleanMsg.toLowerCase().includes('limit') || cleanMsg.includes('429') || cleanMsg.includes('insufficient_quota');
         if (isQuota) {
-          throw new Error('GeminiQuotaExceeded: Google Gemini API quota has been exceeded. Please try again in a few minutes or use Mock Mode.');
+          throw new Error('OpenAIQuotaExceeded: OpenAI API quota has been exceeded. Please try again in a few minutes or use Mock Mode.');
         }
 
-        throw new Error(cleanMsg || 'Gemini service is currently unavailable. Please try again.');
+        throw new Error(cleanMsg || 'OpenAI service is currently unavailable. Please try again.');
       }
-      
+
       // Wait before retrying (longer backoff for rate limits)
       await new Promise(resolve => setTimeout(resolve, attempt * 4000));
     }

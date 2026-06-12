@@ -1,53 +1,93 @@
 import { Router } from 'express';
-import { GoogleGenAI } from '@google/genai';
+import OpenAI from 'openai';
 
 const router = Router();
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gpt-4o-mini';
 
 router.post('/', async (req, res) => {
-  const { message, dimension, score, explanation, context, experience } = req.body;
+  const { message, dimension, score, explanation, context, experience, allDimensions, overallScore, priorityActionPlan, fixThisFirst } = req.body;
 
   if (!message || !dimension) {
     return res.status(400).json({ error: 'Missing chat message or dimension data.' });
   }
 
+  // Build cross-dimension overview
+  let dimsOverview = '';
+  if (allDimensions && allDimensions.length > 0) {
+    dimsOverview = allDimensions.map(d => {
+      const imp = d.improve && d.improve.length > 0 ? d.improve[0].title : '';
+      return `- **${d.label}**: ${d.score}/100${imp ? ` — top improvement: ${imp}` : ''}`;
+    }).join('\n');
+  } else {
+    dimsOverview = `- **${dimension}**: ${score}/100`;
+  }
+
+  let topFixesNote = '';
+  if (priorityActionPlan && priorityActionPlan.critical_fixes && priorityActionPlan.critical_fixes.length > 0) {
+    topFixesNote = '\nHighest priority improvements:\n' +
+      priorityActionPlan.critical_fixes.slice(0, 2).map(f => `- ${f.title}`).join('\n');
+  }
+
+  let fixFirstNote = '';
+  if (fixThisFirst && fixThisFirst.title) {
+    fixFirstNote = `\nSingle most important fix: ${fixThisFirst.title}`;
+  }
+
   // Fallback if no API key is present
-  if (!process.env.GEMINI_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     return res.json({
-      reply: `I'm here as your Co-Pilot, but the server doesn't have a Gemini API key configured. \n\nHowever, since you scored a **${score}/100** on **${dimension}**, you can improve this by focusing on: \n\n- ${explanation}\n- Calibrate your case studies specifically for: **${context}**.`
+      reply: `I'm here as your Co-Pilot, but the server doesn't have an OpenAI API key configured. \n\nHere's a summary of your portfolio:\n\n${dimsOverview}\n\nYou're currently viewing **${dimension}** (${score}/100). Focus on the areas above to level up your portfolio for **${context}**.`
     });
   }
 
   try {
-    const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
     });
 
-    const systemInstruction = `You are Vurdict Co-Pilot, the designer's talented, witty, and highly supportive Design Lead Best Friend. 
+    const systemInstruction = `You are Vurdict Co-Pilot, the designer's talented, witty, and highly supportive Design Lead Best Friend.
 You speak in a friendly, modern design-mentor tone (like a senior colleague chatting over Slack or coffee). You use terms like "hifi", "lofi", "UX writing", "friction", "CTA", and "flows".
-You are helping them review their "**${dimension}**" dimension (they scored **${score}/100**).
-Their goal is to "${context}" at an experience level of "${experience}".
-The exact feedback Vurdict gave them for this is: "${explanation}".
+
+The user's portfolio is being reviewed for the "${context}" goal at an experience level of "${experience}".
+Overall score: ${overallScore || score}/100.
+
+Here are their scores across all 6 evaluation dimensions:
+${dimsOverview}${topFixesNote}${fixFirstNote}
+
+The dimension they are currently viewing is "${dimension}" (${score}/100).
 
 Guidelines:
-1. Explain how their score makes sense based on their goals and experience. Speak honestly but supportively—be their biggest cheerleader while helping them level up.
-2. Structure your replies to be highly readable: use short paragraphs, bold key terms, and bullet lists.
-3. Reference the Vurdict evaluation framework when answering (e.g. Structural Logic, Critical Thinking, Visual Execution, Impact Evidence, Narrative Tone, Positioning Clarity).
-4. Give concrete, creative rewrite options or formatting ideas they can copy and paste directly into their case studies.`;
+1. Use the full portfolio context above when answering, not just the current dimension. Cross-reference strengths and weaknesses across dimensions.
+2. Explain how their scores make sense based on their goals and experience. Speak honestly but supportively.
+3. Structure replies to be highly readable: short paragraphs, bold key terms, bullet lists.
+4. Give concrete, creative rewrite options or formatting ideas they can copy-paste directly.
+5. If they ask about the current dimension, use it as the entry point but feel free to reference related dimensions.
 
-    const response = await ai.models.generateContent({
+RESPONSE LENGTH RULES (critical):
+- If the user says a simple greeting ("hi", "hey", "hello"), respond with a brief warm greeting (1-2 sentences) and ask if they want help.
+- If the user gives short acknowledgments ("okay", "ok", "got it", "thanks", "thank you", "i see", "makes sense", "cool", "nice"), respond with just 1 sentence acknowledging them and leave the door open without pushing more advice.
+- If the user says "no", "nah", "not really", "not now", "maybe later", "i'm good", or declines help, respond briefly (1 sentence) saying "No problem at all — I'm here whenever you want to pick this up." Do NOT push advice or suggest next steps.
+- If the user asks about something off-topic (weather, news, food, sports, programming, etc.), politely say "I'm your portfolio co-pilot, so I stick to design career advice." and redirect back to their portfolio.
+- For substantive questions about their score, improvement, hiring, etc., give detailed, valuable responses with specific advice.
+- MATCH the user's energy: if they're brief, be brief. If they ask a detailed question, give a detailed answer.`;
+
+    const response = await openai.chat.completions.create({
       model: MODEL,
-      contents: message,
-      config: {
-        systemInstruction: systemInstruction,
-        temperature: 0.7,
-      },
+      messages: [
+        { role: 'system', content: systemInstruction },
+        { role: 'user', content: message },
+      ],
+      temperature: 0.7,
     });
 
-    res.json({ reply: response.text });
+    const text = response.choices[0]?.message?.content;
+    if (!text) {
+      return res.status(500).json({ error: 'OpenAI returned an empty response.' });
+    }
+    res.json({ reply: text });
   } catch (err) {
-    console.error('[Chat Router Error]', err);
-    res.status(500).json({ error: 'Failed to generate response' });
+    console.error('[Chat Router Error]', err.message);
+    res.status(503).json({ fallback: true });
   }
 });
 

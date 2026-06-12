@@ -8,7 +8,6 @@ import {
   Sparkles,
   AlertCircle,
   Lock,
-  Server,
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
@@ -39,7 +38,6 @@ export default function AnalyzePage() {
   const [goal, setGoal] = useState(searchParams.get('goal') || 'get_hired');
   const [experience, setExperience] = useState('junior');
   const [error, setError] = useState('');
-  const [useMock, setUseMock] = useState(false);
 
   const isUrlEmpty = !url.trim();
   const selectedGoal = GOALS.find((g) => g.key === goal);
@@ -71,7 +69,7 @@ export default function AnalyzePage() {
     }
 
     navigate(
-      `/analyzing?url=${encodeURIComponent(url.trim())}&goal=${goal}&experience=${experience}&mock=${useMock}`
+      `/analyzing?url=${encodeURIComponent(url.trim())}&goal=${goal}&experience=${experience}`
     );
   };
 
@@ -218,18 +216,6 @@ export default function AnalyzePage() {
                       );
                     })}
                   </div>
-                </div>
-
-                <div className="flex items-center justify-between bg-white border border-white rounded-2xl px-4 py-2.5">
-                  <div className="flex items-center gap-2">
-                    <Server size={14} className="text-slate-600" />
-                    <span className="text-[11px] font-medium text-slate-900">Bypass server (use mock data)</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setUseMock(!useMock)}
-                    className={`relative h-5 w-9 rounded-full transition-all ${useMock ? 'bg-brand-900' : 'bg-slate-600'}`}>                    <div className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${useMock ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
-                  </button>
                 </div>
 
                 {/* CTA */}
