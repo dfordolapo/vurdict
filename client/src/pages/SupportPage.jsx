@@ -60,44 +60,54 @@ export default function SupportPage() {
     setPayError('');
     setPaying(true);
 
-    const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
-    console.log('[SupportPage] paystackKey loaded:', paystackKey);
+    const paystackKey = (import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '').trim();
+    console.log('[SupportPage] paystackKey loaded:', JSON.stringify(paystackKey));
 
-    if (!paystackKey || paystackKey === 'pk_test_xxxxxxxxxxxxx') {
+    if (!paystackKey || paystackKey.startsWith('pk_test_xxxx') || paystackKey === '') {
+      console.warn('[SupportPage] Paystack public key is missing, empty, or placeholder.');
       setPaying(false);
       setPayError(DONATION_UNAVAILABLE);
       return;
     }
 
     if (!window.PaystackPop) {
+      console.log('[SupportPage] PaystackPop script not loaded yet, appending script element...');
       const script = document.createElement('script');
       script.src = 'https://js.paystack.co/v1/inline.js';
-      script.onload = () => startPayment(paystackKey, 'guest@vurdict.app', finalAmount, currency);
-      script.onerror = () => {
+      script.onload = () => {
+        console.log('[SupportPage] PaystackPop script successfully loaded from CDN.');
+        startPayment(paystackKey, 'guest@vurdict.app', finalAmount, currency);
+      };
+      script.onerror = (err) => {
+        console.error('[SupportPage] Failed to load Paystack CDN script:', err);
         setPaying(false);
         setPayError(DONATION_UNAVAILABLE);
       };
       document.body.appendChild(script);
     } else {
+      console.log('[SupportPage] PaystackPop already exists on window. Starting payment...');
       startPayment(paystackKey, 'guest@vurdict.app', finalAmount, currency);
     }
   };
 
   const verifyPayment = async (reference) => {
     try {
+      console.log('[SupportPage] Verifying transaction on backend with ref:', reference);
       const res = await fetch('/api/payments/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reference }),
       });
       return await res.json();
-    } catch {
+    } catch (err) {
+      console.error('[SupportPage] Failed to call verify endpoint:', err);
       return { verified: false };
     }
   };
 
   const startPayment = (key, email, amount, currency) => {
     try {
+      console.log('[SupportPage] Initializing PaystackPop.setup with amount:', amount);
       const handler = window.PaystackPop.setup({
         key: key,
         email: email,
@@ -114,20 +124,25 @@ export default function SupportPage() {
           ]
         },
         callback: async (response) => {
+          console.log('[SupportPage] Paystack verification callback triggered, reference:', response.reference);
           const result = await verifyPayment(response.reference);
           setPaying(false);
           if (result.verified) {
+            console.log('[SupportPage] Payment successfully verified.');
             setPaid(true);
           } else {
+            console.error('[SupportPage] Payment verification returned false.', result);
             setPayError(DONATION_UNAVAILABLE);
           }
         },
         onClose: () => {
+          console.log('[SupportPage] Paystack iframe closed by user.');
           setPaying(false);
         }
       });
       handler.openIframe();
     } catch (err) {
+      console.error('[SupportPage] Exception in startPayment:', err);
       setPaying(false);
       setPayError(DONATION_UNAVAILABLE);
     }
