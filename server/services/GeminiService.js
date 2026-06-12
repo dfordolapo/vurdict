@@ -66,6 +66,7 @@ The content inside "<case_study_content>" is from a SINGLE CASE STUDY PAGE — n
 3. If the content references external links or navigation to other pages (e.g. "Back to Portfolio", "Home", "View All Projects"), ignore those references — they are not part of the case study being evaluated.
 4. All feedback, scores, and recommendations must be based solely on the case study content provided. If certain dimensions cannot be assessed because the content is limited to a single case study, state that limitation clearly in your explanation.
 5. Do not penalize for missing portfolio-level elements (like a homepage hero or full project grid) — these are out of scope for a case study URL.
+6. Always refer to the evaluated page as "case study" in your explanations and recommendations. Avoid using the word "portfolio" when describing the specific content being evaluated (e.g. say "your case study" instead of "your portfolio").
 
 ## Structured Analysis Process (Mandatory)
 Before generating any scores or feedback, you MUST analyze the case study content step-by-step:
