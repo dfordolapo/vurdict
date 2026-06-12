@@ -21,6 +21,7 @@ const PROVIDER_CONFIG = {
   gemini: { key: 'GEMINI_API_KEY', label: 'Gemini' },
   claude: { key: 'CLAUDE_API_KEY', label: 'Claude' },
   deepseek: { key: 'DEEPSEEK_API_KEY', label: 'DeepSeek' },
+  evolink: { key: 'EVOLINK_API_KEY', label: 'Evolink' },
 };
 
 const SYSTEM_PROMPT = `You are Vurdict, a brutal but fair Senior Design Lead and Hiring Manager at a top-tier tech firm (like Airbnb, Stripe, or Linear). Your job is to audit product design case studies and provide feedback that helps designers reach the next level.
@@ -253,11 +254,34 @@ async function callDeepSeek(prompt, userContent) {
   return JSON.parse(rawText);
 }
 
+async function callEvolink(prompt, userContent) {
+  if (!process.env.EVOLINK_API_KEY) {
+    throw new Error('EVOLINK_API_KEY is not configured on the server.');
+  }
+  const client = new OpenAI({
+    apiKey: process.env.EVOLINK_API_KEY,
+    baseURL: 'https://api.evolink.ai/v1',
+  });
+  const response = await client.chat.completions.create({
+    model: CLAUDE_MODEL,
+    messages: [
+      { role: 'system', content: prompt + '\n\nYou MUST respond in valid JSON matching the provided JSON schema.' },
+      { role: 'user', content: userContent },
+    ],
+    response_format: { type: 'json_object' },
+    temperature: 0.0,
+  });
+  const rawText = response.choices[0]?.message?.content;
+  if (!rawText) throw new Error('Evolink returned an empty response.');
+  return JSON.parse(rawText);
+}
+
 const CALLERS = {
   openai: callOpenAI,
   gemini: callGemini,
   claude: callClaude,
   deepseek: callDeepSeek,
+  evolink: callEvolink,
 };
 
 export async function evaluatePortfolio(goal, experienceLabel, portfolioContent, sourceUrl) {

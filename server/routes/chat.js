@@ -14,6 +14,7 @@ const PROVIDER_CONFIG = {
   gemini: { key: 'GEMINI_API_KEY', label: 'Gemini' },
   claude: { key: 'CLAUDE_API_KEY', label: 'Claude' },
   deepseek: { key: 'DEEPSEEK_API_KEY', label: 'DeepSeek' },
+  evolink: { key: 'EVOLINK_API_KEY', label: 'Evolink' },
 };
 
 router.post('/', async (req, res) => {
@@ -118,6 +119,22 @@ RESPONSE LENGTH RULES (critical):
         });
         const response = await deepseek.chat.completions.create({
           model: DEEPSEEK_MODEL,
+          messages: [
+            { role: 'system', content: systemInstruction },
+            { role: 'user', content: message },
+          ],
+          temperature: 0.7,
+        });
+        text = response.choices[0]?.message?.content;
+        break;
+      }
+      case 'evolink': {
+        const client = new OpenAI({
+          apiKey: process.env.EVOLINK_API_KEY,
+          baseURL: 'https://api.evolink.ai/v1',
+        });
+        const response = await client.chat.completions.create({
+          model: CLAUDE_MODEL,
           messages: [
             { role: 'system', content: systemInstruction },
             { role: 'user', content: message },
