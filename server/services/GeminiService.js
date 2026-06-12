@@ -271,8 +271,9 @@ async function callEvolink(prompt, userContent) {
     response_format: { type: 'json_object' },
     temperature: 0.0,
   });
-  const rawText = response.choices[0]?.message?.content;
+  let rawText = response.choices[0]?.message?.content;
   if (!rawText) throw new Error('Evolink returned an empty response.');
+  rawText = rawText.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
   return JSON.parse(rawText);
 }
 
