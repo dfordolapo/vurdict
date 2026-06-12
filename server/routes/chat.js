@@ -1,8 +1,11 @@
 import { Router } from 'express';
+import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
 
 const router = Router();
-const MODEL = 'gpt-4o-mini';
+const PROVIDER = process.env.AI_PROVIDER || 'openai';
+const OPENAI_MODEL = 'gpt-4o-mini';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 
 router.post('/', async (req, res) => {
   const { message, dimension, score, explanation, context, experience, allDimensions, overallScore, priorityActionPlan, fixThisFirst } = req.body;
@@ -11,7 +14,6 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Missing chat message or dimension data.' });
   }
 
-  // Build cross-dimension overview
   let dimsOverview = '';
   if (allDimensions && allDimensions.length > 0) {
     dimsOverview = allDimensions.map(d => {
@@ -33,18 +35,14 @@ router.post('/', async (req, res) => {
     fixFirstNote = `\nSingle most important fix: ${fixThisFirst.title}`;
   }
 
-  // Fallback if no API key is present
-  if (!process.env.OPENAI_API_KEY) {
+  const missingKey = PROVIDER === 'gemini' ? 'GEMINI_API_KEY' : 'OPENAI_API_KEY';
+  if (!process.env[missingKey]) {
     return res.json({
-      reply: `I'm here as your Co-Pilot, but the server doesn't have an OpenAI API key configured. \n\nHere's a summary of your portfolio:\n\n${dimsOverview}\n\nYou're currently viewing **${dimension}** (${score}/100). Focus on the areas above to level up your portfolio for **${context}**.`
+      reply: `I'm here as your Co-Pilot, but the server doesn't have a ${missingKey} configured. \n\nHere's a summary of your portfolio:\n\n${dimsOverview}\n\nYou're currently viewing **${dimension}** (${score}/100). Focus on the areas above to level up your portfolio for **${context}**.`
     });
   }
 
   try {
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
     const systemInstruction = `You are Vurdict Co-Pilot, the designer's talented, witty, and highly supportive Design Lead Best Friend.
 You speak in a friendly, modern design-mentor tone (like a senior colleague chatting over Slack or coffee). You use terms like "hifi", "lofi", "UX writing", "friction", "CTA", and "flows".
 
@@ -71,18 +69,31 @@ RESPONSE LENGTH RULES (critical):
 - For substantive questions about their score, improvement, hiring, etc., give detailed, valuable responses with specific advice.
 - MATCH the user's energy: if they're brief, be brief. If they ask a detailed question, give a detailed answer.`;
 
-    const response = await openai.chat.completions.create({
-      model: MODEL,
-      messages: [
-        { role: 'system', content: systemInstruction },
-        { role: 'user', content: message },
-      ],
-      temperature: 0.7,
-    });
+    let text;
 
-    const text = response.choices[0]?.message?.content;
+    if (PROVIDER === 'gemini') {
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const response = await ai.models.generateContent({
+        model: GEMINI_MODEL,
+        contents: message,
+        config: { systemInstruction, temperature: 0.7 },
+      });
+      text = response.text;
+    } else {
+      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      const response = await openai.chat.completions.create({
+        model: OPENAI_MODEL,
+        messages: [
+          { role: 'system', content: systemInstruction },
+          { role: 'user', content: message },
+        ],
+        temperature: 0.7,
+      });
+      text = response.choices[0]?.message?.content;
+    }
+
     if (!text) {
-      return res.status(500).json({ error: 'OpenAI returned an empty response.' });
+      return res.status(500).json({ error: `${PROVIDER === 'gemini' ? 'Gemini' : 'OpenAI'} returned an empty response.` });
     }
     res.json({ reply: text });
   } catch (err) {

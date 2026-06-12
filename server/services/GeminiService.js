@@ -1,3 +1,4 @@
+import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
@@ -6,13 +7,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Load structured output schema
 const schemaPath = join(__dirname, '../ai_response_schema.json');
 const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 
-const MODEL = 'gpt-4o-mini';
+const PROVIDER = process.env.AI_PROVIDER || 'openai';
+const OPENAI_MODEL = 'gpt-4o-mini';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 
-// ── System Prompt ─────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are Vurdict, a brutal but fair Senior Design Lead and Hiring Manager at a top-tier tech firm (like Airbnb, Stripe, or Linear). Your job is to audit product design case studies and provide feedback that helps designers reach the next level.
 
 ## Scoring Calibration Guidelines (Strict Scale)
@@ -93,11 +94,8 @@ Each item must be grounded in the specific case study being evaluated — never 
 
 - **critical_fixes** (max 3): Highest-impact improvements most likely to affect hiring or client-winning outcomes.
 - **medium_priority** (max 3): Valuable enhancements that strengthen the case study.
-- **nice_to_have** (max 3): Optional refinements for further polish.
+- **nice_to_have** (max 3): Optional refinements for further polish.`;
 
-You MUST respond in valid JSON matching the provided JSON schema.`;
-
-// ── User Prompt Builder ───────────────────────────────────────────────────
 function buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl) {
   const goalLabels = {
     get_hired: 'Get Hired at a top-tier company',
@@ -105,7 +103,6 @@ function buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl) {
   };
   const goalLabel = goalLabels[goal] || 'Get Hired at a top-tier company';
 
-  // Inject specific prompt calibration details based on goals and experience level
   let goalInstructions = '';
   if (goal === 'get_hired') {
     goalInstructions = `- **Hiring Perspective**: Evaluate from the perspective of an engineering-focused tech company. Look for B2B/B2C SaaS complexity, team collaboration, and hard evidence of outcome metrics (e.g., conversion rates, time-on-task).`;
@@ -147,64 +144,84 @@ ${portfolioContent.slice(0, 500000)}
 </case_study_content>`;
 }
 
-/**
- * Evaluates a portfolio using OpenAI with built-in retry logic.
- * @param {string} goal - 'get_hired' | 'win_clients'
- * @param {string} experienceLabel - 'Junior' | 'Mid-Level' | 'Senior'
- * @param {string} portfolioContent - Raw text extracted from the portfolio URL.
- * @param {string} sourceUrl - The original URL being analyzed (for context isolation).
- * @returns {Promise<Object>} - Parsed JSON evaluation result.
- */
-export async function evaluatePortfolio(goal, experienceLabel, portfolioContent, sourceUrl) {
+function computeOverallScore(parsed, goal) {
+  const weights = goal === 'get_hired'
+    ? { problem_framing: 0.25, process_visibility: 0.25, outcome_impact: 0.25, visual_quality: 0.1, niche_positioning: 0.1, trust_cta: 0.05 }
+    : { niche_positioning: 0.25, trust_cta: 0.25, visual_quality: 0.25, problem_framing: 0.1, process_visibility: 0.1, outcome_impact: 0.05 };
+
+  let derivedScore = 0;
+  let weightSum = 0;
+  for (const key of Object.keys(weights)) {
+    const score = parsed.categories?.[key]?.score || 0;
+    derivedScore += score * weights[key];
+    weightSum += weights[key];
+  }
+
+  parsed.overall_score = Math.round(derivedScore / weightSum);
+  return parsed;
+}
+
+async function callOpenAI(prompt, userContent) {
   if (!process.env.OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY is not configured on the server.');
   }
 
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+  const response = await openai.chat.completions.create({
+    model: OPENAI_MODEL,
+    messages: [
+      { role: 'system', content: prompt + '\n\nYou MUST respond in valid JSON matching the provided JSON schema.' },
+      { role: 'user', content: userContent },
+    ],
+    response_format: { type: 'json_object' },
+    temperature: 0.0,
   });
 
+  const rawText = response.choices[0]?.message?.content;
+  if (!rawText) throw new Error('OpenAI returned an empty response.');
+  return JSON.parse(rawText);
+}
+
+async function callGemini(prompt, userContent) {
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY is not configured on the server.');
+  }
+
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+  const response = await ai.models.generateContent({
+    model: GEMINI_MODEL,
+    contents: userContent,
+    config: {
+      systemInstruction: prompt,
+      responseMimeType: 'application/json',
+      responseSchema: responseSchema,
+      temperature: 0.0,
+    },
+  });
+
+  const rawText = response.text;
+  if (!rawText) throw new Error('Gemini returned an empty response.');
+  return JSON.parse(rawText);
+}
+
+export async function evaluatePortfolio(goal, experienceLabel, portfolioContent, sourceUrl) {
+  const prompt = SYSTEM_PROMPT;
+  const userContent = buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl);
+
+  const caller = PROVIDER === 'gemini' ? callGemini : callOpenAI;
+  const providerName = PROVIDER === 'gemini' ? 'Gemini' : 'OpenAI';
   const maxRetries = 4;
   let attempt = 0;
 
   while (attempt < maxRetries) {
     try {
-      const response = await openai.chat.completions.create({
-        model: MODEL,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl) },
-        ],
-        response_format: { type: 'json_object' },
-        temperature: 0.0,
-      });
-
-      const rawText = response.choices[0]?.message?.content;
-      if (!rawText) {
-        throw new Error('OpenAI returned an empty response.');
-      }
-
-      const parsed = JSON.parse(rawText);
-
-      // Programmatically derive the overall score based on the category scores and selected goal
-      const weights = goal === 'get_hired'
-        ? { problem_framing: 0.25, process_visibility: 0.25, outcome_impact: 0.25, visual_quality: 0.1, niche_positioning: 0.1, trust_cta: 0.05 }
-        : { niche_positioning: 0.25, trust_cta: 0.25, visual_quality: 0.25, problem_framing: 0.1, process_visibility: 0.1, outcome_impact: 0.05 };
-
-      let derivedScore = 0;
-      let weightSum = 0;
-      for (const key of Object.keys(weights)) {
-        const score = parsed.categories?.[key]?.score || 0;
-        derivedScore += score * weights[key];
-        weightSum += weights[key];
-      }
-
-      parsed.overall_score = Math.round(derivedScore / weightSum);
-
-      return parsed;
+      const parsed = await caller(prompt, userContent);
+      return computeOverallScore(parsed, goal);
     } catch (err) {
       attempt++;
-      console.warn(`[OpenAIService] Attempt ${attempt} failed: ${err.message}`);
+      console.warn(`[${providerName}Service] Attempt ${attempt} failed: ${err.message}`);
 
       if (attempt >= maxRetries) {
         let cleanMsg = err.message;
@@ -215,13 +232,12 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
 
         const isQuota = cleanMsg.toLowerCase().includes('quota') || cleanMsg.toLowerCase().includes('limit') || cleanMsg.includes('429') || cleanMsg.includes('insufficient_quota');
         if (isQuota) {
-          throw new Error('OpenAIQuotaExceeded: OpenAI API quota has been exceeded. Please try again in a few minutes or use Mock Mode.');
+          throw new Error(`${providerName}QuotaExceeded: ${providerName} API quota has been exceeded. Please try again in a few minutes or switch providers.`);
         }
 
-        throw new Error(cleanMsg || 'OpenAI service is currently unavailable. Please try again.');
+        throw new Error(cleanMsg || `${providerName} service is currently unavailable. Please try again.`);
       }
 
-      // Wait before retrying (longer backoff for rate limits)
       await new Promise(resolve => setTimeout(resolve, attempt * 4000));
     }
   }
