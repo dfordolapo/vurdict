@@ -63,8 +63,8 @@ export default function SupportPage() {
     const paystackKey = (import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '').trim();
     console.log('[SupportPage] paystackKey loaded:', JSON.stringify(paystackKey));
 
-    if (!paystackKey || paystackKey.startsWith('pk_test_') || paystackKey === '') {
-      console.warn('[SupportPage] Paystack public key is missing, empty, or is a test key.');
+    if (!paystackKey || paystackKey === 'pk_test_xxxxxxxxxxxxx' || paystackKey === '') {
+      console.warn('[SupportPage] Paystack public key is missing, empty, or placeholder.');
       setPaying(false);
       setPayError(DONATION_UNAVAILABLE);
       return;
