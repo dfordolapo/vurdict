@@ -13,15 +13,12 @@ const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 const PROVIDER = process.env.AI_PROVIDER || 'openai';
 const OPENAI_MODEL = 'gpt-4o-mini';
 const GEMINI_MODEL = 'gemini-2.5-flash';
-const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
 const DEEPSEEK_MODEL = 'deepseek-chat';
 
 const PROVIDER_CONFIG = {
   openai: { key: 'OPENAI_API_KEY', label: 'OpenAI' },
   gemini: { key: 'GEMINI_API_KEY', label: 'Gemini' },
-  claude: { key: 'CLAUDE_API_KEY', label: 'Claude' },
   deepseek: { key: 'DEEPSEEK_API_KEY', label: 'DeepSeek' },
-  evolink: { key: 'EVOLINK_API_KEY', label: 'Evolink' },
 };
 
 const SYSTEM_PROMPT = `You are Vurdict, a brutal but fair Senior Design Lead and Hiring Manager at a top-tier tech firm (like Airbnb, Stripe, or Linear). Your job is to audit product design case studies and provide feedback that helps designers reach the next level.
@@ -56,7 +53,7 @@ Your language must convey credible, measured feedback — not false certainty. F
 
 ## Explanations Format
 - Keep explanations direct, punchy, and professional.
-- Use "The Hiring Manager's perspective" for the "get_hired" goal.
+- Use "The Recruiter's perspective" for the "get_hired" goal.
 - Use "The Client's perspective" for the "win_clients" goal.
 
 ## Strict Data Isolation Rule
@@ -210,28 +207,6 @@ async function callGemini(prompt, userContent) {
   return JSON.parse(rawText);
 }
 
-async function callClaude(prompt, userContent) {
-  if (!process.env.CLAUDE_API_KEY) {
-    throw new Error('CLAUDE_API_KEY is not configured on the server.');
-  }
-  const client = new OpenAI({
-    apiKey: process.env.CLAUDE_API_KEY,
-    baseURL: 'https://api.evolink.ai/v1',
-  });
-  const response = await client.chat.completions.create({
-    model: CLAUDE_MODEL,
-    messages: [
-      { role: 'system', content: prompt + '\n\nYou MUST respond in valid JSON matching the provided JSON schema.' },
-      { role: 'user', content: userContent },
-    ],
-    response_format: { type: 'json_object' },
-    temperature: 0.0,
-  });
-  const rawText = response.choices[0]?.message?.content;
-  if (!rawText) throw new Error('Claude returned an empty response.');
-  return JSON.parse(rawText);
-}
-
 async function callDeepSeek(prompt, userContent) {
   if (!process.env.DEEPSEEK_API_KEY) {
     throw new Error('DEEPSEEK_API_KEY is not configured on the server.');
@@ -254,35 +229,10 @@ async function callDeepSeek(prompt, userContent) {
   return JSON.parse(rawText);
 }
 
-async function callEvolink(prompt, userContent) {
-  if (!process.env.EVOLINK_API_KEY) {
-    throw new Error('EVOLINK_API_KEY is not configured on the server.');
-  }
-  const client = new OpenAI({
-    apiKey: process.env.EVOLINK_API_KEY,
-    baseURL: 'https://api.evolink.ai/v1',
-  });
-  const response = await client.chat.completions.create({
-    model: CLAUDE_MODEL,
-    messages: [
-      { role: 'system', content: prompt + '\n\nYou MUST respond in valid JSON matching the provided JSON schema.' },
-      { role: 'user', content: userContent },
-    ],
-    response_format: { type: 'json_object' },
-    temperature: 0.0,
-  });
-  let rawText = response.choices[0]?.message?.content;
-  if (!rawText) throw new Error('Evolink returned an empty response.');
-  rawText = rawText.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
-  return JSON.parse(rawText);
-}
-
 const CALLERS = {
   openai: callOpenAI,
   gemini: callGemini,
-  claude: callClaude,
   deepseek: callDeepSeek,
-  evolink: callEvolink,
 };
 
 export async function evaluatePortfolio(goal, experienceLabel, portfolioContent, sourceUrl) {
@@ -290,7 +240,7 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
   const userContent = buildUserPrompt(goal, experienceLabel, portfolioContent, sourceUrl);
 
   const cfg = PROVIDER_CONFIG[PROVIDER];
-  if (!cfg) throw new Error(`Unknown AI_PROVIDER: ${PROVIDER}. Valid options: openai, gemini, claude, deepseek.`);
+  if (!cfg) throw new Error(`Unknown AI_PROVIDER: ${PROVIDER}. Valid options: openai, gemini, deepseek.`);
 
   const caller = CALLERS[PROVIDER];
   const maxRetries = 4;
@@ -309,7 +259,7 @@ export async function evaluatePortfolio(goal, experienceLabel, portfolioContent,
         try {
           const parsedErr = JSON.parse(err.message);
           cleanMsg = parsedErr.error?.message || cleanMsg;
-        } catch {}
+        } catch { }
 
         const isQuota = cleanMsg.toLowerCase().includes('quota') || cleanMsg.toLowerCase().includes('limit') || cleanMsg.includes('429') || cleanMsg.includes('insufficient_quota');
         if (isQuota) {

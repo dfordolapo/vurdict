@@ -28,7 +28,7 @@ To provide product designers with objective, goal-aware portfolio feedback using
 - **Framework**: Express (Node.js).
 - **Architecture**: Service-oriented.
   - `JinaService`: Handles content extraction.
-  - `ClaudeService`: Handles prompt construction and LLM interaction.
+  - `GeminiService`: Handles prompt construction and LLM interaction (supports Gemini, OpenAI, DeepSeek).
 - **Error Handling**: Graceful handling of URL timeouts, 404s, and LLM parsing errors.
 
 ## 4. Coding Philosophy
@@ -42,6 +42,15 @@ To provide product designers with objective, goal-aware portfolio feedback using
 
 ---
 
-## 6. Current Phase
-**Discovery & Strategy Phase (Completed)**.
-Next Phase: Infrastructure & Backend Core.
+## 6. Known Issues
+
+### Gemini API Key & Rate Limits
+- Under high demand, the Gemini API may occasionally return 503 errors. The `GeminiService.js` implementation includes built-in retry logic (up to 4 attempts with backoff) to gracefully recover and return analysis successfully.
+
+---
+
+## 7. Current Phase
+**Infrastructure & Backend Core (Completed)**.
+- Deprecated and removed Evolink and Claude integrations completely.
+- Switched primary provider to Gemini and validated integration.
+- Next: Connect frontend client to backend server and test end-to-end analysis.
