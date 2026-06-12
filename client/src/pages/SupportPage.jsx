@@ -61,6 +61,7 @@ export default function SupportPage() {
     setPaying(true);
 
     const paystackKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+    console.log('[SupportPage] paystackKey loaded:', paystackKey);
 
     if (!paystackKey || paystackKey === 'pk_test_xxxxxxxxxxxxx') {
       setPaying(false);
