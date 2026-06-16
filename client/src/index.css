@@ -182,3 +182,113 @@ body {
     animation-duration: 10s;
   }
 }
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   Vurdict Pull-to-Refresh
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/*
+  Fixed overlay that slides in from above the viewport.
+  Uses translateY so it never affects page layout.
+  z-index 49 keeps it below the navbar (z-50).
+*/
+.ptr-overlay {
+  position: fixed;
+  top: 4rem;              /* sits below the fixed h-16 navbar */
+  left: 0;
+  right: 0;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 14px;
+  z-index: 49;            /* below navbar z-50 */
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── Mascot card ───────────────────────────────────────────────────────── */
+.ptr-card {
+  width: 110px;
+  height: 110px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(23, 37, 84, 0.1);
+  box-shadow:
+    0 4px 16px rgba(23, 37, 84, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  will-change: transform, opacity;
+  transition: box-shadow 0.25s ease;
+}
+
+/* Glow when threshold hit */
+.ptr-card--ready {
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.2),
+    0 6px 28px rgba(23, 37, 84, 0.14);
+}
+
+/* ── Labels ────────────────────────────────────────────────────────────── */
+.ptr-label {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #172554;
+  white-space: nowrap;
+  user-select: none;
+
+  /* Pill card background */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(23, 37, 84, 0.12);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  box-shadow:
+    0 2px 8px rgba(23, 37, 84, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Mascot animations ─────────────────────────────────────────────────── */
+
+/* Gentle float bob while loading */
+@keyframes ptr-mascot-bob {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-4px); }
+}
+.ptr-mascot-bob {
+  animation: ptr-mascot-bob 1.4s ease-in-out infinite;
+}
+
+/* Antenna ping ring */
+@keyframes ptr-ping {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+
+/* Eye scan line sweeps vertically */
+@keyframes ptr-scanline {
+  0%   { transform: translateY(0px);  opacity: 0.8; }
+  100% { transform: translateY(17px); opacity: 0;   }
+}
+
+/* Pulsing label */
+@keyframes ptr-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1;    }
+}
+
+/* Suppress native browser overscroll — touch devices only (not laptop trackpads) */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    overscroll-behavior-y: none;
+  }
+}
+

@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense, lazy } from 'react'
 import LandingPage from './pages/LandingPage.jsx'
 import { AnalysisProvider } from './context/AnalysisContext'
 import PWAInstallPrompt from './components/PWAInstallPrompt.jsx'
+import PullToRefresh from './components/PullToRefresh.jsx'
 const AnalyzePage = lazy(() => import('./pages/AnalyzePage.jsx'))
 const AnalyzingPage = lazy(() => import('./pages/AnalyzingPage.jsx'))
 const ResultsPage = lazy(() => import('./pages/ResultsPage.jsx'))
@@ -52,6 +53,7 @@ export default function App() {
         </div>
       }>
         <div>
+          <PullToRefresh />
           <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/analyze" element={<AnalyzePage />} />
