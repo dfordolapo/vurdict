@@ -131,6 +131,11 @@ export default function AnalyzePage() {
                       className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
                     />
                   </div>
+                  {!url && (
+                    <p className="text-xs text-sky-200/50 font-normal mt-2 px-1">
+                      Works with Notion, Framer, Webflow, Behance, personal sites, or any public link
+                    </p>
+                  )}
                 </div>
 
                 {/* Goal Cards */}

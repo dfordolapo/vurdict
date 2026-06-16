@@ -192,6 +192,7 @@ export default function PullToRefresh() {
     isDragging.current = false
 
     if (pullY >= PULL_THRESHOLD) {
+      navigator.vibrate?.(40)   // haptic snap on Android
       window.location.reload()
     } else {
       setPhase('idle')

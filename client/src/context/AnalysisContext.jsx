@@ -15,11 +15,11 @@ export function getScoreStatus(score) {
 
 // Score band framework for interpretation
 export const SCORE_BANDS = [
-  { min: 86, max: 100, label: 'Exceptional', description: 'Represents outstanding quality and differentiation.' },
-  { min: 71, max: 85, label: 'Strong', description: 'Demonstrates strong execution and hiring readiness.' },
-  { min: 51, max: 70, label: 'Competitive', description: 'Shows a solid foundation with room for improvement.' },
-  { min: 31, max: 50, label: 'Early Foundation', description: 'Some fundamentals are present, but important gaps remain.' },
-  { min: 0, max: 30, label: 'Significant Gaps', description: 'Major weaknesses were identified. Substantial improvements are needed.' },
+  { min: 86, max: 100, label: 'Exceptional', description: 'Represents outstanding quality and differentiation.', tooltip: 'Scores in this range indicate a portfolio that strongly signals high-level critical thinking, measurable business impact, and exceptional visual craft. Highly competitive for top-tier roles.' },
+  { min: 71, max: 85, label: 'Strong', description: 'Demonstrates strong execution and hiring readiness.', tooltip: 'Scores in this range indicate a solid, hireable portfolio. It effectively communicates problem-solving and process, with only minor gaps in outcome metrics or niche positioning.' },
+  { min: 51, max: 70, label: 'Competitive', description: 'Shows a solid foundation with room for improvement.', tooltip: 'Scores in this range suggest a good foundation but noticeable gaps. Often this means the case study describes the process well, but fails to prove business value with quantitative metrics.' },
+  { min: 31, max: 50, label: 'Early Foundation', description: 'Some fundamentals are present, but important gaps remain.', tooltip: 'Scores in this range indicate significant missing signals. Evaluators may struggle to understand your specific role, the problem validation, or the final business outcomes.' },
+  { min: 0, max: 30, label: 'Significant Gaps', description: 'Major weaknesses were identified. Substantial improvements are needed.', tooltip: 'Scores in this range are missing the core signals evaluators look for. Focus on completely restructuring the case study around a clear problem-to-outcome narrative.' },
 ];
 
 export function getScoreBand(score) {

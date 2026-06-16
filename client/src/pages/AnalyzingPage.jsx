@@ -375,9 +375,20 @@ export default function AnalyzingPage() {
                   })}
                 </div>
 
-                <div className="text-[10px] text-sky-100/50 font-semibold flex items-center gap-1">
-                  <Clock size={12} />
-                  <span>This usually takes a few minutes.</span>
+                <div className="flex flex-col items-center sm:items-start gap-4 mt-2">
+                  <div className="text-[10px] text-sky-100/50 font-semibold flex items-center gap-1">
+                    <Clock size={12} />
+                    <span>This usually takes a few minutes.</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      // Navigate back to analyze page and clear any partial state
+                      navigate('/analyze');
+                    }}
+                    className="text-[10px] font-semibold text-sky-300 hover:text-white transition-colors cursor-pointer border border-sky-800/50 hover:bg-sky-900/30 px-3 py-1.5 rounded-lg"
+                  >
+                    Cancel Analysis
+                  </button>
                 </div>
               </div>
 

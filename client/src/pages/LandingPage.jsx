@@ -168,6 +168,7 @@ function HeroSection() {
   const navigate = useNavigate()
   const [url, setUrl] = useState('')
   const [goal, setGoal] = useState('get_hired')
+  const [experience, setExperience] = useState('junior')
   const [goalDropdownOpen, setGoalDropdownOpen] = useState(false)
 
   const goalsList = {
@@ -210,7 +211,7 @@ function HeroSection() {
                 onKeyDown={e => {
                   if (e.key === 'Enter' && url) {
                     const mappedGoal = goal === 'win_clients' ? 'win_clients' : 'get_hired';
-                    navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
+                    navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}&experience=${experience}`);
                   }
                 }}
                 placeholder="https://notion.so/your-case-study"
@@ -264,7 +265,7 @@ function HeroSection() {
               onClick={() => {
                 if (url) {
                   const mappedGoal = goal === 'win_clients' ? 'win_clients' : 'get_hired';
-                  navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}`);
+                  navigate(`/analyzing?url=${encodeURIComponent(url)}&goal=${mappedGoal}&experience=${experience}`);
                 }
               }}
               className="bg-brand-900 text-white flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-medium text-xs hover:bg-brand-800 transition-colors group cursor-pointer whitespace-nowrap shrink-0 w-full md:w-auto"
@@ -277,7 +278,32 @@ function HeroSection() {
           </div>
 
           {/* Bullet sub-badges */}
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
+            {/* Experience toggle */}
+            <div className="flex items-center gap-1.5">
+              {[
+                { key: 'junior', label: 'Junior' },
+                { key: 'mid',    label: 'Mid' },
+                { key: 'senior', label: 'Senior' },
+              ].map(({ key, label }) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setExperience(key)}
+                  className={`px-3 py-1 rounded-lg text-[10px] font-semibold transition-all border ${
+                    experience === key
+                      ? 'bg-white text-brand-900 border-white'
+                      : 'bg-white/10 text-sky-200/70 border-white/20 hover:bg-white/20'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Trust badges */}
+          <div className="flex flex-wrap justify-center gap-6 mt-4">
             {[
               { icon: Lock, text: 'No signup required' },
               { icon: Zap, text: 'Results in minutes' },

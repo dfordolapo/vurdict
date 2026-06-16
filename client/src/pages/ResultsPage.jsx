@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { useAnalysis, getScoreStatus, getScoreBand } from '../context/AnalysisContext';
@@ -37,6 +37,11 @@ export default function ResultsPage() {
   const navigate = useNavigate();
   const { state, resetAnalysis, toggleMockFallback } = useAnalysis();
   const [copied, setCopied] = useState(false);
+  const [shareChip, setShareChip] = useState(null);
+  const [animatedScores, setAnimatedScores] = useState({});
+  const [animatedOverallScore, setAnimatedOverallScore] = useState(0);
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const scoreBarsRef = useRef(null);
 
   const handleDownload = () => {
     const dims = [
@@ -216,20 +221,20 @@ export default function ResultsPage() {
         report: state.report,
         isMock: state.isMock
       };
-      
-      // Safe UTF-8 to Base64 serialization
       const jsonString = JSON.stringify(payload);
       const utf8Bytes = new TextEncoder().encode(jsonString);
-      let binString = "";
+      let binString = '';
       for (let i = 0; i < utf8Bytes.length; i++) {
         binString += String.fromCharCode(utf8Bytes[i]);
       }
       const serialized = btoa(binString);
       const shareUrl = `${window.location.origin}/results?share=${serialized}`;
-      
       navigator.clipboard.writeText(shareUrl);
       setCopied(true);
+      const currentStatus = state.report ? getScoreStatus(state.report.overall_score) : 'Completed';
+      setShareChip({ score: state.report?.overall_score, label: currentStatus });
       setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setShareChip(null), 3000);
     } catch (e) {
       console.error('Failed to generate share link', e);
     }
@@ -241,6 +246,54 @@ export default function ResultsPage() {
       toggleMockFallback();
     }
   }, [state.report, state.status, toggleMockFallback]);
+
+  // Animate score bars when they scroll into view
+  useEffect(() => {
+    if (!scoreBarsRef.current || !state.report) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Calculate scoreboard inside effect to avoid dependency cycles or use state.report
+          const cats = state.report.categories || {};
+          const dims = [
+            { slug: 'structural_logic', score: cats.process_visibility?.score || 88 },
+            { slug: 'critical_thinking', score: cats.problem_framing?.score || 78 },
+            { slug: 'visual_execution', score: cats.visual_quality?.score || 85 },
+            { slug: 'impact_evidence', score: cats.outcome_impact?.score || 80 },
+            { slug: 'narrative_tone', score: cats.trust_cta?.score || 82 },
+            { slug: 'positioning_clarity', score: cats.niche_positioning?.score || 75 }
+          ];
+          dims.forEach((dim, i) => {
+            setTimeout(() => {
+              setAnimatedScores(prev => ({ ...prev, [dim.slug]: dim.score }));
+            }, i * 90);
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(scoreBarsRef.current);
+
+    // Count up overall score
+    const targetScore = state.report.overall_score;
+    let startTimestamp = null;
+    const duration = 1200; // 1.2s count up
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // easeOutQuart
+      const easeProgress = 1 - Math.pow(1 - progress, 4);
+      setAnimatedOverallScore(Math.floor(easeProgress * targetScore));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!!state.report]);
 
   const report = state.report;
   if (!report) {
@@ -401,7 +454,7 @@ export default function ResultsPage() {
             </div>
 
             {/* Action buttons (Download, Save, Share) */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 w-full">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 w-full">
               <button
                 onClick={handleDownload}
                 className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-medium text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
@@ -409,13 +462,21 @@ export default function ResultsPage() {
                 <Download size={14} className="text-brand-900" />
                 <span>Download</span>
               </button>
-              <button 
-                onClick={handleShare}
-                className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
-              >
-                <Share2 size={14} />
-                <span>{copied ? 'Link Copied!' : 'Share Review'}</span>
-              </button>
+              <div className="relative">
+                <button 
+                  onClick={handleShare}
+                  className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
+                >
+                  <Share2 size={14} />
+                  <span>{copied ? 'Link Copied!' : 'Share Review'}</span>
+                </button>
+                {shareChip && (
+                  <div className="absolute left-0 top-full mt-2 whitespace-nowrap flex items-center gap-1.5 bg-white border border-slate-200 shadow-lg rounded-xl px-3 py-1.5 text-[11px] font-medium text-slate-700 z-50">
+                    <span>🔗</span>
+                    <span>Score: <strong>{shareChip.score}</strong> · {shareChip.label} · Copied!</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -471,19 +532,36 @@ export default function ResultsPage() {
                     strokeWidth="6.5" 
                     fill="transparent" 
                     strokeDasharray="263.89" 
-                    strokeDashoffset={263.89 - (report.overall_score / 100) * 263.89}
+                    strokeDashoffset={263.89 - (animatedOverallScore / 100) * 263.89}
                   />
                 </svg>
                 <div className="text-center flex flex-col items-center">
-                  <span className="text-5xl font-bold text-slate-900 leading-none">{report.overall_score}</span>
+                  <span className="text-5xl font-bold text-slate-900 leading-none">{animatedOverallScore}</span>
                   <span className="text-[10px] text-slate-400 font-semibold block mt-1">/ 100</span>
                 </div>
               </div>
 
               <div className="mt-5 text-center space-y-1">
-                <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${overallColors.border} ${overallColors.bg}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${overallColors.text.replace('text-', 'bg-')}`} />
-                  <span className={`text-xs font-semibold ${overallColors.text}`}>{statusLabel}</span>
+                <div className="relative inline-flex items-center gap-1.5">
+                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border ${overallColors.border} ${overallColors.bg}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${overallColors.text.replace('text-', 'bg-')}`} />
+                    <span className={`text-xs font-semibold ${overallColors.text}`}>{statusLabel}</span>
+                  </div>
+                  <button
+                    onMouseEnter={() => setTooltipVisible(true)}
+                    onMouseLeave={() => setTooltipVisible(false)}
+                    onFocus={() => setTooltipVisible(true)}
+                    onBlur={() => setTooltipVisible(false)}
+                    className="h-4 w-4 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center text-slate-400 text-[9px] font-bold transition-colors cursor-help"
+                    aria-label="What does this score mean?"
+                  >?</button>
+                  {tooltipVisible && (
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-52 bg-slate-900 text-white text-[11px] font-normal leading-relaxed rounded-xl px-3 py-2 shadow-xl z-50 pointer-events-none">
+                      <p className="font-semibold text-white mb-0.5">{statusLabel}</p>
+                      <p className="text-slate-300">{scoreBand.tooltip}</p>
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-slate-900" />
+                    </div>
+                  )}
                 </div>
                 <p className="text-xs text-slate-500 font-medium leading-normal max-w-xs mx-auto">
                   {scoreBand.description}
@@ -519,22 +597,26 @@ export default function ResultsPage() {
                   Scores by {state.goal === 'win_clients' ? 'Client' : 'Hiring'} Dimension
                 </h3>
 
-                <div className="space-y-3.5 pt-3">
+                <div className="space-y-1 pt-3" ref={scoreBarsRef}>
                   {scoreboard.map((dim) => {
+                    const animW = animatedScores[dim.slug] ?? 0;
                     return (
                       <div 
                         key={dim.slug}
                         onClick={() => navigate(`/results/${dim.slug}`)}
-                        className="group flex flex-col gap-1.5 cursor-pointer"
+                        className="group flex flex-col gap-1.5 cursor-pointer rounded-lg px-2 py-1.5 -mx-2 hover:bg-slate-50 transition-colors"
                       >
                         <div className="flex items-center justify-between text-xs">
-                          <span className="font-medium text-slate-700 group-hover:text-brand-900 transition-colors">{dim.label}</span>
-                          <span className="font-mono font-medium text-slate-900">{dim.score}/100</span>
+                          <span className="font-medium text-slate-700 group-hover:text-brand-900 transition-colors group-hover:underline underline-offset-2">{dim.label}</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono font-medium text-slate-900">{dim.score}/100</span>
+                            <ArrowRight size={11} className="text-slate-300 group-hover:text-brand-900 transition-all group-hover:translate-x-0.5" />
+                          </div>
                         </div>
                         <div className="w-full h-1.5 rounded bg-slate-100 overflow-hidden relative">
                           <div 
-                            className="h-full bg-blue-600 rounded transition-all duration-300 group-hover:bg-blue-700" 
-                            style={{ width: `${dim.score}%` }} 
+                            className="h-full bg-blue-600 rounded group-hover:bg-blue-700" 
+                            style={{ width: `${animW}%`, transition: 'width 700ms cubic-bezier(0.22,1,0.36,1)' }} 
                           />
                         </div>
                       </div>

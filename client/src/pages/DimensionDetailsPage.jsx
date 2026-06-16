@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useAnalysis, getScoreStatus } from '../context/AnalysisContext';
+import { useAnalysis, getScoreStatus, getScoreBand } from '../context/AnalysisContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import WaveDivider from '../components/WaveDivider';
@@ -12,6 +12,7 @@ import {
   Microscope,
   SwatchBook,
   TrendingUp,
+  ArrowLeft,
   Feather,
   Target,
   ChevronRight,
@@ -66,6 +67,24 @@ export default function DimensionDetailsPage() {
   const { dimSlug } = useParams();
   const navigate = useNavigate();
   const { state, toggleMockFallback } = useAnalysis();
+  
+  const [animatedScore, setAnimatedScore] = useState(0);
+  const [animatedBenchmark, setAnimatedBenchmark] = useState(0);
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [examplesModalOpen, setExamplesModalOpen] = useState(false);
+
+  // Esc key listener for modals
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setExamplesModalOpen(false);
+        setChatOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Direct access safety: seed with mock if empty
   useEffect(() => {
@@ -73,6 +92,40 @@ export default function DimensionDetailsPage() {
       toggleMockFallback();
     }
   }, [state.report, state.status, toggleMockFallback]);
+
+  // Animate scores when dimension changes
+  useEffect(() => {
+    if (!state.report) return;
+    
+    // Minimal re-definition of dimensions just for the effect target
+    const dimensionsList = [
+      { slug: 'structural_logic', key: 'process_visibility', benchmark: 85 },
+      { slug: 'critical_thinking', key: 'problem_framing', benchmark: 75 },
+      { slug: 'visual_execution', key: 'visual_quality', benchmark: 80 },
+      { slug: 'impact_evidence', key: 'outcome_impact', benchmark: 70 },
+      { slug: 'narrative_tone', key: 'trust_cta', benchmark: 75 },
+      { slug: 'positioning_clarity', key: 'niche_positioning', benchmark: 80 }
+    ];
+    const activeDim = dimensionsList.find(d => d.slug === dimSlug) || dimensionsList[0];
+    const activeData = state.report.categories[activeDim.key] || { score: 62 };
+
+    let startTimestamp = null;
+    const duration = 1000;
+    const targetScore = activeData.score;
+    const targetBench = activeDim.benchmark;
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 4);
+      setAnimatedScore(Math.floor(easeProgress * targetScore));
+      setAnimatedBenchmark(Math.floor(easeProgress * targetBench));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [dimSlug, state.report]);
 
   const report = state.report;
   if (!report) {
@@ -100,11 +153,14 @@ export default function DimensionDetailsPage() {
 
   // Status badge helper
   const getBadge = (score) => {
-    if (score >= 86) return { label: 'Exceptional', style: 'text-violet-700 bg-violet-50 border-violet-100' };
-    if (score >= 71) return { label: 'Strong', style: 'text-emerald-700 bg-emerald-50 border-emerald-100' };
-    if (score >= 51) return { label: 'Competitive', style: 'text-amber-700 bg-amber-50 border-amber-100' };
-    if (score >= 31) return { label: 'Early Foundation', style: 'text-orange-700 bg-orange-50 border-orange-100' };
-    return { label: 'Significant Gaps', style: 'text-rose-700 bg-rose-50 border-rose-100' };
+    const band = getScoreBand(score);
+    let style = 'text-rose-700 bg-rose-50 border-rose-100';
+    if (score >= 86) style = 'text-violet-700 bg-violet-50 border-violet-100';
+    else if (score >= 71) style = 'text-emerald-700 bg-emerald-50 border-emerald-100';
+    else if (score >= 51) style = 'text-amber-700 bg-amber-50 border-amber-100';
+    else if (score >= 31) style = 'text-orange-700 bg-orange-50 border-orange-100';
+    
+    return { label: band.label, tooltip: band.tooltip || band.description, style };
   };
 
   const badge = getBadge(activeData.score);
@@ -343,13 +399,23 @@ export default function DimensionDetailsPage() {
 
   const details = getDetails(activeDim.slug, state.goal, state.experience);
 
-  const [chatOpen, setChatOpen] = useState(false);
-  const [examplesModalOpen, setExamplesModalOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
       <Navbar />
+
+      {/* ── Floating "Back to Results" button ── */}
+      <div className="sticky top-40 z-40 w-full h-0 pointer-events-none">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-end">
+          <button
+            onClick={() => navigate('/results')}
+            className="pointer-events-auto flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-100/90 hover:bg-slate-200 backdrop-blur-md border border-slate-200/50 shadow-sm text-slate-700 text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0"
+          >
+            <ArrowLeft size={13} />
+            <span>Back to Results</span>
+          </button>
+        </div>
+      </div>
 
       {/* Wave divider transitioning to Navy */}
       <div className="w-full bg-white z-10">
@@ -423,19 +489,34 @@ export default function DimensionDetailsPage() {
               <div className="flex items-center gap-6 shrink-0 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
                 <div>
                   <span className="text-[9px] font-normal uppercase tracking-wide text-slate-455 block">Your Score</span>
-                  <span className="text-2xl font-semibold text-slate-900 mt-0.5 block">{activeData.score} <span className="text-xs text-slate-400 font-normal">/ 100</span></span>
-                  <span className={`inline-block text-[8px] font-normal uppercase tracking-wide px-2 py-0.5 rounded-full border mt-1.5 ${badge.style}`}>
-                    {badge.label}
-                  </span>
-                  <span className="text-[9px] text-slate-400 font-medium block mt-1 max-w-[140px] leading-tight">
-                    {badge.label === 'Exceptional' ? 'Outstanding quality and differentiation.' : badge.label === 'Strong' ? 'Strong execution and hiring readiness.' : badge.label === 'Competitive' ? 'Solid foundation with room to grow.' : badge.label === 'Early Foundation' ? 'Fundamentals present, gaps remain.' : 'Major improvements needed.'}
-                  </span>
+                  <span className="text-2xl font-semibold text-slate-900 mt-0.5 block">{animatedScore} <span className="text-xs text-slate-400 font-normal">/ 100</span></span>
+                  
+                  <div className="mt-1.5 relative inline-flex items-center gap-1.5">
+                    <span className={`inline-block text-[8px] font-normal uppercase tracking-wide px-2 py-0.5 rounded-full border ${badge.style}`}>
+                      {badge.label}
+                    </span>
+                    <button
+                      onMouseEnter={() => setTooltipVisible(true)}
+                      onMouseLeave={() => setTooltipVisible(false)}
+                      onFocus={() => setTooltipVisible(true)}
+                      onBlur={() => setTooltipVisible(false)}
+                      className="h-4 w-4 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center text-slate-400 text-[9px] font-bold transition-colors cursor-help"
+                      aria-label="What does this score mean?"
+                    >?</button>
+                    {tooltipVisible && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 bg-slate-900 text-white text-[11px] font-normal leading-relaxed rounded-xl px-3 py-2 shadow-xl z-50 pointer-events-none text-left">
+                        <p className="font-semibold text-white mb-0.5">{badge.label}</p>
+                        <p className="text-slate-300">{badge.tooltip}</p>
+                        <div className="absolute left-1/2 -translate-x-1/2 bottom-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-slate-900" />
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <span className="text-[9px] font-normal uppercase tracking-wide text-slate-455 block">Industry Benchmark</span>
-                  <span className="text-2xl font-semibold text-slate-600 mt-0.5 block">{activeDim.benchmark} <span className="text-xs text-slate-400 font-normal">/ 100</span></span>
+                  <span className="text-2xl font-semibold text-slate-600 mt-0.5 block">{animatedBenchmark} <span className="text-xs text-slate-400 font-normal">/ 100</span></span>
                   <div className="w-24 h-1.5 rounded bg-slate-100 mt-2.5 overflow-hidden">
-                    <div className="h-full bg-slate-400 rounded" style={{ width: `${activeDim.benchmark}%` }} />
+                    <div className="h-full bg-slate-400 rounded" style={{ width: `${animatedBenchmark}%`, transition: 'width 1000ms cubic-bezier(0.22,1,0.36,1)' }} />
                   </div>
                 </div>
               </div>
