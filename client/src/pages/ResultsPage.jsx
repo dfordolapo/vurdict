@@ -260,8 +260,173 @@ export default function ResultsPage() {
     window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
   };
 
-  const handleSavePdf = () => {
-    window.print();
+  const handleDownload = () => {
+    const dims = [
+      { label: 'Structural Logic', key: 'process_visibility' },
+      { label: 'Critical Thinking', key: 'problem_framing' },
+      { label: 'Visual Execution', key: 'visual_quality' },
+      { label: 'Impact Evidence', key: 'outcome_impact' },
+      { label: 'Narrative Tone', key: 'trust_cta' },
+      { label: 'Positioning Clarity', key: 'niche_positioning' },
+    ];
+
+    const getScoreColor = (score) => {
+      if (score >= 86) return '#8b5cf6';
+      if (score >= 71) return '#059669';
+      if (score >= 51) return '#2563eb';
+      if (score >= 31) return '#d97706';
+      return '#e11d48';
+    };
+    const getBandDesc = (score) => {
+      if (score >= 86) return 'Represents outstanding quality and differentiation.';
+      if (score >= 71) return 'Demonstrates strong execution and hiring readiness.';
+      if (score >= 51) return 'Shows a solid foundation with room for improvement.';
+      if (score >= 31) return 'Some fundamentals are present, but important gaps remain.';
+      return 'Major weaknesses were identified. Substantial improvements are needed.';
+    };
+    const bandDesc = getBandDesc(report.overall_score);
+
+    const dimRows = dims.map((d) => {
+      const cat = report.categories[d.key];
+      const score = cat?.score ?? 0;
+      const color = getScoreColor(score);
+      return `
+        <tr>
+          <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#1e293b;font-weight:600;">${d.label}</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;text-align:center;">
+            <span class="score-badge" style="display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:700;color:${color};background:${color}10;border:1px solid ${color}30;">${score}/100</span>
+          </td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:12px;color:#64748b;line-height:1.5;">${cat?.explanation || ''}</td>
+        </tr>`;
+    }).join('');
+
+    const goalLabel = state.goal === 'win_clients' ? 'Win Freelance Clients' : 'Get Hired';
+    const scoreColor = getScoreColor(report.overall_score);
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vurdict Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @media (max-width: 480px) {
+      .report-body { padding: 20px 16px !important; }
+      .report-header { padding: 24px 16px !important; }
+      .dim-table td, .dim-table th { padding: 8px !important; font-size: 11px !important; }
+      .dim-table td:last-child { font-size: 11px !important; word-break: break-word; }
+      .dim-table .score-badge { font-size: 10px !important; padding: 1px 6px !important; }
+      .rec-card { padding: 16px !important; }
+      .meta-table td { font-size: 12px !important; }
+      .outer-wrap { padding: 0 12px !important; margin: 20px auto !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;font-family:'Poppins','Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;">
+  <div class="outer-wrap" style="max-width:720px;margin:40px auto;padding:0 20px;">
+
+    <!-- Header -->
+    <div class="report-header" style="background:#172554;border-radius:16px 16px 0 0;padding:32px 40px;text-align:center;">
+      <div style="margin-bottom:12px;">
+        <span style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;">vurdict</span>
+      </div>
+      <h1 style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.3px;">Case Study Evaluation</h1>
+    </div>
+
+    <!-- Body -->
+    <div class="report-body" style="background:#fff;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 16px 16px;padding:32px 40px;">
+
+      <!-- Meta -->
+      <table class="meta-table" style="width:100%;font-size:13px;border-collapse:collapse;">
+        <tr><td style="padding:6px 0;color:#64748b;">URL</td><td style="padding:6px 0;font-weight:500;color:#0f172a;">${state.url || 'N/A'}</td></tr>
+        <tr><td style="padding:6px 0;color:#64748b;">Date</td><td style="padding:6px 0;font-weight:500;color:#0f172a;">${formattedDateTime}</td></tr>
+        <tr><td style="padding:6px 0;color:#64748b;">Goal</td><td style="padding:6px 0;font-weight:500;color:#0f172a;">${goalLabel}</td></tr>
+        <tr><td style="padding:6px 0;border-bottom:2px solid #f1f5f9;color:#64748b;">Experience</td><td style="padding:6px 0;border-bottom:2px solid #f1f5f9;font-weight:500;color:#0f172a;">${state.experience || 'Junior'}</td></tr>
+      </table>
+
+      <!-- Overall Score -->
+      <div style="text-align:center;padding:28px 0 24px;">
+        <div style="display:inline-flex;flex-direction:column;align-items:center;">
+          <span style="font-size:52px;font-weight:800;color:${scoreColor};line-height:1;">${report.overall_score}</span>
+          <span style="font-size:13px;color:#94a3b8;font-weight:600;margin-top:2px;">out of 100</span>
+          <span style="margin-top:8px;display:inline-block;padding:4px 16px;border-radius:999px;font-size:12px;font-weight:700;color:${scoreColor};background:${scoreColor}10;border:1px solid ${scoreColor}30;">${statusLabel}</span>
+          <span style="margin-top:4px;font-size:11px;color:#94a3b8;font-weight:500;">${bandDesc}</span>
+        </div>
+      </div>
+
+      <!-- Dimension Scores -->
+      <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Dimension Breakdown</h2>
+      <p style="font-size:12px;color:#94a3b8;margin:0 0 16px;">How your case study scored across each evaluation dimension.</p>
+      <table class="dim-table" style="width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
+        <thead>
+          <tr style="background:#f8fafc;">
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #e2e8f0;">Dimension</th>
+            <th style="padding:10px 14px;text-align:center;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #e2e8f0;">Score</th>
+            <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid #e2e8f0;">Analysis</th>
+          </tr>
+        </thead>
+        <tbody>${dimRows}</tbody>
+      </table>
+
+      <!-- Top Recommendation -->
+      <div class="rec-card" style="margin-top:28px;padding:20px 24px;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:16px;">⭐</span>
+          <span style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:0.5px;">Top Recommendation</span>
+        </div>
+        <h3 style="margin:0 0 4px;font-size:15px;font-weight:700;color:#1e293b;">${report.fix_this_first?.title || 'Improve Your Portfolio'}</h3>
+        <p style="margin:0;font-size:13px;color:#78716c;line-height:1.6;">${report.fix_this_first?.description || ''}</p>
+        ${report.fix_this_first?.priority_score ? `<span style="display:inline-block;margin-top:10px;font-size:11px;font-weight:600;color:#92400e;">Priority Score: ${report.fix_this_first.priority_score}/10</span>` : ''}
+      </div>
+
+      <!-- Priority Action Plan -->
+      ${report.priority_action_plan ? `
+      <div style="margin-top:28px;">
+        <h2 style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 4px;">Priority Action Plan</h2>
+        <p style="font-size:12px;color:#94a3b8;margin:0 0 16px;">Ranked by impact — start here to improve your portfolio.</p>
+        ${['critical_fixes', 'medium_priority', 'nice_to_have'].map((tier, ti) => {
+          const tierLabels = ['Critical Fixes', 'Medium Priority', 'Nice-to-Have'];
+          const tierColors = ['#e11d48', '#d97706', '#64748b'];
+          const items = report.priority_action_plan[tier] || [];
+          if (items.length === 0) return '';
+          return `
+            <div style="margin-bottom:12px;padding:16px 20px;border-radius:10px;border:1px solid ${tierColors[ti]}30;background:${tierColors[ti]}08;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:999px;background:${tierColors[ti]}15;border:1px solid ${tierColors[ti]}30;font-size:10px;font-weight:700;color:${tierColors[ti]};">${ti + 1}</span>
+                <span style="font-size:11px;font-weight:700;color:${tierColors[ti]};text-transform:uppercase;letter-spacing:0.5px;">${tierLabels[ti]}</span>
+              </div>
+              ${items.map(item => `
+                <div style="margin-bottom:6px;">
+                  <div style="font-size:12px;font-weight:600;color:#1e293b;">${item.title}</div>
+                  <div style="font-size:11px;color:#64748b;line-height:1.5;">${item.description}</div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }).join('')}
+      </div>
+      ` : ''}
+
+      <!-- Footer -->
+      <div style="margin-top:32px;padding-top:20px;border-top:1px solid #f1f5f9;text-align:center;font-size:11px;color:#94a3b8;">
+        <p style="margin:0;">Generated by <strong style="color:#172554;">Vurdict</strong> • AI Portfolio Feedback for Product Designers</p>
+        <p style="margin:4px 0 0;">vurdict.vercel.app</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `vurdict-report-${Date.now()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   // Direct access safety: seed with mock if empty
@@ -482,11 +647,11 @@ export default function ResultsPage() {
             {/* Action buttons (Download, Save, Share) */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 w-full no-print">
               <button
-                onClick={handleSavePdf}
+                onClick={handleDownload}
                 className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-medium text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
               >
                 <Download size={14} className="text-brand-900" />
-                <span>Save as PDF</span>
+                <span>Download</span>
               </button>
               
               <button
