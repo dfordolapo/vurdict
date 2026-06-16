@@ -732,9 +732,9 @@ export default function DimensionDetailsPage() {
             </div>
             
             <div className="space-y-1.5">
-              <h3 className="text-base font-semibold text-slate-900">Co-Pilot is coming soon</h3>
+              <h3 className="text-base font-semibold text-slate-900">Co-Pilot is wrapping up work</h3>
               <p className="text-xs text-slate-500 font-normal leading-relaxed max-w-xs mx-auto">
-                Your AI design bestie is wrapping up work.
+                Join the waitlist to be notified when your design bestie is cleared for takeoff.
               </p>
             </div>
 
