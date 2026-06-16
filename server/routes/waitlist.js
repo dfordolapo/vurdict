@@ -32,20 +32,22 @@ function writeEmails(emails) {
 
 router.post('/', async (req, res) => {
   const { email, feature } = req.body;
+  const normalizedEmail = email?.toLowerCase().trim();
+  const normalizedFeature = (feature || 'general').toLowerCase().trim();
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!normalizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
     return res.status(400).json({ error: 'Invalid email address.' });
   }
 
   const emails = readEmails();
 
-  if (emails.some((e) => e.email === email && e.feature === (feature || 'general'))) {
+  if (emails.some((e) => e.email?.toLowerCase().trim() === normalizedEmail && e.feature?.toLowerCase().trim() === normalizedFeature)) {
     return res.json({ success: true, message: 'Already on the waitlist.' });
   }
 
   emails.push({
-    email,
-    feature: feature || 'general',
+    email: normalizedEmail,
+    feature: normalizedFeature,
     subscribed_at: new Date().toISOString(),
   });
 
