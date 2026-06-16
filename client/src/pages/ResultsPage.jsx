@@ -244,6 +244,7 @@ export default function ResultsPage() {
       setShareChip({ score: state.report?.overall_score, label: currentStatus });
       setTimeout(() => setCopied(false), 2000);
       setTimeout(() => setShareChip(null), 3000);
+    } catch (e) {
       console.error('Failed to copy link', e);
     }
   };
