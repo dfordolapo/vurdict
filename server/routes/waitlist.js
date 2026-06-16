@@ -1,34 +1,9 @@
 import { Router } from 'express';
 import { Resend } from 'resend';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { kv } from '@vercel/kv';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const router = Router();
-
 const resend = new Resend(process.env.RESEND_API_KEY);
-const STORAGE_PATH = path.join(process.env.VERCEL ? '/tmp' : __dirname, '..', 'waitlist-emails.json');
-
-function readEmails() {
-  try {
-    if (fs.existsSync(STORAGE_PATH)) {
-      return JSON.parse(fs.readFileSync(STORAGE_PATH, 'utf-8'));
-    }
-  } catch (err) {
-    console.error('[Waitlist] Error reading storage:', err.message);
-  }
-  return [];
-}
-
-function writeEmails(emails) {
-  try {
-    fs.writeFileSync(STORAGE_PATH, JSON.stringify(emails, null, 2), 'utf-8');
-  } catch (err) {
-    console.error('[Waitlist] Error writing storage:', err.message);
-  }
-}
 
 router.post('/', async (req, res) => {
   const { email, feature } = req.body;
@@ -39,32 +14,30 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Invalid email address.' });
   }
 
-  const emails = readEmails();
+  const key = `waitlist:${normalizedFeature}`;
 
-  if (emails.some((e) => e.email?.toLowerCase().trim() === normalizedEmail && e.feature?.toLowerCase().trim() === normalizedFeature)) {
-    return res.json({ success: true, message: 'Already on the waitlist.' });
+  try {
+    const added = await kv.sadd(key, normalizedEmail);
+    if (added === 0) {
+      return res.json({ success: true, message: 'Already on the waitlist.' });
+    }
+  } catch (err) {
+    console.error('[Waitlist] KV error:', err.message);
+    return res.status(503).json({ error: 'Storage unavailable. Try again later.' });
   }
-
-  emails.push({
-    email: normalizedEmail,
-    feature: normalizedFeature,
-    subscribed_at: new Date().toISOString(),
-  });
-
-  writeEmails(emails);
 
   try {
     const { data, error } = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: process.env.NOTIFY_EMAIL || 'hellovurdict@gmail.com',
-      subject: `New Waitlist Signup: ${feature || 'general'}`,
-      html: `<p><strong>Email:</strong> ${email}</p><p><strong>Feature:</strong> ${feature || 'general'}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
+      subject: `New Waitlist Signup: ${normalizedFeature}`,
+      html: `<p><strong>Email:</strong> ${normalizedEmail}</p><p><strong>Feature:</strong> ${normalizedFeature}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
     });
 
     if (error) {
       console.error('[Waitlist] Email notification failed:', error);
     } else {
-      console.log(`[Waitlist] Notification sent for: ${email} (id: ${data?.id})`);
+      console.log(`[Waitlist] Notification sent for: ${normalizedEmail} (id: ${data?.id})`);
     }
   } catch (err) {
     console.error('[Waitlist] Email notification threw an exception:', err.message);
