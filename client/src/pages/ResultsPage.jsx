@@ -212,7 +212,7 @@ export default function ResultsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const handleShare = () => {
+  const getShareUrl = () => {
     try {
       const payload = {
         url: state.url,
@@ -228,16 +228,39 @@ export default function ResultsPage() {
         binString += String.fromCharCode(utf8Bytes[i]);
       }
       const serialized = btoa(binString);
-      const shareUrl = `${window.location.origin}/results?share=${serialized}`;
+      return `${window.location.origin}/results?share=${serialized}`;
+    } catch (e) {
+      console.error('Failed to generate share link', e);
+      return window.location.origin;
+    }
+  };
+
+  const handleShare = () => {
+    try {
+      const shareUrl = getShareUrl();
       navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       const currentStatus = state.report ? getScoreStatus(state.report.overall_score) : 'Completed';
       setShareChip({ score: state.report?.overall_score, label: currentStatus });
       setTimeout(() => setCopied(false), 2000);
       setTimeout(() => setShareChip(null), 3000);
-    } catch (e) {
-      console.error('Failed to generate share link', e);
+      console.error('Failed to copy link', e);
     }
+  };
+
+  const handleTwitterShare = () => {
+    const shareUrl = getShareUrl();
+    const text = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio! See if your portfolio is ready for hiring:`);
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+  };
+
+  const handleLinkedInShare = () => {
+    const shareUrl = getShareUrl();
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
+  };
+
+  const handleSavePdf = () => {
+    window.print();
   };
 
   // Direct access safety: seed with mock if empty
@@ -429,7 +452,9 @@ export default function ResultsPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between relative overflow-x-hidden select-none font-sans">
       
-      <Navbar />
+      <div className="no-print">
+        <Navbar />
+      </div>
 
       {/* Wave divider transitioning to Navy */}
       <div className="w-full bg-white z-10">
@@ -454,21 +479,38 @@ export default function ResultsPage() {
             </div>
 
             {/* Action buttons (Download, Save, Share) */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 w-full">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 w-full no-print">
               <button
-                onClick={handleDownload}
+                onClick={handleSavePdf}
                 className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-transparent rounded-xl text-xs font-medium text-brand-900 shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
               >
                 <Download size={14} className="text-brand-900" />
-                <span>Download</span>
+                <span>Save as PDF</span>
               </button>
+              
+              <button
+                onClick={handleTwitterShare}
+                className="flex items-center gap-1.5 px-3.5 py-2 bg-[#000000] hover:bg-[#222222] border border-transparent rounded-xl text-xs font-medium text-white shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="12" height="12" className="fill-current"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 5.975H5.059z"></path></g></svg>
+                <span>Share</span>
+              </button>
+
+              <button
+                onClick={handleLinkedInShare}
+                className="flex items-center gap-1.5 px-3.5 py-2 bg-[#0a66c2] hover:bg-[#004182] border border-transparent rounded-xl text-xs font-medium text-white shadow-lg shadow-brand-950/10 transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="12" height="12" className="fill-current"><g><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path></g></svg>
+                <span>Share</span>
+              </button>
+
               <div className="relative">
                 <button 
                   onClick={handleShare}
                   className="flex items-center gap-1.5 px-3.5 py-2 border border-[#1e3060] bg-[#121e48] hover:bg-[#162348] rounded-xl text-xs font-medium text-white/80 hover:text-white transition-all cursor-pointer whitespace-nowrap shrink-0 hover:scale-[1.02] active:scale-100"
                 >
                   <Share2 size={14} />
-                  <span>{copied ? 'Link Copied!' : 'Share Review'}</span>
+                  <span>{copied ? 'Link Copied!' : 'Copy Link'}</span>
                 </button>
                 {shareChip && (
                   <div className="absolute left-0 top-full mt-2 whitespace-nowrap flex items-center gap-1.5 bg-white border border-slate-200 shadow-lg rounded-xl px-3 py-1.5 text-[11px] font-medium text-slate-700 z-50">
@@ -793,7 +835,9 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      <Footer />
+      <div className="no-print">
+        <Footer />
+      </div>
 
     </div>
   );
