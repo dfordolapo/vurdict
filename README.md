@@ -86,5 +86,5 @@ Vurdict grades portfolios against six distinct hiring dimensions:
 * **Stateless:** No user accounts, database persistence, or long-term storage (results are transient and rely on `sessionStorage`).
 * **Focused Experience & Single Workflow:** An opinionated, single-task flow. Designers input their portfolio link, choose their goal, and immediately receive feedback without accounts or distractions.
 * **Premium UX Polish:** Features 60fps score count-up animations, touch-optimized Pull-to-Refresh mechanics with haptic feedback, interactive tooltips, and floating sticky navigation.
-* **Clean Typographic Aesthetic:** A high-contrast light theme design featuring deep navy brand colors (`#172554`), Inter typography, subtle micro-animations (like AI radar scans), and frosted glassmorphism overlays.
+* **Clean Typographic Aesthetic:** A high-contrast light theme design featuring deep navy brand colors (`#172554`), Poppins typography, subtle micro-animations (like AI radar scans), and frosted glassmorphism overlays.
 

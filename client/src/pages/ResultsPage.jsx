@@ -106,7 +106,7 @@ export default function ResultsPage() {
     }
   </style>
 </head>
-<body style="margin:0;padding:0;font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;">
+<body style="margin:0;padding:0;font-family:'Poppins','Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;">
   <div class="outer-wrap" style="max-width:720px;margin:40px auto;padding:0 20px;">
 
     <!-- Header -->
