@@ -14,6 +14,7 @@ const TermsPage = lazy(() => import('./pages/TermsPage.jsx'))
 const SupportPage = lazy(() => import('./pages/SupportPage.jsx'))
 const ReVurdictPage = lazy(() => import('./pages/ReVurdictPage.jsx'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'))
+const ErrorPage = lazy(() => import('./pages/ErrorPage.jsx'))
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/support" element={<SupportPage />} />
           <Route path="/revurdict" element={<ReVurdictPage />} />
+          <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         </div>
