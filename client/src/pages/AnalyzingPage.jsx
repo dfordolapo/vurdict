@@ -385,7 +385,7 @@ export default function AnalyzingPage() {
                       // Navigate back to analyze page and clear any partial state
                       navigate('/analyze');
                     }}
-                    className="text-[10px] font-semibold text-sky-300 hover:text-white transition-colors cursor-pointer border border-sky-800/50 hover:bg-sky-900/30 px-3 py-1.5 rounded-lg"
+                    className="text-sm font-semibold text-sky-300 hover:text-white transition-colors cursor-pointer border border-sky-800/50 hover:bg-sky-900/30 px-10 py-3 rounded-xl w-full sm:w-auto text-center"
                   >
                     Cancel Analysis
                   </button>
