@@ -290,7 +290,7 @@ function HeroSection() {
                   key={key}
                   type="button"
                   onClick={() => setExperience(key)}
-                  className={`px-3 py-1 rounded-lg text-[10px] font-semibold transition-all border ${
+                  className={`px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border ${
                     experience === key
                       ? 'bg-white text-brand-900 border-white'
                       : 'bg-white/10 text-sky-200/70 border-white/20 hover:bg-white/20'
