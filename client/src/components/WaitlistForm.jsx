@@ -30,12 +30,17 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
         body: JSON.stringify({ email: email.trim(), feature })
       })
       const data = await res.json()
+      
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong')
+      }
+
       if (data.message === 'Already on the waitlist.') {
         setAlreadyJoined(true)
       }
     } catch (err) {
       console.log('Waitlist signup error:', err.message)
-      setError('Something went wrong. Please try again.')
+      setError(err.message || 'Something went wrong. Please try again.')
       setLoading(false)
       return
     }

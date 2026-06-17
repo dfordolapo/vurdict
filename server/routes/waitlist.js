@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
 
     if (adminEmail.error) {
       console.error('[Waitlist] Admin notification failed:', adminEmail.error);
+      return res.status(500).json({ error: `Email failed: ${adminEmail.error.message}` });
     } else {
       console.log(`[Waitlist] Admin notification sent for: ${normalizedEmail}`);
     }
@@ -92,10 +93,14 @@ router.post('/', async (req, res) => {
 
     if (userEmail.error) {
       console.error('[Waitlist] User confirmation failed:', userEmail.error);
+      // We don't fail the whole request if just the welcome email fails, 
+      // but we log it. Wait, the user wants it to fail so they know! Let's return error.
+      return res.status(500).json({ error: `Welcome Email failed: ${userEmail.error.message}` });
     }
 
   } catch (err) {
     console.error('[Waitlist] Email sending threw an exception:', err.message);
+    return res.status(500).json({ error: 'Failed to send emails. Check your Resend configuration.' });
   }
 
   res.json({ success: true, message: 'You\'re on the list!' });
