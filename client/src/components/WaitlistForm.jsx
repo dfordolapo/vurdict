@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Mail, CheckCircle, Loader2 } from 'lucide-react'
+import { Mail, User, CheckCircle, Loader2 } from 'lucide-react'
 
 const apiUrl = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.port === '5173' ? 'http://localhost:3001' : '')
 
 export default function WaitlistForm({ feature = 'this feature', placeholder = 'you@example.com', buttonText = 'Notify Me' }) {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [alreadyJoined, setAlreadyJoined] = useState(false)
@@ -16,6 +17,11 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
     e.preventDefault()
     setError('')
 
+    if (!name.trim()) {
+      setError('Please enter your name')
+      return
+    }
+
     if (!email.trim() || !isValidEmail(email.trim())) {
       setError('Please enter a valid email address')
       return
@@ -27,7 +33,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
       const res = await fetch(`${apiUrl}/api/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), feature })
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), feature })
       })
       const data = await res.json()
       
@@ -53,14 +59,24 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
     return (
       <div className="flex items-center gap-2 text-xs text-emerald-600 font-medium">
         <CheckCircle size={14} />
-        <span>{alreadyJoined ? 'This email is already on the waitlist.' : `You're on the list! We'll let you know when ${feature} is ready.`}</span>
+        <span>{alreadyJoined ? 'This email is already on the waitlist.' : `You're confirmed! We'll let you know when ${feature} is ready.`}</span>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2 w-full">
-      <div className="relative flex-1">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-2 w-full">
+      <div className="relative w-full sm:w-1/3">
+        <User size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => { setName(e.target.value); setError('') }}
+          placeholder="Your Name"
+          className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
+        />
+      </div>
+      <div className="relative w-full sm:flex-1">
         <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
         <input
           type="email"
@@ -73,7 +89,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
       <button
         type="submit"
         disabled={loading}
-        className="shrink-0 px-4 py-2 text-xs font-medium rounded-xl bg-brand-900 text-white hover:bg-brand-800 disabled:opacity-50 transition-all flex items-center gap-1.5 cursor-pointer"
+        className="shrink-0 w-full sm:w-auto px-4 py-2 text-xs font-medium rounded-xl bg-brand-900 text-white hover:bg-brand-800 disabled:opacity-50 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
       >
         {loading ? <Loader2 size={14} className="animate-spin" /> : buttonText}
       </button>
