@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import WaveDivider from '../components/WaveDivider';
 import WaitlistForm from '../components/WaitlistForm';
+import PaywallOverlay from '../components/PaywallOverlay';
 import comingSoonIllustration from '../assets/coming_soon_illustration.png';
 import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
 import {
@@ -73,6 +74,17 @@ export default function DimensionDetailsPage() {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [examplesModalOpen, setExamplesModalOpen] = useState(false);
+
+  // Paywall state — persisted for the browser session
+  const [isPaid, setIsPaid] = useState(() => {
+    try { return sessionStorage.getItem('vurdict_paid') === 'true'; }
+    catch { return false; }
+  });
+
+  const handleUnlock = () => {
+    try { sessionStorage.setItem('vurdict_paid', 'true'); } catch {}
+    setIsPaid(true);
+  };
 
   // Esc key listener for modals
   useEffect(() => {
@@ -472,10 +484,10 @@ export default function DimensionDetailsPage() {
             </div>
           </div>
 
-          {/* Right Column: Dimension Details Main Panel (lg:col-span-9) */}
-          <div className="lg:col-span-9 space-y-6">
-            
-            {/* Main header block */}
+          {/* Right Column: Dimension Details Main Panel (lg:col-span-9) — paywalled */}
+          <div className="lg:col-span-9 space-y-6 relative">
+
+            {/* ── FREE: Main header block (score + badge — always visible) ── */}
             <div className="bg-white text-slate-900 border border-slate-100 p-6 rounded-3xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-start gap-4">
                 <DimIcon size={26} className="text-brand-900 shrink-0" />
@@ -522,112 +534,126 @@ export default function DimensionDetailsPage() {
               </div>
             </div>
 
-            {/* Why this score block */}
-            <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-2 text-left">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Why this score?</h4>
-              <p className="text-xs text-slate-700 font-normal leading-relaxed">
-                {details.why}
-              </p>
-            </div>
+            {/* ── LOCKED: Detailed analysis + Recommendation ── */}
+            <div className="relative">
 
-            {/* Three columns details (Working, Improve, Evidence) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-900">
-              
-              {/* What's Working */}
-              <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
-                <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 uppercase">
-                  <CheckCircle size={14} className="text-emerald-500" />
-                  <span>What's Working</span>
+              {/* Locked content — rendered but visually hidden behind overlay when !isPaid */}
+              <div className={`space-y-6 ${!isPaid ? 'pointer-events-none select-none' : ''}`} aria-hidden={!isPaid}>
+
+                {/* Why this score block */}
+                <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-2 text-left">
+                  <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Why this score?</h4>
+                  <p className="text-xs text-slate-700 font-normal leading-relaxed">
+                    {details.why}
+                  </p>
                 </div>
-                <div className="space-y-4">
-                  {details.working.map((item, i) => (
-                    <div key={i} className="flex gap-2">
-                      <CheckCircle size={14} className="text-emerald-600 shrink-0 mt-0.5" />
-                      <div>
-                        <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
-                        <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
-                      </div>
+
+                {/* Three columns details (Working, Improve, Evidence) */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-900">
+                  
+                  {/* What's Working */}
+                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 uppercase">
+                      <CheckCircle size={14} className="text-emerald-500" />
+                      <span>What's Working</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Where You Can Improve */}
-              <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
-                <div className="flex items-center gap-2 text-xs font-semibold text-amber-700 uppercase">
-                  <AlertTriangle size={14} className="text-amber-500" />
-                  <span>Where You Can Improve</span>
-                </div>
-                <div className="space-y-4">
-                  {details.improve.map((item, i) => (
-                    <div key={i} className="flex gap-2">
-                      <AlertTriangle size={14} className="text-amber-600 shrink-0 mt-0.5" />
-                      <div>
-                        <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
-                        <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
-                      </div>
+                    <div className="space-y-4">
+                      {details.working.map((item, i) => (
+                        <div key={i} className="flex gap-2">
+                          <CheckCircle size={14} className="text-emerald-600 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
+                            <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
 
-              {/* Evidence Found */}
-              <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
-                <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase">
-                  <FileText size={14} className="text-blue-500" />
-                  <span>Evidence Found</span>
-                </div>
-                <div className="space-y-4">
-                  {details.evidence.map((item, i) => (
-                    <div key={i} className="flex gap-3">
-                      <EvidenceIcon title={item.title} />
-                      <div>
-                        <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
-                        <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
-                      </div>
+                  {/* Where You Can Improve */}
+                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-amber-700 uppercase">
+                      <AlertTriangle size={14} className="text-amber-500" />
+                      <span>Where You Can Improve</span>
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <div className="space-y-4">
+                      {details.improve.map((item, i) => (
+                        <div key={i} className="flex gap-2">
+                          <AlertTriangle size={14} className="text-amber-600 shrink-0 mt-0.5" />
+                          <div>
+                            <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
+                            <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-            </div>
+                  {/* Evidence Found */}
+                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase">
+                      <FileText size={14} className="text-blue-500" />
+                      <span>Evidence Found</span>
+                    </div>
+                    <div className="space-y-4">
+                      {details.evidence.map((item, i) => (
+                        <div key={i} className="flex gap-3">
+                          <EvidenceIcon title={item.title} />
+                          <div>
+                            <h5 className="text-xs font-semibold text-slate-900">{item.title}</h5>
+                            <p className="text-[9px] text-slate-455 font-normal leading-relaxed mt-0.5">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Row 2: Full-width Recommendation */}
+                <div className="bg-blue-50 border border-blue-150 p-6 rounded-3xl text-left space-y-4 text-slate-900">
+                  <div className="flex items-center justify-between border-b border-blue-100 pb-3">
+                    <div className="space-y-0.5">
+                      <span className="text-[9px] font-normal uppercase tracking-wide text-blue-700 block">Top Recommendation</span>
+                      <h4 className="text-sm font-semibold text-slate-900">{details.recommendation.title}</h4>
+                    </div>
+                    <button onClick={() => setExamplesModalOpen(true)} className="rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-normal text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
+                      <span>See Examples</span>
+                      <ExternalLink size={12} />
+                    </button>
+                  </div>
+                  
+                  <p className="text-xs text-slate-600 font-normal leading-relaxed">
+                    {details.recommendation.desc}
+                  </p>
+
+                  <div className="space-y-3 pt-2">
+                    <span className="text-[10px] font-normal text-slate-400 uppercase tracking-wide block">Actionable Steps:</span>
+                    <div className="space-y-2">
+                      {details.recommendation.steps.map((step, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <div className="h-5 w-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                            {i + 1}
+                          </div>
+                          <p className="text-xs text-slate-750 font-normal mt-0.5">{step}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+              </div>{/* end locked content */}
+
+              {/* Paywall overlay — shown until payment is confirmed */}
+              {!isPaid && (
+                <PaywallOverlay onUnlock={handleUnlock} />
+              )}
+
+            </div>{/* end relative wrapper */}
 
           </div>
         </div>
 
-        {/* Row 2: Full-width Recommendation */}
-        <div className="max-w-7xl w-full mx-auto relative z-20">
-            <div className="bg-blue-50 border border-blue-150 p-6 rounded-3xl text-left space-y-4 text-slate-900">
-              <div className="flex items-center justify-between border-b border-blue-100 pb-3">
-                <div className="space-y-0.5">
-                  <span className="text-[9px] font-normal uppercase tracking-wide text-blue-700 block">Top Recommendation</span>
-                  <h4 className="text-sm font-semibold text-slate-900">{details.recommendation.title}</h4>
-                </div>
-                <button onClick={() => setExamplesModalOpen(true)} className="rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-normal text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0">
-                  <span>See Examples</span>
-                  <ExternalLink size={12} />
-                </button>
-              </div>
-              
-              <p className="text-xs text-slate-600 font-normal leading-relaxed">
-                {details.recommendation.desc}
-              </p>
-
-              <div className="space-y-3 pt-2">
-                <span className="text-[10px] font-normal text-slate-400 uppercase tracking-wide block">Actionable Steps:</span>
-                <div className="space-y-2">
-                  {details.recommendation.steps.map((step, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="h-5 w-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                        {i + 1}
-                      </div>
-                      <p className="text-xs text-slate-750 font-normal mt-0.5">{step}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
       </div>
 
       {/* Wave divider transitioning back to White */}
