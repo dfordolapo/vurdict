@@ -63,13 +63,15 @@ function rateLimiter(req, res, next) {
 // ── Middleware ──────────────────────────────────────────────────────────────
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow same-origin / server-side requests (no origin header)
+    // Allow server-to-server requests (no origin header)
     if (!origin) return callback(null, true);
 
     try {
       const parsedOrigin = new URL(origin);
       const isLocalhost = parsedOrigin.hostname === 'localhost' || parsedOrigin.hostname === '127.0.0.1';
       const isLocalTunnel = parsedOrigin.hostname.endsWith('.loca.lt') || parsedOrigin.hostname.endsWith('.ngrok-free.app');
+      // Allow production domains automatically
+      const isProduction = parsedOrigin.hostname === 'vurdict.site' || parsedOrigin.hostname === 'www.vurdict.site';
       // Allow explicitly configured CLIENT_URL(s) — supports comma-separated list
       const allowedOrigins = (process.env.CLIENT_URL || '')
         .split(',')
@@ -77,7 +79,7 @@ app.use(cors({
         .filter(Boolean);
       const isAllowedProd = allowedOrigins.includes(origin);
 
-      if (isLocalhost || isLocalTunnel || isAllowedProd) {
+      if (isLocalhost || isLocalTunnel || isProduction || isAllowedProd) {
         callback(null, true);
       } else {
         callback(new Error('Blocked by CORS policy'));
