@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'hello@vurdict.site',
       to: process.env.NOTIFY_EMAIL || 'hellovurdict@gmail.com',
       subject: `New Waitlist Signup: ${normalizedFeature}`,
       html: `<p><strong>Email:</strong> ${normalizedEmail}</p><p><strong>Feature:</strong> ${normalizedFeature}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
