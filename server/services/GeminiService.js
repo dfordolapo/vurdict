@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 const schemaPath = join(__dirname, '../ai_response_schema.json');
 const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 
-const PROVIDER = process.env.AI_PROVIDER || 'openai';
+const PROVIDER = process.env.AI_PROVIDER || 'gemini';
 const OPENAI_MODEL = 'gpt-4o-mini';
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const DEEPSEEK_MODEL = 'deepseek-chat';

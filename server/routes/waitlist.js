@@ -1,9 +1,8 @@
 import { Router } from 'express';
 import { Resend } from 'resend';
-import { kv } from '@vercel/kv';
 
 const router = Router();
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 router.post('/', async (req, res) => {
   const { email, feature } = req.body;
@@ -14,16 +13,24 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Invalid email address.' });
   }
 
-  const key = `waitlist:${normalizedFeature}`;
+  if (!resend) {
+    console.error('[Waitlist] RESEND_API_KEY not configured.');
+    return res.status(503).json({ error: 'Email service not configured. Please try again later.' });
+  }
 
-  try {
-    const added = await kv.sadd(key, normalizedEmail);
-    if (added === 0) {
-      return res.json({ success: true, message: 'Already on the waitlist.' });
-    }
-  } catch (err) {
-    console.error('[Waitlist] KV error:', err.message);
-    return res.status(503).json({ error: 'Storage unavailable. Try again later.' });
+  // Define dynamic descriptions for the email
+  let featureName = normalizedFeature === 'general' ? 'Vurdict Early Access' : normalizedFeature;
+  let featureDescription = "We are building the ultimate suite of tools to give product designers objective, goal-aware portfolio feedback.";
+
+  if (normalizedFeature.includes('re:vurdict')) {
+    featureName = "Re:Vurdict";
+    featureDescription = "Re:Vurdict is your AI design co-pilot that not only reviews your portfolio but helps you rewrite and fix it in real-time to meet hiring standards.";
+  } else if (normalizedFeature.includes('example')) {
+    featureName = "Example Case Studies";
+    featureDescription = "You'll get access to a curated library of high-scoring portfolio case studies across different seniority levels to inspire your next update.";
+  } else if (normalizedFeature.includes('co-pilot')) {
+    featureName = "Vurdict Co-Pilot";
+    featureDescription = "The Vurdict Co-Pilot will assist you in real-time as you write your case studies, ensuring you hit every metric hiring managers look for.";
   }
 
   try {
@@ -40,21 +47,6 @@ router.post('/', async (req, res) => {
       return res.status(500).json({ error: `Email failed: ${adminEmail.error.message}` });
     } else {
       console.log(`[Waitlist] Admin notification sent for: ${normalizedEmail}`);
-    }
-
-    // Define dynamic descriptions for the email
-    let featureName = normalizedFeature === 'general' ? 'Vurdict Early Access' : normalizedFeature;
-    let featureDescription = "We are building the ultimate suite of tools to give product designers objective, goal-aware portfolio feedback.";
-    
-    if (normalizedFeature.includes('re:vurdict')) {
-      featureName = "Re:Vurdict";
-      featureDescription = "Re:Vurdict is your AI design co-pilot that not only reviews your portfolio but helps you rewrite and fix it in real-time to meet hiring standards.";
-    } else if (normalizedFeature.includes('example')) {
-      featureName = "Example Case Studies";
-      featureDescription = "You'll get access to a curated library of high-scoring portfolio case studies across different seniority levels to inspire your next update.";
-    } else if (normalizedFeature.includes('co-pilot')) {
-      featureName = "Vurdict Co-Pilot";
-      featureDescription = "The Vurdict Co-Pilot will assist you in real-time as you write your case studies, ensuring you hit every metric hiring managers look for.";
     }
 
     // 2. Send confirmation to the user
@@ -93,8 +85,6 @@ router.post('/', async (req, res) => {
 
     if (userEmail.error) {
       console.error('[Waitlist] User confirmation failed:', userEmail.error);
-      // We don't fail the whole request if just the welcome email fails, 
-      // but we log it. Wait, the user wants it to fail so they know! Let's return error.
       return res.status(500).json({ error: `Welcome Email failed: ${userEmail.error.message}` });
     }
 
