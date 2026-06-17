@@ -817,6 +817,24 @@ export default function ResultsPage() {
           </div>
         </div>
 
+        {/* Bottom Row: Action Banner */}
+        <div className="max-w-7xl w-full mx-auto bg-brand-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in-up mt-6">
+          <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-3">
+            <Trophy size={24} className="text-yellow-400 shrink-0" />
+            <div>
+              <h4 className="text-sm font-semibold">Want a personalized action plan to improve your score?</h4>
+              <p className="text-[10px] text-slate-400 mt-0.5 md:mt-0">Get step-by-step recommendations tailored to your portfolio.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate(`/results/${lowestSlug}`)}
+            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap shrink-0 w-full md:w-auto mt-2 md:mt-0"
+          >
+            <span>View Detailed Recommendations</span>
+            <ArrowRight size={14} />
+          </button>
+        </div>
+
         {/* Human Expert Review Waitlist */}
         <div className="max-w-7xl w-full mx-auto animate-fade-in-up mt-16 mb-6">
           <div className="text-center mb-10">
@@ -832,7 +850,7 @@ export default function ResultsPage() {
             <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
               <h4 className="text-lg font-bold text-slate-900">Detailed Review</h4>
               <div className="mt-2 mb-4 flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-slate-900">₦15,000</span>
+                <span className="text-2xl font-bold text-slate-900">₦20,000</span>
               </div>
               <ul className="space-y-3 mb-6">
                 {[
@@ -847,7 +865,7 @@ export default function ResultsPage() {
                   </li>
                 ))}
               </ul>
-              <WaitlistForm feature="Expert Review - Detailed (15k)" buttonText="Join Waitlist" placeholder="Email Address" />
+              <WaitlistForm feature="Expert Review - Detailed (20k)" buttonText="Join Waitlist" placeholder="Email Address" />
             </div>
 
             {/* Tier 2 */}
@@ -858,7 +876,7 @@ export default function ResultsPage() {
               </div>
               <h4 className="text-lg font-bold text-white">Video Teardown</h4>
               <div className="mt-2 mb-4 flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-white">₦25,000</span>
+                <span className="text-2xl font-bold text-white">₦30,000</span>
               </div>
               <ul className="space-y-3 mb-6">
                 {[
@@ -873,7 +891,7 @@ export default function ResultsPage() {
                   </li>
                 ))}
               </ul>
-              <WaitlistForm feature="Expert Review - Video Teardown (25k)" buttonText="Join Waitlist" placeholder="Email Address" />
+              <WaitlistForm feature="Expert Review - Video Teardown (30k)" buttonText="Join Waitlist" placeholder="Email Address" />
             </div>
 
             {/* Tier 3 */}
@@ -899,24 +917,6 @@ export default function ResultsPage() {
             </div>
 
           </div>
-        </div>
-
-        {/* Bottom Row: Action Banner */}
-        <div className="max-w-7xl w-full mx-auto bg-brand-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in-up mt-6">
-          <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-3">
-            <Trophy size={24} className="text-yellow-400 shrink-0" />
-            <div>
-              <h4 className="text-sm font-semibold">Want a personalized action plan to improve your score?</h4>
-              <p className="text-[10px] text-slate-400 mt-0.5 md:mt-0">Get step-by-step recommendations tailored to your portfolio.</p>
-            </div>
-          </div>
-          <button
-            onClick={() => navigate(`/results/${lowestSlug}`)}
-            className="rounded-xl bg-white hover:bg-slate-100 text-slate-900 px-6 py-3 text-xs font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap shrink-0 w-full md:w-auto mt-2 md:mt-0"
-          >
-            <span>View Detailed Recommendations</span>
-            <ArrowRight size={14} />
-          </button>
         </div>
       </div>
 

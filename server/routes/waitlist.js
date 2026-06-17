@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
             <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.025em;">Vurdict</h1>
           </div>
           <div style="padding: 32px 24px; background-color: #ffffff;">
-            <img src="https://illustrations.popsy.co/indigo/productive-work.svg" alt="Productive Work" style="width: 100%; max-width: 250px; margin: 0 auto 24px; display: block;" />
+            <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Rocket/3D/rocket_3d.png" alt="Rocket Illustration" style="width: 100%; max-width: 120px; margin: 0 auto 24px; display: block;" />
             <p style="color: #475569; font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
               Hi ${normalizedName}, <br><br>
               You are officially on the waitlist for <strong>${featureName}</strong>. 
