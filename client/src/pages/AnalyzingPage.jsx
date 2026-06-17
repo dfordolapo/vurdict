@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAnalysis } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
-import errorIllustration from '../assets/error_illustration.png';
+import errorIllustration from '../assets/error_illustration.webp';
 import { 
   Check, 
   Sparkles, 
@@ -311,6 +311,7 @@ export default function AnalyzingPage() {
                 src={errorIllustration} 
                 alt="Broken magnifying glass illustration" 
                 className="w-full max-w-[600px] h-auto select-none animate-float-slow" 
+                loading="lazy"
               />
             </div>
           </div>

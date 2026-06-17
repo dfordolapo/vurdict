@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Heart, Brain, Cloud, Terminal, Server, HeartHandshake, X, CheckCircle, Loader2, ChevronDown } from 'lucide-react';
-import supportIllustration from '../assets/support_illustration.png';
+import supportIllustration from '../assets/support_illustration.webp';
 
 const DONATION_UNAVAILABLE = 'Support payments are temporarily unavailable. Please try again later.';
 
@@ -174,7 +174,7 @@ export default function SupportPage() {
       <main className="flex-1 max-w-3xl w-full mx-auto px-6 pt-8 pb-16 md:pt-12 md:pb-20 text-center space-y-8 select-text">
         <div className="space-y-3 border-b border-slate-100 pb-6">
           <div className="w-full max-w-[200px] mb-4 mx-auto">
-            <img src={supportIllustration} alt="Support Vurdict illustration" className="w-full h-auto object-contain select-none" />
+            <img src={supportIllustration} alt="Support Vurdict illustration" loading="lazy" className="w-full h-auto object-contain select-none" />
           </div>
           <h1 className="text-3xl font-bold text-slate-950 tracking-tight">Support Vurdict</h1>
           <p className="text-sm text-slate-500 leading-relaxed font-normal">

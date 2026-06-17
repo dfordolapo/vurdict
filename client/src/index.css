@@ -21,7 +21,7 @@
   --color-slate-800: #1e293b;
   --color-slate-900: #0f172a;
 
-  --font-sans: 'Poppins', 'Inter', system-ui, sans-serif;
+  --font-sans: 'Poppins', system-ui, sans-serif;
 }
 
 *, *::before, *::after {
@@ -35,7 +35,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  font-family: 'Poppins', system-ui, sans-serif;
   background-color: #ffffff;
   color: #0f172a;
   -webkit-font-smoothing: antialiased;
@@ -235,7 +235,7 @@ body {
 
 /* ── Labels ────────────────────────────────────────────────────────────── */
 .ptr-label {
-  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  font-family: 'Poppins', system-ui, sans-serif;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.08em;

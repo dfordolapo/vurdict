@@ -6,8 +6,8 @@ import {
   Target, Layers, BookOpen, Code2, Quote, Sparkles,
   Workflow, Brain, SwatchBook, Feather, Menu, X
 } from 'lucide-react'
-import heroIllustration from '../assets/hero-illustration.png'
-import ctaIllustration from '../assets/cta-illustration.jpg'
+import heroIllustration from '../assets/hero-illustration.webp'
+import ctaIllustration from '../assets/cta-illustration.webp'
 import Logo from '../components/Logo'
 import WaveDivider from '../components/WaveDivider'
 import BetaTicker from '../components/BetaTicker'

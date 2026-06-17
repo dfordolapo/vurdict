@@ -92,7 +92,7 @@ export default function ResultsPage() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vurdict Report</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     @media (max-width: 480px) {
       .report-body { padding: 20px 16px !important; }
@@ -106,7 +106,7 @@ export default function ResultsPage() {
     }
   </style>
 </head>
-<body style="margin:0;padding:0;font-family:'Poppins','Inter',system-ui,sans-serif;background:#f8fafc;color:#0f172a;">
+<body style="margin:0;padding:0;font-family:'Poppins',system-ui,sans-serif;background:#f8fafc;color:#0f172a;">
   <div class="outer-wrap" style="max-width:720px;margin:40px auto;padding:0 20px;">
 
     <!-- Header -->
@@ -529,6 +529,7 @@ export default function ResultsPage() {
                   src={getThumbnailUrl(state.url)} 
                   alt="Portfolio thumbnail" 
                   className="absolute inset-0 w-full h-full object-cover object-top z-0"
+                  loading="lazy"
                   onError={(e) => {
                     e.target.style.display = 'none';
                   }}

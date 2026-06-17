@@ -12,7 +12,7 @@ import {
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
 import BetaTicker from '../components/BetaTicker';
-import analyzeIllustration from '../assets/analyze_illustration.png';
+import analyzeIllustration from '../assets/analyze_illustration.webp';
 
 const GOALS = [
   {
@@ -250,7 +250,7 @@ export default function AnalyzePage() {
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}
             <div className="lg:col-span-7 flex justify-end mr-0 overflow-hidden">
                 <div className="flex items-center justify-center -m-4 sm:-m-6">
-                    <img src={analyzeIllustration} alt="Portfolio analysis illustration" className="w-full max-w-[600px] lg:max-w-[650px] h-auto select-none animate-float-slow flex-shrink-0" />
+                    <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full max-w-[600px] lg:max-w-[650px] h-auto select-none animate-float-slow flex-shrink-0" />
                 </div>
             </div>
             </div>

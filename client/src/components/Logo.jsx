@@ -11,11 +11,12 @@ function Logo({ size = 'normal', onClick }) {
       aria-label="Vurdict logo"
     >
       <img
-        src="/assets/vurdict-logo.png"
+        src="/assets/vurdict-logo.webp"
         alt="Vurdict"
         width={dim}
         height={dim}
         className="object-contain"
+        loading="eager"
       />
     </div>
   );

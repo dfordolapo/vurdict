@@ -6,8 +6,8 @@ import Footer from '../components/Footer';
 import WaveDivider from '../components/WaveDivider';
 import WaitlistForm from '../components/WaitlistForm';
 import PaywallOverlay from '../components/PaywallOverlay';
-import comingSoonIllustration from '../assets/coming_soon_illustration.png';
-import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.png';
+import comingSoonIllustration from '../assets/coming_soon_illustration.webp';
+import examplesComingSoonIllustration from '../assets/examples_coming_soon_illustration.webp';
 import {
   Workflow,
   Microscope,
