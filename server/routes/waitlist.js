@@ -5,9 +5,10 @@ const router = Router();
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 router.post('/', async (req, res) => {
-  const { email, feature } = req.body;
+  const { name, email, feature } = req.body;
   const normalizedEmail = email?.toLowerCase().trim();
   const normalizedFeature = (feature || 'general').toLowerCase().trim();
+  const normalizedName = name?.trim() || 'there';
 
   if (!normalizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
     return res.status(400).json({ error: 'Invalid email address.' });
@@ -39,7 +40,7 @@ router.post('/', async (req, res) => {
       from: 'hello@vurdict.site',
       to: process.env.NOTIFY_EMAIL || 'hellovurdict@gmail.com',
       subject: `New Waitlist Signup: ${normalizedFeature}`,
-      html: `<p><strong>Email:</strong> ${normalizedEmail}</p><p><strong>Feature:</strong> ${normalizedFeature}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
+      html: `<p><strong>Name:</strong> ${normalizedName}</p><p><strong>Email:</strong> ${normalizedEmail}</p><p><strong>Feature:</strong> ${normalizedFeature}</p><p><strong>Time:</strong> ${new Date().toLocaleString()}</p>`,
     });
 
     if (adminEmail.error) {
@@ -60,9 +61,9 @@ router.post('/', async (req, res) => {
             <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.025em;">Vurdict</h1>
           </div>
           <div style="padding: 32px 24px; background-color: #ffffff;">
-            <h2 style="margin-top: 0; color: #0f172a; font-size: 20px; font-weight: 600;">You're on the list.</h2>
+            <img src="https://illustrations.popsy.co/indigo/productive-work.svg" alt="Productive Work" style="width: 100%; max-width: 250px; margin: 0 auto 24px; display: block;" />
             <p style="color: #475569; font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
-              Hi there, <br><br>
+              Hi ${normalizedName}, <br><br>
               You are officially on the waitlist for <strong>${featureName}</strong>. 
             </p>
             <div style="background-color: #f8fafc; border-left: 4px solid #3b82f6; padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
@@ -93,7 +94,7 @@ router.post('/', async (req, res) => {
     return res.status(500).json({ error: 'Failed to send emails. Check your Resend configuration.' });
   }
 
-  res.json({ success: true, message: 'You\'re on the list!' });
+  res.json({ success: true, message: 'Waitlist confirmed!' });
 });
 
 export default router;

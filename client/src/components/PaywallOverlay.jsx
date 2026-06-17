@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Lock, Sparkles, CheckCircle, AlertTriangle, FileText, Target, ChevronRight, X } from 'lucide-react';
 
 const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || '';
-const AMOUNT_KOBO = 250000; // ₦2,500 in kobo
+const AMOUNT_KOBO = 300000; // ₦3,000 in kobo
 
 function loadPaystackScript() {
   return new Promise((resolve, reject) => {
@@ -186,7 +186,7 @@ export default function PaywallOverlay({ onUnlock }) {
               ) : (
                 <>
                   <Lock size={14} />
-                  <span>Unlock Full Report — ₦2,500</span>
+                  <span>Unlock Full Report — ₦3,000</span>
                   <ChevronRight size={14} className="opacity-70" />
                 </>
               )}

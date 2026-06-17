@@ -84,7 +84,7 @@ Vurdict grades portfolios against six distinct hiring dimensions:
 ## ⚙️ MVP Boundaries & Core Rules
 * **Role Support:** Exclusively Product Designer roles.
 * **Stateless:** No user accounts, database persistence, or long-term storage (results are transient and rely on `sessionStorage`, shareable via base64 encoded URL).
-* **Monetization (Paywall):** Users can view the high-level report card for free, but detailed dimension analysis and priority action plans are gated behind a ₦2,500 paywall powered by Paystack.
+* **Monetization (Paywall):** Users can view the high-level report card for free, but detailed dimension analysis and priority action plans are gated behind a paywall powered by Paystack.
 * **Focused Experience & Single Workflow:** An opinionated, single-task flow. Designers input their portfolio link, choose their goal, and immediately receive feedback without accounts or distractions.
 * **Premium UX Polish:** Features 60fps score count-up animations, interactive tooltips, and dynamic loading states.
 * **Clean Typographic Aesthetic:** A high-contrast light theme design featuring deep navy brand colors (`#172554`), modern typography, subtle micro-animations, and frosted glassmorphism overlays.
