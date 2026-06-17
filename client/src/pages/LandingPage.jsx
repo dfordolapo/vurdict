@@ -533,7 +533,7 @@ function ReportCardSection() {
                   <span className="text-white font-bold text-sm">V</span>
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">vurdict.com/analysis</h4>
+                  <h4 className="text-sm font-bold text-slate-900">vurdict.site/analysis</h4>
                   <p className="text-[10px] text-slate-400 font-medium">May 2026 · Structured Review</p>
                 </div>
               </div>
