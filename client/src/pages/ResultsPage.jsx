@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import WaveDivider from '../components/WaveDivider';
+import WaitlistForm from '../components/WaitlistForm';
 
 export default function ResultsPage() {
   const navigate = useNavigate();
@@ -813,6 +814,90 @@ export default function ResultsPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Human Expert Review Waitlist */}
+        <div className="max-w-7xl w-full mx-auto animate-fade-in-up mt-16 mb-6">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl font-bold text-slate-900 tracking-tight">Need a human touch?</h3>
+            <p className="text-sm text-slate-500 mt-2 max-w-xl mx-auto">
+              AI gets you 90% there. For the final 10%, join the waitlist to have a Senior Design Leader manually review your portfolio, tear down your case studies, and prep you for interviews.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            
+            {/* Tier 1 */}
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
+              <h4 className="text-lg font-bold text-slate-900">Detailed Review</h4>
+              <div className="mt-2 mb-4 flex items-baseline gap-1">
+                <span className="text-2xl font-bold text-slate-900">₦15,000</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  'Complete manual review by a Senior Design Leader',
+                  'Written 2-page strategic feedback report',
+                  'High-level ATS & resume compatibility check',
+                  'Turnaround: 5 business days'
+                ].map((perk, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-slate-600">
+                    <CheckCircle size={14} className="text-sky-500 shrink-0 mt-0.5" />
+                    <span>{perk}</span>
+                  </li>
+                ))}
+              </ul>
+              <WaitlistForm feature="Expert Review - Detailed (15k)" buttonText="Join Waitlist" placeholder="Email Address" />
+            </div>
+
+            {/* Tier 2 */}
+            <div className="bg-brand-900 border border-brand-800 rounded-3xl p-6 shadow-xl relative overflow-hidden transform md:-translate-y-4">
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-sky-400 to-blue-500" />
+              <div className="absolute top-4 -right-10 bg-sky-500 text-white text-[10px] font-bold uppercase tracking-wider py-1 px-10 rotate-45 shadow-sm text-center">
+                Popular
+              </div>
+              <h4 className="text-lg font-bold text-white">Video Teardown</h4>
+              <div className="mt-2 mb-4 flex items-baseline gap-1">
+                <span className="text-2xl font-bold text-white">₦25,000</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  'Everything in Detailed Review, plus:',
+                  '15-minute personalized Loom video walkthrough',
+                  'Line-by-line rewrite suggestions for weak areas',
+                  'Priority Turnaround: 48 hours'
+                ].map((perk, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-slate-300">
+                    <CheckCircle size={14} className="text-sky-400 shrink-0 mt-0.5" />
+                    <span className={idx === 0 ? "font-semibold text-white" : ""}>{perk}</span>
+                  </li>
+                ))}
+              </ul>
+              <WaitlistForm feature="Expert Review - Video Teardown (25k)" buttonText="Join Waitlist" placeholder="Email Address" />
+            </div>
+
+            {/* Tier 3 */}
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow relative">
+              <h4 className="text-lg font-bold text-slate-900">1:1 Live Coaching</h4>
+              <div className="mt-2 mb-4 flex items-baseline gap-1">
+                <span className="text-2xl font-bold text-slate-900">₦50,000</span>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  'Everything in Video Teardown, plus:',
+                  '45-minute live 1:1 strategy call via Google Meet',
+                  'Mock portfolio presentation with live feedback',
+                  'Post-interview email support for 30 days'
+                ].map((perk, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-slate-600">
+                    <CheckCircle size={14} className="text-sky-500 shrink-0 mt-0.5" />
+                    <span className={idx === 0 ? "font-semibold text-slate-900" : ""}>{perk}</span>
+                  </li>
+                ))}
+              </ul>
+              <WaitlistForm feature="Expert Review - 1:1 Coaching (50k)" buttonText="Join Waitlist" placeholder="Email Address" />
+            </div>
+
           </div>
         </div>
 
