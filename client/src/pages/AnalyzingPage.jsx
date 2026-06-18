@@ -337,9 +337,11 @@ export default function AnalyzingPage() {
           </div>
 
           {/* Navy blue block containing Main Content Grid */}
-          <div className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 flex-1 relative overflow-hidden z-10">
+          <div className="bg-brand-900 text-white pt-2 pb-12 px-6 md:px-12 flex-1 relative z-10">
             {/* Spotlight blue background circle */}
-            <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute w-80 h-80 rounded-full bg-sky-500/10 blur-[100px] top-1/4 left-1/4" />
+            </div>
 
             {/* Image 4: Active Analyzing State */}
             <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start z-20">

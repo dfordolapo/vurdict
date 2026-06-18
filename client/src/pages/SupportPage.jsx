@@ -296,7 +296,7 @@ export default function SupportPage() {
                       value={customAmount}
                       onChange={handleCustomChange}
                       placeholder="Custom amount"
-                      className="w-full bg-transparent text-sm text-slate-800 placeholder:text-xs placeholder-slate-300 focus:outline-none"
+                      className="w-full bg-transparent text-base sm:text-sm text-slate-800 placeholder:text-xs placeholder-slate-300 focus:outline-none"
                     />
                   </div>
 
@@ -321,7 +321,7 @@ export default function SupportPage() {
                       <select
                         value={currency}
                         onChange={(e) => setCurrency(e.target.value)}
-                        className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:border-brand-900/30 focus:bg-white transition-all cursor-pointer"
+                        className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-base sm:text-sm text-slate-700 focus:outline-none focus:border-brand-900/30 focus:bg-white transition-all cursor-pointer"
                       >
                         {CURRENCIES.map((c) => (
                           <option key={c.code} value={c.code}>{c.symbol} {c.code}</option>

@@ -147,7 +147,7 @@ export default function AnalyzePage() {
                       placeholder="https://yourportfolio.com"
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
-                      className="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+                      className="w-full bg-transparent text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
                     />
                   </div>
                   {!url && (

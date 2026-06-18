@@ -215,7 +215,7 @@ function HeroSection() {
                   }
                 }}
                 placeholder="https://notion.so/your-case-study"
-                className="w-full py-2 bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+                className="w-full py-2 bg-transparent text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
               />
             </div>
             
@@ -357,7 +357,7 @@ function ProblemSection() {
     <section id="why-vurdict" className="py-12 md:py-20 bg-white relative scroll-mt-1">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight text-balance">
             Most portfolio feedback is <br className="hidden md:inline" />{" "}
             <span className="text-red-500 line-through decoration-red-300">too vague</span> to be helpful
           </h2>
@@ -685,9 +685,9 @@ function FinalCTASection() {
     <div className="bg-white">
       {/* Heading area on White background */}
       <div className="pt-16 pb-8 px-6 text-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
-          See What Recruiters See Before They Do
-        </h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight text-balance">
+            See What Recruiters See Before They Do
+          </h2>
           <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
             Great case studies don't happen by accident
           </p>
@@ -699,7 +699,7 @@ function FinalCTASection() {
       {/* Dark blue illustration block with absolute button overlay */}
       <div className="relative bg-[#111d43] pt-0 pb-28 md:pb-36 px-6 flex flex-col items-center">
         <div className="relative w-full max-w-4xl mx-auto mt-[1px] md:mt-[1px]">
-          <div className="relative flex flex-col items-center -ml-16 md:-ml-32">
+          <div className="relative flex flex-col items-center md:-ml-32">
             <img
               src={ctaIllustration}
               alt="Pedestal Spotlight Evaluation"
