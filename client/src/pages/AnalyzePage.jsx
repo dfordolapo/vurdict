@@ -8,11 +8,14 @@ import {
   Sparkles,
   AlertCircle,
   Lock,
+  Clock,
+  TrendingUp,
 } from 'lucide-react';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
 import BetaTicker from '../components/BetaTicker';
 import PWAInstallPrompt from '../components/PWAInstallPrompt';
+import { getHistory } from '../utils/history';
 import analyzeIllustration from '../assets/analyze_illustration.webp';
 
 const GOALS = [
@@ -40,6 +43,11 @@ export default function AnalyzePage() {
   const [experience, setExperience] = useState('junior');
   const [error, setError] = useState('');
   const [showPWA, setShowPWA] = useState(false);
+  const [recentHistory, setRecentHistory] = useState([]);
+
+  useEffect(() => {
+    setRecentHistory(getHistory());
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -254,6 +262,43 @@ export default function AnalyzePage() {
                   </div>
                 )}
               </form>
+
+              {/* Recent Reviews */}
+              {recentHistory.length > 0 && (
+                <div className="pt-4 border-t border-white/10 animate-fade-in-up">
+                  <p className="text-[10px] text-sky-200/50 font-semibold uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <Clock size={12} />
+                    Recent Reviews
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    {recentHistory.map((h, i) => (
+                      <button
+                        key={i}
+                        onClick={() => navigate(`/analyzing?url=${encodeURIComponent(h.url)}&goal=${h.goal}&experience=${h.experience}`)}
+                        className="flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 text-left transition-colors group cursor-pointer w-full"
+                      >
+                        <div className="flex items-center gap-3 overflow-hidden min-w-0">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
+                            h.score >= 71 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 
+                            h.score >= 51 ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 
+                            'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                          }`}>
+                            {h.score}
+                          </div>
+                          <div className="truncate min-w-0">
+                            <p className="text-xs font-medium text-white truncate">{h.url.replace(/^https?:\/\//, '')}</p>
+                            <p className="text-[10px] text-sky-200/60 truncate">
+                              <TrendingUp size={10} className="inline mr-0.5 -mt-0.5" />
+                              {new Date(h.date).toLocaleDateString()} • {h.goal === 'win_clients' ? 'Win Clients' : 'Get Hired'} • {h.experience}
+                            </p>
+                          </div>
+                        </div>
+                        <ArrowRight size={14} className="text-white/30 group-hover:text-white/80 transition-colors shrink-0 ml-2" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}

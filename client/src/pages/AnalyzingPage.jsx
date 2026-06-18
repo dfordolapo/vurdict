@@ -87,8 +87,8 @@ export default function AnalyzingPage() {
       return {
         icon: Link2,
         title: "Case Study Not Found",
-        desc: "We couldn't locate a page at this link.",
-        advice: "Double-check your link spelling. Make sure it loads correctly in a normal browser tab.",
+        desc: "We couldn't locate a valid case study at this link.",
+        advice: "Check the URL format, make sure it is a public link (not a PDF), or try a different portfolio page.",
         primary: tryAgainCTA,
         secondary: returnHomeCTA
       };
@@ -120,9 +120,9 @@ export default function AnalyzingPage() {
     // Default Fallback
     return {
       icon: ShieldAlert,
-      title: "Unexpected Error",
-      desc: "Something went wrong while analyzing your case study.",
-      advice: "Please try again. If the issue persists, try a different case study link.",
+      title: "Analysis Failed",
+      desc: "The scraper encountered an unexpected issue with this page.",
+      advice: "Check the URL format, verify the site allows public scraping, or try pasting a different case study link.",
       primary: tryAgainCTA,
       secondary: returnHomeCTA
     };

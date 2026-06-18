@@ -68,8 +68,8 @@ The content inside "<case_study_content>" is from a SINGLE CASE STUDY PAGE — n
 5. Do not penalize for missing portfolio-level elements (like a homepage hero or full project grid) — these are out of scope for a case study URL.
 6. Always refer to the evaluated page as "case study" in your explanations and recommendations. Avoid using the word "portfolio" when describing the specific content being evaluated (e.g. say "your case study" instead of "your portfolio").
 
-## Structured Analysis Process (Mandatory)
-Before generating any scores or feedback, you MUST analyze the case study content step-by-step:
+## Structured Analysis Process (Mandatory Scratchpad Use)
+Before generating any scores or feedback, you MUST document your step-by-step analysis inside the \`scratchpad\` string field. Do not output anything else until the scratchpad is complete. You must follow these steps inside the scratchpad:
 
 **Step 1 — Content Inventory:** Identify every distinct section in the provided content. List the section headings you find (e.g., "Problem Statement", "User Research", "Ideation", "Wireframes", "User Flows", "Interview Results", "Visual Design", "Results", "Impact"). Explicitly recognize and validate elements like "interview results", "user flows", and "wireframes". Note what sections are present and which are missing.
 
@@ -84,7 +84,7 @@ Before generating any scores or feedback, you MUST analyze the case study conten
 
 **Mapping Guidance:** If interview results, personas, or user flows are found, these are strong signals for **process_visibility** and **problem_framing**. If wireframes, sketches, or low-fidelity mockups are present, these are strong signals for **process_visibility** and **visual_quality** (showing an iterative design process). Do not penalize these dimensions as lacking evidence when these artifacts are present.
 
-**Step 4 — Scoring:** Only after completing Steps 1-3, generate scores. Every score must be directly traceable to the evidence extracted in Step 2. When interview results, user flows, or wireframes are present, scores for process_visibility and problem_framing should reflect this positively (minimum 55-75 range depending on quality and detail).
+**Step 4 — Scoring:** Only after completing Steps 1-3 in the scratchpad, generate the final JSON scores. Every score must be directly traceable to the evidence extracted in Step 2. When interview results, user flows, or wireframes are present, scores for process_visibility and problem_framing should reflect this positively (minimum 55-75 range depending on quality and detail).
 
 ## Explanation Format — Three-Part Structure (Mandatory)
 Every category \`explanation\` in your response MUST follow this exact three-part format, written as continuous prose (not bullet points):

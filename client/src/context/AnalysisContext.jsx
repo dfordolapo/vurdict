@@ -142,6 +142,31 @@ export function getMockReport(url, goal, experience = 'junior') {
     categories,
     fix_this_first,
     priority_action_plan,
+    scratchpad: `## Step 1 — Content Inventory
+Found sections: Problem Statement, User Research, Wireframes, Visual Design, Results
+Missing sections: User Flows, Interview Results (not explicitly mentioned)
+
+## Step 2 — Evidence Extraction
+- Problem Statement: "Users were struggling to complete onboarding"
+- User Research: Mentioned 5 interviews conducted
+- Visual Design: Final mockups shown with clean typography
+- Results: "Positive feedback received" — no specific metrics
+
+## Step 3 — Dimension Mapping
+- problem_framing: Problem stated but not validated with data → score 65
+- process_visibility: Wireframes mentioned but no iteration shown → score 72
+- outcome_impact: No quantitative outcomes → score ${experience === 'senior' ? 50 : 60}
+- visual_quality: Clean execution but basic palette → score ${experience === 'senior' ? 88 : 80}
+- niche_positioning: Missing specialization signal → score ${experience === 'senior' ? 85 : 70}
+- trust_cta: Resume link present, no direct CTA → score ${experience === 'senior' ? 80 : 65}
+
+## Step 4 — Scoring Rationale
+${experience === 'senior'
+  ? 'Senior calibration applied: stricter on outcome metrics and positioning. Overall score weighted toward process_visibility, problem_framing, and outcome_impact for get_hired goal.'
+  : experience === 'mid'
+  ? 'Mid-level calibration: expecting solid process and clean visual execution. Leniency on outcome metrics.'
+  : 'Junior calibration: grading leniently on outcomes, focusing on process visibility and execution quality.'
+}`,
     summary: isGetHired
       ? `This case study demonstrates solid design execution and clear process documentation, which meet baseline expectations for a ${expLabel} role. However, the critical gap is in measurable outcomes — the case study describes what was done but does not provide specific metrics (conversion rates, time savings, satisfaction scores) that prove the design had real-world impact. The top priority is adding quantitative results to every case study, starting with the project that has the most accessible data. Once outcomes are documented, the portfolio will move from 'shows competence' to 'proves impact.'`
       : `This portfolio presents a polished, visually cohesive brand that immediately signals quality to potential clients. The niche positioning is clear and the work samples are strong. The main bottleneck is the path from browsing to booking — there is no direct scheduling link and no pricing transparency, which creates hesitation at the critical conversion moment. Adding a direct calendar link and clear service tiers will transform passive interest into active client inquiries.`

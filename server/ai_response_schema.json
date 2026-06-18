@@ -4,12 +4,17 @@
   "description": "Structured JSON response format returned by the Gemini/Claude Service after case study evaluation.",
   "type": "object",
   "required": [
+    "scratchpad",
     "overall_score",
     "categories",
     "fix_this_first",
     "summary"
   ],
   "properties": {
+    "scratchpad": {
+      "type": "string",
+      "description": "A detailed step-by-step reasoning and analysis of the portfolio content. You MUST fill this out before determining the overall score or dimension scores."
+    },
     "overall_score": {
       "type": "number",
       "description": "The aggregated score (0-100) representing overall case study readiness based on the selected goal weights.",

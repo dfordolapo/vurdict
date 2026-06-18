@@ -107,9 +107,39 @@ app.use('/api/payments', paymentsRouter);
 app.use('/api/waitlist', waitlistRouter);
 app.use('/api/revurdict-chat', rateLimiter, revurdictRouter);
 
+import fs from 'fs';
+
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  const indexPath = path.join(__dirname, '../client/dist/index.html');
+  
+  if (req.path === '/results' && req.query.share) {
+    try {
+      // Decode base64 payload
+      const jsonString = Buffer.from(req.query.share, 'base64').toString('utf8');
+      const payload = JSON.parse(jsonString);
+      const score = payload.report?.overall_score || 0;
+      
+      let html = fs.readFileSync(indexPath, 'utf8');
+      
+      const title = `I scored ${score}/100 on Vurdict!`;
+      const description = `See if your Product Design portfolio is ready for hiring. Vurdict provides objective, goal-aware portfolio feedback.`;
+      const ogTags = `
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${title}">
+        <meta name="twitter:description" content="${description}">
+      `;
+      
+      html = html.replace('</head>', `${ogTags}</head>`);
+      return res.send(html);
+    } catch (e) {
+      console.error('Failed to inject OG tags:', e);
+    }
+  }
+
+  res.sendFile(indexPath);
 });
 
 // ── Global Error Handler ────────────────────────────────────────────────────

@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { useAnalysis, getScoreStatus, getScoreBand } from '../context/AnalysisContext';
+import { saveToHistory } from '../utils/history';
 import {
   ArrowLeft, 
   Sparkles, 
   Flame, 
   ChevronDown, 
-  ChevronUp, 
+  ChevronUp,
+  BrainCircuit, 
   Eye, 
   Layers, 
   Search, 
@@ -42,6 +44,7 @@ export default function ResultsPage() {
   const [animatedScores, setAnimatedScores] = useState({});
   const [animatedOverallScore, setAnimatedOverallScore] = useState(0);
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [showReasoning, setShowReasoning] = useState(false);
   const scoreBarsRef = useRef(null);
 
   const handleDownload = () => {
@@ -251,15 +254,16 @@ export default function ResultsPage() {
   };
 
   const handleTwitterShare = () => {
+    const shareUrl = getShareUrl();
     const text = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio! See if your portfolio is ready for hiring:`);
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.origin)}`, '_blank');
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(shareUrl)}`, '_blank');
   };
 
   const handleLinkedInShare = () => {
-    const url = encodeURIComponent(window.location.origin);
+    const shareUrl = getShareUrl();
     const title = encodeURIComponent('My Vurdict Portfolio Analysis');
     const summary = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio!`);
-    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${summary}`, '_blank');
+    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${title}&summary=${summary}`, '_blank');
   };
 
 
@@ -268,8 +272,48 @@ export default function ResultsPage() {
   useEffect(() => {
     if (!state.report && state.status === 'idle') {
       toggleMockFallback();
+    } else if (state.report && state.url) {
+      // Save to local history
+      saveToHistory({
+        url: state.url,
+        score: state.report.overall_score,
+        goal: state.goal,
+        experience: state.experience
+      });
     }
-  }, [state.report, state.status, toggleMockFallback]);
+  }, [state.report, state.status, state.url, state.goal, state.experience, toggleMockFallback]);
+
+  // Dynamically inject OG meta tags for rich sharing
+  useEffect(() => {
+    if (!state.report) return;
+    const score = state.report.overall_score;
+    const status = getScoreStatus(score);
+    const title = `Vurdict — Scored ${score}/100 (${status})`;
+    const desc = `My product design portfolio scored ${score}/100 on Vurdict. ${state.report.summary?.slice(0, 120) || 'Get objective, goal-aware portfolio feedback.'}`;
+    const img = 'https://vurdict.site/assets/social-preview.jpg';
+
+    const setMeta = (prop, name, content) => {
+      let el = document.querySelector(`meta[${prop}="${name}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(prop, name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+
+    setMeta('property', 'og:title', title);
+    setMeta('property', 'og:description', desc);
+    setMeta('property', 'og:image', img);
+    setMeta('property', 'og:url', window.location.href);
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', desc);
+    setMeta('name', 'twitter:image', img);
+
+    return () => {
+      document.querySelectorAll('meta[property="og:title"], meta[property="og:description"], meta[property="og:image"], meta[name="twitter:title"], meta[name="twitter:description"], meta[name="twitter:image"]').forEach(el => el.remove());
+    };
+  }, [state.report]);
 
   // Animate score bars when they scroll into view
   useEffect(() => {
@@ -630,6 +674,38 @@ export default function ResultsPage() {
                   {summaryText}
                 </p>
               </div>
+
+              {/* Chain of Thought: How we scored this */}
+              {report.scratchpad && (
+                <div className="w-full mt-4 border-t border-slate-100 pt-3">
+                  <button
+                    onClick={() => setShowReasoning(!showReasoning)}
+                    className="flex items-center justify-between w-full text-left group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <BrainCircuit size={14} className="text-slate-400 group-hover:text-brand-900 transition-colors" />
+                      <span className="text-[10px] font-semibold text-slate-400 group-hover:text-brand-900 uppercase tracking-wider transition-colors">How we scored this</span>
+                    </div>
+                    {showReasoning ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
+                  </button>
+                  {showReasoning && (
+                    <div className="mt-3 bg-slate-50 border border-slate-100 rounded-xl p-4 text-left">
+                      <div className="prose prose-xs max-w-none">
+                        {report.scratchpad.split('\n').map((line, i) => {
+                          if (line.startsWith('## ')) {
+                            return <h4 key={i} className="text-[11px] font-bold text-slate-700 mt-3 mb-1 first:mt-0">{line.replace('## ', '')}</h4>;
+                          }
+                          if (line.startsWith('- ')) {
+                            return <p key={i} className="text-[10px] text-slate-600 leading-relaxed ml-2 mb-0.5">{line}</p>;
+                          }
+                          if (line.trim() === '') return <div key={i} className="h-1" />;
+                          return <p key={i} className="text-[10px] text-slate-600 leading-relaxed mb-0.5">{line}</p>;
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -834,6 +910,37 @@ export default function ResultsPage() {
             <span>View Detailed Recommendations</span>
             <ArrowRight size={14} />
           </button>
+        </div>
+
+        {/* Teasers for Copilot & Examples */}
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up mt-12 mb-6">
+          <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 flex flex-col justify-between shadow-sm">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles size={18} className="text-indigo-600" />
+                <h3 className="text-sm font-bold text-slate-900">Vurdict Co-Pilot</h3>
+                <span className="bg-indigo-100 text-indigo-700 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Coming Soon</span>
+              </div>
+              <p className="text-xs text-slate-500 mb-6 leading-relaxed">
+                Get real-time AI assistance as you rewrite your case study. Co-Pilot will suggest specific improvements for your problem statements, metric framing, and visual flow.
+              </p>
+            </div>
+            <WaitlistForm feature="copilot" buttonText="Join Co-Pilot Waitlist" />
+          </div>
+
+          <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 flex flex-col justify-between shadow-sm">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Layers size={18} className="text-sky-600" />
+                <h3 className="text-sm font-bold text-slate-900">Score 90+ Examples</h3>
+                <span className="bg-sky-100 text-sky-700 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Coming Soon</span>
+              </div>
+              <p className="text-xs text-slate-500 mb-6 leading-relaxed">
+                Unlock a curated library of product design portfolios that scored 90+ on Vurdict. See exactly how top candidates frame their work to get hired.
+              </p>
+            </div>
+            <WaitlistForm feature="examples" buttonText="Join Library Waitlist" />
+          </div>
         </div>
 
         {/* Human Expert Review Waitlist */}
