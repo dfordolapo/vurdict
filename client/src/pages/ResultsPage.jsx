@@ -911,37 +911,6 @@ export default function ResultsPage() {
           </button>
         </div>
 
-        {/* Teasers for Copilot & Examples */}
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up mt-12 mb-6">
-          <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Sparkles size={18} className="text-indigo-600" />
-                <h3 className="text-sm font-bold text-slate-900">Vurdict Co-Pilot</h3>
-                <span className="bg-indigo-100 text-indigo-700 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Coming Soon</span>
-              </div>
-              <p className="text-xs text-slate-500 mb-6 leading-relaxed">
-                Get real-time AI assistance as you rewrite your case study. Co-Pilot will suggest specific improvements for your problem statements, metric framing, and visual flow.
-              </p>
-            </div>
-            <WaitlistForm feature="copilot" buttonText="Join Co-Pilot Waitlist" />
-          </div>
-
-          <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 flex flex-col justify-between shadow-sm">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Layers size={18} className="text-sky-600" />
-                <h3 className="text-sm font-bold text-slate-900">Score 90+ Examples</h3>
-                <span className="bg-sky-100 text-sky-700 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Coming Soon</span>
-              </div>
-              <p className="text-xs text-slate-500 mb-6 leading-relaxed">
-                Unlock a curated library of product design portfolios that scored 90+ on Vurdict. See exactly how top candidates frame their work to get hired.
-              </p>
-            </div>
-            <WaitlistForm feature="examples" buttonText="Join Library Waitlist" />
-          </div>
-        </div>
-
         {/* Human Expert Review Waitlist */}
         <div className="max-w-7xl w-full mx-auto animate-fade-in-up mt-16 mb-6">
           <div className="text-center mb-10">
