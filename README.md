@@ -1,4 +1,5 @@
 # Vurdict
+**[Live Demo](https://www.vurdict.site)**
 
 Vurdict is an AI-powered, goal-aware portfolio review application designed specifically for product designers. By pasting a portfolio URL (such as Behance, Dribbble, or a personal website), designers receive high-fidelity, objective feedback based on a structured 6-dimension evaluation framework.
 
@@ -24,6 +25,7 @@ The repository supports a unified deployment structure for ease of local testing
 - **Database / Cache:** Vercel KV (Upstash Redis) for background job resilience and caching.
 - **AI Core:** Google Gemini API (gemini-2.5-flash via `@google/genai`)
 - **Scraping:** Jina Reader API (high-fidelity content extraction)
+- **Monetization (Paywall):** Paystack API (for gated premium analysis)
 - **Email/Lead Capture:** Resend API (Waitlist and deduplication)
 
 ---
@@ -83,7 +85,7 @@ Vurdict grades portfolios against six distinct hiring dimensions:
 * **Role Support:** Exclusively Product Designer roles.
 * **Authentication:** No user accounts or login walls (frictionless entry).
 * **Background Resilience:** Utilizes Vercel KV Database to safely cache AI analysis jobs if a user's mobile browser drops the connection in the background.
-* **Monetization & Lead Gen:** Detailed dimension analysis and new feature access is gated behind Waitlist forms powered by Resend (with in-memory/KV deduplication).
+* **Monetization & Lead Gen:** Detailed dimension analysis is gated behind a premium paywall powered by **Paystack**, while upcoming features use Waitlist forms powered by Resend.
 * **Focused Experience:** An opinionated, single-task flow. Designers input their portfolio link, choose their goal, and immediately receive feedback.
 * **Premium UX Polish:** Features 60fps score count-up animations, interactive tooltips, custom mobile pull-to-refresh deadzones, and dynamic loading states.
 
