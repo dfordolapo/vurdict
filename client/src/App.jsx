@@ -20,7 +20,10 @@ function ScrollToTop() {
 
   useEffect(() => {
     if (!hash) {
-      document.documentElement.scrollTop = 0
+      const html = document.documentElement
+      html.style.scrollBehavior = 'auto'
+      html.scrollTop = 0
+      html.style.scrollBehavior = ''
     }
   }, [pathname, hash])
 
