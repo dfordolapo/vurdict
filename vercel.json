@@ -5,10 +5,7 @@
       "src": "server/index.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": [
-          "server/ai_response_schema.json",
-          "client/dist/index.html"
-        ]
+        "includeFiles": ["server/ai_response_schema.json"]
       }
     },
     {
@@ -27,10 +24,6 @@
     {
       "src": "/assets/(.*)",
       "dest": "client/assets/$1"
-    },
-    {
-      "src": "/results",
-      "dest": "server/index.js"
     },
     {
       "src": "/(.*)",

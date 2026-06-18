@@ -107,47 +107,9 @@ app.use('/api/payments', paymentsRouter);
 app.use('/api/waitlist', waitlistRouter);
 app.use('/api/revurdict-chat', rateLimiter, revurdictRouter);
 
-import fs from 'fs';
-
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
 app.get('*', (req, res) => {
-  // Resolve path to client's index.html — handles local dev and Vercel
-  let indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
-  if (!fs.existsSync(indexPath)) {
-    indexPath = path.join(__dirname, 'client', 'dist', 'index.html');
-  }
-  
-  if (req.path === '/results' && req.query.share) {
-    try {
-      // Decode base64url payload (handle both with and without padding)
-      const base64 = req.query.share.replace(/-/g, '+').replace(/_/g, '/');
-      const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, '=');
-      const jsonString = Buffer.from(padded, 'base64').toString('utf8');
-      const payload = JSON.parse(jsonString);
-      const score = payload.report?.overall_score || 0;
-      
-      let html = fs.readFileSync(indexPath, 'utf8');
-      
-      const title = `I scored ${score}/100 on Vurdict!`;
-      const description = `See if your Product Design portfolio is ready for hiring. Vurdict provides objective, goal-aware portfolio feedback.`;
-      const image = 'https://vurdict.site/assets/social-preview.jpg';
-      const ogTags = `
-        <meta property="og:title" content="${title}">
-        <meta property="og:description" content="${description}">
-        <meta property="og:image" content="${image}">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="${title}">
-        <meta name="twitter:description" content="${description}">
-        <meta name="twitter:image" content="${image}">
-      `;
-      
-      html = html.replace('</head>', `${ogTags}</head>`);
-      return res.send(html);
-    } catch (e) {
-      console.error('Failed to inject OG tags:', e);
-    }
-  }
-
+  const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
   res.sendFile(indexPath);
 });
 

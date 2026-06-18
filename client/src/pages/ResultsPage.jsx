@@ -216,27 +216,7 @@ export default function ResultsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const getShareUrl = () => {
-    try {
-      const payload = {
-        url: state.url,
-        goal: state.goal,
-        experience: state.experience,
-        report: state.report ? { overall_score: state.report.overall_score } : null
-      };
-      const jsonString = JSON.stringify(payload);
-      const utf8Bytes = new TextEncoder().encode(jsonString);
-      let binString = '';
-      for (let i = 0; i < utf8Bytes.length; i++) {
-        binString += String.fromCharCode(utf8Bytes[i]);
-      }
-      const serialized = btoa(binString).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-      return `${window.location.origin}/results?share=${serialized}`;
-    } catch (e) {
-      console.error('Failed to generate share link', e);
-      return window.location.origin;
-    }
-  };
+  const getShareUrl = () => window.location.origin;
 
   const handleShare = () => {
     try {
