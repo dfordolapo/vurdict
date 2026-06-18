@@ -124,12 +124,15 @@ app.get('*', (req, res) => {
       
       const title = `I scored ${score}/100 on Vurdict!`;
       const description = `See if your Product Design portfolio is ready for hiring. Vurdict provides objective, goal-aware portfolio feedback.`;
+      const image = 'https://vurdict.site/assets/social-preview.jpg';
       const ogTags = `
         <meta property="og:title" content="${title}">
         <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${image}">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="${title}">
         <meta name="twitter:description" content="${description}">
+        <meta name="twitter:image" content="${image}">
       `;
       
       html = html.replace('</head>', `${ogTags}</head>`);
