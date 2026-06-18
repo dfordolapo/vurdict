@@ -688,17 +688,27 @@ export default function ResultsPage() {
                     {showReasoning ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
                   </button>
                   {showReasoning && (
-                    <div className="mt-3 bg-slate-50 border border-slate-100 rounded-xl p-4 text-left">
-                      <div className="prose prose-xs max-w-none">
+                    <div className="mt-3 bg-slate-50 border border-slate-100 rounded-xl p-5 text-left">
+                      <div className="max-w-none">
                         {report.scratchpad.split('\n').map((line, i) => {
+                          const trimmed = line.trim();
                           if (line.startsWith('## ')) {
-                            return <h4 key={i} className="text-[11px] font-bold text-slate-700 mt-3 mb-1 first:mt-0">{line.replace('## ', '')}</h4>;
+                            return <h4 key={i} className="text-[11px] font-bold text-slate-800 mt-5 mb-2 first:mt-0">{line.replace('## ', '')}</h4>;
                           }
-                          if (line.startsWith('- ')) {
-                            return <p key={i} className="text-[10px] text-slate-600 leading-relaxed ml-2 mb-0.5">{line}</p>;
+                          if (line.startsWith('**') && line.endsWith('**')) {
+                            return <p key={i} className="text-[10px] font-semibold text-slate-700 mt-3 mb-1">{line.replace(/\*\*/g, '')}</p>;
                           }
-                          if (line.trim() === '') return <div key={i} className="h-1" />;
-                          return <p key={i} className="text-[10px] text-slate-600 leading-relaxed mb-0.5">{line}</p>;
+                          if (trimmed.startsWith('- **')) {
+                            const parts = trimmed.replace(/^- /, '').split('**').filter(Boolean);
+                            return <p key={i} className="text-[10px] text-slate-600 leading-relaxed pl-3 mb-1.5">
+                              <span className="font-semibold text-slate-700">{parts[0]}</span>{parts.slice(1).join('')}
+                            </p>;
+                          }
+                          if (trimmed.startsWith('- ')) {
+                            return <p key={i} className="text-[10px] text-slate-600 leading-relaxed pl-3 mb-1.5">{trimmed.replace(/^- /, '')}</p>;
+                          }
+                          if (trimmed === '') return <div key={i} className="h-2" />;
+                          return <p key={i} className="text-[10px] text-slate-600 leading-relaxed mb-1.5">{line}</p>;
                         })}
                       </div>
                     </div>

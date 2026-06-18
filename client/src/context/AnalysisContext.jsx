@@ -143,29 +143,50 @@ export function getMockReport(url, goal, experience = 'junior') {
     fix_this_first,
     priority_action_plan,
     scratchpad: `## Step 1 — Content Inventory
-Found sections: Problem Statement, User Research, Wireframes, Visual Design, Results
-Missing sections: User Flows, Interview Results (not explicitly mentioned)
+
+The case study was scanned for distinct sections and design artifacts. Here is what was found and what is missing.
+
+**Sections detected:**
+- Problem Statement — clearly stated at the beginning of the case study
+- User Research — mentions research activity but lacks depth
+- Wireframes — included as visual artifacts showing early-stage thinking
+- Visual Design — final mockups presented with attention to typography and layout
+- Results — outcomes mentioned but only in qualitative terms
+
+**Sections missing:**
+- User Flows — not present; would strengthen process visibility
+- Interview Results — no synthesized findings from user research
+- Iteration Docs — no evidence of design iteration based on testing or feedback
 
 ## Step 2 — Evidence Extraction
-- Problem Statement: "Users were struggling to complete onboarding"
-- User Research: Mentioned 5 interviews conducted
-- Visual Design: Final mockups shown with clean typography
-- Results: "Positive feedback received" — no specific metrics
+
+Each detected section was examined for specific quotes, data points, and project details that could inform scoring.
+
+- Problem Statement: "Users were struggling to complete the onboarding flow within the first session." This establishes a clear design challenge but is not backed by baseline metrics.
+- User Research: "Conducted 5 user interviews to understand pain points." Interviews are mentioned but no verbatim quotes, themes, or prioritization frameworks are presented.
+- Visual Design: Final mockups show clean typography, consistent spacing, and a modern sans-serif approach. No accessibility annotations or responsive breakpoints are demonstrated.
+- Results: "The new design received positive feedback from stakeholders and users." This is purely qualitative — no conversion rates, time savings, or satisfaction scores are provided.
+
+This evidence suggests the designer understands what to include in a case study but has not yet mastered the art of proving impact with data.
 
 ## Step 3 — Dimension Mapping
-- problem_framing: Problem stated but not validated with data → score 65
-- process_visibility: Wireframes mentioned but no iteration shown → score 72
-- outcome_impact: No quantitative outcomes → score ${experience === 'senior' ? 50 : 60}
-- visual_quality: Clean execution but basic palette → score ${experience === 'senior' ? 88 : 80}
-- niche_positioning: Missing specialization signal → score ${experience === 'senior' ? 85 : 70}
-- trust_cta: Resume link present, no direct CTA → score ${experience === 'senior' ? 80 : 65}
+
+Each of the 6 evaluation dimensions was scored based on the evidence (or lack thereof) extracted in Step 2.
+
+- **problem_framing** → 65: Problem is stated but not validated with user data or market research. The framing is speculative rather than evidence-driven.
+- **process_visibility** → 72: Wireframes are present, showing early ideation. However, no user flows, iteration cycles, or testing loops are documented.
+- **outcome_impact** → ${experience === 'senior' ? 50 : 60}: No quantitative outcomes are reported. At ${experience} level, hiring managers expect at least directional metrics.
+- **visual_quality** → ${experience === 'senior' ? 88 : 80}: Strong typography and layout discipline. Lacks accessibility annotations and responsive edge-case polish.
+- **niche_positioning** → ${experience === 'senior' ? 85 : 70}: Work samples show competence but no clear specialization signal. Unclear what type of designer this person is beyond "product designer."
+- **trust_cta** → ${experience === 'senior' ? 80 : 65}: Resume and contact are accessible. No direct call to action or project-specific next step for the reader.
 
 ## Step 4 — Scoring Rationale
+
 ${experience === 'senior'
-  ? 'Senior calibration applied: stricter on outcome metrics and positioning. Overall score weighted toward process_visibility, problem_framing, and outcome_impact for get_hired goal.'
+  ? 'Senior calibration was applied, which raises the bar on outcome metrics and strategic positioning. The overall score is weighted toward process_visibility and problem_framing, as these are the dimensions most critical for a get_hired goal. The lack of quantitative outcomes and unclear specialization prevent this portfolio from scoring higher, despite solid visual execution.'
   : experience === 'mid'
-  ? 'Mid-level calibration: expecting solid process and clean visual execution. Leniency on outcome metrics.'
-  : 'Junior calibration: grading leniently on outcomes, focusing on process visibility and execution quality.'
+  ? 'Mid-level calibration was applied, with balanced weight across all dimensions. The portfolio shows solid process awareness and clean execution. Leniency was given on outcome metrics, but the absence of any quantified impact prevents the score from crossing into the top band.'
+  : 'Junior calibration was applied, with the highest weight on process visibility and visual quality. Outcome expectations were intentionally lowered. The portfolio demonstrates a strong foundation — the primary gap is translating process knowledge into measurable results.'
 }`,
     summary: isGetHired
       ? `This case study demonstrates solid design execution and clear process documentation, which meet baseline expectations for a ${expLabel} role. However, the critical gap is in measurable outcomes — the case study describes what was done but does not provide specific metrics (conversion rates, time savings, satisfaction scores) that prove the design had real-world impact. The top priority is adding quantitative results to every case study, starting with the project that has the most accessible data. Once outcomes are documented, the portfolio will move from 'shows competence' to 'proves impact.'`
