@@ -230,7 +230,7 @@ export default function ResultsPage() {
       for (let i = 0; i < utf8Bytes.length; i++) {
         binString += String.fromCharCode(utf8Bytes[i]);
       }
-      const serialized = btoa(binString);
+      const serialized = btoa(binString).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
       return `${window.location.origin}/results?share=${serialized}`;
     } catch (e) {
       console.error('Failed to generate share link', e);
@@ -254,14 +254,14 @@ export default function ResultsPage() {
 
   const handleTwitterShare = () => {
     const shareUrl = getShareUrl();
-    const text = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio! See if your portfolio is ready for hiring:`);
+    const text = encodeURIComponent(`I just scored a ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio! See if your portfolio is ready for hiring:`);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(shareUrl)}`, '_blank');
   };
 
   const handleLinkedInShare = () => {
     const shareUrl = getShareUrl();
     const title = encodeURIComponent('My Vurdict Portfolio Analysis');
-    const summary = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio!`);
+    const summary = encodeURIComponent(`I just scored a ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio!`);
     window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${title}&summary=${summary}`, '_blank');
   };
 

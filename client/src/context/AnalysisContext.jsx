@@ -212,8 +212,10 @@ export function AnalysisProvider({ children }) {
       const params = new URLSearchParams(window.location.search);
       const shareData = params.get('share');
       if (shareData) {
-        // Safe Base64 decoding (supporting UTF-8 characters)
-        const binString = atob(shareData);
+        // Safe Base64url decoding (supporting UTF-8 characters)
+        const base64 = shareData.replace(/-/g, '+').replace(/_/g, '/');
+        const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, '=');
+        const binString = atob(padded);
         const bytes = new Uint8Array(binString.length);
         for (let i = 0; i < binString.length; i++) {
           bytes[i] = binString.charCodeAt(i);

@@ -119,8 +119,10 @@ app.get('*', (req, res) => {
   
   if (req.path === '/results' && req.query.share) {
     try {
-      // Decode base64 payload
-      const jsonString = Buffer.from(req.query.share, 'base64').toString('utf8');
+      // Decode base64url payload (handle both with and without padding)
+      const base64 = req.query.share.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, '=');
+      const jsonString = Buffer.from(padded, 'base64').toString('utf8');
       const payload = JSON.parse(jsonString);
       const score = payload.report?.overall_score || 0;
       
