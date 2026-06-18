@@ -140,7 +140,7 @@ export default function AnalyzePage() {
 
                 {/* URL Input */}
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 rounded-2xl border border-white bg-white px-4 py-3.5 focus-within:border-sky-300/70 transition-all">
+                  <div className="flex items-center gap-2 rounded-2xl border border-white bg-white px-4 py-3.5 focus-within:ring-4 focus-within:ring-sky-300/20 focus-within:border-sky-300/70 transition-all shadow-sm">
                     <Globe size={18} className="text-sky-300/70 shrink-0" />
                     <input
                       type="text"
@@ -222,19 +222,12 @@ export default function AnalyzePage() {
                           key={item.key}
                           type="button"
                           onClick={() => setExperience(item.key)}
-                          className={`flex-1 flex items-center justify-center gap-1 sm:gap-2 py-3 rounded-2xl border text-xs sm:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
+                          className={`flex-1 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all border whitespace-nowrap shrink-0 ${
                             isSelected
-                              ? 'bg-white text-slate-900 border-white shadow-sm'
-                              : 'bg-[#121e48] text-white border-[#1e3060] hover:bg-[#162348] hover:border-[#264070]'
+                              ? 'bg-white text-brand-900 border-white shadow-sm'
+                              : 'bg-white/10 text-sky-200/70 border-white/20 hover:bg-white/20'
                           }`}
                         >
-                          <div
-                            className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-                              isSelected ? 'border-brand-900' : 'border-white/60'
-                            }`}
-                          >
-                            {isSelected && <div className="h-2 w-2 rounded-full bg-brand-900" />}
-                          </div>
                           {item.label}
                         </button>
                       );
@@ -246,14 +239,16 @@ export default function AnalyzePage() {
                 <button
                   type="submit"
                   disabled={isUrlEmpty}
-                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
+                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-semibold transition-all whitespace-nowrap shrink-0 group ${
                     isUrlEmpty
                       ? 'bg-white/15 text-white/40 cursor-not-allowed'
-                      : 'bg-white text-brand-900 hover:bg-sky-50 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0'
+                      : 'bg-white text-brand-900 hover:bg-sky-50 shadow-[0_4px_14px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.15)] hover:-translate-y-0.5 active:translate-y-0'
                   }`}
                 >
-                  <span>                  Analyze Portfolio</span>
-                  <ArrowRight size={16} />
+                  <span>Analyze Portfolio</span>
+                  <div className={`rounded-md p-0.5 transition-all duration-200 ${!isUrlEmpty && 'group-hover:bg-brand-900/10'}`}>
+                    <ArrowRight size={16} className={`transition-all duration-200 ${!isUrlEmpty && 'group-hover:translate-x-1'}`} />
+                  </div>
                 </button>
 
                 {/* Error */}
