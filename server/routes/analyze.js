@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { extractContent } from '../services/JinaService.js';
 import { evaluatePortfolio } from '../services/GeminiService.js';
+import { generateJobId, getJobStatus, setJobProcessing, setJobCompleted, setJobFailed, waitForJobCompletion } from '../services/KVService.js';
 
 const router = Router();
 
@@ -54,13 +55,58 @@ router.post('/', async (req, res, next) => {
 
     console.log(`[Analyze] Goal: ${goal} | Level: ${experienceLabel} | URL: ${url}`);
 
-    // ── Step 1: Extract portfolio content ────────────────────────────────────
-    const portfolioContent = await extractContent(url);
+    const jobId = generateJobId(url, goal);
+    const existingJob = await getJobStatus(jobId);
 
-    // ── Step 2: Run AI evaluation ────────────────────────────────────────────
-    const evaluation = await evaluatePortfolio(goal, experienceLabel, portfolioContent, url);
+    if (existingJob) {
+      if (existingJob.status === 'completed') {
+        console.log(`[Analyze] Returning CACHED report for ${jobId}`);
+        return res.json({ success: true, evaluation: existingJob.evaluation });
+      } else if (existingJob.status === 'failed') {
+        return res.status(400).json(existingJob.errorConfig);
+      } else if (existingJob.status === 'processing') {
+        console.log(`[Analyze] Job ${jobId} is processing. Polling...`);
+        // Wait up to 25 seconds for it to finish
+        const finishedJob = await waitForJobCompletion(jobId, 25000);
+        
+        if (finishedJob && finishedJob.status === 'completed') {
+          return res.json({ success: true, evaluation: finishedJob.evaluation });
+        } else if (finishedJob && finishedJob.status === 'failed') {
+          return res.status(400).json(finishedJob.errorConfig);
+        } else {
+          // Still processing after 25s, return timeout so frontend can prompt "Try Again"
+          return res.status(504).json({
+            error: 'Analysis is taking longer than expected. Please wait a moment and try again.',
+            code: 'TIMEOUT'
+          });
+        }
+      }
+    }
 
-    return res.json({ success: true, evaluation });
+    // New Job: Mark as processing and start
+    await setJobProcessing(jobId);
+
+    try {
+      // ── Step 1: Extract portfolio content ────────────────────────────────────
+      const portfolioContent = await extractContent(url);
+
+      // ── Step 2: Run AI evaluation ────────────────────────────────────────────
+      const evaluation = await evaluatePortfolio(goal, experienceLabel, portfolioContent, url);
+
+      // Save to KV
+      await setJobCompleted(jobId, evaluation);
+
+      return res.json({ success: true, evaluation });
+    } catch (processErr) {
+      // If it's our custom structure
+      const errorConfig = {
+        error: processErr.message || 'Something went wrong.',
+        code: processErr.code || 'UNEXPECTED_FAILURE'
+      };
+      await setJobFailed(jobId, errorConfig);
+      throw processErr;
+    }
+
   } catch (err) {
     next(err);
   }
