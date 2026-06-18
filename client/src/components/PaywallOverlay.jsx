@@ -23,7 +23,7 @@ function loadPaystackScript() {
   });
 }
 
-export default function PaywallOverlay({ onUnlock }) {
+export default function PaywallOverlay({ onUnlock, isUnlocking }) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -95,7 +95,7 @@ export default function PaywallOverlay({ onUnlock }) {
   ];
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center py-6 px-4 overflow-y-auto">
+    <div className={`absolute inset-0 z-30 flex items-center justify-center py-6 px-4 overflow-y-auto transition-all duration-1000 ${isUnlocking ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'}`}>
       {/* Frosted glass backdrop */}
       <div
         className="absolute inset-0 backdrop-blur-md"

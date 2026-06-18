@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const PULL_THRESHOLD = 80   // px to trigger refresh
-const MAX_PULL       = 150  // max visual stretch
+const PULL_THRESHOLD = 150  // px to trigger refresh
+const MAX_PULL       = 200  // max visual stretch
 
 // ─── Rubber-band easing ───────────────────────────────────────────────────────
 const rubberband = (x, limit) => limit * (1 - Math.exp(-x / limit))
@@ -157,6 +157,7 @@ export default function PullToRefresh() {
   const [pullY,    setPullY]  = useState(0)
 
   const touchStartY  = useRef(0)
+  const touchStartX  = useRef(0)
   const touchStartSY = useRef(0)
   const isDragging   = useRef(false)
 
@@ -165,20 +166,32 @@ export default function PullToRefresh() {
 
   // ── Touch handlers ────────────────────────────────────────────────────────
   const onTouchStart = useCallback((e) => {
-    if (window.scrollY > 4) return
     touchStartY.current  = e.touches[0].clientY
+    touchStartX.current  = e.touches[0].clientX
     touchStartSY.current = window.scrollY
     isDragging.current   = false
   }, [])
 
   const onTouchMove = useCallback((e) => {
-    if (touchStartSY.current > 4) return
+    // If the page was scrolled at start, or has scrolled during this gesture, abort PTR.
+    if (touchStartSY.current > 0 || window.scrollY > 0) return
+
+    // Ensure no nested scrollable container is scrolled down.
+    let el = e.target;
+    while (el && el !== document.documentElement && el !== document.body) {
+      if (el.scrollTop > 0) return;
+      el = el.parentElement;
+    }
+
     const deltaY = e.touches[0].clientY - touchStartY.current
+    const deltaX = e.touches[0].clientX - touchStartX.current
     if (deltaY <= 0) return
 
-    // Only take over the gesture once the user has clearly pulled down (10px deadzone).
-    // Below this, leave the event alone so normal taps/clicks still fire.
-    if (deltaY < 10) return
+    // Reject horizontal swipes: if the user moves more sideways than down, it's a swipe not a pull
+    if (Math.abs(deltaX) > Math.abs(deltaY) * 0.5) return
+
+    // Require an actual pull (wait for 40px movement) before taking over the event
+    if (deltaY < 40 && !isDragging.current) return
 
     e.preventDefault()
     isDragging.current = true

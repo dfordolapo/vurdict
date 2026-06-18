@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowRight,
@@ -12,6 +12,7 @@ import {
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
 import BetaTicker from '../components/BetaTicker';
+import PWAInstallPrompt from '../components/PWAInstallPrompt';
 import analyzeIllustration from '../assets/analyze_illustration.webp';
 
 const GOALS = [
@@ -38,6 +39,14 @@ export default function AnalyzePage() {
   const [goal, setGoal] = useState(searchParams.get('goal') || 'get_hired');
   const [experience, setExperience] = useState('junior');
   const [error, setError] = useState('');
+  const [showPWA, setShowPWA] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPWA(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const isUrlEmpty = !url.trim();
   const selectedGoal = GOALS.find((g) => g.key === goal);
@@ -276,6 +285,7 @@ export default function AnalyzePage() {
         </div>
       </div>
 
+      {showPWA && <PWAInstallPrompt />}
     </div>
   );
 }

@@ -256,7 +256,10 @@ export default function ResultsPage() {
   };
 
   const handleLinkedInShare = () => {
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank');
+    const url = encodeURIComponent(window.location.origin);
+    const title = encodeURIComponent('My Vurdict Portfolio Analysis');
+    const summary = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio! See how your portfolio compares.`);
+    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${summary}`, '_blank');
   };
 
 
@@ -798,10 +801,10 @@ export default function ResultsPage() {
               {/* Nice-to-Have */}
               <div className="bg-slate-50/50 border border-slate-100 rounded-2xl p-5 space-y-3">
                 <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase">
-                  <span className="h-5 w-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-400">3</span>
+                  <span className="h-5 w-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600">3</span>
                   Nice-to-Have
                 </div>
-                <p className="text-[9px] text-slate-400/70 font-medium">Optional refinements for further polish.</p>
+                <p className="text-[9px] text-slate-400 font-medium">Optional refinements for further polish.</p>
                 <div className="space-y-3">
                   {(report.priority_action_plan?.nice_to_have || []).slice(0, 3).map((item, i) => (
                     <div key={i} className="space-y-0.5">

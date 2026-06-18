@@ -80,10 +80,17 @@ export default function DimensionDetailsPage() {
     try { return sessionStorage.getItem('vurdict_paid') === 'true'; }
     catch { return false; }
   });
+  const [isUnlocking, setIsUnlocking] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   const handleUnlock = () => {
-    try { sessionStorage.setItem('vurdict_paid', 'true'); } catch {}
-    setIsPaid(true);
+    setIsUnlocking(true);
+    setTimeout(() => {
+      try { sessionStorage.setItem('vurdict_paid', 'true'); } catch {}
+      setIsPaid(true);
+      setIsUnlocking(false);
+      setTimeout(() => setRevealed(true), 50);
+    }, 1000);
   };
 
   // Esc key listener for modals
@@ -538,10 +545,10 @@ export default function DimensionDetailsPage() {
             <div className="relative">
 
               {/* Locked content — rendered but visually hidden behind overlay when !isPaid */}
-              <div className={`space-y-6 ${!isPaid ? 'pointer-events-none select-none' : ''}`} aria-hidden={!isPaid}>
+              <div className={`space-y-6 transition-all duration-1000 ease-out ${!isPaid && !isUnlocking ? 'pointer-events-none select-none opacity-40 blur-[4px] scale-[0.97]' : 'opacity-100 blur-none scale-100'}`} aria-hidden={!isPaid}>
 
                 {/* Why this score block */}
-                <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-2 text-left">
+                <div className="bg-white text-slate-900 border border-slate-100 p-5 rounded-3xl shadow-lg space-y-2 text-left" style={{ opacity: revealed ? 1 : 0, transform: revealed ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.5s cubic-bezier(0.22,1,0.36,1)', transitionDelay: revealed ? '0ms' : '0ms' }}>
                   <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Why this score?</h4>
                   <p className="text-xs text-slate-700 font-normal leading-relaxed">
                     {details.why}
@@ -552,7 +559,7 @@ export default function DimensionDetailsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-900">
                   
                   {/* What's Working */}
-                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
+                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left" style={{ opacity: revealed ? 1 : 0, transform: revealed ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.5s cubic-bezier(0.22,1,0.36,1)', transitionDelay: revealed ? '100ms' : '0ms' }}>
                     <div className="flex items-center gap-2 text-xs font-semibold text-emerald-700 uppercase">
                       <CheckCircle size={14} className="text-emerald-500" />
                       <span>What's Working</span>
@@ -571,7 +578,7 @@ export default function DimensionDetailsPage() {
                   </div>
 
                   {/* Where You Can Improve */}
-                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
+                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left" style={{ opacity: revealed ? 1 : 0, transform: revealed ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.5s cubic-bezier(0.22,1,0.36,1)', transitionDelay: revealed ? '200ms' : '0ms' }}>
                     <div className="flex items-center gap-2 text-xs font-semibold text-amber-700 uppercase">
                       <AlertTriangle size={14} className="text-amber-500" />
                       <span>Where You Can Improve</span>
@@ -590,7 +597,7 @@ export default function DimensionDetailsPage() {
                   </div>
 
                   {/* Evidence Found */}
-                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left">
+                  <div className="bg-white border border-slate-100 p-5 rounded-3xl shadow-lg space-y-4 text-left" style={{ opacity: revealed ? 1 : 0, transform: revealed ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.5s cubic-bezier(0.22,1,0.36,1)', transitionDelay: revealed ? '300ms' : '0ms' }}>
                     <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase">
                       <FileText size={14} className="text-blue-500" />
                       <span>Evidence Found</span>
@@ -611,7 +618,7 @@ export default function DimensionDetailsPage() {
                 </div>
 
                 {/* Row 2: Full-width Recommendation */}
-                <div className="bg-blue-50 border border-blue-150 p-6 rounded-3xl text-left space-y-4 text-slate-900">
+                <div className="bg-blue-50 border border-blue-150 p-6 rounded-3xl text-left space-y-4 text-slate-900" style={{ opacity: revealed ? 1 : 0, transform: revealed ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.5s cubic-bezier(0.22,1,0.36,1)', transitionDelay: revealed ? '400ms' : '0ms' }}>
                   <div className="flex items-center justify-between border-b border-blue-100 pb-3">
                     <div className="space-y-0.5">
                       <span className="text-[9px] font-normal uppercase tracking-wide text-blue-700 block">Top Recommendation</span>
@@ -645,8 +652,8 @@ export default function DimensionDetailsPage() {
               </div>{/* end locked content */}
 
               {/* Paywall overlay — shown until payment is confirmed */}
-              {!isPaid && (
-                <PaywallOverlay onUnlock={handleUnlock} />
+              {(!isPaid || isUnlocking) && (
+                <PaywallOverlay onUnlock={handleUnlock} isUnlocking={isUnlocking} />
               )}
 
             </div>{/* end relative wrapper */}

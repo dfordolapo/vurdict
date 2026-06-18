@@ -41,7 +41,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
         throw new Error(data.error || 'Something went wrong')
       }
 
-      if (data.message === 'Already on the waitlist.') {
+      if (data.message === "You're already on the list.") {
         setAlreadyJoined(true)
       }
     } catch (err) {
@@ -59,7 +59,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
     return (
       <div className="flex items-center gap-2 text-xs text-emerald-600 font-medium">
         <CheckCircle size={14} />
-        <span>{alreadyJoined ? 'This email is already on the waitlist.' : `You're confirmed! We'll let you know when ${feature} is ready.`}</span>
+        <span>{alreadyJoined ? "You're already on the list." : "You're in! We'll be in touch."}</span>
       </div>
     )
   }

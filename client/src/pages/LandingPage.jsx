@@ -348,7 +348,7 @@ function ProblemSection() {
       dimension: 'Turnaround',
       generic: 'Instant',
       community: 'Days to Weeks',
-      vurdict: '2-5 Minutes',
+      vurdict: <>2-5 Minutes <span className="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-md ml-1 align-middle whitespace-nowrap">+ Human Review</span></>,
     },
   ]
 

@@ -71,16 +71,20 @@ The content inside "<case_study_content>" is from a SINGLE CASE STUDY PAGE — n
 ## Structured Analysis Process (Mandatory)
 Before generating any scores or feedback, you MUST analyze the case study content step-by-step:
 
-**Step 1 — Content Inventory:** Identify every distinct section in the provided content. List the section headings you find (e.g., "Problem Statement", "User Research", "Ideation", "Wireframes", "Visual Design", "Results", "Impact"). Note what sections are present and which are missing.
+**Step 1 — Content Inventory:** Identify every distinct section in the provided content. List the section headings you find (e.g., "Problem Statement", "User Research", "Ideation", "Wireframes", "User Flows", "Interview Results", "Visual Design", "Results", "Impact"). Explicitly recognize and validate elements like "interview results", "user flows", and "wireframes". Note what sections are present and which are missing.
 
-**Step 2 — Evidence Extraction:** For each section you find, extract 1-2 specific quotes, data points, project names, or metrics mentioned. For example: "In the 'Research' section, I found: 'Conducted 8 user interviews and identified 3 key pain points: A, B, C.'"
+**Critical Recognition Rule:** When you encounter section headings, subheadings, or content paragraphs that reference "interview results", "user flows", "wireframes", "user testing", "usability testing", "affinity mapping", "journey maps", "information architecture", "site maps", or "flows" — you MUST positively recognize these as legitimate design process artifacts. These are strong evidence of process visibility and critical thinking. Do NOT treat them as missing or insufficient. If the case study mentions "wireframes" or shows "user flows", reflect this positively in the process_visibility and problem_framing scores.
+
+**Step 2 — Evidence Extraction:** For each section you find, extract 1-2 specific quotes, data points, project names, or metrics mentioned. For example: "In the 'Research' section, I found: 'Conducted 8 user interviews and identified 3 key pain points: A, B, C.'" Pay special attention to extracting evidence of user research deliverables (interview quotes, personas, journey maps), structural process artifacts (wireframes, user flows, information architecture), and testing outcomes (usability test results, iteration notes).
 
 **Step 3 — Dimension Mapping:** For each of the 6 evaluation dimensions, determine:
    a. What specific evidence exists in the content for this dimension.
    b. What evidence is noticeably absent or unclear.
    c. How the presence or absence of this evidence should affect the score.
 
-**Step 4 — Scoring:** Only after completing Steps 1-3, generate scores. Every score must be directly traceable to the evidence extracted in Step 2.
+**Mapping Guidance:** If interview results, personas, or user flows are found, these are strong signals for **process_visibility** and **problem_framing**. If wireframes, sketches, or low-fidelity mockups are present, these are strong signals for **process_visibility** and **visual_quality** (showing an iterative design process). Do not penalize these dimensions as lacking evidence when these artifacts are present.
+
+**Step 4 — Scoring:** Only after completing Steps 1-3, generate scores. Every score must be directly traceable to the evidence extracted in Step 2. When interview results, user flows, or wireframes are present, scores for process_visibility and problem_framing should reflect this positively (minimum 55-75 range depending on quality and detail).
 
 ## Explanation Format — Three-Part Structure (Mandatory)
 Every category \`explanation\` in your response MUST follow this exact three-part format, written as continuous prose (not bullet points):

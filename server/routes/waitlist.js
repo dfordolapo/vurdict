@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 
 const router = Router();
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const waitlistEmails = new Set();
 
 router.post('/', async (req, res) => {
   const { name, email, feature } = req.body;
@@ -12,6 +13,12 @@ router.post('/', async (req, res) => {
 
   if (!normalizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
     return res.status(400).json({ error: 'Invalid email address.' });
+  }
+
+  const featureKey = `${normalizedEmail}:${normalizedFeature}`;
+
+  if (waitlistEmails.has(featureKey)) {
+    return res.json({ success: true, message: "You're already on the list." });
   }
 
   if (!resend) {
@@ -61,7 +68,6 @@ router.post('/', async (req, res) => {
             <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.025em;">Vurdict</h1>
           </div>
           <div style="padding: 32px 24px; background-color: #ffffff;">
-            <img src="https://raw.githubusercontent.com/microsoft/fluentui-emoji/main/assets/Rocket/3D/rocket_3d.png" alt="Rocket Illustration" style="width: 100%; max-width: 120px; margin: 0 auto 24px; display: block;" />
             <p style="color: #475569; font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
               Hi ${normalizedName}, <br><br>
               You are officially on the waitlist for <strong>${featureName}</strong>. 
@@ -89,12 +95,14 @@ router.post('/', async (req, res) => {
       return res.status(500).json({ error: `Welcome Email failed: ${userEmail.error.message}` });
     }
 
+    waitlistEmails.add(featureKey);
+
   } catch (err) {
     console.error('[Waitlist] Email sending threw an exception:', err.message);
     return res.status(500).json({ error: 'Failed to send emails. Check your Resend configuration.' });
   }
 
-  res.json({ success: true, message: 'Waitlist confirmed!' });
+  res.json({ success: true, message: "You're in! We'll be in touch." });
 });
 
 export default router;
