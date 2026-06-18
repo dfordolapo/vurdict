@@ -111,7 +111,11 @@ import fs from 'fs';
 
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '../client/dist/index.html');
+  // Resolve path to client's index.html — handles local dev and Vercel
+  let indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    indexPath = path.join(__dirname, 'client', 'dist', 'index.html');
+  }
   
   if (req.path === '/results' && req.query.share) {
     try {
