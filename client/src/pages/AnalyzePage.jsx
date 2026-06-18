@@ -311,10 +311,10 @@ export default function AnalyzePage() {
             </div>
 
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}
-            <div className="lg:col-span-7 flex justify-end mr-0 overflow-hidden">
-                <div className="flex items-center justify-center -m-4 sm:-m-6">
-                    <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full max-w-[600px] lg:max-w-[650px] h-auto select-none animate-float-slow flex-shrink-0" />
-                </div>
+            <div className="lg:col-span-7 flex justify-center lg:justify-end">
+              <div className="flex items-center justify-center w-full max-w-[500px] lg:max-w-none">
+                <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full h-auto select-none animate-float-slow max-h-[320px] sm:max-h-[400px] lg:max-h-none" />
+              </div>
             </div>
             </div>
         </div>
