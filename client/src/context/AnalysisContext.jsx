@@ -378,8 +378,21 @@ export function AnalysisProvider({ children }) {
     });
   };
 
+  const restoreFromHistory = (entry) => {
+    updateState({
+      status: 'completed',
+      url: entry.url,
+      goal: entry.goal,
+      experience: entry.experience,
+      report: entry.report,
+      error: null,
+      errorCode: null,
+      isMock: entry.isMock || false
+    });
+  };
+
   return (
-    <AnalysisContext.Provider value={{ state, startAnalysis, resetAnalysis, toggleMockFallback }}>
+    <AnalysisContext.Provider value={{ state, startAnalysis, resetAnalysis, toggleMockFallback, restoreFromHistory }}>
       {children}
     </AnalysisContext.Provider>
   );

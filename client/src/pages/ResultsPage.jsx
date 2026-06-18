@@ -277,7 +277,9 @@ export default function ResultsPage() {
         url: state.url,
         score: state.report.overall_score,
         goal: state.goal,
-        experience: state.experience
+        experience: state.experience,
+        report: state.report,
+        isMock: state.isMock
       });
     }
   }, [state.report, state.status, state.url, state.goal, state.experience, toggleMockFallback]);

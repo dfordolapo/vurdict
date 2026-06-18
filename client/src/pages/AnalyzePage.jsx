@@ -11,6 +11,7 @@ import {
   Clock,
   TrendingUp,
 } from 'lucide-react';
+import { useAnalysis } from '../context/AnalysisContext';
 import Logo from '../components/Logo';
 import WaveDivider from '../components/WaveDivider';
 import BetaTicker from '../components/BetaTicker';
@@ -37,6 +38,7 @@ const EXPERIENCE_LEVELS = ['Junior', 'Mid-Level', 'Senior'];
 
 export default function AnalyzePage() {
   const navigate = useNavigate();
+  const { restoreFromHistory } = useAnalysis();
   const [searchParams] = useSearchParams();
   const [url, setUrl] = useState(searchParams.get('url') || '');
   const [goal, setGoal] = useState(searchParams.get('goal') || 'get_hired');
@@ -274,7 +276,14 @@ export default function AnalyzePage() {
                     {recentHistory.map((h, i) => (
                       <button
                         key={i}
-                        onClick={() => navigate(`/analyzing?url=${encodeURIComponent(h.url)}&goal=${h.goal}&experience=${h.experience}`)}
+                        onClick={() => {
+                          if (h.report) {
+                            restoreFromHistory(h);
+                            navigate('/results');
+                          } else {
+                            navigate(`/analyzing?url=${encodeURIComponent(h.url)}&goal=${h.goal}&experience=${h.experience}`);
+                          }
+                        }}
                         className="flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 text-left transition-colors group cursor-pointer w-full"
                       >
                         <div className="flex items-center gap-3 overflow-hidden min-w-0">
