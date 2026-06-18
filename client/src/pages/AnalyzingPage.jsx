@@ -136,6 +136,19 @@ export default function AnalyzingPage() {
     startAnalysis(url, goal, experience, mock);
   }, [url, goal, experience, mock]);
 
+  // Prevent accidental tab closure during analysis
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (state.status !== 'completed' && state.status !== 'error') {
+        e.preventDefault();
+        e.returnValue = ''; // Required for Chrome
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [state.status]);
+
   // Minimum presentation timer (4 seconds)
   useEffect(() => {
     const timer = setTimeout(() => {
