@@ -222,8 +222,7 @@ export default function ResultsPage() {
         url: state.url,
         goal: state.goal,
         experience: state.experience,
-        report: state.report,
-        isMock: state.isMock
+        report: state.report ? { overall_score: state.report.overall_score } : null
       };
       const jsonString = JSON.stringify(payload);
       const utf8Bytes = new TextEncoder().encode(jsonString);
