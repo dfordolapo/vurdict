@@ -216,7 +216,7 @@ export default function ResultsPage() {
     URL.revokeObjectURL(url);
   };
 
-  const getShareUrl = () => window.location.origin;
+  const getShareUrl = () => 'https://www.vurdict.site/';
 
   const handleShare = () => {
     try {
