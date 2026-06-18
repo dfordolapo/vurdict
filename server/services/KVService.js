@@ -3,6 +3,7 @@ import crypto from 'crypto';
 
 // In-memory fallback for local development if KV is not configured
 const memoryCache = new Map();
+let localAnalysisCount = 0;
 
 export const generateJobId = (url, goal) => {
   return crypto.createHash('sha256').update(`${url}-${goal}`).digest('hex');
@@ -83,4 +84,31 @@ export const waitForJobCompletion = async (jobId, timeoutMs = 25000) => {
   }
   
   return null; // Timed out waiting
+};
+
+export const incrementAnalysisCount = async () => {
+  try {
+    if (isKVConfigured()) {
+      return await kv.incr('vurdict:analysis_count');
+    } else {
+      localAnalysisCount++;
+      return localAnalysisCount;
+    }
+  } catch (err) {
+    console.error('[KVService] Error incrementing analysis count:', err);
+    return null;
+  }
+};
+
+export const getAnalysisCount = async () => {
+  try {
+    if (isKVConfigured()) {
+      return await kv.get('vurdict:analysis_count') || 0;
+    } else {
+      return localAnalysisCount;
+    }
+  } catch (err) {
+    console.error('[KVService] Error getting analysis count:', err);
+    return 0;
+  }
 };

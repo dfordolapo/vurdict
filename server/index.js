@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import analyzeRouter from './routes/analyze.js';
+import { getAnalysisCount } from './services/KVService.js';
 import sendReportRouter from './routes/send-report.js';
 import chatRouter from './routes/chat.js';
 import paymentsRouter from './routes/payments.js';
@@ -98,6 +99,11 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 // ── Routes ──────────────────────────────────────────────────────────────────
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/analysis-count', async (_req, res) => {
+  const count = await getAnalysisCount();
+  res.json({ count: 50 + (count || 0) });
 });
 
 app.use('/api/analyze', rateLimiter, analyzeRouter);

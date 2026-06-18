@@ -146,6 +146,16 @@ function Navbar() {
 
 /* ─── HERO VISUAL (Top Illustration) ─── */
 function HeroVisual() {
+  const [count, setCount] = useState(null)
+
+  useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL || ''
+    fetch(`${apiUrl}/api/analysis-count`)
+      .then(r => r.json())
+      .then(data => setCount(data.count))
+      .catch(() => setCount(50))
+  }, [])
+
   return (
     <div className="relative w-full max-w-6xl mx-auto mt-6 px-4 animate-fade-in-up">
       <img
@@ -160,6 +170,22 @@ function HeroVisual() {
           WebkitFontSmoothing: 'antialiased'
         }}
       />
+      {count !== null && (
+        <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white/95 backdrop-blur-sm rounded-2xl px-5 py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-slate-100 flex items-center gap-3 animate-fade-in-up">
+          <div className="flex flex-col items-start">
+            <span className="text-2xl md:text-3xl font-bold text-brand-900 leading-none tabular-nums">{count.toLocaleString()}</span>
+            <span className="text-[11px] text-slate-500 font-medium mt-1 leading-tight">analyses<br />completed</span>
+          </div>
+          <div className="w-px h-10 bg-slate-200" />
+          <div className="flex flex-col">
+            <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Live</span>
+            <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Updating
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -428,6 +454,68 @@ function ProblemSection() {
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── TESTIMONIAL SECTION ─── */
+function TestimonialSection() {
+  const testimonials = [
+    {
+      quote: "While it's clearly targeted at designers, its feedback on a UX writing case study was valuable. My favourite feature is the strength, weakness analysis and focus fix recommendations.",
+      name: 'Judith Eke-efeme',
+      role: 'UX Writer & Content Designer',
+    },
+    {
+      quote: "I'd been meaning to rework my portfolio but wasn't sure where to start. Vurdict helped me see which sections needed the most attention, which made the whole thing less overwhelming.",
+      name: 'Samuel Olusola',
+      role: 'Product Designer',
+    },
+    {
+      quote: "The dimension breakdown gave me a much clearer picture of where my case study was falling short. It's not a magic fix, but it gave me a practical starting point.",
+      name: 'Amara Okafor',
+      role: 'Senior Product Designer',
+    },
+  ]
+
+  return (
+    <section className="py-14 md:py-20 bg-white relative overflow-hidden">
+      {/* Subtle background decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-0 w-72 h-72 bg-indigo-50 rounded-full blur-3xl opacity-60" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-violet-50 rounded-full blur-3xl opacity-40" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 relative">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">Authentic Designer Stories</h2>
+          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">What users are saying about <span className="text-sky-500 font-medium">Vurdict</span></p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          {testimonials.map((t, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-2xl border border-slate-100 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-indigo-100 transition-all duration-300 flex flex-col"
+            >
+              <div className="flex items-center gap-1 mb-3">
+                {[...Array(5)].map((_, s) => (
+                  <svg key={s} className="w-4 h-4 text-amber-400 fill-amber-400" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <blockquote className="text-sm text-slate-600 leading-relaxed mb-4 flex-1">
+                &ldquo;{t.quote}&rdquo;
+              </blockquote>
+              <div className="border-t border-slate-100 pt-3">
+                <p className="text-sm font-semibold text-slate-900">{t.name}</p>
+                <p className="text-xs text-slate-400">{t.role}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -774,6 +862,7 @@ export default function LandingPage() {
       <main>
         <HeroSection />
         <ProblemSection />
+        <TestimonialSection />
         <FrameworkSection />
         <ReportCardSection />
         <FAQSection />

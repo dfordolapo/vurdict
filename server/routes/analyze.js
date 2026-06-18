@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { extractContent } from '../services/JinaService.js';
 import { evaluatePortfolio } from '../services/GeminiService.js';
-import { generateJobId, getJobStatus, setJobProcessing, setJobCompleted, setJobFailed, waitForJobCompletion } from '../services/KVService.js';
+import { generateJobId, getJobStatus, setJobProcessing, setJobCompleted, setJobFailed, waitForJobCompletion, incrementAnalysisCount } from '../services/KVService.js';
 
 const router = Router();
 
@@ -93,8 +93,9 @@ router.post('/', async (req, res, next) => {
       // ── Step 2: Run AI evaluation ────────────────────────────────────────────
       const evaluation = await evaluatePortfolio(goal, experienceLabel, portfolioContent, url);
 
-      // Save to KV
+      // Save to KV and update live counter
       await setJobCompleted(jobId, evaluation);
+      incrementAnalysisCount().catch(() => {});
 
       return res.json({ success: true, evaluation });
     } catch (processErr) {
