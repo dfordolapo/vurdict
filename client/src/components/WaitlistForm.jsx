@@ -73,7 +73,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
           value={name}
           onChange={(e) => { setName(e.target.value); setError('') }}
           placeholder="Your Name"
-          className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
+          className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-[10px] sm:placeholder:text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
         />
       </div>
       <div className="relative w-full">
@@ -83,7 +83,7 @@ export default function WaitlistForm({ feature = 'this feature', placeholder = '
           value={email}
           onChange={(e) => { setEmail(e.target.value); setError('') }}
           placeholder={placeholder}
-          className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
+          className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-[10px] sm:placeholder:text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-900/20 focus:border-brand-900 transition-all"
         />
       </div>
       <button

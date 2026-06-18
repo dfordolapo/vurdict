@@ -215,7 +215,7 @@ function HeroSection() {
                   }
                 }}
                 placeholder="https://notion.so/your-case-study"
-                className="w-full py-2 bg-transparent text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
+                className="w-full py-2 bg-transparent text-base sm:text-sm text-slate-800 placeholder:text-xs sm:placeholder:text-sm placeholder-slate-400 focus:outline-none"
               />
             </div>
             
