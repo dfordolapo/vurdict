@@ -175,12 +175,12 @@ body {
 }
 .animate-scroll-ticker {
   will-change: transform;
-  animation: scroll-ticker 25s linear infinite;
+  animation: scroll-ticker 50s linear infinite;
 }
 
 @media (max-width: 768px) {
   .animate-scroll-ticker {
-    animation-duration: 8s;
+    animation-duration: 18s;
   }
 }
 
