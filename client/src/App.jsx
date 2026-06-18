@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useState, useEffect, Suspense, lazy } from 'react'
 import LandingPage from './pages/LandingPage.jsx'
 import { AnalysisProvider } from './context/AnalysisContext'
@@ -14,6 +14,18 @@ const SupportPage = lazy(() => import('./pages/SupportPage.jsx'))
 const ReVurdictPage = lazy(() => import('./pages/ReVurdictPage.jsx'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage.jsx'))
+
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname, hash])
+
+  return null
+}
 
 export default function App() {
   const [isOnline, setIsOnline] = useState(navigator.onLine)
@@ -53,6 +65,7 @@ export default function App() {
         </div>
       }>
         <div>
+          <ScrollToTop />
           <PullToRefresh />
           <Routes>
           <Route path="/" element={<LandingPage />} />
