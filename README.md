@@ -1,71 +1,69 @@
 # Vurdict
 
-Vurdict is an AI-powered, goal-aware portfolio review application designed specifically for product designers. By pasting a portfolio URL (such as Behance, dribbble, or a personal website), designers receive high-fidelity, objective feedback based on a structured 6-dimension evaluation framework.
+Vurdict is an AI-powered, goal-aware portfolio review application designed specifically for product designers. By pasting a portfolio URL (such as Behance, Dribbble, or a personal website), designers receive high-fidelity, objective feedback based on a structured 6-dimension evaluation framework.
 
 ---
 
 ## 🏗️ Project Architecture & Structure
 
-The repository supports a unified staging structure for ease of local testing and production deployment:
+The repository supports a unified deployment structure for ease of local testing and production deployment on Vercel:
 
 ```
-├── client/          # React (Vite + TypeScript) frontend
-├── server/          # Express API server (serves the built client)
-├── nextjs/          # Next.js frontend (alternative implementation)
-├── PRD.md           # Product requirements document
+├── client/          # React (Vite) frontend with Tailwind CSS
+├── server/          # Express API Serverless backend
 ├── AGENTS.md        # AI agent development context & MVP boundaries
-├── AI_EVALUATION_PROMPT.md  # Core prompt definitions for the LLM
-├── RUBRIC.md        # The evaluation criteria for the 6-dimension review
-└── MARKET_INTELLIGENCE.md  # Target user and positioning details
+└── README.md        # Project documentation
 ```
-
-### 🔗 Unified Origin Setup
-To bypass mobile/tunnel CORS issues, the backend is configured to host the static assets directly. The Express server serves compiled static files from `client/dist`. Relative routing is used for API communication, eliminating cross-origin request issues.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Frontend:** React (Vite) + Tailwind CSS + Lucide Icons + JavaScript
-- **Backend:** Node.js + Express
-- **AI Core:** Google Gemini API (gemini-2.5-flash via `@google/genai` with built-in retry/backoff logic)
+- **Backend:** Node.js + Express (Serverless Functions via Vercel)
+- **Database / Cache:** Vercel KV (Upstash Redis) for background job resilience and caching.
+- **AI Core:** Google Gemini API (gemini-2.5-flash via `@google/genai`)
 - **Scraping:** Jina Reader API (high-fidelity content extraction)
-- **Live Previews:** `thum.io` (for live webpage screenshot generation on the results dashboard)
+- **Email/Lead Capture:** Resend API (Waitlist and deduplication)
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Local Development)
 
-To run the unified application locally:
+*(Note: These instructions are for developers to run and test the application on their own machines before pushing to production).*
 
-### 1. Build the Frontend Assets
-Generate the client distribution bundle so the backend can serve it:
+To run the application locally:
+
+### 1. Configure the Backend Environment
+Navigate to the server folder and set up your `.env` file:
 ```bash
-cd client
-npm install
-npm run build
-```
-
-### 2. Configure the Backend
-Navigate to the server folder, configure your keys, and install dependencies:
-```bash
-cd ../server
+cd server
 cp .env.example .env
 ```
 Inside the `server/.env` file, populate your credentials:
 ```env
 PORT=3001
 GEMINI_API_KEY=your_gemini_api_key
-# Optional: add other endpoints or override defaults
+RESEND_API_KEY=your_resend_api_key
+KV_REST_API_URL=your_vercel_kv_url
+KV_REST_API_TOKEN=your_vercel_kv_token
 ```
 
-### 3. Start the Server
-Run the watch/dev server:
+### 2. Start the Backend Server
 ```bash
 npm install
 npm run dev
 ```
-The unified application will be live at **`http://localhost:3001`**.
+The API will run on `http://localhost:3001`.
+
+### 3. Start the Frontend App
+Open a new terminal window, navigate to the client, and start Vite:
+```bash
+cd client
+npm install
+npm run dev
+```
+The React frontend will be live at **`http://localhost:5173`**.
 
 ---
 
@@ -83,16 +81,15 @@ Vurdict grades portfolios against six distinct hiring dimensions:
 
 ## ⚙️ MVP Boundaries & Core Rules
 * **Role Support:** Exclusively Product Designer roles.
-* **Stateless:** No user accounts, database persistence, or long-term storage (results are transient and rely on `sessionStorage`, shareable via base64 encoded URL).
-* **Monetization (Paywall):** Users can view the high-level report card for free, but detailed dimension analysis and priority action plans are gated behind a paywall powered by Paystack.
-* **Focused Experience & Single Workflow:** An opinionated, single-task flow. Designers input their portfolio link, choose their goal, and immediately receive feedback without accounts or distractions.
-* **Premium UX Polish:** Features 60fps score count-up animations, interactive tooltips, and dynamic loading states.
-* **Clean Typographic Aesthetic:** A high-contrast light theme design featuring deep navy brand colors (`#172554`), modern typography, subtle micro-animations, and frosted glassmorphism overlays.
+* **Authentication:** No user accounts or login walls (frictionless entry).
+* **Background Resilience:** Utilizes Vercel KV Database to safely cache AI analysis jobs if a user's mobile browser drops the connection in the background.
+* **Monetization & Lead Gen:** Detailed dimension analysis and new feature access is gated behind Waitlist forms powered by Resend (with in-memory/KV deduplication).
+* **Focused Experience:** An opinionated, single-task flow. Designers input their portfolio link, choose their goal, and immediately receive feedback.
+* **Premium UX Polish:** Features 60fps score count-up animations, interactive tooltips, custom mobile pull-to-refresh deadzones, and dynamic loading states.
 
 ---
 
-## 🌐 Deployment
-The repository includes a `vercel.json` file configured for a unified monorepo deployment on **Vercel**. 
-- The React application (`client/`) is served statically.
-- The Express API (`server/`) is deployed as a Serverless Function on the `/api/*` route.
-
+## 🌐 Production Deployment
+The repository is designed to be deployed directly to **Vercel** as a monorepo. 
+- The React application (`client/`) is built and served via Vercel's Edge Network.
+- The Express API (`server/`) is deployed as Serverless Functions routing to `/api/*`.
