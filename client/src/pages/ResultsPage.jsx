@@ -256,10 +256,7 @@ export default function ResultsPage() {
   };
 
   const handleLinkedInShare = () => {
-    const url = encodeURIComponent(window.location.origin);
-    const title = encodeURIComponent('My Vurdict Portfolio Analysis');
-    const summary = encodeURIComponent(`I just scored an ${state.report?.overall_score || 0}/100 on Vurdict for my Product Design portfolio! See how your portfolio compares.`);
-    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${summary}`, '_blank');
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`, '_blank');
   };
 
 
