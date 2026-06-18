@@ -29,7 +29,7 @@ const GOALS = [
   {
     key: 'win_clients',
     label: 'Win Freelance Clients',
-    desc: 'Attract and convert more freelance opportunities',
+    desc: 'Attract more freelance opportunities',
     icon: Users,
   },
 ];
