@@ -12,7 +12,7 @@ const responseSchema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 
 const PROVIDER = process.env.AI_PROVIDER || 'gemini';
 const OPENAI_MODEL = 'gpt-4o-mini';
-const GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_MODEL = 'gemini-1.5-pro';
 const DEEPSEEK_MODEL = 'deepseek-chat';
 
 const PROVIDER_CONFIG = {
