@@ -326,6 +326,16 @@ export default function AnalyzePage() {
       </div>
 
 
+      {/* Bottom strip */}
+      <div className="bg-white py-5 md:py-6 px-6 md:px-12 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto flex justify-center text-slate-500 text-xs font-normal">
+          <div className="text-center">
+            <p className="text-slate-800 font-normal">Fast & automated</p>
+            <p className="text-[10px] text-slate-400 font-normal mt-0.5">Get your full analysis in under 5 minutes.</p>
+          </div>
+        </div>
+      </div>
+
       {showPWA && <PWAInstallPrompt />}
     </div>
   );
