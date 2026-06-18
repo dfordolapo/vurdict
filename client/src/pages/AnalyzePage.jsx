@@ -325,19 +325,6 @@ export default function AnalyzePage() {
         <WaveDivider fill="#172554" flip={true} />
       </div>
 
-      {/* Bottom strip */}
-      <div className="bg-white py-5 md:py-6 px-6 md:px-12 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between gap-6 text-slate-500 text-xs font-normal">
-          <div>
-            <p className="text-slate-800 font-normal">Works with any portfolio</p>
-            <p className="text-[10px] text-slate-400 font-normal mt-0.5">Personal websites, Notion, Framer, Webflow & more.</p>
-          </div>
-          <div>
-            <p className="text-slate-800 font-normal">Fast & automated</p>
-            <p className="text-[10px] text-slate-400 font-normal mt-0.5">Get your full analysis in under 5 minutes.</p>
-          </div>
-        </div>
-      </div>
 
       {showPWA && <PWAInstallPrompt />}
     </div>
