@@ -1,39 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://vurdict.site/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.vurdict.site/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>http://vurdict.site/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>http://www.vurdict.site/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://vurdict.site/analyze</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.vurdict.site/analyze</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>http://vurdict.site/analyze</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>http://www.vurdict.site/analyze</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://vurdict.site/framework</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.vurdict.site/framework</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>http://vurdict.site/framework</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>http://www.vurdict.site/framework</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://vurdict.site/report-card</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.vurdict.site/report-card</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>http://vurdict.site/report-card</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>http://www.vurdict.site/report-card</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://vurdict.site/faq</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.vurdict.site/faq</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>http://vurdict.site/faq</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>http://www.vurdict.site/faq</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://vurdict.site/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://www.vurdict.site/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>http://vurdict.site/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>http://www.vurdict.site/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://vurdict.site/terms</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://www.vurdict.site/terms</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>http://vurdict.site/terms</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>http://www.vurdict.site/terms</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://vurdict.site/support</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://www.vurdict.site/support</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>http://vurdict.site/support</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
-  <url><loc>http://www.vurdict.site/support</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://vurdict.site/revurdict</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://www.vurdict.site/revurdict</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
-  <url><loc>http://vurdict.site/revurdict</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
-  <url><loc>http://www.vurdict.site/revurdict</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
 </urlset>

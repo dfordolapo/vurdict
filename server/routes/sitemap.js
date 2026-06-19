@@ -16,9 +16,6 @@ const pages = [
 
 const origins = [
   'https://vurdict.site',
-  'https://www.vurdict.site',
-  'http://vurdict.site',
-  'http://www.vurdict.site',
 ];
 
 const urls = origins.flatMap(origin =>
