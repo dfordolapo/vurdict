@@ -171,16 +171,16 @@ function HeroVisual() {
         }}
       />
       {count !== null && (
-        <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white/95 backdrop-blur-sm rounded-2xl px-5 py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-slate-100 flex items-center gap-3 animate-fade-in-up">
+        <div className="absolute bottom-3 right-3 md:bottom-8 md:right-8 bg-white/95 backdrop-blur-sm rounded-xl md:rounded-2xl px-3 py-2 md:px-5 md:py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-slate-100 flex items-center gap-2 md:gap-3 animate-fade-in-up">
           <div className="flex flex-col items-start">
-            <span className="text-2xl md:text-3xl font-bold text-brand-900 leading-none tabular-nums">{count.toLocaleString()}</span>
-            <span className="text-[11px] text-slate-500 font-medium mt-1 leading-tight">analyses<br />completed</span>
+            <span className="text-lg md:text-3xl font-bold text-brand-900 leading-none tabular-nums">{count.toLocaleString()}</span>
+            <span className="text-[9px] md:text-[11px] text-slate-500 font-medium mt-0.5 md:mt-1 leading-tight">analyses<br />completed</span>
           </div>
-          <div className="w-px h-10 bg-slate-200" />
+          <div className="w-px h-7 md:h-10 bg-slate-200" />
           <div className="flex flex-col">
-            <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Live</span>
-            <span className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[8px] md:text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Live</span>
+            <span className="text-[8px] md:text-[10px] text-emerald-600 font-semibold flex items-center gap-0.5 md:gap-1 mt-0.5">
+              <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Updating
             </span>
           </div>
