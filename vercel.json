@@ -23,16 +23,21 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "client/dist/assets/$1"
+      "dest": "client/assets/$1"
     },
 
     {
-      "src": "/(.*\\.(js|css|png|svg|ico|json|webmanifest|html|xml))",
-      "dest": "client/dist/$1"
+      "src": "/sitemap.xml",
+      "dest": "server/index.js"
+    },
+
+    {
+      "src": "/(.*\\.(js|css|png|svg|ico|json|webmanifest|html))",
+      "dest": "client/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "client/dist/index.html"
+      "dest": "client/index.html"
     }
   ]
 }

@@ -114,6 +114,10 @@ app.use('/api/waitlist', waitlistRouter);
 app.use('/api/revurdict-chat', rateLimiter, revurdictRouter);
 
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
+app.get('/sitemap.xml', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'sitemap.xml'));
+});
+
 app.get('*', (req, res) => {
   const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
   res.sendFile(indexPath);
