@@ -323,10 +323,10 @@ body {
 /* ─── Custom Speech Bubble ─── */
 .speech-bubble {
   position: relative;
-  background: linear-gradient(135deg, var(--color-brand-800) 0%, var(--color-brand-900) 100%);
+  background: linear-gradient(145deg, var(--color-brand-800) 0%, var(--color-brand-900) 100%);
   color: white;
-  border-radius: 1rem;
-  padding: 1.25rem;
+  border-radius: 2.5rem 1.25rem 3rem 1.5rem;
+  padding: 1.5rem 1.75rem;
   min-height: 180px;
   display: flex;
   align-items: center;

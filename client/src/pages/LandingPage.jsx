@@ -506,7 +506,7 @@ function TestimonialSection() {
               </div>
               {/* Author info below the tail */}
               <div className="flex items-center gap-3 mt-6">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-700 to-blue-900 flex items-center justify-center text-white text-sm font-semibold shrink-0">
+                <div className="w-10 h-10 rounded-full bg-brand-900 flex items-center justify-center text-white text-sm font-semibold shrink-0">
                   {t.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="text-left">
