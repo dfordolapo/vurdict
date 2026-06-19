@@ -181,7 +181,7 @@ function HeroVisual() {
         <div className="absolute bottom-3 right-3 md:bottom-8 md:right-8 bg-white/95 backdrop-blur-sm rounded-xl md:rounded-2xl px-3 py-2 md:px-5 md:py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-slate-100 flex items-center gap-2 md:gap-3 animate-fade-in-up">
           <div className="flex flex-col items-start">
             <span className="text-lg md:text-3xl font-bold text-brand-900 leading-none tabular-nums">{count.toLocaleString()}</span>
-            <span className="text-[9px] md:text-[11px] text-slate-500 font-medium mt-0.5 md:mt-1 leading-tight">portfolios<br />analyzed</span>
+            <span className="text-[9px] md:text-[11px] text-slate-500 font-medium mt-0.5 md:mt-1 leading-tight">case studies<br />analyzed</span>
           </div>
           <div className="w-px h-7 md:h-10 bg-slate-200" />
           <div className="flex flex-col">
