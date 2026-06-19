@@ -11,6 +11,7 @@ import chatRouter from './routes/chat.js';
 import paymentsRouter from './routes/payments.js';
 import waitlistRouter from './routes/waitlist.js';
 import revurdictRouter from './routes/revurdict-chat.js';
+import sitemapRouter from './routes/sitemap.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -112,12 +113,9 @@ app.use('/api/chat', rateLimiter, chatRouter);
 app.use('/api/payments', paymentsRouter);
 app.use('/api/waitlist', waitlistRouter);
 app.use('/api/revurdict-chat', rateLimiter, revurdictRouter);
+app.use('/sitemap.xml', sitemapRouter);
 
 // ── Fallback to SPA Router ──────────────────────────────────────────────────
-app.get('/sitemap.xml', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'sitemap.xml'));
-});
-
 app.get('*', (req, res) => {
   const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
   res.sendFile(indexPath);
