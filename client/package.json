@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp client/public/sitemap.xml dist/sitemap.xml",
-    "postbuild": "copy client\\public\\sitemap.xml client\\dist\\sitemap.xml",
-    "preview": "vite preview"
+    "build": "vite build && cp client/public/sitemap.xml dist/sitemap.xml"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",
