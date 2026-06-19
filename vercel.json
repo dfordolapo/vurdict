@@ -25,12 +25,10 @@
       "src": "/assets/(.*)",
       "dest": "client/assets/$1"
     },
-
     {
       "src": "/sitemap.xml",
       "dest": "server/index.js"
     },
-
     {
       "src": "/(.*\\.(js|css|png|svg|ico|json|webmanifest|html))",
       "dest": "client/$1"
