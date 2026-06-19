@@ -777,7 +777,7 @@ function FinalCTASection() {
             See What Recruiters See Before They Do
           </h2>
           <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-            Great case studies don't happen by accident
+            Great portfolios don't happen by accident
           </p>
       </div>
 
