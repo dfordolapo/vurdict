@@ -10,7 +10,7 @@ const DimensionDetailsPage = lazy(() => import('./pages/DimensionDetailsPage.jsx
 const OfflinePage = lazy(() => import('./pages/OfflinePage.jsx'))
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage.jsx'))
 const TermsPage = lazy(() => import('./pages/TermsPage.jsx'))
-const SupportPage = lazy(() => import('./pages/SupportPage.jsx'))
+const PartnershipsPage = lazy(() => import('./pages/PartnershipsPage.jsx'))
 const ReVurdictPage = lazy(() => import('./pages/ReVurdictPage.jsx'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage.jsx'))
@@ -79,7 +79,7 @@ export default function App() {
           <Route path="/offline" element={<OfflinePage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
-          <Route path="/support" element={<SupportPage />} />
+          <Route path="/partnerships" element={<PartnershipsPage />} />
           <Route path="/revurdict" element={<ReVurdictPage />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />

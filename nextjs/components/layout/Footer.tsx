@@ -27,8 +27,8 @@ export default function Footer() {
           <Link href="/terms" className="hover:text-slate-300 transition-colors whitespace-nowrap">
             Terms of Use
           </Link>
-          <Link href="/support" className="hover:text-slate-300 transition-colors whitespace-nowrap">
-            Support Us
+          <Link href="/partnerships" className="hover:text-slate-300 transition-colors whitespace-nowrap">
+            Partnerships
           </Link>
           <Link href="/revurdict" className="text-brand-indigo hover:text-white transition-colors font-bold whitespace-nowrap">
             Re:Vurdict

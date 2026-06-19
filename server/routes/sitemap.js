@@ -10,7 +10,7 @@ const pages = [
   { path: '/faq', freq: 'monthly', priority: '0.6' },
   { path: '/privacy', freq: 'monthly', priority: '0.3' },
   { path: '/terms', freq: 'monthly', priority: '0.3' },
-  { path: '/support', freq: 'monthly', priority: '0.3' },
+  { path: '/partnerships', freq: 'monthly', priority: '0.3' },
   { path: '/revurdict', freq: 'weekly', priority: '0.5' },
 ];
 

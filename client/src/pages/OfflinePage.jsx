@@ -72,7 +72,7 @@ export default function OfflinePage() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-1 mb-3 font-normal text-slate-500 justify-items-center md:flex md:gap-6">
           <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
-          <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
+          <Link to="/partnerships" className="hover:text-brand-900 transition-colors whitespace-nowrap">Partnerships</Link>
           <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
         </div>
         <p>© {new Date().getFullYear()} Vurdict. Offline Mode.</p>

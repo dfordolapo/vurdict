@@ -150,10 +150,17 @@ function HeroVisual() {
 
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL || ''
-    fetch(`${apiUrl}/api/analysis-count`)
-      .then(r => r.json())
-      .then(data => setCount(data.count))
-      .catch(() => setCount(50))
+
+    const fetchCount = () => {
+      fetch(`${apiUrl}/api/analysis-count`)
+        .then(r => r.json())
+        .then(data => setCount(data.count))
+        .catch(() => setCount(52))
+    }
+
+    fetchCount()
+    const interval = setInterval(fetchCount, 30000)
+    return () => clearInterval(interval)
   }, [])
 
   return (
@@ -174,7 +181,7 @@ function HeroVisual() {
         <div className="absolute bottom-3 right-3 md:bottom-8 md:right-8 bg-white/95 backdrop-blur-sm rounded-xl md:rounded-2xl px-3 py-2 md:px-5 md:py-3.5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-slate-100 flex items-center gap-2 md:gap-3 animate-fade-in-up">
           <div className="flex flex-col items-start">
             <span className="text-lg md:text-3xl font-bold text-brand-900 leading-none tabular-nums">{count.toLocaleString()}</span>
-            <span className="text-[9px] md:text-[11px] text-slate-500 font-medium mt-0.5 md:mt-1 leading-tight">analyses<br />completed</span>
+            <span className="text-[9px] md:text-[11px] text-slate-500 font-medium mt-0.5 md:mt-1 leading-tight">portfolios<br />analyzed</span>
           </div>
           <div className="w-px h-7 md:h-10 bg-slate-200" />
           <div className="flex flex-col">
@@ -830,7 +837,7 @@ function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-xs font-normal text-slate-500 justify-items-center md:flex md:gap-6">
           <Link to="/privacy" className="hover:text-brand-900 transition-colors whitespace-nowrap">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-brand-900 transition-colors whitespace-nowrap">Terms of Use</Link>
-          <Link to="/support" className="hover:text-brand-900 transition-colors whitespace-nowrap">Support Us</Link>
+          <Link to="/partnerships" className="hover:text-brand-900 transition-colors whitespace-nowrap">Partnerships</Link>
           <Link to="/revurdict" className="text-indigo-500 hover:text-indigo-700 transition-colors font-semibold whitespace-nowrap">Re:Vurdict</Link>
         </div>
       </div>

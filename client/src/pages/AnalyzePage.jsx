@@ -97,20 +97,20 @@ export default function AnalyzePage() {
 
       {/* Fixed header stack */}
       <div className="fixed top-0 left-0 right-0 z-50">
-        <header className="bg-white/95 backdrop-blur-lg h-16 px-6 md:px-12 border-b border-slate-100 flex items-center">
+        <header className="bg-white/95 backdrop-blur-lg h-14 md:h-16 px-4 md:px-12 border-b border-slate-100 flex items-center">
           <div className="max-w-7xl w-full mx-auto flex items-center justify-between">
             <Logo onClick={() => navigate('/')} />
             <button
               onClick={() => navigate('/')}
-              className="text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
+              className="text-[10px] md:text-xs font-normal text-slate-500 hover:text-brand-900 transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
             >
-              <span>← Back to Home</span>
+              <span>← Back</span>
             </button>
           </div>
         </header>
         <BetaTicker />
       </div>
-      <div className="h-[5.5rem] shrink-0" />
+      <div className="h-[5rem] md:h-[5.5rem] shrink-0" />
 
       {/* Wave to navy */}
       <div className="w-full bg-white">
@@ -118,40 +118,40 @@ export default function AnalyzePage() {
       </div>
 
       {/* Navy section */}
-      <section className="bg-brand-900 text-white pt-2 pb-3 md:pb-5 px-6 md:px-12 flex-1 relative overflow-hidden">
+      <section className="bg-brand-900 text-white pt-2 pb-3 md:pb-5 px-4 md:px-12 flex-1 relative overflow-hidden">
 
         <div className="max-w-7xl w-full mx-auto relative z-10">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="grid lg:grid-cols-12 gap-5 lg:gap-12 items-start">
 
             {/* ─── LEFT COLUMN: FORM ─── */}
-            <div className="lg:col-span-5 space-y-7">
+            <div className="lg:col-span-5 space-y-5 md:space-y-7">
               {/* Header */}
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
+                <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
                   Analyze Your Portfolio
                 </h1>
-                <p className="mt-2 text-sky-100/70 text-xs sm:text-sm font-normal leading-relaxed text-balance max-w-sm">
+                <p className="mt-1.5 md:mt-2 text-sky-100/70 text-[11px] sm:text-sm font-normal leading-relaxed text-balance max-w-sm">
                   Paste a case study link and choose what you're optimizing for.
                 </p>
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
 
                 {/* URL Input */}
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 rounded-2xl border border-white bg-white px-4 py-3.5 focus-within:ring-4 focus-within:ring-sky-300/20 focus-within:border-sky-300/70 transition-all shadow-sm">
-                    <Globe size={18} className="text-sky-300/70 shrink-0" />
+                  <div className="flex items-center gap-2 rounded-xl md:rounded-2xl border border-white bg-white px-3 md:px-4 py-3 md:py-3.5 focus-within:ring-4 focus-within:ring-sky-300/20 focus-within:border-sky-300/70 transition-all shadow-sm">
+                    <Globe size={16} className="text-sky-300/70 shrink-0" />
                     <input
                       type="text"
                       placeholder="https://yourportfolio.com"
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
-                      className="w-full bg-transparent text-base sm:text-sm text-slate-800 placeholder:text-xs sm:placeholder:text-sm placeholder-slate-400 focus:outline-none"
+                      className="w-full bg-transparent text-[16px] md:text-sm text-slate-800 placeholder:text-xs md:placeholder:text-sm placeholder-slate-400 focus:outline-none"
                     />
                   </div>
                   {!url && (
-                    <p className="text-xs text-sky-200/50 font-normal mt-2 px-1">
+                    <p className="text-[10px] md:text-xs text-sky-200/50 font-normal mt-1.5 md:mt-2 px-1">
                       Works with Notion, Framer, Webflow, Behance, personal sites, or any public link
                     </p>
                   )}
@@ -159,10 +159,10 @@ export default function AnalyzePage() {
 
                 {/* Goal Cards */}
                 <div>
-                  <p className="text-xs font-bold text-sky-200 tracking-wide mb-2.5">
+                  <p className="text-[11px] md:text-xs font-bold text-sky-200 tracking-wide mb-2">
                     What's your goal?
                   </p>
-                  <div className="grid gap-2.5">
+                  <div className="grid gap-2">
                     {GOALS.map((item) => {
                       const isSelected = goal === item.key;
                       const Icon = item.icon;
@@ -171,33 +171,33 @@ export default function AnalyzePage() {
                           key={item.key}
                           type="button"
                           onClick={() => setGoal(item.key)}
-                          className={`flex items-center gap-3.5 w-full text-left p-3.5 rounded-2xl border transition-all ${
+                          className={`flex items-center gap-3 w-full text-left p-3 md:p-3.5 rounded-xl md:rounded-2xl border transition-all ${
                             isSelected
                               ? 'bg-white text-slate-900 border-white shadow-sm'
                               : 'bg-[#121e48] text-white border-[#1e3060] hover:bg-[#162348] hover:border-[#264070]'
                           }`}
                         >
                           <div
-                            className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 ${
+                            className={`h-8 w-8 md:h-9 md:w-9 rounded-lg md:rounded-xl flex items-center justify-center shrink-0 ${
                               isSelected ? 'bg-brand-900/10 text-brand-900' : 'bg-[#162348] text-sky-300'
                             }`}
                           >
-                            <Icon size={17} />
+                            <Icon size={15} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <span className={`block text-sm font-semibold leading-tight ${isSelected ? 'text-slate-900' : 'text-white'}`}>
+                            <span className={`block text-xs md:text-sm font-semibold leading-tight ${isSelected ? 'text-slate-900' : 'text-white'}`}>
                               {item.label}
                             </span>
-                            <span className={`block text-xs mt-0.5 leading-normal font-normal ${isSelected ? 'text-slate-500' : 'text-white/60'}`}>
+                            <span className={`block text-[10px] md:text-xs mt-0.5 leading-normal font-normal ${isSelected ? 'text-slate-500' : 'text-white/60'}`}>
                               {item.desc}
                             </span>
                           </div>
                           <div
-                            className={`h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                            className={`h-4 w-4 md:h-5 md:w-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                               isSelected ? 'border-brand-900 bg-brand-900' : 'border-white/40'
                             }`}
                           >
-                            {isSelected && <div className="h-2 w-2 rounded-full bg-white" />}
+                            {isSelected && <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-white" />}
                           </div>
                         </button>
                       );
@@ -207,10 +207,10 @@ export default function AnalyzePage() {
 
                 {/* Experience Level */}
                 <div>
-                  <p className="text-xs font-bold text-sky-200 tracking-wide mb-2.5">
+                  <p className="text-[11px] md:text-xs font-bold text-sky-200 tracking-wide mb-2">
                     Experience Level
                   </p>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1.5 md:gap-2">
                     {[
                       { key: 'junior', label: 'Junior' },
                       { key: 'mid', label: 'Mid-Level' },
@@ -222,7 +222,7 @@ export default function AnalyzePage() {
                           key={item.key}
                           type="button"
                           onClick={() => setExperience(item.key)}
-                          className={`flex-1 px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all border whitespace-nowrap shrink-0 ${
+                          className={`flex-1 px-3 md:px-4 py-2.5 md:py-3 rounded-lg md:rounded-xl text-[11px] md:text-sm font-semibold transition-all border whitespace-nowrap shrink-0 ${
                             isSelected
                               ? 'bg-white text-brand-900 border-white shadow-sm'
                               : 'bg-white/10 text-sky-200/70 border-white/20 hover:bg-white/20'
@@ -239,7 +239,7 @@ export default function AnalyzePage() {
                 <button
                   type="submit"
                   disabled={isUrlEmpty}
-                  className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-semibold transition-all whitespace-nowrap shrink-0 group ${
+                  className={`w-full flex items-center justify-center gap-2 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-sm font-semibold transition-all whitespace-nowrap shrink-0 group ${
                     isUrlEmpty
                       ? 'bg-white/15 text-white/40 cursor-not-allowed'
                       : 'bg-white text-brand-900 hover:bg-sky-50 shadow-[0_4px_14px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.15)] hover:-translate-y-0.5 active:translate-y-0'
@@ -247,7 +247,7 @@ export default function AnalyzePage() {
                 >
                   <span>Analyze Portfolio</span>
                   <div className={`rounded-md p-0.5 transition-all duration-200 ${!isUrlEmpty && 'group-hover:bg-brand-900/10'}`}>
-                    <ArrowRight size={16} className={`transition-all duration-200 ${!isUrlEmpty && 'group-hover:translate-x-1'}`} />
+                    <ArrowRight size={15} className={`transition-all duration-200 ${!isUrlEmpty && 'group-hover:translate-x-1'}`} />
                   </div>
                 </button>
 
@@ -308,7 +308,7 @@ export default function AnalyzePage() {
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}
             <div className="lg:col-span-7 flex justify-center lg:justify-end">
               <div className="flex items-center justify-center w-full max-w-[500px] lg:max-w-none">
-                <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full h-auto select-none animate-float-slow max-h-[320px] sm:max-h-[400px] lg:max-h-none" />
+                <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full h-auto select-none animate-float-slow max-h-[220px] sm:max-h-[400px] lg:max-h-none" />
               </div>
             </div>
             </div>
@@ -322,10 +322,10 @@ export default function AnalyzePage() {
 
 
       {/* Bottom strip */}
-      <div className="bg-white py-5 md:py-6 px-6 md:px-12 border-t border-slate-100">
+      <div className="bg-white py-4 md:py-6 px-4 md:px-12 border-t border-slate-100">
         <div className="max-w-7xl mx-auto flex justify-center text-slate-500 text-xs font-normal">
           <div className="text-center">
-            <p className="text-slate-800 font-normal">Fast & automated</p>
+            <p className="text-xs md:text-sm text-slate-800 font-normal">Fast & automated</p>
             <p className="text-[10px] text-slate-400 font-normal mt-0.5">Get your full analysis in under 5 minutes.</p>
           </div>
         </div>

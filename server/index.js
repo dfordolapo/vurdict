@@ -104,7 +104,7 @@ app.get('/health', (_req, res) => {
 
 app.get('/api/analysis-count', async (_req, res) => {
   const count = await getAnalysisCount();
-  res.json({ count: 50 + (count || 0) });
+  res.json({ count: 52 + (count || 0) });
 });
 
 app.use('/api/analyze', rateLimiter, analyzeRouter);
