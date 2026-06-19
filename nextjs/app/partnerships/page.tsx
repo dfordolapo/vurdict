@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Handshake, Building, GraduationCap, Users, ArrowRight, Mail } from 'lucide-react';
+import { Handshake, Building, GraduationCap, Users, ArrowRight, Mail, Globe, FileText } from 'lucide-react';
 
 export default function PartnershipsPage() {
   return (
@@ -29,10 +29,10 @@ export default function PartnershipsPage() {
             {[
               { title: "For Design Communities", desc: "Give your members access to professional-grade portfolio analysis that helps them stand out in job applications and freelance pitches.", icon: Users },
               { title: "For Design Schools", desc: "Integrate Vurdict into your curriculum so students can self-evaluate their case studies before portfolio reviews.", icon: GraduationCap },
-              { title: "Content Partners", desc: "Design blogs, newsletters, or YouTube channels that feature Vurdict as a resource for their audience. A simple link swap that helps both sides.", icon: Building },
+              { title: "Content Partners", desc: "Design blogs, newsletters, or YouTube channels that feature Vurdict as a resource for their audience. A simple link swap that helps both sides.", icon: Globe },
               { title: "Event / Workshop Partners", desc: "Design meetups or conferences get a Vurdict portfolio review station. Attendees get real feedback, and you offer something unique.", icon: Handshake },
               { title: "For Design Tools", desc: "Let your users run portfolio analysis without leaving your site. A simple integration that makes your platform more useful to designers.", icon: Building },
-              { title: "Co-Branded Reports", desc: "Add your logo to Vurdict reports so when your community gets feedback, your brand is part of the experience.", icon: Handshake }
+              { title: "Co-Branded Reports", desc: "Add your logo to Vurdict reports so when your community gets feedback, your brand is part of the experience.", icon: FileText }
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
