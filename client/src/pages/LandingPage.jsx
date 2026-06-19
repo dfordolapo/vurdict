@@ -462,23 +462,19 @@ function ProblemSection() {
 
 /* ─── TESTIMONIAL SECTION ─── */
 function TestimonialSection() {
+
   const testimonials = [
     {
-      quote: "While it's clearly targeted at designers, its feedback on a UX writing case study was valuable. My favourite feature is the strength, weakness analysis and focus fix recommendations.",
-      name: 'Judith Eke-efeme',
-      role: 'UX Writer & Content Designer',
+      quote: "While it's clearly targeted at designers, its feedback on a UX writing case study was valuable. My favourite features are the strength and weakness analysis and the focus fix recommendations.",
+      name: "Judith Eke-efeme",
+      role: "UX Writer & Content Designer",
     },
     {
-      quote: "I'd been meaning to rework my portfolio but wasn't sure where to start. Vurdict helped me see which sections needed the most attention, which made the whole thing less overwhelming.",
-      name: 'Samuel Olusola',
-      role: 'Product Designer',
+      quote: "This site is great, it helped me figure out what was lacking in my portfolio.",
+      name: "Taiwo Obayemi",
+      role: "Entry level UI/UX designer",
     },
-    {
-      quote: "The dimension breakdown gave me a much clearer picture of where my case study was falling short. It's not a magic fix, but it gave me a practical starting point.",
-      name: 'Amara Okafor',
-      role: 'Senior Product Designer',
-    },
-  ]
+  ];
 
   return (
     <section className="py-14 md:py-20 bg-white relative overflow-hidden">
@@ -488,38 +484,42 @@ function TestimonialSection() {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-violet-50 rounded-full blur-3xl opacity-40" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 relative">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">Authentic Designer Stories</h2>
-          <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed">What users are saying about <span className="text-sky-500 font-medium">Vurdict</span></p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-slate-900 tracking-tight">
+          Authentic Designer Stories
+        </h2>
+        <p className="text-slate-500 font-normal max-w-xl mx-auto text-sm md:text-base leading-relaxed mb-10">
+          What users are saying about <span className="text-sky-500 font-medium">Vurdict</span>
+        </p>
+        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl border border-slate-100 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-indigo-100 transition-all duration-300 flex flex-col"
+              className="testimonial-card flex flex-col items-center max-w-sm"
+              style={{ animationDelay: `${i * 150}ms` }}
             >
-              <div className="flex items-center gap-1 mb-3">
-                {[...Array(5)].map((_, s) => (
-                  <svg key={s} className="w-4 h-4 text-amber-400 fill-amber-400" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
+              {/* Speech bubble */}
+              <div className="speech-bubble w-full">
+                <blockquote className="text-sm font-light italic leading-relaxed">
+                  “{t.quote}”
+                </blockquote>
               </div>
-              <blockquote className="text-sm text-slate-600 leading-relaxed mb-4 flex-1">
-                &ldquo;{t.quote}&rdquo;
-              </blockquote>
-              <div className="border-t border-slate-100 pt-3">
-                <p className="text-sm font-semibold text-slate-900">{t.name}</p>
-                <p className="text-xs text-slate-400">{t.role}</p>
+              {/* Author info below the tail */}
+              <div className="flex items-center gap-3 mt-6">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-700 to-blue-900 flex items-center justify-center text-white text-sm font-semibold shrink-0">
+                  {t.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-semibold text-slate-900">{t.name}</p>
+                  {t.role && <p className="text-xs text-slate-500 mt-0.5">{t.role}</p>}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 /* ─── FRAMEWORK SECTION ─── */
