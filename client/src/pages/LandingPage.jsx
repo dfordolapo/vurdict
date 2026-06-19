@@ -155,7 +155,7 @@ function HeroVisual() {
       fetch(`${apiUrl}/api/analysis-count`)
         .then(r => r.json())
         .then(data => setCount(data.count))
-        .catch(() => setCount(52))
+        .catch(() => setCount(54))
     }
 
     fetchCount()
