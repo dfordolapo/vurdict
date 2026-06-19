@@ -741,7 +741,7 @@ function FAQSection() {
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-sm text-slate-800 group"
+                className="w-full flex items-center justify-between px-6 py-4 text-left font-medium text-sm text-slate-800 group"
               >
                 <span>{faq.q}</span>
                 <div className="rounded-lg p-1.5 transition-all duration-200 group-hover:bg-slate-200/60 group-hover:shadow-[0_0_8px_rgba(0,0,0,0.05)]">
