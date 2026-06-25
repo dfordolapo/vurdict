@@ -124,7 +124,7 @@ export default function AnalyzePage() {
           <div className="grid lg:grid-cols-12 gap-5 lg:gap-12 items-start">
 
             {/* ─── LEFT COLUMN: FORM ─── */}
-            <div className="lg:col-span-5 space-y-5 md:space-y-7">
+            <div className="lg:col-span-5 space-y-5 md:space-y-7 max-w-md mx-auto lg:max-w-none lg:mx-0 w-full">
               {/* Header */}
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
