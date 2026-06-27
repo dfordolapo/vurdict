@@ -30,42 +30,9 @@ The repository supports a unified deployment structure for ease of local testing
 
 ---
 
-## 🚀 Getting Started (Local Development)
+## 🚀 Live Experience
 
-*(Note: These instructions are for developers to run and test the application on their own machines before pushing to production).*
-
-To run the application locally:
-
-### 1. Configure the Backend Environment
-Navigate to the server folder and set up your `.env` file:
-```bash
-cd server
-cp .env.example .env
-```
-Inside the `server/.env` file, populate your credentials:
-```env
-PORT=3001
-GEMINI_API_KEY=your_gemini_api_key
-RESEND_API_KEY=your_resend_api_key
-KV_REST_API_URL=your_vercel_kv_url
-KV_REST_API_TOKEN=your_vercel_kv_token
-```
-
-### 2. Start the Backend Server
-```bash
-npm install
-npm run dev
-```
-The API will run on `http://localhost:3001`.
-
-### 3. Start the Frontend App
-Open a new terminal window, navigate to the client, and start Vite:
-```bash
-cd client
-npm install
-npm run dev
-```
-The React frontend will be live at **`http://localhost:5173`**.
+Experience Vurdict live at: **[www.vurdict.site](https://www.vurdict.site)**
 
 ---
 
