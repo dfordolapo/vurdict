@@ -307,8 +307,8 @@ export default function AnalyzePage() {
 
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}
             <div className="lg:col-span-7 flex justify-center lg:justify-end">
-              <div className="flex items-center justify-center w-full max-w-[500px] lg:max-w-none">
-                <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full h-auto select-none animate-float-slow max-h-[220px] sm:max-h-[400px] lg:max-h-none" />
+              <div className="flex items-center justify-center w-full max-w-[400px]">
+                <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full h-auto select-none animate-float-slow max-h-[220px] sm:max-h-[300px] lg:max-h-[400px]" />
               </div>
             </div>
             </div>
