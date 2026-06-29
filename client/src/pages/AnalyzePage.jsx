@@ -120,11 +120,11 @@ export default function AnalyzePage() {
       {/* Navy section */}
       <section className="bg-brand-900 text-white pt-2 pb-3 md:pb-5 px-4 md:px-12 flex-1 relative overflow-hidden">
 
-        <div className="max-w-7xl w-full mx-auto relative z-10">
-          <div className="grid lg:grid-cols-12 gap-5 lg:gap-12 items-start">
+        <div className="max-w-6xl w-full mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
             {/* ─── LEFT COLUMN: FORM ─── */}
-            <div className="lg:col-span-5 space-y-5 md:space-y-7 max-w-md mx-auto w-full">
+            <div className="space-y-5 md:space-y-7 max-w-md mx-auto lg:mr-0 lg:ml-auto w-full">
               {/* Header */}
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl sm:text-4xl font-semibold tracking-tight text-white leading-tight text-balance">
@@ -306,8 +306,8 @@ export default function AnalyzePage() {
             </div>
 
             {/* ─── RIGHT COLUMN: ILLUSTRATION ─── */}
-            <div className="lg:col-span-7 flex justify-center lg:justify-end">
-              <div className="flex items-center justify-center w-full max-w-[400px]">
+            <div className="flex justify-center lg:justify-start">
+              <div className="flex items-center justify-center w-full max-w-[400px] lg:ml-8">
                 <img src={analyzeIllustration} alt="Portfolio analysis illustration" loading="lazy" className="w-full h-auto select-none animate-float-slow max-h-[220px] sm:max-h-[300px] lg:max-h-[400px]" />
               </div>
             </div>
